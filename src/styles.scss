@@ -1,6 +1,12 @@
 @import 'src/scss/variables';
 @import 'primeng/resources/primeng.css';
 
-body {
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
   font-family: Poppins, sans-serif;
 }
