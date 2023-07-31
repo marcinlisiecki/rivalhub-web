@@ -1,0 +1,26 @@
+@import 'src/scss/variables';
+
+.header {
+  height: 80px;
+
+  &-content {
+    max-width: $pageWidth;
+    margin: 0 auto;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &-left {
+    display: flex;
+    align-items: center;
+  }
+
+  ul {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    column-gap: 1.5rem;
+  }
+}
