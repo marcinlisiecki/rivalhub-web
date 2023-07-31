@@ -1,14 +1,23 @@
 <p-card header="Rejestracja" styleClass="auth-form">
-  <form action="">
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
     <div class="input-box">
       <label for="email">Adres email</label>
       <input
+        formControlName="email"
         pInputText
         name="email"
         id="email"
         type="email"
         placeholder="jan.kowalski@example.com"
       />
+      <div *ngIf="email?.invalid && email?.touched">
+        <app-validation-error *ngIf="email?.errors?.['required']">
+          Adres email jest wymagany
+        </app-validation-error>
+        <app-validation-error *ngIf="email?.errors?.['email']">
+          Niepoprawny adres email
+        </app-validation-error>
+      </div>
     </div>
 
     <div class="input-box">
@@ -19,7 +28,19 @@
         id="username"
         type="text"
         placeholder="jan.kowal"
+        formControlName="username"
       />
+      <div *ngIf="username?.invalid && username?.touched">
+        <app-validation-error *ngIf="username?.errors?.['required']">
+          Nazwa użytkownika jest wymagana
+        </app-validation-error>
+        <app-validation-error *ngIf="username?.errors?.['minlength']">
+          Nazwa użytkownika musi mieć co najmniej 3 znaki
+        </app-validation-error>
+        <app-validation-error *ngIf="username?.errors?.['maxlength']">
+          Nazwa użytkownika nie może mieć więcej niż 250 znaków
+        </app-validation-error>
+      </div>
     </div>
 
     <div class="input-box">
@@ -32,9 +53,22 @@
         styleClass="input-wide"
         inputStyleClass="input-wide"
         placeholder="********"
+        formControlName="password"
+        promptLabel="Wprowadź hasło"
+        weakLabel="Słabe"
+        mediumLabel="Średnie"
+        strongLabel="Silne"
       ></p-password>
+      <div *ngIf="password?.invalid && password?.touched">
+        <app-validation-error *ngIf="password?.errors?.['required']">
+          Hasło jest wymagane
+        </app-validation-error>
+        <app-validation-error *ngIf="password?.errors?.['minlength']">
+          Hasło musi mieć co najmniej 8 znaków
+        </app-validation-error>
+      </div>
     </div>
 
-    <p-button styleClass="button-wide">Zarejestruj się</p-button>
+    <p-button styleClass="button-wide" type="submit">Zarejestruj się</p-button>
   </form>
 </p-card>
