@@ -1,0 +1,7 @@
+@import 'src/scss/variables';
+
+.validation-error {
+  color: $dangerColor;
+  margin: 0;
+  font-size: $textSm;
+}
