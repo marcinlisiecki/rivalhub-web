@@ -1,0 +1,47 @@
+<header class="header">
+  <div class="header-content">
+    <div class="header-left">
+      <div class="header-logo-wrapper">
+        <img ngSrc="assets/img/logo.png" height="40" width="60" alt="Logo" />
+      </div>
+      <nav>
+        <ul>
+          <li>
+            <a
+              routerLink="/"
+              class="header-link"
+              routerLinkActive="header-link-active"
+              [routerLinkActiveOptions]="{ exact: true }"
+            >
+              Strona Główna
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <nav>
+      <ul>
+        <li>
+          <a
+            routerLink="/login"
+            class="header-link"
+            routerLinkActive="header-link-active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            Logowanie
+          </a>
+        </li>
+        <li>
+          <a
+            routerLink="/register"
+            class="header-link"
+            routerLinkActive="header-link-active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            Rejestracja
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
