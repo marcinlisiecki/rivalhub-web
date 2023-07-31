@@ -1,0 +1,40 @@
+<p-card header="Rejestracja" styleClass="auth-form">
+  <form action="">
+    <div class="input-box">
+      <label for="email">Adres email</label>
+      <input
+        pInputText
+        name="email"
+        id="email"
+        type="email"
+        placeholder="jan.kowalski@example.com"
+      />
+    </div>
+
+    <div class="input-box">
+      <label for="username">Nazwa użytkownika</label>
+      <input
+        pInputText
+        name="username"
+        id="username"
+        type="text"
+        placeholder="jan.kowal"
+      />
+    </div>
+
+    <div class="input-box">
+      <label for="password">Hasło</label>
+      <p-password
+        name="password"
+        id="password"
+        inputId="password"
+        [toggleMask]="true"
+        styleClass="input-wide"
+        inputStyleClass="input-wide"
+        placeholder="********"
+      ></p-password>
+    </div>
+
+    <p-button styleClass="button-wide">Zarejestruj się</p-button>
+  </form>
+</p-card>

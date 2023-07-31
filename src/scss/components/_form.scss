@@ -1,0 +1,20 @@
+.auth-form {
+  width: 400px;
+  margin: 4rem auto 0 auto;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+  }
+}
+
+.input-box {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.2rem;
+}
+
+.input-wide {
+  width: 100%;
+}
