@@ -1,20 +1,13 @@
 <header class="header">
   <div class="header-content">
     <div class="header-left">
-      <div class="header-logo-wrapper">
+      <a class="header-logo-wrapper" routerLink="/">
         <img ngSrc="assets/img/logo.png" height="40" width="60" alt="Logo" />
-      </div>
+      </a>
       <nav>
         <ul>
           <li>
-            <a
-              routerLink="/"
-              class="header-link"
-              routerLinkActive="header-link-active"
-              [routerLinkActiveOptions]="{ exact: true }"
-            >
-              Strona Główna
-            </a>
+            <app-header-link href="/">Strona Główna</app-header-link>
           </li>
         </ul>
       </nav>
@@ -22,68 +15,30 @@
     <nav>
       <ul>
         <li *ngIf="!isLoggedIn">
-          <a
-            routerLink="/login"
-            class="header-link"
-            routerLinkActive="header-link-active"
-            [routerLinkActiveOptions]="{ exact: true }"
-          >
-            Logowanie
-          </a>
+          <app-header-link href="/register"> Rejestracja </app-header-link>
         </li>
         <li *ngIf="!isLoggedIn">
-          <a
-            routerLink="/register"
-            class="header-link"
-            routerLinkActive="header-link-active"
-            [routerLinkActiveOptions]="{ exact: true }"
-          >
-            Rejestracja
-          </a>
+          <app-header-link href="/login"> Logowanie </app-header-link>
         </li>
 
         <li *ngIf="isLoggedIn">
-          <a
-            routerLink="/calendar"
-            class="header-link"
-            routerLinkActive="header-link-active"
-            [routerLinkActiveOptions]="{ exact: true }"
-          >
-            Kalendarz
-          </a>
+          <app-header-link href="/calendar"> Kalendarz </app-header-link>
         </li>
 
         <li *ngIf="isLoggedIn">
-          <a
-            routerLink="/organizations/new"
-            class="header-link"
-            routerLinkActive="header-link-active"
-            [routerLinkActiveOptions]="{ exact: true }"
-          >
+          <app-header-link href="/organizations/new">
             Dodaj organizację
-          </a>
+          </app-header-link>
         </li>
 
         <li *ngIf="isLoggedIn">
-          <a
-            routerLink="/my-organizations"
-            class="header-link"
-            routerLinkActive="header-link-active"
-            [routerLinkActiveOptions]="{ exact: true }"
-          >
+          <app-header-link href="/my-organizations">
             Moje organizacje
-          </a>
+          </app-header-link>
         </li>
 
         <li *ngIf="isLoggedIn">
-          <a
-            routerLink="/profile"
-            class="header-link"
-            routerLinkActive="header-link-active"
-            [routerLinkActiveOptions]="{ exact: true }"
-          >
-            Profil
-          </a>
+          <app-header-link href="/profile">Profil</app-header-link>
         </li>
       </ul>
     </nav>
