@@ -21,7 +21,7 @@
     </div>
     <nav>
       <ul>
-        <li>
+        <li *ngIf="!isLoggedIn">
           <a
             routerLink="/login"
             class="header-link"
@@ -31,7 +31,7 @@
             Logowanie
           </a>
         </li>
-        <li>
+        <li *ngIf="!isLoggedIn">
           <a
             routerLink="/register"
             class="header-link"
@@ -39,6 +39,50 @@
             [routerLinkActiveOptions]="{ exact: true }"
           >
             Rejestracja
+          </a>
+        </li>
+
+        <li *ngIf="isLoggedIn">
+          <a
+            routerLink="/calendar"
+            class="header-link"
+            routerLinkActive="header-link-active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            Kalendarz
+          </a>
+        </li>
+
+        <li *ngIf="isLoggedIn">
+          <a
+            routerLink="/organizations/new"
+            class="header-link"
+            routerLinkActive="header-link-active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            Dodaj organizację
+          </a>
+        </li>
+
+        <li *ngIf="isLoggedIn">
+          <a
+            routerLink="/my-organizations"
+            class="header-link"
+            routerLinkActive="header-link-active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            Moje organizacje
+          </a>
+        </li>
+
+        <li *ngIf="isLoggedIn">
+          <a
+            routerLink="/profile"
+            class="header-link"
+            routerLinkActive="header-link-active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            Profil
           </a>
         </li>
       </ul>
