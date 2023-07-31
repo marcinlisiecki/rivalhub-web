@@ -1,1 +1,12 @@
-/* You can add global styles to this file, and also import other style files */
+@import 'src/scss/variables';
+@import 'primeng/resources/primeng.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: Poppins, sans-serif;
+}
