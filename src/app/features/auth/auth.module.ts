@@ -9,20 +9,19 @@ import { SharedModule } from '../../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './login/login.component';
+import {MessageModule} from "primeng/message";
 
 @NgModule({
-    declarations: [RegisterFormComponent, LoginComponent],
-    imports: [
-        CommonModule,
-        PasswordModule,
-        SharedModule,
-        FormsModule,
-        ReactiveFormsModule,
-        BrowserAnimationsModule,
-    ],
-  exports: [
-    RegisterFormComponent,
-    LoginComponent
-  ]
+  declarations: [RegisterFormComponent, LoginComponent],
+  imports: [
+    CommonModule,
+    PasswordModule,
+    SharedModule,
+    FormsModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MessageModule,
+  ],
+  exports: [RegisterFormComponent, LoginComponent],
 })
 export class AuthModule {}
