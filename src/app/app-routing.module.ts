@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { RegisterFormComponent } from './features/auth/register-form/register-form.component';
 import { AddOrganizationComponent } from './features/organization/add-organization/add-organization.component';
+import {LoginComponent} from "./features/auth/login/login.component";
 
 const routes: Routes = [
   {
@@ -11,6 +12,10 @@ const routes: Routes = [
   {
     path: 'add-organization',
     component: AddOrganizationComponent,
+  },
+  {
+    path: 'login',
+    component: LoginComponent
   }
 ];
 

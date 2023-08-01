@@ -1,0 +1,46 @@
+<header class="header">
+  <div class="header-content">
+    <div class="header-left">
+      <a class="header-logo-wrapper" routerLink="/">
+        <img ngSrc="assets/img/logo.png" height="40" width="60" alt="Logo" />
+      </a>
+      <nav>
+        <ul>
+          <li>
+            <app-header-link href="/">Strona Główna</app-header-link>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <nav>
+      <ul>
+        <li *ngIf="!isLoggedIn">
+          <app-header-link href="/register"> Rejestracja </app-header-link>
+        </li>
+        <li *ngIf="!isLoggedIn">
+          <app-header-link href="/login"> Logowanie </app-header-link>
+        </li>
+
+        <li *ngIf="isLoggedIn">
+          <app-header-link href="/calendar"> Kalendarz </app-header-link>
+        </li>
+
+        <li *ngIf="isLoggedIn">
+          <app-header-link href="/organizations/new">
+            Dodaj organizację
+          </app-header-link>
+        </li>
+
+        <li *ngIf="isLoggedIn">
+          <app-header-link href="/my-organizations">
+            Moje organizacje
+          </app-header-link>
+        </li>
+
+        <li *ngIf="isLoggedIn">
+          <app-header-link href="/profile">Profil</app-header-link>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
