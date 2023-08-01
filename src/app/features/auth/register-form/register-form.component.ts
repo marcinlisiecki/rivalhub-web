@@ -32,13 +32,14 @@ export class RegisterFormComponent {
   ) {}
 
   onSubmit() {
-    this.isLoading = true;
     this.apiError = null;
 
     if (!this.registerForm.valid) {
       this.registerForm.markAllAsTouched();
       return;
     }
+
+    this.isLoading = true;
 
     const credentials: RegisterCredentials = {
       email: this.email?.value || '',
