@@ -13,3 +13,10 @@
 html {
   font-family: Poppins, sans-serif;
 }
+
+.p-fileupload .p-fileupload-buttonbar {
+  border:0;
+}
+.p-fileupload .p-fileupload-content {
+  display:none;
+}
