@@ -48,7 +48,7 @@ export class RegisterFormComponent {
 
     this.authService.register(credentials).subscribe({
       next: () => {
-        this.router.navigateByUrl('/login?registered').then();
+        this.router.navigateByUrl('/login?registered=true').then();
       },
       error: (err: unknown) => {
         this.apiError = extractMessage(err);
