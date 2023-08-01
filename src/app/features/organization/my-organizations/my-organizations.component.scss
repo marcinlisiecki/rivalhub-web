@@ -1,0 +1,38 @@
+@import '../../../../scss/variables.scss';
+
+.organizations-container{
+    display: flex;
+    //break rows if width is less than 300px
+    flex-wrap: wrap;
+    
+   
+
+    .organization-card{
+        display: flex;
+        //make card with 300px width
+        margin:10px;
+        
+        
+
+        .organization-link{
+            display: flex;
+            width: 300px;
+            height: 300px;
+
+            justify-content: center;
+            align-items: center;
+
+            text-decoration: none;
+            border-radius: 10px;
+
+            background-repeat: no-repeat;
+            background-size: cover;
+
+        }
+        .organization-name{
+            color:black;
+            font-size: 24px;
+            font-weight: $weightMedium;
+        }
+    }
+}
