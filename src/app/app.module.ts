@@ -7,9 +7,10 @@ import { SharedModule } from './shared/shared.module';
 import { AuthModule } from './features/auth/auth.module';
 import { AddOrganizationComponent } from './features/organization/add-organization/add-organization.component';
 import { LayoutModule } from './core/layout/layout.module';
+import { MyOrganizationsComponent } from './features/organization/my-organizations/my-organizations.component';
 
 @NgModule({
-  declarations: [AppComponent, AddOrganizationComponent],
+  declarations: [AppComponent, AddOrganizationComponent, MyOrganizationsComponent],
   imports: [BrowserModule, AppRoutingModule, SharedModule, AuthModule, LayoutModule],
   providers: [],
   bootstrap: [AppComponent],

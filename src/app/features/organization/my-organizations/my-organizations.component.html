@@ -1,0 +1,8 @@
+<div class="organizations-container">
+    <div class="organization-card" *ngFor="let organization of organizations">
+        <a class="organization-link" [ngStyle]="{'background-image': 'url(' + organization.imageUrl + ')'}" [href]="createURL(organization.id)">
+            <span class="organization-name" *ngIf="isDefaultAvatar(organization.imageUrl)">{{displayName(organization.name)}}</span>
+        </a>
+    </div>
+
+</div>
