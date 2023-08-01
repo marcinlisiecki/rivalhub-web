@@ -4,6 +4,10 @@ import { ValidationErrorComponent } from './validation-error/validation-error.co
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
+import { AvatarModule } from 'primeng/avatar';
+import { DividerModule } from 'primeng/divider';
+import { FileUploadModule } from 'primeng/fileupload';
+import { ImageModule } from 'primeng/image';
 
 @NgModule({
   declarations: [ValidationErrorComponent],
@@ -12,7 +16,20 @@ import { ButtonModule } from 'primeng/button';
     CardModule,
     InputTextModule,
     ButtonModule,
+    AvatarModule,
+    DividerModule,
+    FileUploadModule,
+    ImageModule,
   ],
-  imports: [CommonModule, CardModule, InputTextModule, ButtonModule],
+  imports: [
+    CommonModule,
+    CardModule,
+    InputTextModule,
+    ButtonModule,
+    AvatarModule,
+    DividerModule,
+    FileUploadModule,
+    ImageModule,
+  ],
 })
 export class SharedModule {}

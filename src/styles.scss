@@ -4,6 +4,8 @@
 @import 'src/scss/components/form';
 @import 'src/scss/components/button';
 
+@import 'src/scss/components/input';
+
 *,
 *::before,
 *::after {
@@ -13,3 +15,4 @@
 html {
   font-family: Poppins, sans-serif;
 }
+
