@@ -1,23 +1,16 @@
 <div class="form-container">
     <p-card header="Dodaj organizację">
-        <div class="form-item form-avatar">            
-            <p-image width="75" height="75"  [src]="imageURL" alt="avatar"></p-image>
+        <div class="form-item form-avatar">
+            <p-image width="75" height="75" [src]="imageURL" alt="avatar"></p-image>
             <p-divider layout="vertical"></p-divider>
-            <p-fileUpload  name="uploadAvatar"
-            [customUpload]="true"
-            (onSelect)="onFileSelectClicked($event)"
-            (onClear)="onClearClicked($event)"
-            [showUploadButton]="false"
-            cancelLabel="Anuluj"
-            chooseLabel="Dodaj zdjęcie"
-            accept="image/*"
-            [fileLimit]="1"
-            [maxFileSize]="5242880">
-            
+            <p-fileUpload name="uploadAvatar" [customUpload]="true" (onSelect)="onFileSelectClicked($event)"
+                (onClear)="onClearClicked($event)" [showUploadButton]="false" cancelLabel="Anuluj"
+                chooseLabel="Dodaj zdjęcie" accept="image/*" [fileLimit]="1" [maxFileSize]="5242880">
+
             </p-fileUpload>
 
         </div>
-        <div class="form-item form-input">
+        <div class="input-box">
             <label htmlFor="organization-name">Nazwa organizacji</label>
             <input #organization id="organization-name" type="text" pInputText />
             <small id="organization-name-help">Podaj nazwę dla swojej organizacji.</small>
@@ -26,7 +19,7 @@
             <app-validation-error>{{error}}</app-validation-error>
         </div>
         <div class="form-item">
-            <p-button  (onClick)="onSendClick(organization.value)" label="Utwórz organizację"></p-button>
+            <p-button (onClick)="onSendClick(organization.value)" label="Utwórz organizację"></p-button>
         </div>
 
     </p-card>

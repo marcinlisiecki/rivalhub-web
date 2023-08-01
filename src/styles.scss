@@ -4,6 +4,8 @@
 @import 'src/scss/components/form';
 @import 'src/scss/components/button';
 
+@import 'src/scss/components/input';
+
 *,
 *::before,
 *::after {
@@ -14,9 +16,3 @@ html {
   font-family: Poppins, sans-serif;
 }
 
-.p-fileupload .p-fileupload-buttonbar {
-  border:0;
-}
-.p-fileupload .p-fileupload-content {
-  display:none;
-}

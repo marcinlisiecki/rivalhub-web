@@ -1,33 +1,17 @@
-.form-container{
-    display:flex;
+.form-container {
+    display: flex;
     justify-content: center;
     align-items: center;
-    margin:15px;
+    margin: 15px;
 
-    .form-item{
+    .form-item {
         margin: 10px 15px;
-        padding:10px;
+        padding: 10px;
     }
-    .form-avatar{
-        display:flex;
+
+    .form-avatar {
+        display: flex;
         justify-content: center;
         align-items: center;
-
-    
     }
-    
-    .form-input{
-        display:flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: flex-start;
-
-        input {
-            width: 100%;
-        }
-    }
-
-    
-    
 }
-
