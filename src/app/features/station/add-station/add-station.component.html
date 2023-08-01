@@ -1,0 +1,19 @@
+<p-card header="Dodaj stanowisko" styleClass="centered-form">
+  <form>
+    <div class="input-box">
+      <label htmlFor="station-name">Nazwa stanowiska</label>
+      <input (focusout)="onNameFocusOut(stationName.value)" #stationName  id="station-name" type="text" pInputText />
+    </div>
+    <div *ngIf="errorName" class="form-item">
+      <app-validation-error>{{errorName}}</app-validation-error>
+    </div>
+    <div class="input-box">
+      <label htmlFor="station-type">Typ stanowiska</label>
+      <input (focusout)="onTypeFocusOut(stationName.value)" #stationType id="station-type" type="text" pInputText />
+    </div>
+    <div *ngIf="errorType" class="form-item">
+      <app-validation-error>{{errorType}}</app-validation-error>
+    </div>
+    <p-button (onClick)="onSendClick(stationName.value, stationType.value)" label="Utwórz stanowisko" styleClass="button-wide"></p-button>
+  </form>
+</p-card>
