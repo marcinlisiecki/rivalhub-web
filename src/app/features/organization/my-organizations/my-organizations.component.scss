@@ -4,6 +4,8 @@
     display: flex;
     //break rows if width is less than 300px
     flex-wrap: wrap;
+    width: $pageWidth;
+    margin: 0 auto;
     
    
 
@@ -16,8 +18,8 @@
 
         .organization-link{
             display: flex;
-            width: 300px;
-            height: 300px;
+            width: 200px;
+            height: 200px;
 
             justify-content: center;
             align-items: center;
@@ -28,10 +30,16 @@
             background-repeat: no-repeat;
             background-size: cover;
 
+            &:hover {
+                //red border
+                border: 2.5px solid red;
+              }
+
         }
         .organization-name{
+            backdrop-filter: blur(5px);
             color:black;
-            font-size: 24px;
+            font-size: 16px;
             font-weight: $weightMedium;
         }
     }
