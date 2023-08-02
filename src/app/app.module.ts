@@ -10,9 +10,10 @@ import { LayoutModule } from './core/layout/layout.module';
 import { AddStationComponent } from './features/station/add-station/add-station.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {MyOrganizationsComponent} from "./features/organization/my-organizations/my-organizations.component";
+import { InviteUserComponent } from './features/organization/invite-user/invite-user.component';
 
 @NgModule({
-  declarations: [AppComponent, AddOrganizationComponent, AddStationComponent, MyOrganizationsComponent],
+  declarations: [AppComponent, AddOrganizationComponent, AddStationComponent, MyOrganizationsComponent, InviteUserComponent],
     imports: [BrowserModule, AppRoutingModule, SharedModule, AuthModule, LayoutModule, ReactiveFormsModule],
   providers: [],
   bootstrap: [AppComponent],
