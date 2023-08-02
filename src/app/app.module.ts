@@ -9,12 +9,16 @@ import { AddOrganizationComponent } from './features/organization/add-organizati
 import { LayoutModule } from './core/layout/layout.module';
 import { MyOrganizationsComponent } from './features/organization/my-organizations/my-organizations.component';
 import { CookieModule } from 'ngx-cookie';
+import { AddStationComponent } from './features/station/add-station/add-station.component';
+import {ReactiveFormsModule} from "@angular/forms";
+import {MyOrganizationsComponent} from "./features/organization/my-organizations/my-organizations.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     AddOrganizationComponent,
     MyOrganizationsComponent,
+      AddStationComponent
   ],
   imports: [
     BrowserModule,
@@ -22,6 +26,7 @@ import { CookieModule } from 'ngx-cookie';
     SharedModule,
     AuthModule,
     LayoutModule,
+      ReactiveFormsModule,
     CookieModule.withOptions(),
   ],
   providers: [],
