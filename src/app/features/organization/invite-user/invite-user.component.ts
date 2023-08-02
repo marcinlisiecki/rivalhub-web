@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-invite-user',
@@ -7,4 +8,15 @@ import { Component } from '@angular/core';
 })
 export class InviteUserComponent {
 
+  sendInviteForm = new FormGroup({
+    email: new FormControl('', [Validators.required, Validators.email])
+  })
+
+  get email() {
+    return this.sendInviteForm.get('email')
+  }
+
+  onSubmit() {
+    // send email to recipient
+  }
 }
