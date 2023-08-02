@@ -8,10 +8,22 @@ import { AuthModule } from './features/auth/auth.module';
 import { AddOrganizationComponent } from './features/organization/add-organization/add-organization.component';
 import { LayoutModule } from './core/layout/layout.module';
 import { MyOrganizationsComponent } from './features/organization/my-organizations/my-organizations.component';
+import { CookieModule } from 'ngx-cookie';
 
 @NgModule({
-  declarations: [AppComponent, AddOrganizationComponent, MyOrganizationsComponent],
-  imports: [BrowserModule, AppRoutingModule, SharedModule, AuthModule, LayoutModule],
+  declarations: [
+    AppComponent,
+    AddOrganizationComponent,
+    MyOrganizationsComponent,
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    SharedModule,
+    AuthModule,
+    LayoutModule,
+    CookieModule.withOptions(),
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
