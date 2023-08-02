@@ -19,7 +19,7 @@ const routes: Routes = [
     component: LoginComponent
   },
   {
-    path: 'add-station',
+    path: 'organizations/:id/add-station',
     component: AddStationComponent,
   }
 ];

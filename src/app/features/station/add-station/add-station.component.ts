@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-add-station',
@@ -6,45 +7,27 @@ import { Component } from '@angular/core';
   styleUrls: ['./add-station.component.scss']
 })
 export class AddStationComponent {
-  // get organization ID somehow when we will have organization site ready
-  stationType: string | undefined
-  stationName: string | undefined
-  errorName: string | undefined
-  errorType: string | undefined
-  errorMsg = "Pole nie moze byc puste"
 
+  addStationForm = new FormGroup({
+    name: new FormControl('', [Validators.required, Validators.minLength(1)]),
+    type: new FormControl('', [Validators.required]
+    )
+  })
 
-  onNameFocusOut(field: string) {
-    if (field == undefined || !field.length) {
-       this.errorName = this.errorMsg
-    } else {
-      this.errorName = undefined
-    }
-    return
+  get name() {
+    return this.addStationForm.get('name')
   }
 
-  onTypeFocusOut(field: string) {
-    if (field == undefined || !field.length) {
-      this.errorType = this.errorMsg
-    } else {
-      this.errorType = undefined
-    }
-    return
+  get type() {
+    return this.addStationForm.get('type')
   }
-  onSendClick(stationName: string, stationType: string) {
-    // to be refactored
-    if (stationName == undefined || !stationType.length) {
-      this.errorName = this.errorMsg
-    } else {
-      this.errorName = undefined
-    }
-    if (stationType == undefined || !stationType.length) {
-      this.errorType = this.errorMsg
-    } else {
-      this.errorType = undefined
-    }
-    return
 
-    // handle sending to backend
+  onSubmit() {
+    if (!this.addStationForm.valid) {
+      this.addStationForm.markAllAsTouched();
+      return;
+    }
+    // send data to backend
   }
+
 }

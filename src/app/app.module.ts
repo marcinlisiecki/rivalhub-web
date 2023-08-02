@@ -8,10 +8,11 @@ import { AuthModule } from './features/auth/auth.module';
 import { AddOrganizationComponent } from './features/organization/add-organization/add-organization.component';
 import { LayoutModule } from './core/layout/layout.module';
 import { AddStationComponent } from './features/station/add-station/add-station.component';
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [AppComponent, AddOrganizationComponent, AddStationComponent],
-  imports: [BrowserModule, AppRoutingModule, SharedModule, AuthModule, LayoutModule],
+    imports: [BrowserModule, AppRoutingModule, SharedModule, AuthModule, LayoutModule, ReactiveFormsModule],
   providers: [],
   bootstrap: [AppComponent],
 })
