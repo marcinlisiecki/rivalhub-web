@@ -7,13 +7,27 @@ import { SharedModule } from './shared/shared.module';
 import { AuthModule } from './features/auth/auth.module';
 import { AddOrganizationComponent } from './features/organization/add-organization/add-organization.component';
 import { LayoutModule } from './core/layout/layout.module';
+import { MyOrganizationsComponent } from './features/organization/my-organizations/my-organizations.component';
+import { CookieModule } from 'ngx-cookie';
 import { AddStationComponent } from './features/station/add-station/add-station.component';
-import {ReactiveFormsModule} from "@angular/forms";
-import {MyOrganizationsComponent} from "./features/organization/my-organizations/my-organizations.component";
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [AppComponent, AddOrganizationComponent, AddStationComponent, MyOrganizationsComponent],
-    imports: [BrowserModule, AppRoutingModule, SharedModule, AuthModule, LayoutModule, ReactiveFormsModule],
+  declarations: [
+    AppComponent,
+    AddOrganizationComponent,
+    MyOrganizationsComponent,
+    AddStationComponent,
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    SharedModule,
+    AuthModule,
+    LayoutModule,
+    ReactiveFormsModule,
+    CookieModule.withOptions(),
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
