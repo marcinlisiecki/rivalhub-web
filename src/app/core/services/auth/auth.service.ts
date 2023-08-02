@@ -52,11 +52,20 @@ export class AuthService {
       );
   }
 
+  logout() {
+    this.cookieService.remove('token');
+    this.authSubject.next(false);
+  }
+
   isAuthObservable(): Observable<boolean> {
     return this.authSubject.asObservable();
   }
 
   isAuth(): boolean {
     return this.jwtService.isTokenValid();
+  }
+
+  getUserEmail(): string | null {
+    return this.jwtService.getUserEmail();
   }
 }
