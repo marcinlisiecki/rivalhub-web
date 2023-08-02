@@ -42,8 +42,15 @@
           Nazwa organizacji nie może mieć więcej niż 256 znaków
         </app-validation-error>
       </div>
-      <div class="button-wrapper">
-        <p-button type="submit">Utwórz organizację</p-button>
+      <div>
+        <div class="button-wrapper">
+          <p-button type="submit">Utwórz organizację</p-button>
+        </div>
+        <p class="api-error-wrapper">
+          <app-validation-error *ngIf="apiError">
+            {{ apiError }}
+          </app-validation-error>
+        </p>
       </div>
     </form>
   </p-card>
