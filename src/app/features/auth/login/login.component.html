@@ -1,38 +1,45 @@
 <p-card header="Logowanie" styleClass="centered-form">
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-<div class="input-box">
-  <label for="email">Adres email</label>
-  <input
-    formControlName="email"
-    pInputText
-    name="email"
-    type="email"
-    placeholder="jan.kowalski@example.com"
-  />
-  <div *ngIf="email?.invalid && email?.touched">
-    <app-validation-error *ngIf="email?.errors?.['required']">
-      Adres email jest wymagany
-    </app-validation-error>
-  </div>
-</div>
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div class="registered-message-wrapper" *ngIf="registered">
+      <p-messages severity="success">
+        <ng-template pTemplate>
+          <div>Pomyślnie utworzono konto</div>
+        </ng-template>
+      </p-messages>
+    </div>
+    <div class="input-box">
+      <label for="email">Adres email</label>
+      <input
+        formControlName="email"
+        pInputText
+        name="email"
+        type="email"
+        placeholder="jan.kowalski@example.com"
+      />
+      <div *ngIf="email?.invalid && email?.touched">
+        <app-validation-error *ngIf="email?.errors?.['required']">
+          Adres email jest wymagany
+        </app-validation-error>
+      </div>
+    </div>
 
+    <div class="input-box">
+      <label for="password">Hasło</label>
+      <p-password
+        [feedback]="false"
+        formControlName="password"
+        name="password"
+        inputId="password"
+        styleClass="input-wide"
+        inputStyleClass="input-wide"
+      ></p-password>
+      <div *ngIf="password?.invalid && password?.touched">
+        <app-validation-error *ngIf="password?.errors?.['required']">
+          Hasło jest wymagane!
+        </app-validation-error>
+      </div>
+    </div>
 
-<div class="input-box">
-  <label for="password">Hasło</label>
-  <p-password [feedback]="false"
-              formControlName="password"
-    name="password"
-    inputId="password"
-    styleClass="input-wide"
-    inputStyleClass="input-wide"
-  ></p-password>
-  <div *ngIf="password?.invalid && password?.touched">
-    <app-validation-error *ngIf="password?.errors?.['required']">
-      Hasło jest wymagane!
-    </app-validation-error>
-  </div>
-</div>
-
-  <p-button styleClass="button-wide" type="submit">Zaloguj się</p-button>
-</form>
+    <p-button styleClass="button-wide" type="submit">Zaloguj się</p-button>
+  </form>
 </p-card>

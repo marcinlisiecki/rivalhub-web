@@ -9,7 +9,7 @@ import { FileSelectEvent } from 'primeng/fileupload';
 export class AddOrganizationComponent {
   uploadedFile: File | undefined;
   organizationName: string | undefined;
-  imageURL: string = 'assets/img/organization.png';
+  imageURL: string = 'assets/img/avatars/avatarplaceholder.png';
   error: string | undefined;
 
   onFileSelectClicked(event: FileSelectEvent) {
@@ -18,7 +18,7 @@ export class AddOrganizationComponent {
   }
 
   onClearClicked(event: Event) {
-    this.imageURL = 'assets/img/organization.png';
+    this.imageURL = 'assets/img/avatars/avatarplaceholder.png';
     this.uploadedFile = undefined;
   }
 

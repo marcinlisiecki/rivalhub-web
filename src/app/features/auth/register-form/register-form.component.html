@@ -21,23 +21,23 @@
     </div>
 
     <div class="input-box">
-      <label for="username">Nazwa użytkownika</label>
+      <label for="name">Nazwa użytkownika</label>
       <input
         pInputText
-        name="username"
-        id="username"
+        name="name"
+        id="name"
         type="text"
         placeholder="jan.kowal"
-        formControlName="username"
+        formControlName="name"
       />
-      <div *ngIf="username?.invalid && username?.touched">
-        <app-validation-error *ngIf="username?.errors?.['required']">
+      <div *ngIf="name?.invalid && name?.touched">
+        <app-validation-error *ngIf="name?.errors?.['required']">
           Nazwa użytkownika jest wymagana
         </app-validation-error>
-        <app-validation-error *ngIf="username?.errors?.['minlength']">
+        <app-validation-error *ngIf="name?.errors?.['minlength']">
           Nazwa użytkownika musi mieć co najmniej 3 znaki
         </app-validation-error>
-        <app-validation-error *ngIf="username?.errors?.['maxlength']">
+        <app-validation-error *ngIf="name?.errors?.['maxlength']">
           Nazwa użytkownika nie może mieć więcej niż 250 znaków
         </app-validation-error>
       </div>
@@ -68,6 +68,15 @@
       </div>
     </div>
 
-    <p-button styleClass="button-wide" type="submit">Zarejestruj się</p-button>
+    <div>
+      <p-button styleClass="button-wide" type="submit" [loading]="isLoading">
+        Zarejestruj się
+      </p-button>
+      <p class="api-error-wrapper">
+        <app-validation-error *ngIf="apiError">
+          {{ apiError }}
+        </app-validation-error>
+      </p>
+    </div>
   </form>
 </p-card>
