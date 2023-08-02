@@ -21,7 +21,7 @@
           <p-menu
             styleClass="menu-slim"
             #menu
-            [model]="items"
+            [model]="flagItems"
             [popup]="true"
           ></p-menu>
           <img
@@ -63,7 +63,7 @@
 
         <li *ngIf="isLoggedIn">
           <app-header-link href="/profile" (click)="profileMenu.toggle($event)">
-            {{ 'header.profile' | translate}}
+            {{ 'header.profile' | translate }}
             <i class="pi pi-angle-down"></i>
           </app-header-link>
           <p-menu [model]="profileItems" #profileMenu [popup]="true"></p-menu>
