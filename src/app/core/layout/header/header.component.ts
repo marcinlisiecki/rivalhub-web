@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { MenuItem, MessageService } from 'primeng/api';
+import { MenuItem, MessageService,  MenuItemCommandEvent} from 'primeng/api';
+import { AuthService } from '../../services/auth/auth.service';
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -8,8 +10,9 @@ import { MenuItem, MessageService } from 'primeng/api';
   providers: [TranslateService, MessageService],
 })
 export class HeaderComponent {
-  isLoggedIn: boolean = true;
-  items: MenuItem[] | undefined;
+  isLoggedIn: boolean = false;
+  flagItems: MenuItem[] | undefined;
+  profileItems: MenuItem[] | undefined;
   currentLanguage: string = '';
   pathOfFlag: string = '';
   flag: { [key: string]: string } = {
@@ -17,7 +20,23 @@ export class HeaderComponent {
     en: 'assets/img/uk-flag.png',
   };
 
-  constructor(private translate: TranslateService) {
+  constructor(private translate: TranslateService,private authService: AuthService) {
+
+    this.authService.isAuthObservable().subscribe((val: boolean) => {
+      this.isLoggedIn = val;
+    });
+
+    this.profileItems = [
+      {
+        escape: false,
+        label: '<span class="header-menu-item">Wyloguj się</span>',
+        icon: 'pi pi-sign-out',
+        command() {
+          authService.logout();
+        },
+      },
+    ];
+
     //ustawianie localstorage i jezyka domyslnego
     if (localStorage.getItem('currentLanguage') === null) {
       this.currentLanguage = <string>translate.getBrowserLang();
@@ -27,7 +46,7 @@ export class HeaderComponent {
       this.currentLanguage = <string>localStorage.getItem('currentLanguage');
     }
     // items dla menu
-    this.items = [
+    this.flagItems = [
       {
         label: `<img src="${this.flag['pl']}" alt="pl" width="24" height="15"/>`,
         escape: false,

@@ -62,9 +62,11 @@
         </li>
 
         <li *ngIf="isLoggedIn">
-          <app-header-link href="/profile">{{
-            'header.profile' | translate
-          }}</app-header-link>
+          <app-header-link href="/profile" (click)="profileMenu.toggle($event)">
+            {{ 'header.profile' | translate}}
+            <i class="pi pi-angle-down"></i>
+          </app-header-link>
+          <p-menu [model]="profileItems" #profileMenu [popup]="true"></p-menu>
         </li>
       </ul>
     </nav>

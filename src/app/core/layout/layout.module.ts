@@ -3,9 +3,8 @@ import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { HeaderComponent } from './header/header.component';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { HeaderLinkComponent } from './header/header-link/header-link.component';
-import { ToastModule } from 'primeng/toast';
 import { MenuModule } from 'primeng/menu';
-
+import { ToastModule } from 'primeng/toast';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -18,13 +17,13 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [HeaderComponent, HeaderLinkComponent],
   exports: [HeaderComponent, HeaderLinkComponent],
   imports: [
+    BrowserModule,
     CommonModule,
     RouterLinkActive,
     RouterLink,
     NgOptimizedImage,
-    ToastModule,
     MenuModule,
-    BrowserModule,
+    ToastModule,
     HttpClientModule,
     TranslateModule.forRoot({
       loader: {
