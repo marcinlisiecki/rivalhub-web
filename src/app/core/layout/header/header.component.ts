@@ -8,22 +8,25 @@ import { MenuItem, MessageService } from 'primeng/api';
   providers: [TranslateService, MessageService],
 })
 export class HeaderComponent {
-  pathOfFlag: string = 'assets/img/pl-flag.png';
   isLoggedIn: boolean = true;
   items: MenuItem[] | undefined;
   currentLanguage: string = '';
-  flag = {
+  pathOfFlag: string = '';
+  flag: { [key: string]: string } = {
     pl: 'assets/img/pl-flag.png',
     en: 'assets/img/uk-flag.png',
   };
+
   constructor(private translate: TranslateService) {
+    //ustawianie localstorage i jezyka domyslnego
     if (localStorage.getItem('currentLanguage') === null) {
       this.currentLanguage = <string>translate.getBrowserLang();
+      this.pathOfFlag = this.flag[this.currentLanguage];
       localStorage.setItem('currentLanguage', this.currentLanguage);
     } else {
       this.currentLanguage = <string>localStorage.getItem('currentLanguage');
     }
-    this.translate.use(<string>this.currentLanguage);
+    // items dla menu
     this.items = [
       {
         label: `<img src="${this.flag['pl']}" alt="pl" width="24" height="15"/>`,
@@ -36,10 +39,11 @@ export class HeaderComponent {
         command: () => this.useLanguage('en'),
       },
     ];
+    this.useLanguage(<string>this.currentLanguage);
   }
 
   useLanguage(lang: string) {
-    // @ts-ignore
+    //ustawienie wybranego jezyka
     this.pathOfFlag = this.flag[lang];
     this.translate.use(lang);
     this.currentLanguage = lang;

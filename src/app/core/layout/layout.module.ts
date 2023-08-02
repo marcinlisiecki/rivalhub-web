@@ -5,11 +5,15 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import { HeaderLinkComponent } from './header/header-link/header-link.component';
 import { ToastModule } from 'primeng/toast';
 import { MenuModule } from 'primeng/menu';
-import { HttpClient } from '@angular/common/http';
-import { HttpLoaderFactory } from '../../app.module';
-// import ngx-translate and the http loader
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { BrowserModule } from '@angular/platform-browser';
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 @NgModule({
   declarations: [HeaderComponent, HeaderLinkComponent],
   exports: [HeaderComponent, HeaderLinkComponent],
@@ -20,6 +24,8 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
     NgOptimizedImage,
     ToastModule,
     MenuModule,
+    BrowserModule,
+    HttpClientModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
