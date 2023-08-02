@@ -8,15 +8,15 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 })
 export class InviteUserComponent {
 
-  sendInviteForm = new FormGroup({
+  inviteForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email])
   })
 
   get email() {
-    return this.sendInviteForm.get('email')
+    return this.inviteForm.get('email')
   }
 
   onSubmit() {
-    // send email to recipient
+
   }
 }

@@ -1,37 +1,54 @@
-<!--<div class="container">-->
-<!--  <div class="container-header">-->
-<!--    <h2>-->
-<!--      Zaproszenie użytkownika-->
-<!--    </h2>-->
-<!--    <span class="sub-text">-->
-<!--      Do organizacji xxx-->
-<!--    </span>-->
-<!--  </div>-->
-<!--  <form [formGroup]="sendInviteForm" (ngSubmit)="onSubmit()">-->
-<!--    <div class="invite-form">-->
-<!--      <div class="input-box">-->
-<!--        <label for="invite-email">Adres email</label>-->
+<div class="main-container">
+  <div class="container-header">
+    <h2>Zaproszenie użytkownika</h2>
+    <span class="supporting-text">Do organizacji XXX</span> <!-- sciagac nazwe z kontekstu -->
+  </div>
+
+<!--  <form [formGroup]="inviteForm" (ngSubmit)="onSubmit()" class="invite-form">-->
+<!--    <div class="input-box">-->
+<!--      <label for="email">Adres email</label>-->
+<!--      <div class="row">-->
 <!--        <input-->
-<!--          id="invite-email"-->
-<!--          name="email"-->
+<!--          id="email"-->
 <!--          formControlName="email"-->
-<!--          type="email"-->
-<!--          placeholder="kowalski@example.com"-->
 <!--          pInputText-->
+<!--          name="email"-->
+<!--          type="email"-->
+<!--          placeholder="jan.kowalski@example.com"-->
 <!--        />-->
 <!--        <div *ngIf="email?.invalid && email?.touched">-->
 <!--          <app-validation-error *ngIf="email?.errors?.['required']">-->
 <!--            Adres email jest wymagany-->
 <!--          </app-validation-error>-->
 <!--        </div>-->
+
+<!--          <p-button styleClass="button-wide" type="submit">Zaproś</p-button>-->
 <!--      </div>-->
-<!--      <p-button styleClass="button-wide" type="submit">Zaproś</p-button>-->
 <!--    </div>-->
 <!--  </form>-->
-<!--</div>-->
-<div class="main-container">
-  <div class="container-header">
-    <h2>Zaproszenie użytkownika</h2>
-    <span>Do organizacji XXX</span> <!-- sciagac nazwe z kontekstu -->
+  <form [formGroup]="inviteForm" (ngSubmit)="onSubmit()" class="invite-form">
+    <div class="input-box">
+      <label for="email">Adres email</label>
+        <input
+          id="email"
+          formControlName="email"
+          pInputText
+          name="email"
+          type="email"
+          placeholder="jan.kowalski@example.com"
+        />
+      <div *ngIf="email?.invalid && email?.touched">
+        <app-validation-error *ngIf="email?.errors?.['required']">
+          Adres email jest wymagany
+        </app-validation-error>
+      </div>
+    </div>
+    <p-button styleClass="button-wide" type="submit">Zaproś</p-button>
+  </form>
+
+  <div class="invite-link">
+    <p>Albo udostępnij link</p>
+    <p class="supporting-text">https://exmaple.com/invite/434354325</p>
   </div>
+
 </div>
