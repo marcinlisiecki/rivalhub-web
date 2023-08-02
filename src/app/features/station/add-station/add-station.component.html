@@ -1,8 +1,9 @@
 <p-card header="Dodaj stanowisko" styleClass="centered-form">
   <form [formGroup]="addStationForm" (ngSubmit)="onSubmit()">
     <div class="input-box">
-      <label htmlFor="station-name">Nazwa stanowiska</label>
+      <label for="station-name">Nazwa stanowiska</label>
       <input
+        id="station-name"
         name="name"
         formControlName="name"
         type="text"
@@ -17,8 +18,9 @@
     </div>
 
     <div class="input-box">
-      <label htmlFor="station-type">Typ stanowiska</label>
+      <label for="station-type">Typ stanowiska</label>
       <input
+        id="station-type"
         formControlName="type"
         name="type"
         type="text"
