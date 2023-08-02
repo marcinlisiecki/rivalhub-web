@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { MenuItem, MessageService,  MenuItemCommandEvent} from 'primeng/api';
+import { MenuItem, MessageService, MenuItemCommandEvent } from 'primeng/api';
 import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
@@ -10,7 +10,7 @@ import { AuthService } from '../../services/auth/auth.service';
   providers: [TranslateService, MessageService],
 })
 export class HeaderComponent {
-  isLoggedIn: boolean = false;
+  isLoggedIn: boolean = true;
   flagItems: MenuItem[] | undefined;
   profileItems: MenuItem[] | undefined;
   currentLanguage: string = '';
@@ -20,8 +20,10 @@ export class HeaderComponent {
     en: 'assets/img/uk-flag.png',
   };
 
-  constructor(private translate: TranslateService,private authService: AuthService) {
-
+  constructor(
+    private translate: TranslateService,
+    private authService: AuthService,
+  ) {
     this.authService.isAuthObservable().subscribe((val: boolean) => {
       this.isLoggedIn = val;
     });
