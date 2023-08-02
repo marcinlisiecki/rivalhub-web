@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { FileSelectEvent } from 'primeng/fileupload';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { subscribeOn } from 'rxjs';
 
 @Component({
   selector: 'app-add-organization',
@@ -8,13 +10,21 @@ import { FileSelectEvent } from 'primeng/fileupload';
 })
 export class AddOrganizationComponent {
   uploadedFile: File | undefined;
-  organizationName: string | undefined;
   imageURL: string = 'assets/img/avatars/avatarplaceholder.png';
   error: string | undefined;
+
+  addForm = new FormGroup({
+    name: new FormControl('', [
+      Validators.required,
+      Validators.minLength(3),
+      Validators.maxLength(256),
+    ]),
+  });
 
   onFileSelectClicked(event: FileSelectEvent) {
     this.uploadedFile = event.files[0];
     this.imageURL = URL.createObjectURL(event.currentFiles[0]);
+    console.log(this.imageURL);
   }
 
   onClearClicked(event: Event) {
@@ -22,19 +32,20 @@ export class AddOrganizationComponent {
     this.uploadedFile = undefined;
   }
 
-  onSendClick(organization: string) {
-    if (
-      organization == undefined ||
-      organization.length < 3 ||
-      organization.length > 256
-    ) {
-      this.error = 'Nazwa organizacji musi posiadać od 2 do 256 znaków!';
+  onSubmit() {
+    if (!this.addForm.valid) {
+      this.addForm.markAllAsTouched();
       return;
     }
-    this.error = undefined;
+
     URL.revokeObjectURL(this.imageURL);
-    this.organizationName = organization;
 
     //handle sending data to backend
   }
+
+  get name() {
+    return this.addForm.get('name');
+  }
+
+  protected readonly subscribeOn = subscribeOn;
 }
