@@ -7,38 +7,64 @@
       <nav>
         <ul>
           <li>
-            <app-header-link href="/">Strona Główna</app-header-link>
+            <app-header-link href="/">{{
+              'header.main-page' | translate
+            }}</app-header-link>
           </li>
         </ul>
       </nav>
     </div>
     <nav>
       <ul>
-        <li *ngIf="!isLoggedIn">
-          <app-header-link href="/register"> Rejestracja </app-header-link>
+        <li>
+          <p-toast></p-toast>
+          <p-menu
+            styleClass="menu-slim"
+            #menu
+            [model]="items"
+            [popup]="true"
+          ></p-menu>
+          <img
+            [src]="pathOfFlag"
+            alt="flag"
+            (click)="menu.toggle($event)"
+            width="24"
+            height="15"
+          />
         </li>
         <li *ngIf="!isLoggedIn">
-          <app-header-link href="/login"> Logowanie </app-header-link>
+          <app-header-link href="/register">
+            {{ 'header.register' | translate }}
+          </app-header-link>
+        </li>
+        <li *ngIf="!isLoggedIn">
+          <app-header-link href="/login">
+            {{ 'header.login' | translate }}
+          </app-header-link>
         </li>
 
         <li *ngIf="isLoggedIn">
-          <app-header-link href="/calendar"> Kalendarz </app-header-link>
+          <app-header-link href="/calendar">
+            {{ 'header.calendar' | translate }}
+          </app-header-link>
         </li>
 
         <li *ngIf="isLoggedIn">
           <app-header-link href="/organizations/new">
-            Dodaj organizację
+            {{ 'header.organisationAdd' | translate }}
           </app-header-link>
         </li>
 
         <li *ngIf="isLoggedIn">
           <app-header-link href="/my-organizations">
-            Moje organizacje
+            {{ 'header.organisationShow' | translate }}
           </app-header-link>
         </li>
 
         <li *ngIf="isLoggedIn">
-          <app-header-link href="/profile">Profil</app-header-link>
+          <app-header-link href="/profile">{{
+            'header.profile' | translate
+          }}</app-header-link>
         </li>
       </ul>
     </nav>
