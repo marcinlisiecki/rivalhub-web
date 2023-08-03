@@ -1,9 +1,27 @@
 {
+	"api.error": "Wystąpił nieoczekiwany błąd",
+	"button.signIn": "Zaloguj się",
+	"button.signUp": "Zarejestruj się",
 	"header.calendar": "Kalendarz",
 	"header.login": "Logowanie",
 	"header.main-page": "Strona główna",
 	"header.organisationAdd": "Dodaj organizację",
 	"header.organisationShow": "Moje organizacje",
 	"header.profile": "Profil",
-	"header.register": "Rejestracja"
+	"header.register": "Rejestracja",
+	"input.email": "Adres email",
+	"input.emailError": " Niepoprawny adres email",
+	"input.emailWarning": "Adres email jest wymagany",
+	"input.password": "Hasło",
+	"input.passwordMediumLabel": "Średnie",
+	"input.passwordMin": "Hasło musi mieć co najmniej 8 znaków",
+	"input.passwordPromptLabel": "Wprowadź hasło",
+	"input.passwordStrongLabel": "Silne",
+	"input.passwordWarning": "Hasło jest wymagane",
+	"input.passwordWeakLabel": "Słabe",
+	"input.success": "Udało się",
+	"input.userName": "Nazwa użytkownika",
+	"input.userNameMax": "Nazwa użytkownika nie może mieć więcej niż 250 znaków",
+	"input.userNameMin": "Nazwa użytkownika musi mieć co najmniej 3 znaki",
+	"input.userNameRequired": "Nazwa użytkownika jest wymagana"
 }

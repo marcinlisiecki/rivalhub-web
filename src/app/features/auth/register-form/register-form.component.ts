@@ -25,11 +25,19 @@ export class RegisterFormComponent {
   });
   apiError: null | string = null;
   isLoading: boolean = false;
+  passwordPrompt: string = '';
 
   constructor(
     private authService: AuthService,
     private router: Router,
-  ) {}
+  ) {
+    let lang: string = <string>localStorage.getItem('currentLanguage');
+    if (lang === 'pl') {
+      this.passwordPrompt = 'Wprowadź hasło';
+    } else {
+      this.passwordPrompt = 'Enter password';
+    }
+  }
 
   onSubmit() {
     this.apiError = null;

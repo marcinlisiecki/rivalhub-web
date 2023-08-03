@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { LoginCredentials } from '../../../core/interfaces/auth';
 import { AuthService } from '../../../core/services/auth/auth.service';
 import { extractMessage } from '../../../core/utils/apiErrors';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-login',
@@ -24,6 +25,7 @@ export class LoginComponent {
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
+    private translate: TranslateService,
   ) {
     this.route.queryParams.subscribe((params) => {
       this.registered = params['registered'];
@@ -54,11 +56,13 @@ export class LoginComponent {
     this.authService.login(credentials).subscribe({
       next: (res) => {
         if (res?.token) {
-          this.router.navigateByUrl('/my-organizations').then();
+          this.router.navigateByUrl('/').then();
           return;
         }
 
-        this.apiError = 'Wystąpił nieoczekiwany błąd';
+        this.translate.get('api.error').subscribe((res: string) => {
+          this.apiError = res;
+        });
       },
       error: (err: unknown) => {
         this.apiError = extractMessage(err);

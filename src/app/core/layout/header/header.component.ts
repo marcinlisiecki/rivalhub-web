@@ -28,16 +28,7 @@ export class HeaderComponent {
       this.isLoggedIn = val;
     });
 
-    this.profileItems = [
-      {
-        escape: false,
-        label: '<span class="header-menu-item">Wyloguj się</span>',
-        icon: 'pi pi-sign-out',
-        command() {
-          authService.logout();
-        },
-      },
-    ];
+    this.profileLogoutLangSetter(this.currentLanguage);
 
     //ustawianie localstorage i jezyka domyslnego
     if (localStorage.getItem('currentLanguage') === null) {
@@ -69,5 +60,26 @@ export class HeaderComponent {
     this.translate.use(lang);
     this.currentLanguage = lang;
     localStorage.setItem('currentLanguage', this.currentLanguage);
+    this.profileLogoutLangSetter(this.currentLanguage);
+  }
+
+  profileLogoutLangSetter(lang: string) {
+    let logout: string;
+    if (lang === 'pl') {
+      logout = 'Wyloguj się';
+    } else {
+      logout = 'Logout';
+    }
+
+    this.profileItems = [
+      {
+        escape: false,
+        label: `<span class="header-menu-item">${logout}</span>`,
+        icon: 'pi pi-sign-out',
+        command: () => {
+          this.authService.logout();
+        },
+      },
+    ];
   }
 }

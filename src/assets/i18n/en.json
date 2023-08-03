@@ -1,9 +1,27 @@
 {
+	"api.error": "An unexpected error has occurred",
+	"button.signIn": "Sign in",
+	"button.signUp": "Sign up",
 	"header.calendar": "Calendar",
 	"header.login": "Log In",
 	"header.main-page": "Home",
 	"header.organisationAdd": "Add an organization",
 	"header.organisationShow": "My organizations",
 	"header.profile": "Profile",
-	"header.register": "Registration"
+	"header.register": "Registration",
+	"input.email": "Email adress",
+	"input.emailError": " Incorrect email address",
+	"input.emailWarning": "Email address is required",
+	"input.password": "Password",
+	"input.passwordMediumLabel": "Medium",
+	"input.passwordMin": "The password must be at least 8 characters long",
+	"input.passwordPromptLabel": "Enter your password",
+	"input.passwordStrongLabel": "Strong",
+	"input.passwordWarning": "The password is required",
+	"input.passwordWeakLabel": "Weak",
+	"input.success": "It worked",
+	"input.userName": "User name",
+	"input.userNameMax": "The username cannot be longer than 250 characters",
+	"input.userNameMin": "Username must be at least 3 characters long",
+	"input.userNameRequired": "The user's name is required"
 }

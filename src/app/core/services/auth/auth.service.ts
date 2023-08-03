@@ -55,7 +55,6 @@ export class AuthService {
   logout() {
     this.cookieService.remove('token');
     this.authSubject.next(false);
-    this.router.navigateByUrl('/login').then();
   }
 
   isAuthObservable(): Observable<boolean> {

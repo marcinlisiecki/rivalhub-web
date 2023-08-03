@@ -11,17 +11,13 @@ import { MyOrganizationsComponent } from './features/organization/my-organizatio
 import { CookieModule } from 'ngx-cookie';
 import { AddStationComponent } from './features/station/add-station/add-station.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthenticateInterceptor } from './core/interceptors/authenticate/authenticate.interceptor';
-import {InviteUserComponent} from "./features/organization/invite-user/invite-user.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     AddOrganizationComponent,
-    MyOrganizationsComponent,
     AddStationComponent,
-    InviteUserComponent,
+    MyOrganizationsComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,13 +31,7 @@ import {InviteUserComponent} from "./features/organization/invite-user/invite-us
     AuthModule,
     CookieModule.withOptions(),
   ],
-  providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthenticateInterceptor,
-      multi: true,
-    },
-  ],
+  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
