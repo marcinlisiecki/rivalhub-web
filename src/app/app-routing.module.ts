@@ -9,8 +9,14 @@ import { AddStationComponent } from './features/station/add-station/add-station.
 import { authenticateGuard } from './core/guards/authenticate/authenticate.guard';
 import { InviteUserComponent } from './features/organization/invite-user/invite-user.component';
 import { AddReservationComponent } from './features/reservation/add-reservation/add-reservation.component';
+import { HeroComponent } from '@app/features/landing/hero/hero.component';
 
 const routes: Routes = [
+  {
+    path: '',
+    component: HeroComponent,
+  },
+
   {
     path: 'register',
     component: RegisterFormComponent,

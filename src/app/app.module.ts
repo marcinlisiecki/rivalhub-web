@@ -25,6 +25,7 @@ import { AddStationComponent } from './features/station/add-station/add-station.
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthenticateInterceptor } from './core/interceptors/authenticate/authenticate.interceptor';
 import { InviteUserComponent } from './features/organization/invite-user/invite-user.component';
+import { HeroComponent } from './features/landing/hero/hero.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { InviteUserComponent } from './features/organization/invite-user/invite-
     AddStationComponent,
     InviteUserComponent,
     AddReservationComponent,
+    HeroComponent,
   ],
   imports: [
     BrowserModule,
