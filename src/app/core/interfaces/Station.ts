@@ -1,5 +1,7 @@
+import {stationType} from "../utils/stationType";
+
 export interface Station {
-  id: number
+  // id: number
   name: string
-  type: "PING-PONG" | "DART" | "BILLIARDS"| "PULL-UPS"
+  type: string
 }

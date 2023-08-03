@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import {Organization} from "../../../core/interfaces/Organization";
+import {Component} from '@angular/core';
 import {Station} from "../../../core/interfaces/Station";
+import {stationType} from "../../../core/utils/stationType";
 
 @Component({
   selector: 'app-add-reservation',
@@ -10,19 +10,19 @@ import {Station} from "../../../core/interfaces/Station";
 export class AddReservationComponent {
   stations: Station[] = [
     {
-      id: 1,
+      // id: 1,
       name: 'Stół nr 1',
-      type: 'PING-PONG',
+      type: stationType.PING_PONG,
     },
     {
-      id: 2,
+      // id: 2,
       name: 'Stół nr 2',
-      type: 'PING-PONG',
+      type: stationType.PING_PONG,
     },
     {
-      id: 3,
+      // id: 3,
       name: 'Stół nr 1',
-      type: 'BILLIARDS',
+      type: stationType.POOL,
     },
   ];
 
