@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Organization } from 'src/app/core/interfaces/Organization';
+import { OrganizationsService } from '../../../core/services/organizations/organizations.service';
 
 @Component({
   selector: 'app-my-organizations',
@@ -7,34 +8,33 @@ import { Organization } from 'src/app/core/interfaces/Organization';
   styleUrls: ['./my-organizations.component.scss'],
 })
 export class MyOrganizationsComponent {
-  organizations: Organization[] = [
-    {
-      id: 1,
-      name: 'Organization 1 super fajna jest bardzo fajna',
-      imageUrl: 'assets/img/avatars/avatarplaceholder.png',
-    },
-    {
-      id: 2,
-      name: 'NCDC',
-      imageUrl: 'assets/img/avatars/ncdc.jpg',
-    },
-    {
-      id: 3,
-      name: 'Organization 3',
-      imageUrl: 'assets/img/avatars/pzw.jpg',
-    },
-  ];
+  organizations: Organization[] = [];
+
+  constructor(private organizationsService: OrganizationsService) {
+    this.organizationsService.getMy().subscribe({
+      next: (res: Organization[]) => {
+        this.organizations = res;
+      },
+    });
+  }
+
+  getImagePath(imageUrl: string | null): string {
+    if (imageUrl !== null) {
+      return imageUrl;
+    }
+
+    return 'assets/img/avatars/avatarplaceholder.png';
+  }
 
   createURL(id: number): string {
     return `/organization/${id}`;
   }
 
-  isDefaultAvatar(imageUrl:string):boolean{
-    return imageUrl.includes('avatarplaceholder'); //dunno if it's good
+  isDefaultAvatar(imageUrl: string | null): boolean {
+    return imageUrl === null;
   }
 
-  displayName(name:string):string{
+  displayName(name: string): string {
     return name.length > 20 ? name.slice(0, 20) + '...' : name;
   }
-
 }
