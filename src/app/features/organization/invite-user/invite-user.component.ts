@@ -17,6 +17,6 @@ export class InviteUserComponent {
   }
 
   onSubmit() {
-
+    // send email to recipient
   }
 }

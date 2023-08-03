@@ -1,37 +1,20 @@
 @import 'src/scss/variables';
 
-.main-container {
+.content-wrapper {
   max-width: $pageWidth;
   margin: 0 auto;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-.container-header {
-
-  h2 {
-    margin-bottom: 5px;
-    font-weight: $weightMedium
-  }
-}
-
-.supporting-text {
-  color: #94A3B8;
-}
-
-.invite-form {
-
-  margin: 4rem 0;
-
-  input {
-    max-width: 400px;
-  }
+  //height: 100%;
+  //display: flex;
+  //flex-direction: column;
 }
 
 .invite-link {
-
   p {
-    margin: 0;
+    margin-bottom: 5px;
+  }
+
+  .supporting-text {
+    color: #94A3B8;
+    font-size: 0.9rem;
   }
 }

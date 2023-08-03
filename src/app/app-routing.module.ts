@@ -29,7 +29,7 @@ const routes: Routes = [
     component: AddStationComponent,
   },
   {
-    path: 'organizations/:id/invite-user',
+    path: 'organizations/:id/invite',
     component: InviteUserComponent,
   }
 ];
