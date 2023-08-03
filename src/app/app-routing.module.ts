@@ -5,6 +5,7 @@ import { AddOrganizationComponent } from './features/organization/add-organizati
 import { MyOrganizationsComponent } from './features/organization/my-organizations/my-organizations.component';
 import { LoginComponent } from './features/auth/login/login.component';
 import { AddStationComponent } from './features/station/add-station/add-station.component';
+import { authenticateGuard } from './core/guards/authenticate/authenticate.guard';
 
 const routes: Routes = [
   {
@@ -14,10 +15,12 @@ const routes: Routes = [
   {
     path: 'organizations/new',
     component: AddOrganizationComponent,
+    canActivate: [authenticateGuard],
   },
   {
     path: 'my-organizations',
     component: MyOrganizationsComponent,
+    canActivate: [authenticateGuard],
   },
   {
     path: 'login',
@@ -26,6 +29,7 @@ const routes: Routes = [
   {
     path: 'organizations/:id/add-station',
     component: AddStationComponent,
+    canActivate: [authenticateGuard],
   },
 ];
 
