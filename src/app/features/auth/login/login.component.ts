@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { LoginCredentials } from '../../../core/interfaces/auth';
+import { AuthService } from '../../../core/services/auth/auth.service';
+import { extractMessage } from '../../../core/utils/apiErrors';
 
 @Component({
   selector: 'app-login',
@@ -14,8 +17,14 @@ export class LoginComponent {
   });
 
   registered: boolean = false;
+  apiError: string | null = null;
+  isLoading: boolean = false;
 
-  constructor(private route: ActivatedRoute) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private authService: AuthService,
+  ) {
     this.route.queryParams.subscribe((params) => {
       this.registered = params['registered'];
     });
@@ -34,6 +43,28 @@ export class LoginComponent {
       this.loginForm.markAllAsTouched();
       return;
     }
-    console.log('Login form');
+
+    this.isLoading = true;
+
+    const credentials: LoginCredentials = {
+      email: this.email?.value || '',
+      password: this.password?.value || '',
+    };
+
+    this.authService.login(credentials).subscribe({
+      next: (res) => {
+        if (res?.token) {
+          this.router.navigateByUrl('/my-organizations').then();
+          return;
+        }
+
+        this.apiError = 'Wystąpił nieoczekiwany błąd';
+      },
+      error: (err: unknown) => {
+        this.apiError = extractMessage(err);
+      },
+    });
+
+    this.isLoading = false;
   }
 }
