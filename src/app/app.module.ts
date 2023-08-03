@@ -13,6 +13,7 @@ import { AddStationComponent } from './features/station/add-station/add-station.
 import { ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthenticateInterceptor } from './core/interceptors/authenticate/authenticate.interceptor';
+import {InviteUserComponent} from "./features/organization/invite-user/invite-user.component";
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { AuthenticateInterceptor } from './core/interceptors/authenticate/authen
     AddOrganizationComponent,
     MyOrganizationsComponent,
     AddStationComponent,
+    InviteUserComponent,
   ],
   imports: [
     BrowserModule,
