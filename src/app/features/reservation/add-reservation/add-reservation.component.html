@@ -27,8 +27,8 @@
                     hourFormat="24"
                     [(ngModel)]="finishTime">
         </p-calendar>
-    <p style="color: darkred" *ngIf="emptyData">Należy wypełnić wszystkie pola</p>
-        <p style="color: darkred" *ngIf="invalidDate">Godzina startowa musi być przed godziną zakończenia</p>
+        <p class="invalid-data" *ngIf="emptyData">Należy wypełnić wszystkie pola</p>
+        <p class="invalid-data" *ngIf="invalidDate">Godzina startowa musi być przed godziną zakończenia</p>
         <p-button styleClass="button-wide"
                   [style]="{'margin-top': '10px'}"
                   type="submit"

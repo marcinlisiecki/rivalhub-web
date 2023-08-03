@@ -6,6 +6,9 @@
   display: flex;
   align-items: start;
   flex-direction: column;
+  .invalid-data{
+    color: $primaryDarkColor;
+  }
   .form-container {
     display: flex;
     align-items: start;
@@ -27,7 +30,7 @@
         &-checkbox{
           margin-right: 4px;
           &hover{
-            color: darkred;
+            color: $primaryDarkColor;
           }
         }
       }

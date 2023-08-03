@@ -12,17 +12,17 @@ export class AddReservationComponent {
     {
       id: 1,
       name: 'Stół nr 1',
-      type: 'Tennis stołowy',
+      type: 'PING-PONG',
     },
     {
       id: 2,
       name: 'Stół nr 2',
-      type: 'Tennis stołowy',
+      type: 'PING-PONG',
     },
     {
       id: 3,
       name: 'Stół nr 1',
-      type: 'Billard',
+      type: 'BILLIARDS',
     },
   ];
 

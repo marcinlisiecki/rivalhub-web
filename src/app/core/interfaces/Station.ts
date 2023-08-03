@@ -1,5 +1,5 @@
 export interface Station {
   id: number
   name: string
-  type: string
+  type: "PING-PONG" | "DART" | "BILLIARDS"| "PULL-UPS"
 }
