@@ -1,0 +1,17 @@
+@import 'src/scss/variables';
+.nav-container{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+@media only screen and (max-width: $mobileBreakpoint) {
+    .nav-container{
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        
+        .nav-item{
+            padding:5px;
+        }
+    }
+}

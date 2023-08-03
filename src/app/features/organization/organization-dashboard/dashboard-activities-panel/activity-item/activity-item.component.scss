@@ -1,0 +1,35 @@
+@import 'src/scss/variables';
+
+.item-container {
+    border: $dashboardBorder;
+    border-radius: $dashboardRadius;
+    margin: 5px;
+    padding: 5px 25px;
+    background-color: $panelContentBg;
+
+    p {
+        margin: 5px 0 0 0;
+    }
+
+    .name {
+        color: $textSecondaryColor;
+    }
+
+    .place {}
+
+    .participants {}
+
+    .bottom {
+
+        display: flex;
+        justify-content: space-between;
+        margin: 20px 0 10px 0;
+
+        .date {
+
+            color: $textSecondaryColor;
+        }
+    }
+
+
+}

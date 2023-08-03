@@ -8,6 +8,9 @@ import { AvatarModule } from 'primeng/avatar';
 import { DividerModule } from 'primeng/divider';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ImageModule } from 'primeng/image';
+import { SidebarModule } from 'primeng/sidebar';
+import { ToggleButtonModule } from 'primeng/togglebutton';
+import { AnimateModule } from 'primeng/animate';
 
 @NgModule({
   declarations: [ValidationErrorComponent],
@@ -20,6 +23,9 @@ import { ImageModule } from 'primeng/image';
     DividerModule,
     FileUploadModule,
     ImageModule,
+    SidebarModule,
+    ToggleButtonModule,
+    AnimateModule,
   ],
   imports: [
     CommonModule,
@@ -30,6 +36,9 @@ import { ImageModule } from 'primeng/image';
     DividerModule,
     FileUploadModule,
     ImageModule,
+    SidebarModule,
+    ToggleButtonModule,
+    AnimateModule,
   ],
 })
 export class SharedModule {}

@@ -1,0 +1,9 @@
+<div class="item-container">
+    <p class="name">{{event.name}}</p>
+    <p class="place">{{event.place}}</p>
+    <p class="participants">{{event.participantIds.length}} użytkowników bierze dział</p>
+    <div class="bottom">
+        <p class="date">{{event.date.toLocaleDateString()}} {{event.beginEndTime}}</p>
+        <p-button styleClass="p-button-secondary">Zobacz wydarzenie</p-button>
+    </div>
+</div>
