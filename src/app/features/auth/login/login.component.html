@@ -3,7 +3,7 @@
     <div class="registered-message-wrapper" *ngIf="registered">
       <p-messages severity="success">
         <ng-template pTemplate>
-          <div>{{ 'login.success' | translate }}</div>
+          <div>{{ 'input.success' | translate }}</div>
         </ng-template>
       </p-messages>
     </div>
@@ -18,7 +18,7 @@
       />
       <div *ngIf="email?.invalid && email?.touched">
         <app-validation-error *ngIf="email?.errors?.['required']">
-          {{ 'input.emailWarning ' | translate }}
+          {{ 'input.emailWarning' | translate }}
         </app-validation-error>
       </div>
     </div>
@@ -32,7 +32,7 @@
         inputId="password"
         styleClass="input-wide"
         inputStyleClass="input-wide"
-        placeholder="*** *****"
+        placeholder="********"
       ></p-password>
       <div *ngIf="password?.invalid && password?.touched">
         <app-validation-error *ngIf="password?.errors?.['required']">

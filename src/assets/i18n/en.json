@@ -19,7 +19,7 @@
 	"input.passwordStrongLabel": "Strong",
 	"input.passwordWarning": "The password is required",
 	"input.passwordWeakLabel": "Weak",
-	"input.success": "It worked",
+	"input.success": "Account created successfully! Log in",
 	"input.userName": "User name",
 	"input.userNameMax": "The username cannot be longer than 250 characters",
 	"input.userNameMin": "Username must be at least 3 characters long",

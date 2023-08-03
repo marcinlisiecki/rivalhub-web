@@ -19,7 +19,7 @@
 	"input.passwordStrongLabel": "Silne",
 	"input.passwordWarning": "Hasło jest wymagane",
 	"input.passwordWeakLabel": "Słabe",
-	"input.success": "Udało się",
+	"input.success": "Pomyślnie utworzono konto! Zaloguj się",
 	"input.userName": "Nazwa użytkownika",
 	"input.userNameMax": "Nazwa użytkownika nie może mieć więcej niż 250 znaków",
 	"input.userNameMin": "Nazwa użytkownika musi mieć co najmniej 3 znaki",

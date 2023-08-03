@@ -27,17 +27,19 @@ export class RegisterFormComponent {
   isLoading: boolean = false;
   passwordPrompt: string = '';
 
+  setPasswordPrompt(): string {
+    let lang: string = <string>localStorage.getItem('currentLanguage');
+    if (lang === 'pl') {
+      return 'Wprowadź hasło';
+    } else {
+      return 'Enter password';
+    }
+  }
+
   constructor(
     private authService: AuthService,
     private router: Router,
-  ) {
-    let lang: string = <string>localStorage.getItem('currentLanguage');
-    if (lang === 'pl') {
-      this.passwordPrompt = 'Wprowadź hasło';
-    } else {
-      this.passwordPrompt = 'Enter password';
-    }
-  }
+  ) {}
 
   onSubmit() {
     this.apiError = null;
