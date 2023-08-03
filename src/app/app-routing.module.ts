@@ -5,6 +5,9 @@ import { AddOrganizationComponent } from './features/organization/add-organizati
 import { MyOrganizationsComponent } from './features/organization/my-organizations/my-organizations.component';
 import {LoginComponent} from "./features/auth/login/login.component";
 import {AddReservationComponent} from "./features/reservation/add-reservation/add-reservation.component";
+import { AddStationComponent } from './features/station/add-station/add-station.component';
+import { authenticateGuard } from './core/guards/authenticate/authenticate.guard';
+import {InviteUserComponent} from "./features/organization/invite-user/invite-user.component";
 
 const routes: Routes = [
   {
@@ -12,12 +15,14 @@ const routes: Routes = [
     component: RegisterFormComponent,
   },
   {
-    path: 'add-organization',
+    path: 'organizations/new',
     component: AddOrganizationComponent,
+    canActivate: [authenticateGuard],
   },
   {
     path: 'my-organizations',
     component: MyOrganizationsComponent,
+    canActivate: [authenticateGuard],
   },
   {
     path: 'login',
@@ -26,8 +31,17 @@ const routes: Routes = [
   {
     path: 'add-reservation',
     component: AddReservationComponent
-  }
+  },
 
+  {
+    path: 'organizations/:id/add-station',
+    component: AddStationComponent,
+    canActivate: [authenticateGuard],
+  },
+  {
+    path:'organizations/:id/invite',
+    component: InviteUserComponent,
+  }
 ];
 
 @NgModule({

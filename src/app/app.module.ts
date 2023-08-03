@@ -12,11 +12,40 @@ import { AddReservationComponent } from './features/reservation/add-reservation/
 import {CheckboxModule} from "primeng/checkbox";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {CalendarModule} from "primeng/calendar";
+import { CookieModule } from 'ngx-cookie';
+import { AddStationComponent } from './features/station/add-station/add-station.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthenticateInterceptor } from './core/interceptors/authenticate/authenticate.interceptor';
+import {InviteUserComponent} from "./features/organization/invite-user/invite-user.component";
 
 @NgModule({
-  declarations: [AppComponent, AddOrganizationComponent, MyOrganizationsComponent, AddReservationComponent],
-  imports: [BrowserModule, AppRoutingModule, SharedModule, AuthModule, LayoutModule, CheckboxModule, FormsModule, CalendarModule, ReactiveFormsModule],
-  providers: [],
+  declarations: [
+    AppComponent,
+    AddOrganizationComponent,
+    MyOrganizationsComponent,
+    AddStationComponent,
+    InviteUserComponent,
+    AddReservationComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    SharedModule,
+    AuthModule,
+    LayoutModule,
+    ReactiveFormsModule,
+    CookieModule.withOptions(),
+    CheckboxModule,
+    FormsModule,
+    CalendarModule
+],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthenticateInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

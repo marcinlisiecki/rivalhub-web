@@ -1,4 +1,4 @@
-<p-card header="Logowanie" styleClass="auth-form">
+<p-card header="Logowanie" styleClass="centered-form">
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <div class="registered-message-wrapper" *ngIf="registered">
       <p-messages severity="success">
@@ -40,6 +40,13 @@
       </div>
     </div>
 
-    <p-button styleClass="button-wide" type="submit">Zaloguj się</p-button>
+    <div>
+      <p-button styleClass="button-wide" type="submit">Zaloguj się</p-button>
+      <p class="api-error-wrapper">
+        <app-validation-error *ngIf="apiError">
+          {{ apiError }}
+        </app-validation-error>
+      </p>
+    </div>
   </form>
 </p-card>
