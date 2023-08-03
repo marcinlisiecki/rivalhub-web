@@ -3,11 +3,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { RegisterFormComponent } from './features/auth/register-form/register-form.component';
 import { AddOrganizationComponent } from './features/organization/add-organization/add-organization.component';
 import { MyOrganizationsComponent } from './features/organization/my-organizations/my-organizations.component';
-import {LoginComponent} from "./features/auth/login/login.component";
-import {AddReservationComponent} from "./features/reservation/add-reservation/add-reservation.component";
+import { LoginComponent } from './features/auth/login/login.component';
 import { AddStationComponent } from './features/station/add-station/add-station.component';
 import { authenticateGuard } from './core/guards/authenticate/authenticate.guard';
 import {InviteUserComponent} from "./features/organization/invite-user/invite-user.component";
+import {AddReservationComponent} from "./features/reservation/add-reservation/add-reservation.component";
 
 const routes: Routes = [
   {
@@ -26,7 +26,7 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    component: LoginComponent
+    component: LoginComponent,
   },
   {
     path: 'add-reservation',

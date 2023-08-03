@@ -25,6 +25,16 @@ export class RegisterFormComponent {
   });
   apiError: null | string = null;
   isLoading: boolean = false;
+  passwordPrompt: string = '';
+
+  setPasswordPrompt(): string {
+    let lang: string = <string>localStorage.getItem('currentLanguage');
+    if (lang === 'pl') {
+      return 'Wprowadź hasło';
+    } else {
+      return 'Enter password';
+    }
+  }
 
   constructor(
     private authService: AuthService,
