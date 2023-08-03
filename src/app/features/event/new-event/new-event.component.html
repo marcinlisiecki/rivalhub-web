@@ -1,5 +1,11 @@
 <section class="wrapper">
-  <section>
+  <p-steps
+    [model]="formSteps"
+    [readonly]="true"
+    [activeIndex]="formStepIndex"
+  ></p-steps>
+
+  <section *ngIf="formState === FormState.CATEGORY" class="step-wrapper">
     <header>
       <h1>Kategoria</h1>
     </header>
@@ -14,9 +20,20 @@
         <p>{{ event.label }}</p>
       </div>
     </section>
+
+    <p-divider></p-divider>
+
+    <div class="navigation-buttons-wrapper">
+      <p-button
+        [disabled]="selectedEvent === null"
+        (onClick)="setFormState(FormState.BASIC_INFO)"
+      >
+        Dalej
+      </p-button>
+    </div>
   </section>
 
-  <section>
+  <section *ngIf="formState === FormState.BASIC_INFO" class="step-wrapper">
     <header>
       <h1>Infomacje o wydarzeniu</h1>
     </header>
@@ -34,20 +51,93 @@
         </div>
       </form>
 
-      <div
-        class="reservation-button"
-        (click)="openReservationMenu()"
-        *ngIf="reservedStations.length === 0"
-      >
-        <i class="pi pi-calendar-plus"></i>
-        <p>Dodaj rezerwację</p>
-      </div>
+      <p-divider></p-divider>
 
-      <div *ngIf="reservedStations.length !== 0">
-        <div *ngFor="let station of reservedStations">
-          {{ station.name }} ({{ station.type }})
-        </div>
+      <div class="navigation-buttons-wrapper">
+        <p-button
+          styleClass="p-button-outlined"
+          (onClick)="setFormState(FormState.CATEGORY)"
+        >
+          Powrót
+        </p-button>
+        <p-button
+          [disabled]="selectedEvent === null"
+          (onClick)="setFormState(FormState.DATE)"
+        >
+          Dalej
+        </p-button>
       </div>
+    </div>
+  </section>
+
+  <section *ngIf="formState === FormState.DATE" class="step-wrapper">
+    <header>
+      <h1>Data i czas wydarzenia</h1>
+    </header>
+
+    <div class="time-selector-wrapper">
+      <div class="input-box">
+        <label for="startDate">Data rozpoczęcia</label>
+        <p-calendar
+          inputId="startDate"
+          styleClass="input-wide"
+          [showTime]="true"
+          [showIcon]="true"
+        ></p-calendar>
+      </div>
+      <div class="input-box">
+        <label for="endDate">Data zakończenia</label>
+        <p-calendar
+          inputId="endDate"
+          styleClass="input-wide"
+          [showTime]="true"
+          [showIcon]="true"
+        ></p-calendar>
+      </div>
+    </div>
+
+    <p-divider></p-divider>
+
+    <div class="navigation-buttons-wrapper">
+      <p-button
+        styleClass="p-button-outlined"
+        (onClick)="setFormState(FormState.BASIC_INFO)"
+      >
+        Powrót
+      </p-button>
+      <p-button
+        [disabled]="selectedEvent === null"
+        (onClick)="setFormState(FormState.RESERVATION)"
+      >
+        Dalej
+      </p-button>
+    </div>
+  </section>
+
+  <section *ngIf="formState === FormState.RESERVATION" class="step-wrapper">
+    <header>
+      <h1>Rezerwacja</h1>
+    </header>
+
+    <p>Dostępne stanowiska dla kategorii: {{ selectedEvent }}</p>
+
+    <div class="stations">
+      <label *ngFor="let station of getOnlyCategoryStations()" class="station">
+        <p-checkbox></p-checkbox>
+        <span>{{ station.name }}</span>
+      </label>
+    </div>
+
+    <p-divider></p-divider>
+
+    <div class="navigation-buttons-wrapper">
+      <p-button
+        styleClass="p-button-outlined"
+        (onClick)="setFormState(FormState.DATE)"
+      >
+        Powrót
+      </p-button>
+      <p-button> Stwórz wydarzenie </p-button>
     </div>
   </section>
 </section>
