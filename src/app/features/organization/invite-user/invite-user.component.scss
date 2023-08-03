@@ -1,0 +1,17 @@
+@import 'src/scss/variables';
+
+.content-wrapper {
+  max-width: $pageWidth;
+  margin: 0 auto;
+}
+
+.invite-link {
+  p {
+    margin-bottom: 5px;
+  }
+
+  .supporting-text {
+    color: #94A3B8;
+    font-size: 0.9rem;
+  }
+}

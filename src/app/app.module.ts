@@ -16,6 +16,15 @@ import { UserItemComponent } from './features/organization/organization-dashboar
 import { DashboardActivitiesPanelComponent } from './features/organization/organization-dashboard/dashboard-activities-panel/dashboard-activities-panel.component';
 import { ActivityItemComponent } from './features/organization/organization-dashboard/dashboard-activities-panel/activity-item/activity-item.component';
 import { NavItemComponent } from './features/organization/organization-dashboard/dashboard-nav/nav-item/nav-item.component';
+import { AddReservationComponent } from './features/reservation/add-reservation/add-reservation.component';
+import { CheckboxModule } from 'primeng/checkbox';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CalendarModule } from 'primeng/calendar';
+import { CookieModule } from 'ngx-cookie';
+import { AddStationComponent } from './features/station/add-station/add-station.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthenticateInterceptor } from './core/interceptors/authenticate/authenticate.interceptor';
+import { InviteUserComponent } from './features/organization/invite-user/invite-user.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +39,9 @@ import { NavItemComponent } from './features/organization/organization-dashboard
     DashboardActivitiesPanelComponent,
     ActivityItemComponent,
     NavItemComponent,
+    AddStationComponent,
+    InviteUserComponent,
+    AddReservationComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,8 +49,22 @@ import { NavItemComponent } from './features/organization/organization-dashboard
     SharedModule,
     AuthModule,
     LayoutModule,
+    ReactiveFormsModule,
+    AppRoutingModule,
+    SharedModule,
+    AuthModule,
+    CookieModule.withOptions(),
+    CheckboxModule,
+    FormsModule,
+    CalendarModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthenticateInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

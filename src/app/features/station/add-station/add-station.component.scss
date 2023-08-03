@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 4rem;
+  margin: 15px;
 
   .form-item {
     margin: 10px 15px;
@@ -14,19 +14,10 @@
     justify-content: center;
     align-items: center;
   }
-  margin: 15px;
 
-  .form-item {
-    margin: 10px 15px;
-    padding: 10px;
+  form {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
   }
-
-  .button-wrapper {
-    margin-top: 20px;
-  }
-}
-.form-avatar {
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
