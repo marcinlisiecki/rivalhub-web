@@ -15,4 +15,35 @@
       </div>
     </section>
   </section>
+
+  <section>
+    <header>
+      <h1>Infomacje o wydarzeniu</h1>
+    </header>
+
+    <div class="detail-reservation-wrapper">
+      <form action="">
+        <div class="input-box">
+          <label for="name">Nazwa</label>
+          <input id="name" type="text" pInputText />
+        </div>
+
+        <div class="input-box">
+          <label for="description">Opis</label>
+          <textarea pInputTextarea id="description" rows="5"></textarea>
+        </div>
+      </form>
+
+      <div class="reservation-button" (click)="openReservationMenu()">
+        <i class="pi pi-calendar-plus"></i>
+        <p>Dodaj rezerwację</p>
+      </div>
+
+      <div *ngIf="reservedStations.length !== 0">
+        <div *ngFor="let station of reservedStations">
+          {{ station.name }} ({{ station.type }})
+        </div>
+      </div>
+    </div>
+  </section>
 </section>

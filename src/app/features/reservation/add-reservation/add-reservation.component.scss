@@ -6,7 +6,7 @@
   display: flex;
   align-items: start;
   flex-direction: column;
-  .invalid-data{
+  .invalid-data {
     color: $primaryDarkColor;
   }
   .form-container {
@@ -14,22 +14,22 @@
     align-items: start;
     flex-direction: column;
     margin-bottom: 20px;
-    &-input{
-      width: 350px;
+    &-input {
+      width: 450px;
       padding: 0px;
       margin-bottom: 10px;
       border-style: solid;
       border-width: 0px;
     }
-    &-list{
+    &-list {
       list-style-type: none;
       margin: 3px;
-      &-element{
+      &-element {
         margin: 0px;
         padding: 0px;
-        &-checkbox{
+        &-checkbox {
           margin-right: 4px;
-          &hover{
+          &hover {
             color: $primaryDarkColor;
           }
         }
@@ -38,5 +38,6 @@
   }
 }
 
-
-
+.in-modal {
+  flex-direction: row !important;
+}
