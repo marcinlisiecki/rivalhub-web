@@ -1,0 +1,18 @@
+<section class="wrapper">
+  <section>
+    <header>
+      <h1>Kategoria</h1>
+    </header>
+    <section class="categories-wrapper">
+      <div
+        class="categories-item"
+        [class.selected-category]="selectedEvent === event.type"
+        *ngFor="let event of events"
+        (click)="selectEvent(event.type)"
+      >
+        <i class="pi {{ event.icon }}"></i>
+        <p>{{ event.label }}</p>
+      </div>
+    </section>
+  </section>
+</section>

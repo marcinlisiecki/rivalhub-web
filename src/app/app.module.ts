@@ -17,6 +17,7 @@ import { AddStationComponent } from './features/station/add-station/add-station.
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthenticateInterceptor } from './core/interceptors/authenticate/authenticate.interceptor';
 import {InviteUserComponent} from "./features/organization/invite-user/invite-user.component";
+import { EventModule } from './features/event/event.module';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import {InviteUserComponent} from "./features/organization/invite-user/invite-us
     CookieModule.withOptions(),
     CheckboxModule,
     FormsModule,
-    CalendarModule
+    CalendarModule,
+    EventModule
 ],
   providers: [
     {
