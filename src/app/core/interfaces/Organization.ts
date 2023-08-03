@@ -1,7 +1,7 @@
 export interface Organization {
   id: number;
   name: string;
-  imageUrl: string;
+  imageUrl: string | null;
 }
 
 export interface NewOrganization {
