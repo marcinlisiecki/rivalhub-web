@@ -6,6 +6,7 @@ import { MyOrganizationsComponent } from './features/organization/my-organizatio
 import { LoginComponent } from './features/auth/login/login.component';
 import { AddStationComponent } from './features/station/add-station/add-station.component';
 import { authenticateGuard } from './core/guards/authenticate/authenticate.guard';
+import {InviteUserComponent} from "./features/organization/invite-user/invite-user.component";
 
 const routes: Routes = [
   {
@@ -31,6 +32,10 @@ const routes: Routes = [
     component: AddStationComponent,
     canActivate: [authenticateGuard],
   },
+  {
+    path:'organizations/:id/invite',
+    component: InviteUserComponent,
+  }
 ];
 
 @NgModule({
