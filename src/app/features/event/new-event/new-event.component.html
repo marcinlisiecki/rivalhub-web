@@ -34,7 +34,11 @@
         </div>
       </form>
 
-      <div class="reservation-button" (click)="openReservationMenu()">
+      <div
+        class="reservation-button"
+        (click)="openReservationMenu()"
+        *ngIf="reservedStations.length === 0"
+      >
         <i class="pi pi-calendar-plus"></i>
         <p>Dodaj rezerwację</p>
       </div>

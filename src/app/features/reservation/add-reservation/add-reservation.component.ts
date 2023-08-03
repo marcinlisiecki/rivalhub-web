@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { Station } from '../../../core/interfaces/Station';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { EventType } from '../../../core/interfaces/event';
@@ -39,12 +39,18 @@ export class AddReservationComponent {
   readyDateAndValid: boolean = false;
   emptyData: boolean = false;
   today: Date = new Date();
-  constructor(
-    private dialogConfig: DynamicDialogConfig,
-    public dialogRef: DynamicDialogRef,
-  ) {
+
+  dialogConfig: DynamicDialogConfig | null = null;
+  dialogRef: DynamicDialogRef | null = null;
+
+  constructor() {
+    try {
+      this.dialogConfig = inject(DynamicDialogConfig);
+      this.dialogRef = inject(DynamicDialogRef);
+    } catch (e) {}
+
     this.stations.forEach((station) => this.checkboxs.set(station, false));
-    this.isInModal = dialogConfig.data.isInModal;
+    this.isInModal = this.dialogConfig?.data?.isInModal || false;
   }
 
   checkValue(inputId: Station) {
