@@ -8,9 +8,12 @@ import { AuthModule } from './features/auth/auth.module';
 import { AddOrganizationComponent } from './features/organization/add-organization/add-organization.component';
 import { LayoutModule } from './core/layout/layout.module';
 import { MyOrganizationsComponent } from './features/organization/my-organizations/my-organizations.component';
+import { AddReservationComponent } from './features/reservation/add-reservation/add-reservation.component';
+import {CheckboxModule} from "primeng/checkbox";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {CalendarModule} from "primeng/calendar";
 import { CookieModule } from 'ngx-cookie';
 import { AddStationComponent } from './features/station/add-station/add-station.component';
-import { ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthenticateInterceptor } from './core/interceptors/authenticate/authenticate.interceptor';
 import {InviteUserComponent} from "./features/organization/invite-user/invite-user.component";
@@ -22,6 +25,7 @@ import {InviteUserComponent} from "./features/organization/invite-user/invite-us
     MyOrganizationsComponent,
     AddStationComponent,
     InviteUserComponent,
+    AddReservationComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +35,10 @@ import {InviteUserComponent} from "./features/organization/invite-user/invite-us
     LayoutModule,
     ReactiveFormsModule,
     CookieModule.withOptions(),
-  ],
+    CheckboxModule,
+    FormsModule,
+    CalendarModule
+],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
