@@ -1,0 +1,39 @@
+@import 'src/scss/variables';
+
+.add-reservation-container {
+  max-width: $pageWidth;
+  margin: 0 auto;
+  display: flex;
+  align-items: start;
+  flex-direction: column;
+  .form-container {
+    display: flex;
+    align-items: start;
+    flex-direction: column;
+    margin-bottom: 20px;
+    &-input{
+      width: 350px;
+      padding: 0px;
+      margin-bottom: 10px;
+      border-style: solid;
+      border-width: 0px;
+    }
+    &-list{
+      list-style-type: none;
+      margin: 3px;
+      &-element{
+        margin: 0px;
+        padding: 0px;
+        &-checkbox{
+          margin-right: 4px;
+          &hover{
+            color: darkred;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+

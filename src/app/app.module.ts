@@ -8,10 +8,14 @@ import { AuthModule } from './features/auth/auth.module';
 import { AddOrganizationComponent } from './features/organization/add-organization/add-organization.component';
 import { LayoutModule } from './core/layout/layout.module';
 import { MyOrganizationsComponent } from './features/organization/my-organizations/my-organizations.component';
+import { AddReservationComponent } from './features/reservation/add-reservation/add-reservation.component';
+import {CheckboxModule} from "primeng/checkbox";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {CalendarModule} from "primeng/calendar";
 
 @NgModule({
-  declarations: [AppComponent, AddOrganizationComponent, MyOrganizationsComponent],
-  imports: [BrowserModule, AppRoutingModule, SharedModule, AuthModule, LayoutModule],
+  declarations: [AppComponent, AddOrganizationComponent, MyOrganizationsComponent, AddReservationComponent],
+  imports: [BrowserModule, AppRoutingModule, SharedModule, AuthModule, LayoutModule, CheckboxModule, FormsModule, CalendarModule, ReactiveFormsModule],
   providers: [],
   bootstrap: [AppComponent],
 })

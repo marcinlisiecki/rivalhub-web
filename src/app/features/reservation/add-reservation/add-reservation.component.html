@@ -1,0 +1,53 @@
+<div class="add-reservation-container">
+  <h1>Tworzenie rezerwacji</h1>
+  <div class="form-container">
+
+        <label>Data</label>
+        <p-calendar class="form-container-input"
+                    [minDate]="today"
+                    [style]="{'width': '350px'}"
+                    [(ngModel)]="date"
+                    [showIcon]="true">
+        </p-calendar>
+        <label>Godzina rozpoczęcia</label>
+        <p-calendar class="form-container-input"
+                    [minDate]="today"
+                    [style]="{'width': '350px'}"
+                    [showTime]="true"
+                    [timeOnly]="true"
+                    hourFormat="24"
+                    [(ngModel)]="startTime">
+        </p-calendar>
+        <label>Godzina zakończenia</label>
+        <p-calendar class="form-container-input"
+                    [minDate]="today"
+                    [style]="{'width': '350px'}"
+                    [showTime]="true"
+                    [timeOnly]="true"
+                    hourFormat="24"
+                    [(ngModel)]="finishTime">
+        </p-calendar>
+    <p style="color: darkred" *ngIf="emptyData">Należy wypełnić wszystkie pola</p>
+        <p style="color: darkred" *ngIf="invalidDate">Godzina startowa musi być przed godziną zakończenia</p>
+        <p-button styleClass="button-wide"
+                  [style]="{'margin-top': '10px'}"
+                  type="submit"
+                  (onClick)="onSubmit()"
+        >Zatwierdź date
+        </p-button>
+  </div>
+
+  <div class="form-container" *ngIf="readyDateAndValid">
+    <li class="form-container-list" *ngFor="let category of types;">
+      <h3>{{category}}</h3>
+      <ul class="form-container-list-element">
+        <li class="form-container-list" *ngFor="let station of stations;">
+          <p class="form-container-list-element" *ngIf="station.type===category">
+            <p-checkbox value="checked" class="form-container-list-element-checkbox" (onChange)="checkValue(station) "></p-checkbox>
+            {{station.name}}
+          </p>
+        </li>
+      </ul>
+    </li>
+  </div>
+</div>

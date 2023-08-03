@@ -4,6 +4,7 @@ import { RegisterFormComponent } from './features/auth/register-form/register-fo
 import { AddOrganizationComponent } from './features/organization/add-organization/add-organization.component';
 import { MyOrganizationsComponent } from './features/organization/my-organizations/my-organizations.component';
 import {LoginComponent} from "./features/auth/login/login.component";
+import {AddReservationComponent} from "./features/reservation/add-reservation/add-reservation.component";
 
 const routes: Routes = [
   {
@@ -21,7 +22,12 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path: 'add-reservation',
+    component: AddReservationComponent
   }
+
 ];
 
 @NgModule({
