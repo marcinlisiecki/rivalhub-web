@@ -27,30 +27,34 @@ const routes: Routes = [
     canActivate: [authenticateGuard],
   },
   {
-    path: 'organization',
+    path: 'organizations/:id',
     component: OrganizationDashboardComponent,
+    canActivate: [authenticateGuard],
   },
   {
     path: 'login',
     component: LoginComponent,
   },
   {
-    path: 'add-reservation',
+    path: 'organizations/:id/reservations/new',
     component: AddReservationComponent,
+    canActivate: [authenticateGuard],
   },
 
   {
-    path: 'organizations/:id/add-station',
+    path: 'organizations/:id/stations/new',
     component: AddStationComponent,
     canActivate: [authenticateGuard],
   },
   {
     path: 'organizations/:id/invite',
     component: InviteUserComponent,
+    canActivate: [authenticateGuard],
   },
   {
     path: 'organizations/:id/events/new',
     component: NewEventComponent,
+    canActivate: [authenticateGuard],
   },
 ];
 

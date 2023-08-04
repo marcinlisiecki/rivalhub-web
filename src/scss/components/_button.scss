@@ -2,25 +2,25 @@
   width: 100%;
   display: flex;
   justify-content: center;
+  column-gap: 0.5rem;
 }
 
-.button-sidebar{
+.button-sidebar {
   //button follows me when I scroll
   position: fixed;
   top: 50px;
-  left:0;
+  left: 0;
 }
-.p-button-overwrite
-{
-    color: $secondaryButtonTextColor !important;
-    background: $secondaryButtonBg !important;
-    border: $secondaryButtonBorder !important;
+.p-button-overwrite {
+  color: $secondaryButtonTextColor !important;
+  background: $secondaryButtonBg !important;
+  border: $secondaryButtonBorder !important;
 
-    outline: 0 none !important;
-    
-      &:enabled:active {
-        background: $secondaryButtonActiveBg !important;
-        color: $secondaryButtonTextActiveColor !important;
-        border-color: $secondaryButtonActiveBorderColor !important;
-      }
+  outline: 0 none !important;
+
+  &:enabled:active {
+    background: $secondaryButtonActiveBg !important;
+    color: $secondaryButtonTextActiveColor !important;
+    border-color: $secondaryButtonActiveBorderColor !important;
+  }
 }

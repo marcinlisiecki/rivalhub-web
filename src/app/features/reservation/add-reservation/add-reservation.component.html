@@ -1,30 +1,33 @@
-<div class="add-reservation-container">
-  <h1 *ngIf="!isInModal">Tworzenie rezerwacji</h1>
+<section class="add-reservation-container">
+  <h1>Nowa rezerwacja</h1>
   <div class="form-container">
-    <div class="input-box">
-      <label for="startDate">Data rozpoczęcia</label>
-      <p-calendar
-        inputId="startDate"
-        styleClass="input-wide"
-        [minDate]="today"
-        [showTime]="true"
-        [showIcon]="true"
-        [(ngModel)]="startTime"
-        (ngModelChange)="readyDateAndValid = false"
-      ></p-calendar>
+    <div class="dates-wrapper">
+      <div class="input-box">
+        <label for="startDate">Data rozpoczęcia</label>
+        <p-calendar
+          inputId="startDate"
+          styleClass="input-wide"
+          [minDate]="today"
+          [showTime]="true"
+          [showIcon]="true"
+          [(ngModel)]="startTime"
+          (ngModelChange)="readyDateAndValid = false"
+        ></p-calendar>
+      </div>
+      <div class="input-box">
+        <label for="endDate">Data zakończenia</label>
+        <p-calendar
+          inputId="endDate"
+          [minDate]="today"
+          styleClass="input-wide"
+          [showTime]="true"
+          [showIcon]="true"
+          [(ngModel)]="finishTime"
+          (ngModelChange)="readyDateAndValid = false"
+        ></p-calendar>
+      </div>
     </div>
-    <div class="input-box">
-      <label for="endDate">Data zakończenia</label>
-      <p-calendar
-        inputId="endDate"
-        [minDate]="today"
-        styleClass="input-wide"
-        [showTime]="true"
-        [showIcon]="true"
-        [(ngModel)]="finishTime"
-        (ngModelChange)="readyDateAndValid = false"
-      ></p-calendar>
-    </div>
+
     <p class="invalid-data" *ngIf="emptyData">Należy wypełnić wszystkie pola</p>
     <p class="invalid-data" *ngIf="invalidDate">
       Godzina startowa musi być przed godziną zakończenia
@@ -50,4 +53,4 @@
   </div>
 
   <p-button>Zapisz</p-button>
-</div>
+</section>

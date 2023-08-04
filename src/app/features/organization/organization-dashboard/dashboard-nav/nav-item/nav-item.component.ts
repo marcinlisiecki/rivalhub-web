@@ -6,6 +6,8 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./nav-item.component.scss'],
 })
 export class NavItemComponent {
+  @Input() href: string = '';
+  @Input() disabled: boolean = false;
   @Input({ required: true })
   title!: string;
 }
