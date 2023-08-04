@@ -23,7 +23,7 @@ const routes: Routes = [
     canActivate: [authenticateGuard],
   },
   {
-    path: 'my-organizations',
+    path: 'organizations',
     component: MyOrganizationsComponent,
     canActivate: [authenticateGuard],
   },

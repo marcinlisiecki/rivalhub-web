@@ -54,7 +54,7 @@ export class LoginComponent {
     this.authService.login(credentials).subscribe({
       next: (res) => {
         if (res?.token) {
-          this.router.navigateByUrl('/my-organizations').then();
+          this.router.navigateByUrl('/organizations').then();
           return;
         }
 

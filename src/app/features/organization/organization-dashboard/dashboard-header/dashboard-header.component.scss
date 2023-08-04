@@ -1,42 +1,25 @@
 @import 'src/scss/variables';
 
 
-.dashboard-header {
+.avatar {
+    height: 100px;
+}
+
+.info {
     display: flex;
-    align-items: center;
-    height: 140px;
-    width: 100%;
+    flex-direction: column;
+    height: 100px;
 
-    &-content {
-        align-items: center;
-        display: flex;
-        background-color: $panelContentBg;
-        padding: 10px;
-        border-radius: $dashboardRadius;
-        width: 100%;
-        border: $dashboardBorder;
+    &-title {
+        text-wrap:balance;
+        margin: 10px 0 10px 15px;
+        font-weight: $weightMedium;
+        color: $textSecondaryColor;
+    }
 
-        &-avatar {
-            height: 100px;
-        }
-
-        &-info {
-            display: flex;
-            flex-direction: column;
-            height: 100px;
-
-            &-title {
-                margin: 10px 0 10px 15px;
-                font-weight: $weightMedium;
-                color: $textSecondaryColor;
-            }
-
-            &-name {
-                margin: 10px 0 10px 15px;
-                font-weight: $weightBold;
-            }
-
-        }
+    &-name {
+        margin: 10px 0 10px 15px;
+        font-weight: $weightBold;
     }
 
 }
