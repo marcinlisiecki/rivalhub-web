@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Station } from '@interfaces/Station';
-import { STATIONS } from '@app/mock/stations';
 import { categoryTypeToLabel } from '@app/core/utils/event';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { OrganizationsService } from '@app/core/services/organizations/organizations.service';
 import { extractMessage } from '@app/core/utils/apiErrors';
 
@@ -12,7 +11,7 @@ import { extractMessage } from '@app/core/utils/apiErrors';
   styleUrls: ['./view-stations.component.scss'],
 })
 export class ViewStationsComponent implements OnInit {
-  stations: Station[] = STATIONS;
+  stations: Station[] = [];
   organizationId!: number;
   apiError: string | null = null;
 
