@@ -1,11 +1,6 @@
 @import 'src/scss/variables';
 
-.item-container {
-    border: $dashboardBorder;
-    border-radius: $dashboardRadius;
-    margin: 5px;
-    padding: 5px 25px;
-    background-color: $panelContentBg;
+
 
     p {
         margin: 5px 0 0 0;
@@ -14,10 +9,6 @@
     .name {
         color: $textSecondaryColor;
     }
-
-    .place {}
-
-    .participants {}
 
     .bottom {
 
@@ -30,6 +21,3 @@
             color: $textSecondaryColor;
         }
     }
-
-
-}

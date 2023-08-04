@@ -1,12 +1,4 @@
-@import 'src/scss/variables';
-
-.item-container {
-    display: flex;
-    justify-items: center;
-    align-items: center;
-    height: 40px;
-    .item-avatar {
-        margin-right: 15px;
-        height: 30px;
-    }
+.item-avatar {
+    margin-right: 15px;
+    height: 30px;
 }

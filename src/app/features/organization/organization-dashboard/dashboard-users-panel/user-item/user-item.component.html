@@ -1,6 +1,2 @@
-<div class="item-container">
-
-    <img class="item-avatar" [src]="user.imageUrl">
-    <p>{{user.firstName}} {{user.lastName}}</p>
-
-</div>
+<img class="item-avatar" [src]="getImagePath(user.profilePictureUrl)">
+<p>{{user.name}}</p>
