@@ -2,13 +2,9 @@
 
 .organizations-container {
     display: flex;
-    //break rows if width is less than 300px
     flex-wrap: wrap;
     width: $pageWidth;
     margin: 0 auto;
-
-
-
     .organization-card {
         display: flex;
         margin: 10px;
