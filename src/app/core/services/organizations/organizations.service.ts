@@ -23,4 +23,10 @@ export class OrganizationsService {
       environment.apiUrl + '/users/organizations',
     );
   }
+
+  getOrganizationStations(organizationId: number): Observable<Station[]> {
+    return this.http.get<Station[]>(
+      environment.apiUrl + `/organizations/${organizationId}/stations`,
+    );
+  }
 }

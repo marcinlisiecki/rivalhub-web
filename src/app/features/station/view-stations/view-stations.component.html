@@ -21,4 +21,5 @@
   <a routerLink="/organizations/{{ organizationId }}/stations/new">
     <p-button>Dodaj stanowisko</p-button>
   </a>
+  <app-validation-error *ngIf="apiError">{{ apiError }}</app-validation-error>
 </section>
