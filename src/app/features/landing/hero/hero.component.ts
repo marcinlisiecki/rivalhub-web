@@ -1,0 +1,20 @@
+import { Component, createComponent, Input, OnInit } from '@angular/core';
+import { AuthService } from '@app/core/services/auth/auth.service';
+import {Router} from "@angular/router";
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+@Component({
+  selector: 'app-hero',
+  templateUrl: './hero.component.html',
+  styleUrls: ['./hero.component.scss'],
+})
+export class HeroComponent {
+  value: boolean;
+
+  constructor(private authService: AuthService, private router: Router,) {
+    this.value = this.authService.isAuth()
+    if( this.value){
+      setTimeout(() =>{this.router.navigateByUrl('/my-organizations').then();},3000);
+    }
+
+  }
+}

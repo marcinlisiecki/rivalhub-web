@@ -25,6 +25,12 @@ import { AddStationComponent } from './features/station/add-station/add-station.
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthenticateInterceptor } from './core/interceptors/authenticate/authenticate.interceptor';
 import { InviteUserComponent } from './features/organization/invite-user/invite-user.component';
+import { HeroComponent } from './features/landing/hero/hero.component';
+import {FieldsetModule} from "primeng/fieldset";
+import {NgOptimizedImage} from "@angular/common";
+import {TranslateModule} from "@ngx-translate/core";
+import { RivalhubComponent } from './features/landing/hero/rivalhub/rivalhub.component';
+import {ProgressSpinnerModule} from "primeng/progressspinner";
 import { EventModule } from './features/event/event.module';
 import { ViewStationsComponent } from './features/station/view-stations/view-stations.component';
 import { TableModule } from 'primeng/table';
@@ -45,6 +51,8 @@ import { TableModule } from 'primeng/table';
     AddStationComponent,
     InviteUserComponent,
     AddReservationComponent,
+    HeroComponent,
+    RivalhubComponent,
     ViewStationsComponent,
   ],
   imports: [
@@ -55,11 +63,16 @@ import { TableModule } from 'primeng/table';
     LayoutModule,
     ReactiveFormsModule,
     AppRoutingModule,
+    SharedModule,
     AuthModule,
     CookieModule.withOptions(),
     CheckboxModule,
     FormsModule,
     CalendarModule,
+    FieldsetModule,
+    NgOptimizedImage,
+    TranslateModule,
+    ProgressSpinnerModule,
     EventModule,
     TableModule,
   ],
