@@ -8,9 +8,15 @@ import { CalendarModule } from 'primeng/calendar';
 import { StepsModule } from 'primeng/steps';
 import { DividerModule } from 'primeng/divider';
 import { CheckboxModule } from 'primeng/checkbox';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from '../../shared/shared.module';
+import { CategorySelectorComponent } from './new-event/category-selector/category-selector.component';
+import { BasicInfoComponent } from './new-event/basic-info/basic-info.component';
+import { DateSelectorComponent } from './new-event/date-selector/date-selector.component';
+import { StationSelectorComponent } from './new-event/station-selector/station-selector.component';
 
 @NgModule({
-  declarations: [NewEventComponent],
+  declarations: [NewEventComponent, CategorySelectorComponent, BasicInfoComponent, DateSelectorComponent, StationSelectorComponent],
   imports: [
     CommonModule,
     CardModule,
@@ -20,6 +26,9 @@ import { CheckboxModule } from 'primeng/checkbox';
     StepsModule,
     DividerModule,
     CheckboxModule,
+    ReactiveFormsModule,
+    FormsModule,
+    SharedModule,
   ],
 })
 export class EventModule {}

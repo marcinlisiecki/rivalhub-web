@@ -1,0 +1,47 @@
+<section class="form-step-wrapper">
+  <header>
+    <h1>Infomacje o wydarzeniu</h1>
+  </header>
+
+  <form action="" [formGroup]="basicInfoForm" class="basic-info-form">
+    <div class="input-box">
+      <label for="name">Nazwa*</label>
+      <input
+        id="name"
+        name="name"
+        placeholder="Super rywalizacja..."
+        type="text"
+        pInputText
+        formControlName="name"
+      />
+    </div>
+
+    <div class="input-box">
+      <label for="description">Opis</label>
+      <textarea
+        pInputTextarea
+        id="description"
+        rows="5"
+        formControlName="description"
+        placeholder="Ustalamy dodatkowe zasady..."
+      ></textarea>
+    </div>
+  </form>
+
+  <p-divider></p-divider>
+
+  <div class="form-step-navigation">
+    <p-button
+      styleClass="p-button-outlined"
+      (onClick)="setFormStep.emit(AddEventFormStep.CATEGORY)"
+    >
+      Powrót
+    </p-button>
+    <p-button
+      [disabled]="!basicInfoForm.valid"
+      (onClick)="setFormStep.emit(AddEventFormStep.DATE)"
+    >
+      Dalej
+    </p-button>
+  </div>
+</section>

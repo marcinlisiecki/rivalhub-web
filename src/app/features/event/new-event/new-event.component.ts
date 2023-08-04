@@ -1,20 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   AvailableEvent,
-  AvailableEvents,
   EventType,
+  AddEventFormStep,
 } from '../../../core/interfaces/event';
 import { DialogService } from 'primeng/dynamicdialog';
-import { AddReservationComponent } from '../../reservation/add-reservation/add-reservation.component';
 import { Station } from '../../../core/interfaces/Station';
+import { STATIONS } from '../../../mock/stations';
 import { MenuItem } from 'primeng/api';
-
-enum FormState {
-  CATEGORY,
-  BASIC_INFO,
-  DATE,
-  RESERVATION,
-}
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  ADD_EVENT_FORM_STEPS,
+  AVAILABLE_EVENTS,
+} from '../../../core/constants/event';
+import { categoryTypeToLabel } from '../../../core/utils/event';
 
 @Component({
   selector: 'app-new-event',
@@ -22,83 +21,69 @@ enum FormState {
   styleUrls: ['./new-event.component.scss'],
   providers: [DialogService],
 })
-export class NewEventComponent implements OnInit {
-  events: AvailableEvent[] = AvailableEvents;
-  selectedEvent: EventType | null = null;
-  reservedStations: Station[] = [];
-  formState: FormState = FormState.CATEGORY;
-  formSteps: MenuItem[] = [];
+export class NewEventComponent {
+  formStep: AddEventFormStep = AddEventFormStep.CATEGORY;
+  formSteps: MenuItem[] = ADD_EVENT_FORM_STEPS;
   formStepIndex: number = 0;
-  stations: Station[] = [
-    {
-      id: 1,
-      name: 'Stół nr 1',
-      type: EventType.PING_PONG,
-    },
-    {
-      id: 2,
-      name: 'Stół nr 2',
-      type: EventType.PING_PONG,
-    },
-    {
-      id: 3,
-      name: 'Stół nr 1',
-      type: EventType.BILLIARDS,
-    },
-  ];
 
-  constructor(private dialogService: DialogService) {}
+  events: AvailableEvent[] = AVAILABLE_EVENTS;
+  selectedEventType: EventType | null = null;
+
+  stations: Station[] = STATIONS;
+  selectedStations: string[] = [];
+
+  dateError: string | null = null;
+
+  basicInfoForm: FormGroup = new FormGroup({
+    name: new FormControl('', [
+      Validators.required,
+      Validators.minLength(3),
+      Validators.maxLength(255),
+    ]),
+    description: new FormControl('', [Validators.maxLength(1000)]),
+  });
+
+  dateForm: FormGroup = new FormGroup({
+    startDate: new FormControl<Date>(new Date(), [Validators.required]),
+    endDate: new FormControl<Date>(
+      new Date(new Date().setHours(new Date().getHours() + 1)),
+      [Validators.required],
+    ),
+  });
 
   getOnlyCategoryStations(): Station[] {
     return this.stations.filter(
-      (station) => station.type === this.selectedEvent,
+      (station) => station.type === this.selectedEventType,
     );
   }
 
-  ngOnInit(): void {
-    this.formSteps = [
-      {
-        label: 'Kategoria',
-      },
-      {
-        label: 'Informacje',
-      },
-      {
-        label: 'Data i czas',
-      },
-      {
-        label: 'Rezerwacja',
-      },
-    ];
+  validateDates(): boolean {
+    const startDate: Date = this.dateForm.get('startDate')?.value;
+    const endDate: Date = this.dateForm.get('endDate')?.value;
+
+    if (startDate.getTime() > endDate.getTime()) {
+      this.dateError = 'Godzina startowa musi być przed godziną zakończenia';
+      return false;
+    }
+
+    return true;
   }
 
-  setFormState(nextState: FormState) {
-    this.formStepIndex = nextState;
-    this.formState = nextState;
+  setFormStep(nextStep: AddEventFormStep): void {
+    if (nextStep === AddEventFormStep.RESERVATION && !this.validateDates()) {
+      return;
+    }
+
+    this.formStepIndex = nextStep;
+    this.formStep = nextStep;
   }
 
-  selectEvent(eventType: EventType) {
-    this.selectedEvent = eventType;
+  selectEvent(eventType: EventType): void {
+    this.selectedStations = [];
+    this.selectedEventType = eventType;
   }
 
-  openReservationMenu() {
-    this.dialogService
-      .open(AddReservationComponent, {
-        data: {
-          isInModal: true,
-        },
-        header: 'Dodawanie rezerwacji',
-        showHeader: true,
-        contentStyle: { overflow: 'auto' },
-      })
-      .onClose.subscribe((stations: Station[]) => {
-        if (!stations) {
-          return;
-        }
-
-        this.reservedStations = stations;
-      });
-  }
-
-  protected readonly FormState = FormState;
+  protected readonly AddEventFormStep = AddEventFormStep;
+  protected readonly String = String;
+  protected readonly categoryTypeToLabel = categoryTypeToLabel;
 }

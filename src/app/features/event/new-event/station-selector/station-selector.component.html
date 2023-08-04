@@ -1,0 +1,37 @@
+<section class="form-step-wrapper">
+  <header>
+    <h1>Rezerwacja</h1>
+  </header>
+
+  <p>Dostępne stanowiska dla kategorii: {{ categoryLabel }}</p>
+
+  <div class="stations">
+    <label
+      *ngFor="let station of stations"
+      class="stations-item"
+      [class.stations-item-selected]="
+        selectedStations.includes(String(station.id))
+      "
+    >
+      <p-checkbox
+        name="station"
+        value="{{ station.id }}"
+        [(ngModel)]="selectedStations"
+        inputId="station-{{ station.id }}"
+      ></p-checkbox>
+      <span>{{ station.name }}</span>
+    </label>
+  </div>
+
+  <p-divider></p-divider>
+
+  <div class="form-step-navigation">
+    <p-button
+      styleClass="p-button-outlined"
+      (onClick)="setFormStep.emit(AddEventFormStep.DATE)"
+    >
+      Powrót
+    </p-button>
+    <p-button> Stwórz wydarzenie </p-button>
+  </div>
+</section>

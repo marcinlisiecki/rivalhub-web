@@ -1,0 +1,11 @@
+.time-selector-wrapper {
+  margin-top: 1rem;
+  display: flex;
+  column-gap: 1rem;
+  justify-content: stretch;
+
+  .input-box {
+    flex: 1;
+    display: flex;
+  }
+}

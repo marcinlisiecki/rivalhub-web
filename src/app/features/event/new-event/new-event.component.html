@@ -5,139 +5,34 @@
     [activeIndex]="formStepIndex"
   ></p-steps>
 
-  <section *ngIf="formState === FormState.CATEGORY" class="step-wrapper">
-    <header>
-      <h1>Kategoria</h1>
-    </header>
-    <section class="categories-wrapper">
-      <div
-        class="categories-item"
-        [class.selected-category]="selectedEvent === event.type"
-        *ngFor="let event of events"
-        (click)="selectEvent(event.type)"
-      >
-        <i class="pi {{ event.icon }}"></i>
-        <p>{{ event.label }}</p>
-      </div>
-    </section>
+  <app-category-selector
+    *ngIf="formStep === AddEventFormStep.CATEGORY"
+    (selectEvent)="selectEvent($event)"
+    (setFormStep)="setFormStep($event)"
+    [events]="events"
+    [selectedEventType]="selectedEventType"
+  ></app-category-selector>
 
-    <p-divider></p-divider>
+  <app-basic-info
+    *ngIf="formStep === AddEventFormStep.BASIC_INFO"
+    (setFormStep)="setFormStep($event)"
+    [basicInfoForm]="basicInfoForm"
+  ></app-basic-info>
 
-    <div class="navigation-buttons-wrapper">
-      <p-button
-        [disabled]="selectedEvent === null"
-        (onClick)="setFormState(FormState.BASIC_INFO)"
-      >
-        Dalej
-      </p-button>
-    </div>
-  </section>
+  <app-date-selector
+    *ngIf="formStep === AddEventFormStep.DATE"
+    (setFormStep)="setFormStep($event)"
+    [dateError]="dateError"
+    [dateForm]="dateForm"
+  >
+  </app-date-selector>
 
-  <section *ngIf="formState === FormState.BASIC_INFO" class="step-wrapper">
-    <header>
-      <h1>Infomacje o wydarzeniu</h1>
-    </header>
-
-    <div class="detail-reservation-wrapper">
-      <form action="">
-        <div class="input-box">
-          <label for="name">Nazwa</label>
-          <input id="name" type="text" pInputText />
-        </div>
-
-        <div class="input-box">
-          <label for="description">Opis</label>
-          <textarea pInputTextarea id="description" rows="5"></textarea>
-        </div>
-      </form>
-
-      <p-divider></p-divider>
-
-      <div class="navigation-buttons-wrapper">
-        <p-button
-          styleClass="p-button-outlined"
-          (onClick)="setFormState(FormState.CATEGORY)"
-        >
-          Powrót
-        </p-button>
-        <p-button
-          [disabled]="selectedEvent === null"
-          (onClick)="setFormState(FormState.DATE)"
-        >
-          Dalej
-        </p-button>
-      </div>
-    </div>
-  </section>
-
-  <section *ngIf="formState === FormState.DATE" class="step-wrapper">
-    <header>
-      <h1>Data i czas wydarzenia</h1>
-    </header>
-
-    <div class="time-selector-wrapper">
-      <div class="input-box">
-        <label for="startDate">Data rozpoczęcia</label>
-        <p-calendar
-          inputId="startDate"
-          styleClass="input-wide"
-          [showTime]="true"
-          [showIcon]="true"
-        ></p-calendar>
-      </div>
-      <div class="input-box">
-        <label for="endDate">Data zakończenia</label>
-        <p-calendar
-          inputId="endDate"
-          styleClass="input-wide"
-          [showTime]="true"
-          [showIcon]="true"
-        ></p-calendar>
-      </div>
-    </div>
-
-    <p-divider></p-divider>
-
-    <div class="navigation-buttons-wrapper">
-      <p-button
-        styleClass="p-button-outlined"
-        (onClick)="setFormState(FormState.BASIC_INFO)"
-      >
-        Powrót
-      </p-button>
-      <p-button
-        [disabled]="selectedEvent === null"
-        (onClick)="setFormState(FormState.RESERVATION)"
-      >
-        Dalej
-      </p-button>
-    </div>
-  </section>
-
-  <section *ngIf="formState === FormState.RESERVATION" class="step-wrapper">
-    <header>
-      <h1>Rezerwacja</h1>
-    </header>
-
-    <p>Dostępne stanowiska dla kategorii: {{ selectedEvent }}</p>
-
-    <div class="stations">
-      <label *ngFor="let station of getOnlyCategoryStations()" class="station">
-        <p-checkbox></p-checkbox>
-        <span>{{ station.name }}</span>
-      </label>
-    </div>
-
-    <p-divider></p-divider>
-
-    <div class="navigation-buttons-wrapper">
-      <p-button
-        styleClass="p-button-outlined"
-        (onClick)="setFormState(FormState.DATE)"
-      >
-        Powrót
-      </p-button>
-      <p-button> Stwórz wydarzenie </p-button>
-    </div>
-  </section>
+  <app-station-selector
+    *ngIf="formStep === AddEventFormStep.RESERVATION && selectedEventType"
+    (setFormStep)="setFormStep($event)"
+    [categoryLabel]="categoryTypeToLabel(selectedEventType)"
+    [selectedStations]="selectedStations"
+    [stations]="getOnlyCategoryStations()"
+  >
+  </app-station-selector>
 </section>
