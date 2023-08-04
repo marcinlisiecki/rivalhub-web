@@ -23,6 +23,7 @@
             .p-steps-title {
                 margin-top: $inlineSpacing;
                 color: $stepsItemTextColor;
+                font-size: $stepsTitleFontSize;
             }
 
             &:not(.p-disabled):focus {
@@ -32,7 +33,7 @@
 
         &.p-highlight {
             .p-steps-number {
-                background: $highlightBg;
+                background: $stepsItemHighlightBg;
                 color: $highlightTextColor;
             }
 

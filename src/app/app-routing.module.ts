@@ -7,6 +7,7 @@ import { OrganizationDashboardComponent } from './features/organization/organiza
 import { LoginComponent } from './features/auth/login/login.component';
 import { AddStationComponent } from './features/station/add-station/add-station.component';
 import { authenticateGuard } from './core/guards/authenticate/authenticate.guard';
+import { NewEventComponent } from './features/event/new-event/new-event.component';
 import { InviteUserComponent } from './features/organization/invite-user/invite-user.component';
 import { AddReservationComponent } from './features/reservation/add-reservation/add-reservation.component';
 
@@ -46,6 +47,10 @@ const routes: Routes = [
   {
     path: 'organizations/:id/invite',
     component: InviteUserComponent,
+  },
+  {
+    path: 'organizations/:id/events/new',
+    component: NewEventComponent,
   },
 ];
 

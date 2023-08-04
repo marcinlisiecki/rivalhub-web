@@ -1,0 +1,40 @@
+<section class="wrapper">
+  <h1>Nowe wydarzenie</h1>
+
+  <p-steps
+    [model]="formSteps"
+    [readonly]="true"
+    [activeIndex]="formStepIndex"
+  ></p-steps>
+
+  <app-category-selector
+    *ngIf="formStep === AddEventFormStep.CATEGORY"
+    (selectEvent)="selectEvent($event)"
+    (setFormStep)="setFormStep($event)"
+    [events]="events"
+    [selectedEventType]="selectedEventType"
+  ></app-category-selector>
+
+  <app-basic-info
+    *ngIf="formStep === AddEventFormStep.BASIC_INFO"
+    (setFormStep)="setFormStep($event)"
+    [basicInfoForm]="basicInfoForm"
+  ></app-basic-info>
+
+  <app-date-selector
+    *ngIf="formStep === AddEventFormStep.DATE"
+    (setFormStep)="setFormStep($event)"
+    [dateError]="dateError"
+    [dateForm]="dateForm"
+  >
+  </app-date-selector>
+
+  <app-station-selector
+    *ngIf="formStep === AddEventFormStep.RESERVATION && selectedEventType"
+    (setFormStep)="setFormStep($event)"
+    [categoryLabel]="categoryTypeToLabel(selectedEventType)"
+    [selectedStations]="selectedStations"
+    [stations]="getOnlyCategoryStations()"
+  >
+  </app-station-selector>
+</section>
