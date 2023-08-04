@@ -73,8 +73,8 @@
       <p-button styleClass="button-wide" type="submit" [loading]="isLoading">
         {{ 'button.signUp' | translate }}
       </p-button>
-      <p class="api-error-wrapper">
-        <app-validation-error *ngIf="apiError">
+      <p class="api-error-wrapper" *ngIf="apiError">
+        <app-validation-error>
           {{ apiError }}
         </app-validation-error>
       </p>
