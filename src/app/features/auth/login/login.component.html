@@ -3,12 +3,12 @@
     <div class="registered-message-wrapper" *ngIf="registered">
       <p-messages severity="success">
         <ng-template pTemplate>
-          <div>Pomyślnie utworzono konto</div>
+          <div>{{ 'input.success' | translate }}</div>
         </ng-template>
       </p-messages>
     </div>
     <div class="input-box">
-      <label for="email">Adres email</label>
+      <label for="email">{{ 'input.email' | translate }}</label>
       <input
         formControlName="email"
         pInputText
@@ -18,13 +18,13 @@
       />
       <div *ngIf="email?.invalid && email?.touched">
         <app-validation-error *ngIf="email?.errors?.['required']">
-          Adres email jest wymagany
+          {{ 'input.emailWarning' | translate }}
         </app-validation-error>
       </div>
     </div>
 
     <div class="input-box">
-      <label for="password">Hasło</label>
+      <label for="password">{{ 'input.password' | translate }}</label>
       <p-password
         [feedback]="false"
         formControlName="password"
@@ -32,16 +32,19 @@
         inputId="password"
         styleClass="input-wide"
         inputStyleClass="input-wide"
+        placeholder="********"
       ></p-password>
       <div *ngIf="password?.invalid && password?.touched">
         <app-validation-error *ngIf="password?.errors?.['required']">
-          Hasło jest wymagane!
+          {{ 'input.passwordWarning' | translate }}
         </app-validation-error>
       </div>
     </div>
 
     <div>
-      <p-button styleClass="button-wide" type="submit">Zaloguj się</p-button>
+      <p-button styleClass="button-wide" type="submit">
+        {{ 'button.signIn' | translate }}
+      </p-button>
       <p class="api-error-wrapper">
         <app-validation-error *ngIf="apiError">
           {{ apiError }}

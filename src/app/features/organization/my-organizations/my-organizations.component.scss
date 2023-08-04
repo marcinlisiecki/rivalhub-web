@@ -1,22 +1,21 @@
-@import '../../../../scss/variables.scss';
+@import 'src/scss/variables';
 
-.organizations-container{
+.organizations-container {
     display: flex;
     //break rows if width is less than 300px
     flex-wrap: wrap;
     width: $pageWidth;
     margin: 0 auto;
-    
-   
 
-    .organization-card{
+
+
+    .organization-card {
         display: flex;
-        //make card with 300px width
-        margin:10px;
-        
-        
+        margin: 10px;
 
-        .organization-link{
+
+
+        .organization-link {
             display: flex;
             width: 200px;
             height: 200px;
@@ -25,7 +24,7 @@
             align-items: center;
 
             text-decoration: none;
-            border-radius: 10px;
+            border-radius: $dashboardRadius;
 
             background-repeat: no-repeat;
             background-size: cover;
@@ -33,12 +32,13 @@
             &:hover {
                 //red border
                 border: 2.5px solid red;
-              }
+            }
 
         }
-        .organization-name{
+
+        .organization-name {
             backdrop-filter: blur(5px);
-            color:black;
+            color: black;
             font-size: 16px;
             font-weight: $weightMedium;
         }

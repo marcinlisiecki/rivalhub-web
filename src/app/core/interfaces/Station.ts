@@ -1,7 +1,7 @@
-import {stationType} from "../utils/stationType";
+import { EventType } from './event';
 
 export interface Station {
-  // id: number
-  name: string
-  type: string
+  id: number;
+  name: string;
+  type: EventType;
 }

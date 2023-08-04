@@ -1,8 +1,14 @@
 @import 'src/assets/viva/viva-dark/theme';
 
 $pageWidth: 1280px;
+$eventFormWidth: 600px;
 
 $dangerColor: #da2237;
+
+$dashboardBorder: 2px solid #334155;
+$dashboardRadius: 10px;
+
+$mobileBreakpoint: 768px;
 
 $weightRegular: 500;
 $weightMedium: 600;

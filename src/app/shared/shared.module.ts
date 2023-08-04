@@ -8,9 +8,15 @@ import { AvatarModule } from 'primeng/avatar';
 import { DividerModule } from 'primeng/divider';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ImageModule } from 'primeng/image';
+import { SidebarModule } from 'primeng/sidebar';
+import { ToggleButtonModule } from 'primeng/togglebutton';
+import { AnimateModule } from 'primeng/animate';
+import { CategoryStationsSelectorComponent } from './category-stations-selector/category-stations-selector.component';
+import { CheckboxModule } from 'primeng/checkbox';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [ValidationErrorComponent],
+  declarations: [ValidationErrorComponent, CategoryStationsSelectorComponent],
   exports: [
     ValidationErrorComponent,
     CardModule,
@@ -20,6 +26,10 @@ import { ImageModule } from 'primeng/image';
     DividerModule,
     FileUploadModule,
     ImageModule,
+    CategoryStationsSelectorComponent,
+    SidebarModule,
+    ToggleButtonModule,
+    AnimateModule,
   ],
   imports: [
     CommonModule,
@@ -30,6 +40,11 @@ import { ImageModule } from 'primeng/image';
     DividerModule,
     FileUploadModule,
     ImageModule,
+    SidebarModule,
+    ToggleButtonModule,
+    AnimateModule,
+    CheckboxModule,
+    FormsModule,
   ],
 })
 export class SharedModule {}

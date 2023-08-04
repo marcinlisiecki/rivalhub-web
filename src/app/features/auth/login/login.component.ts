@@ -57,7 +57,6 @@ export class LoginComponent {
           this.router.navigateByUrl('/my-organizations').then();
           return;
         }
-
         this.apiError = 'Wystąpił nieoczekiwany błąd';
       },
       error: (err: unknown) => {

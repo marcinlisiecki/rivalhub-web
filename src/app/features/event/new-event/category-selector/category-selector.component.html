@@ -1,0 +1,27 @@
+<section class="form-step-wrapper">
+  <header>
+    <h1>Kategoria</h1>
+  </header>
+  <section class="categories">
+    <div
+      class="card-checkbox categories-item"
+      [class.selected-category]="selectedEventType === event.type"
+      *ngFor="let event of events"
+      (click)="selectEvent.emit(event.type)"
+    >
+      <i class="pi {{ event.icon }}"></i>
+      <p>{{ categoryTypeToLabel(event.type) }}</p>
+    </div>
+  </section>
+
+  <p-divider></p-divider>
+
+  <div class="form-step-navigation">
+    <p-button
+      [disabled]="selectedEventType === null"
+      (onClick)="setFormStep.emit(AddEventFormStep.BASIC_INFO)"
+    >
+      Dalej
+    </p-button>
+  </div>
+</section>
