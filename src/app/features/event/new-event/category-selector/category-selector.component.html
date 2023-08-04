@@ -4,7 +4,7 @@
   </header>
   <section class="categories">
     <div
-      class="categories-item"
+      class="card-checkbox categories-item"
       [class.selected-category]="selectedEventType === event.type"
       *ngFor="let event of events"
       (click)="selectEvent.emit(event.type)"

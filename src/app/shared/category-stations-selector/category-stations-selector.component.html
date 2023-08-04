@@ -1,0 +1,17 @@
+<div class="stations">
+  <label
+    *ngFor="let station of stations"
+    class="card-checkbox"
+    [class.card-checkbox-selected]="
+      selectedStations.includes(String(station.id))
+    "
+  >
+    <p-checkbox
+      name="station"
+      value="{{ station.id }}"
+      [(ngModel)]="selectedStations"
+      inputId="station-{{ station.id }}"
+    ></p-checkbox>
+    <span>{{ station.name }}</span>
+  </label>
+</div>

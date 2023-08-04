@@ -7,18 +7,9 @@
 
   &-item {
     aspect-ratio: 1 / 1;
-    border-radius: $borderRadius;
-    border: 2px solid $shade600;
-    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    cursor: pointer;
-    transition: border-color 0.3s;
-
-    &:hover {
-      border-color: $shade800;
-    }
 
     i {
       font-size: 2rem;
