@@ -7,9 +7,11 @@ import { OrganizationDashboardComponent } from './features/organization/organiza
 import { LoginComponent } from './features/auth/login/login.component';
 import { AddStationComponent } from './features/station/add-station/add-station.component';
 import { authenticateGuard } from './core/guards/authenticate/authenticate.guard';
+import { NewEventComponent } from './features/event/new-event/new-event.component';
 import { InviteUserComponent } from './features/organization/invite-user/invite-user.component';
 import { AddReservationComponent } from './features/reservation/add-reservation/add-reservation.component';
 import { HeroComponent } from '@app/features/landing/hero/hero.component';
+import { ViewStationsComponent } from '@app/features/station/view-stations/view-stations.component';
 
 const routes: Routes = [
   {
@@ -27,31 +29,43 @@ const routes: Routes = [
     canActivate: [authenticateGuard],
   },
   {
-    path: 'my-organizations',
+    path: 'organizations',
     component: MyOrganizationsComponent,
     canActivate: [authenticateGuard],
   },
   {
-    path: 'organization',
+    path: 'organizations/:id',
     component: OrganizationDashboardComponent,
+    canActivate: [authenticateGuard],
   },
   {
     path: 'login',
     component: LoginComponent,
   },
   {
-    path: 'add-reservation',
+    path: 'organizations/:id/reservations/new',
     component: AddReservationComponent,
+    canActivate: [authenticateGuard],
   },
-
   {
-    path: 'organizations/:id/add-station',
+    path: 'organizations/:id/stations/new',
     component: AddStationComponent,
+    canActivate: [authenticateGuard],
+  },
+  {
+    path: 'organizations/:id/stations',
+    component: ViewStationsComponent,
     canActivate: [authenticateGuard],
   },
   {
     path: 'organizations/:id/invite',
     component: InviteUserComponent,
+    canActivate: [authenticateGuard],
+  },
+  {
+    path: 'organizations/:id/events/new',
+    component: NewEventComponent,
+    canActivate: [authenticateGuard],
   },
 ];
 

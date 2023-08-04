@@ -19,14 +19,19 @@
 
     <div class="input-box">
       <label for="station-type">Typ stanowiska</label>
-      <input
+      <select
+        [(ngModel)]="selectedOption"
         id="station-type"
         formControlName="type"
         name="type"
-        type="text"
-        placeholder="Ping-Pong"
-        pInputText />
+        pInputText>
+
+        <option *ngFor="let option of stationType;" >
+          {{ categoryTypeToLabel(option) }}
+        </option>
+      </select>
     </div>
+
     <div *ngIf="type?.invalid && type?.touched" class="form-item">
       <app-validation-error *ngIf="type?.errors?.['required']">
         Pole typ jest wymagane.

@@ -1,9 +1,13 @@
 import { Component, HostListener } from '@angular/core';
-import { UserDto } from '@interfaces/UserDto';
 import { Organization } from '@interfaces/Organization';
-import { EventDto } from '@app/core/interfaces/EventDto';
+import { EventDto } from '@interfaces/EventDto';
 import { navAnimation } from '@app/core/animations/nav-animation';
-
+import { OrganizationsService } from '@app/core/services/organizations/organizations.service';
+import { ActivatedRoute } from '@angular/router';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { ViewService } from '@app/core/services/view/view.service';
+import { UserDetailsDto } from '@interfaces/UserDetailsDto';
+import { PagedResponse } from '@app/core/interfaces/PagedResponse';
 @Component({
   selector: 'app-organization-dashboard',
   templateUrl: './organization-dashboard.component.html',
@@ -12,16 +16,7 @@ import { navAnimation } from '@app/core/animations/nav-animation';
 })
 export class OrganizationDashboardComponent {
   navVisible: boolean = false;
-  toggleNav() {
-    this.navVisible = !this.navVisible;
-  }
-  mobileView: boolean = window.innerWidth <= 768 ? true : false;
-  //update mobileView on window resize
-  @HostListener('window:resize', ['$event'])
-  onResize(event: any) {
-    this.mobileView = event.target.innerWidth <= 768;
-  }
-
+  mobileView!: boolean;
   events: EventDto[] = [
     {
       id: 1,
@@ -48,61 +43,81 @@ export class OrganizationDashboardComponent {
       participantIds: [2, 3, 4],
     },
   ];
+  organization!: Organization;
+  users!: UserDetailsDto[];
+  id!: number;
 
-  organization: Organization = {
-    id: 1,
-    name: 'Polski Związek Wędkarski',
-    imageUrl: 'assets/img/avatars/pzw.jpg',
-  };
+  constructor(
+    private organizationsService: OrganizationsService,
+    private route: ActivatedRoute,
+    private viewService: ViewService,
+  ) {}
 
-  users: UserDto[] = [
-    {
-      id: 1,
-      firstName: 'John',
-      lastName: 'Doe',
-      email: 'JohnDoe@gmail.com',
-      imageUrl: 'assets/img/avatars/user.png',
-      role: 'Admin',
-    },
-    {
-      id: 2,
-      firstName: 'Jane',
-      lastName: 'Doe',
-      email: 'JaneDoe@gmail.com',
-      imageUrl: 'assets/img/avatars/user.png',
-      role: 'Member',
-    },
-    {
-      id: 3,
-      firstName: 'Jacob',
-      lastName: 'Dwayne',
-      email: 'JacobDwayne@gmail.com',
-      imageUrl: 'assets/img/avatars/user.png',
-      role: 'Member',
-    },
-    {
-      id: 4,
-      firstName: 'Albert',
-      lastName: 'Smart',
-      email: 'AlbertSmart@gmail.com',
-      imageUrl: 'assets/img/avatars/user.png',
-      role: 'Member',
-    },
-    {
-      id: 5,
-      firstName: 'Alice',
-      lastName: 'Rabbit',
-      email: 'AliceRabbit@gmail.com',
-      imageUrl: 'assets/img/avatars/user.png',
-      role: 'Member',
-    },
-    {
-      id: 6,
-      firstName: 'Mark',
-      lastName: 'Parker',
-      email: 'MarkParker@gmail.com',
-      imageUrl: 'assets/img/avatars/user.png',
-      role: 'Member',
-    },
-  ];
+  ngOnInit() {
+    this.mobileView = this.viewService.mobileView;
+    this.viewService.resizeEvent.subscribe((value: boolean) => {
+      this.mobileView = value;
+    });
+
+    this.route.params.subscribe((params) => {
+      this.id = params['id'];
+    });
+
+    this.getOrganizationInfo();
+    this.getOrganizationUsers();
+    // this.getOrgzationEvents();
+  }
+
+  private getOrganizationInfo() {
+    this.organizationsService.choose(this.id).subscribe({
+      next: (res: Organization) => {
+        this.organization = res;
+        this.organization.imageUrl = this.getImagePath(res.imageUrl);
+      },
+      //Dodaj kiedyś obsługę błędów jak wpadniesz na fajny pomysł jak to zrobić
+      error: (err: HttpErrorResponse) => {
+        console.error('An error occurred:', err);
+      },
+    });
+  }
+
+  private getOrgzationEvents() {
+    this.organizationsService.getEvents(this.id).subscribe({
+      next: (res: EventDto[]) => {
+        this.events = res;
+      },
+      error: (err: HttpErrorResponse) => {
+        console.error('An error occurred:', err);
+      },
+    });
+  }
+
+  private getOrganizationUsers() {
+    this.organizationsService.getUsers(this.id, 0, 5).subscribe({
+      next: (res: PagedResponse<UserDetailsDto>) => {
+        this.users = res.content;
+      },
+      //Dodaj kiedyś obsługę błędów jak wpadniesz na fajny pomysł jak to zrobić
+      error: (err: HttpErrorResponse) => {
+        console.error('An error occurred:', err);
+      },
+    });
+  }
+
+  getImagePath(imageUrl: string | null): string {
+    if (imageUrl !== null) {
+      return imageUrl;
+    }
+
+    return 'assets/img/avatars/avatarplaceholder.png';
+  }
+
+  toggleNav() {
+    this.navVisible = !this.navVisible;
+  }
+  //update mobileView on window resize
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.mobileView = event.target.innerWidth <= 768;
+  }
 }

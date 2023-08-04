@@ -54,16 +54,17 @@ export class LoginComponent {
     this.authService.login(credentials).subscribe({
       next: (res) => {
         if (res?.token) {
-          this.router.navigateByUrl('/my-organizations').then();
+          this.router.navigateByUrl('/organizations').then();
           return;
         }
+
+        this.isLoading = false;
         this.apiError = 'Wystąpił nieoczekiwany błąd';
       },
       error: (err: unknown) => {
+        this.isLoading = false;
         this.apiError = extractMessage(err);
       },
     });
-
-    this.isLoading = false;
   }
 }

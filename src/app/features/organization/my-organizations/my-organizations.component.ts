@@ -27,7 +27,7 @@ export class MyOrganizationsComponent {
   }
 
   createURL(id: number): string {
-    return `/organization/${id}`;
+    return `/organizations/${id}`;
   }
 
   isDefaultAvatar(imageUrl: string | null): boolean {

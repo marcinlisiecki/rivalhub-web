@@ -1,1 +1,7 @@
-<a href="#" class="nav-item">{{title}}</a>
+<a
+  href="#"
+  class="nav-item"
+  [class.nav-item-disabled]="disabled"
+  [routerLink]="href"
+  >{{ title }}</a
+>

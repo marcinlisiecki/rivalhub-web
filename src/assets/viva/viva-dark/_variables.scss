@@ -698,7 +698,7 @@ $tooltipTextColor: $shade000 !default;
 $tooltipPadding: $inputPadding !default;
 
 //steps
-$stepsItemBg: transparent !default;
+$stepsItemBg: #121212 !default;
 $stepsItemBorder: 2px solid $shade600 !default;
 $stepsItemTextColor: $shade100 !default;
 $stepsItemNumberWidth: 2rem !default;
@@ -707,6 +707,8 @@ $stepsItemNumberFontSize: 1.143rem !default;
 $stepsItemNumberColor: $shade000 !default;
 $stepsItemNumberBorderRadius: 50% !default;
 $stepsItemActiveFontWeight: 600 !default;
+$stepsTitleFontSize: 0.875rem !default;
+$stepsItemHighlightBg: #321418 !default;
 
 //progressbar
 $progressBarHeight: 1.5rem !default;

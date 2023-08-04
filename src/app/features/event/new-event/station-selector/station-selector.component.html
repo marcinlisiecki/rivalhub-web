@@ -1,0 +1,24 @@
+<section class="form-step-wrapper">
+  <header>
+    <h1>Rezerwacja</h1>
+  </header>
+
+  <app-category-stations-selector
+    [stations]="stations"
+    [selectedStations]="selectedStations"
+    [categoryLabel]="categoryLabel"
+  >
+  </app-category-stations-selector>
+
+  <p-divider></p-divider>
+
+  <div class="form-step-navigation">
+    <p-button
+      styleClass="p-button-outlined"
+      (onClick)="setFormStep.emit(AddEventFormStep.DATE)"
+    >
+      Powrót
+    </p-button>
+    <p-button> Stwórz wydarzenie </p-button>
+  </div>
+</section>

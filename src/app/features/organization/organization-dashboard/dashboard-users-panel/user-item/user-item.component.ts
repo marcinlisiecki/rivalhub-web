@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { UserDto } from '@app/core/interfaces/UserDto';
+import { UserDetailsDto } from '@app/core/interfaces/UserDetailsDto';
 
 @Component({
   selector: 'app-user-item',
@@ -7,5 +7,13 @@ import { UserDto } from '@app/core/interfaces/UserDto';
   styleUrls: ['./user-item.component.scss'],
 })
 export class UserItemComponent {
-  @Input({ required: true }) user!: UserDto;
+  @Input({ required: true }) user!: UserDetailsDto;
+
+  getImagePath(imageUrl: string | null): string {
+    if (imageUrl !== null) {
+      return imageUrl;
+    }
+
+    return '/assets/img/avatars/user.png';
+  }
 }

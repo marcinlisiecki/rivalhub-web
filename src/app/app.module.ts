@@ -26,6 +26,9 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthenticateInterceptor } from './core/interceptors/authenticate/authenticate.interceptor';
 import { InviteUserComponent } from './features/organization/invite-user/invite-user.component';
 import { HeroComponent } from './features/landing/hero/hero.component';
+import { EventModule } from './features/event/event.module';
+import { ViewStationsComponent } from './features/station/view-stations/view-stations.component';
+import { TableModule } from 'primeng/table';
 
 @NgModule({
   declarations: [
@@ -44,6 +47,7 @@ import { HeroComponent } from './features/landing/hero/hero.component';
     InviteUserComponent,
     AddReservationComponent,
     HeroComponent,
+    ViewStationsComponent,
   ],
   imports: [
     BrowserModule,
@@ -59,6 +63,8 @@ import { HeroComponent } from './features/landing/hero/hero.component';
     CheckboxModule,
     FormsModule,
     CalendarModule,
+    EventModule,
+    TableModule,
   ],
   providers: [
     {

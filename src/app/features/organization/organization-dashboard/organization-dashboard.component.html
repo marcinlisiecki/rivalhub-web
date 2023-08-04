@@ -1,11 +1,11 @@
 <div class="dashboard-container">
-    <app-dashboard-header class="dashboard-container-header" [organization]="organization"></app-dashboard-header>
+    <app-dashboard-header class="dashboard-container-header" [organization]="organization" *ngIf="organization"></app-dashboard-header>
 
     <div class="dashboard-nav-panel">
         <p-toggleButton styleClass="p-button-secondary p-button-overwrite" (click)="toggleNav()" onLabel="Pokaż" offLabel="Schowaj"></p-toggleButton>
     </div>
     <app-dashboard-nav [@openNav]="navVisible && mobileView" class="dashboard-container-nav"></app-dashboard-nav>
-    <div class="dashboard-panels">
+    <div class="dashboard-panels" >
         <app-dashboard-activities-panel class="dashboard-panels-activities"
             [events]="events"></app-dashboard-activities-panel>
         <app-dashboard-users-panel class="dashboard-panels-users" [users]="users"></app-dashboard-users-panel>
