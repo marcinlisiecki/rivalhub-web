@@ -5,3 +5,8 @@ export interface Station {
   name: string;
   type: EventType;
 }
+
+export interface NewStation {
+  name: string,
+  type: EventType
+}
