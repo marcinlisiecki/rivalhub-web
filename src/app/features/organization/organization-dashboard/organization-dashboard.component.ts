@@ -93,7 +93,7 @@ export class OrganizationDashboardComponent {
   }
 
   private getOrganizationUsers() {
-    this.organizationsService.getUsers(this.id, 1, 5).subscribe({
+    this.organizationsService.getUsers(this.id, 0, 5).subscribe({
       next: (res: PagedResponse<UserDetailsDto>) => {
         this.users = res.content;
       },
