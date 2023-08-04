@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { UserDto } from '@app/core/interfaces/UserDto';
+import { UserDetailsDto } from '@interfaces/UserDetailsDto';
 
 @Component({
   selector: 'app-dashboard-users-panel',
@@ -8,5 +8,5 @@ import { UserDto } from '@app/core/interfaces/UserDto';
 })
 export class DashboardUsersPanelComponent {
   @Input({ required: true })
-  users!: UserDto[];
+  users!: UserDetailsDto[];
 }

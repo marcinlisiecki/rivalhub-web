@@ -4,14 +4,14 @@
   max-width: $nonBgFormWidth;
   margin: 4rem auto;
   display: flex;
-  align-items: start;
+  align-items: flex-start;
   flex-direction: column;
   .invalid-data {
     color: $primaryDarkColor;
   }
   .form-container {
     display: flex;
-    align-items: start;
+    align-items: flex-start; 
     flex-direction: column;
     margin-bottom: 20px;
     &-input {
