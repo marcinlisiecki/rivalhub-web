@@ -1,7 +1,8 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Station } from '../../../core/interfaces/Station';
-import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { EventType } from '../../../core/interfaces/event';
+import { categoryTypeToLabel } from '../../../core/utils/event';
+import { STATIONS } from '../../../mock/stations';
 
 @Component({
   selector: 'app-add-reservation',
@@ -11,58 +12,24 @@ import { EventType } from '../../../core/interfaces/event';
 export class AddReservationComponent {
   @Input() isInModal: boolean = false;
 
-  stations: Station[] = [
-    {
-      id: 1,
-      name: 'Stół nr 1',
-      type: EventType.PING_PONG,
-    },
-    {
-      id: 2,
-      name: 'Stół nr 2',
-      type: EventType.PING_PONG,
-    },
-    {
-      id: 3,
-      name: 'Stół nr 1',
-      type: EventType.BILLIARDS,
-    },
-  ];
+  stations: Station[] = STATIONS;
 
   types = new Set(this.stations.map((station) => station.type));
-  checkboxs: Map<Station, Boolean> = new Map();
+  selectedStations: string[] = [];
   date: any;
-  startTime: any;
-  finishTime: any;
-  checkoutForm: any;
+  startTime: Date = new Date();
+  finishTime: Date = new Date(new Date().setHours(new Date().getHours() + 1));
   invalidDate: boolean = false;
   readyDateAndValid: boolean = false;
   emptyData: boolean = false;
   today: Date = new Date();
 
-  dialogConfig: DynamicDialogConfig | null = null;
-  dialogRef: DynamicDialogRef | null = null;
-
-  constructor() {
-    try {
-      this.dialogConfig = inject(DynamicDialogConfig);
-      this.dialogRef = inject(DynamicDialogRef);
-    } catch (e) {}
-
-    this.stations.forEach((station) => this.checkboxs.set(station, false));
-    this.isInModal = this.dialogConfig?.data?.isInModal || false;
-  }
-
-  checkValue(inputId: Station) {
-    this.checkboxs.set(inputId, !(<Boolean>this.checkboxs.get(inputId)));
+  getCategoryStations(category: EventType) {
+    return this.stations.filter((station) => station.type === category);
   }
 
   onSubmit() {
-    if (
-      this.startTime == null ||
-      this.finishTime == null ||
-      this.date == null
-    ) {
+    if (this.startTime == null || this.finishTime == null) {
       this.emptyData = true;
       return;
     }
@@ -77,17 +44,5 @@ export class AddReservationComponent {
     return;
   }
 
-  onSave() {
-    if (this.dialogRef) {
-      const reserved: Station[] = [];
-
-      this.checkboxs.forEach((isSelected, key: Station) => {
-        if (isSelected) {
-          reserved.push(key);
-        }
-      });
-
-      this.dialogRef.close(reserved);
-    }
-  }
+  protected readonly categoryTypeToLabel = categoryTypeToLabel;
 }

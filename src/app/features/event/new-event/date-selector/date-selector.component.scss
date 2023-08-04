@@ -1,3 +1,5 @@
+@import 'src/scss/variables';
+
 .time-selector-wrapper {
   margin-top: 1rem;
   display: flex;
@@ -7,5 +9,12 @@
   .input-box {
     flex: 1;
     display: flex;
+  }
+}
+
+@media (max-width: $mobileBreakpoint) {
+  .time-selector-wrapper {
+    flex-direction: column;
+    row-gap: 1rem;
   }
 }

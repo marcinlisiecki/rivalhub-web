@@ -3,4 +3,8 @@
 .wrapper {
   max-width: $eventFormWidth;
   margin: 4rem auto;
+
+  > h1 {
+    margin-bottom: 4rem;
+  }
 }

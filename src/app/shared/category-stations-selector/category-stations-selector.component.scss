@@ -1,5 +1,13 @@
+@import 'src/scss/variables';
+
 .stations {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
+}
+
+@media (max-width: $mobileBreakpoint) {
+  .stations {
+    grid-template-columns: 1fr;
+  }
 }
