@@ -15,11 +15,8 @@ export class AddStationService {
 
   saveStation(id: string, station: NewStation): Observable<{}> {
     return this.http.post<NewStation>(
-      environment.apiUrl +
-      "/organizations" +
-      "/" +id.toString() +
-      "/stations"
-      , station
+      environment.apiUrl + `/organizations/${id}/stations`,
+      station
     );
   }
 }
