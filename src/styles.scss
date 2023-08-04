@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
 @import 'src/scss/variables';
 @import 'primeng/resources/primeng.css';
 @import 'primeicons/primeicons.css';
@@ -16,5 +18,5 @@
 }
 
 html {
-  font-family: Poppins, sans-serif;
+  font-family: $fontFamily;
 }

@@ -46,8 +46,8 @@
       <p-button styleClass="button-wide" type="submit">
         {{ 'button.signIn' | translate }}
       </p-button>
-      <p class="api-error-wrapper">
-        <app-validation-error *ngIf="apiError">
+      <p class="api-error-wrapper" *ngIf="apiError">
+        <app-validation-error>
           {{ apiError }}
         </app-validation-error>
       </p>
