@@ -1,7 +1,6 @@
-import { Component, createComponent, Input, OnInit } from '@angular/core';
+import { Component} from '@angular/core';
 import { AuthService } from '@app/core/services/auth/auth.service';
 import {Router} from "@angular/router";
-import { ProgressSpinnerModule } from 'primeng/progressspinner';
 @Component({
   selector: 'app-hero',
   templateUrl: './hero.component.html',

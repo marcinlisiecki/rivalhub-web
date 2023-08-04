@@ -24,13 +24,15 @@
             [model]="flagItems"
             [popup]="true"
           ></p-menu>
+          <button class="button-flag" (click)="menu.toggle($event)">
           <img
+            id="flag"
             [src]="pathOfFlag"
             alt="flag"
-            (click)="menu.toggle($event)"
             width="24"
             height="12"
           />
+          </button>
         </li>
         <li *ngIf="!isLoggedIn">
           <app-header-link href="/register">
