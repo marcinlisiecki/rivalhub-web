@@ -5,11 +5,8 @@ import { AddOrganizationComponent } from './features/organization/add-organizati
 import { MyOrganizationsComponent } from './features/organization/my-organizations/my-organizations.component';
 import { OrganizationDashboardComponent } from './features/organization/organization-dashboard/organization-dashboard.component';
 import { LoginComponent } from './features/auth/login/login.component';
-import { LoginComponent } from './features/auth/login/login.component';
-import { AddReservationComponent } from './features/reservation/add-reservation/add-reservation.component';
 import { AddStationComponent } from './features/station/add-station/add-station.component';
 import { authenticateGuard } from './core/guards/authenticate/authenticate.guard';
-import { InviteUserComponent } from './features/organization/invite-user/invite-user.component';
 import { NewEventComponent } from './features/event/new-event/new-event.component';
 import { InviteUserComponent } from './features/organization/invite-user/invite-user.component';
 import { AddReservationComponent } from './features/reservation/add-reservation/add-reservation.component';
@@ -35,11 +32,11 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    component: LoginComponent
+    component: LoginComponent,
   },
   {
     path: 'add-reservation',
-    component: AddReservationComponent
+    component: AddReservationComponent,
   },
 
   {
@@ -48,7 +45,7 @@ const routes: Routes = [
     canActivate: [authenticateGuard],
   },
   {
-    path:'organizations/:id/invite',
+    path: 'organizations/:id/invite',
     component: InviteUserComponent,
   },
   {

@@ -84,6 +84,5 @@ export class NewEventComponent {
   }
 
   protected readonly AddEventFormStep = AddEventFormStep;
-  protected readonly String = String;
   protected readonly categoryTypeToLabel = categoryTypeToLabel;
 }
