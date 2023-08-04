@@ -1,12 +1,13 @@
 import { Component, HostListener } from '@angular/core';
-import { UserDto } from '@interfaces/UserDto';
 import { Organization } from '@interfaces/Organization';
-import { EventDto } from '@app/core/interfaces/EventDto';
+import { EventDto } from '@interfaces/EventDto';
 import { navAnimation } from '@app/core/animations/nav-animation';
 import { OrganizationsService } from '@app/core/services/organizations/organizations.service';
 import { ActivatedRoute } from '@angular/router';
-import { HttpErrorResponse } from '@angular/common/http';
-
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { ViewService } from '@app/core/services/view/view.service';
+import { UserDetailsDto } from '@interfaces/UserDetailsDto';
+import { PagedResponse } from '@app/core/interfaces/PagedResponse';
 @Component({
   selector: 'app-organization-dashboard',
   templateUrl: './organization-dashboard.component.html',
@@ -15,7 +16,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class OrganizationDashboardComponent {
   navVisible: boolean = false;
-  mobileView: boolean = window.innerWidth <= 768 ? true : false;
+  mobileView!: boolean;
   events: EventDto[] = [
     {
       id: 1,
@@ -43,71 +44,28 @@ export class OrganizationDashboardComponent {
     },
   ];
   organization!: Organization;
-  users: UserDto[] = [
-    {
-      id: 1,
-      firstName: 'John',
-      lastName: 'Doe',
-      email: 'JohnDoe@gmail.com',
-      imageUrl: 'assets/img/avatars/user.png',
-      role: 'Admin',
-    },
-    {
-      id: 2,
-      firstName: 'Jane',
-      lastName: 'Doe',
-      email: 'JaneDoe@gmail.com',
-      imageUrl: 'assets/img/avatars/user.png',
-      role: 'Member',
-    },
-    {
-      id: 3,
-      firstName: 'Jacob',
-      lastName: 'Dwayne',
-      email: 'JacobDwayne@gmail.com',
-      imageUrl: 'assets/img/avatars/user.png',
-      role: 'Member',
-    },
-    {
-      id: 4,
-      firstName: 'Albert',
-      lastName: 'Smart',
-      email: 'AlbertSmart@gmail.com',
-      imageUrl: 'assets/img/avatars/user.png',
-      role: 'Member',
-    },
-    {
-      id: 5,
-      firstName: 'Alice',
-      lastName: 'Rabbit',
-      email: 'AliceRabbit@gmail.com',
-      imageUrl: 'assets/img/avatars/user.png',
-      role: 'Member',
-    },
-    {
-      id: 6,
-      firstName: 'Mark',
-      lastName: 'Parker',
-      email: 'MarkParker@gmail.com',
-      imageUrl: 'assets/img/avatars/user.png',
-      role: 'Member',
-    },
-  ];
+  users!: UserDetailsDto[];
   id!: number;
 
   constructor(
     private organizationsService: OrganizationsService,
     private route: ActivatedRoute,
-  ) {
+    private viewService: ViewService,
+  ) {}
+
+  ngOnInit() {
+    this.mobileView = this.viewService.mobileView;
+    this.viewService.resizeEvent.subscribe((value: boolean) => {
+      this.mobileView = value;
+    });
+
     this.route.params.subscribe((params) => {
       this.id = params['id'];
     });
-  }
 
-  ngOnInit() {
     this.getOrganizationInfo();
-    this.getOrgzationEvents();
     this.getOrganizationUsers();
+    // this.getOrgzationEvents();
   }
 
   private getOrganizationInfo() {
@@ -116,6 +74,7 @@ export class OrganizationDashboardComponent {
         this.organization = res;
         this.organization.imageUrl = this.getImagePath(res.imageUrl);
       },
+      //Dodaj kiedyś obsługę błędów jak wpadniesz na fajny pomysł jak to zrobić
       error: (err: HttpErrorResponse) => {
         console.error('An error occurred:', err);
       },
@@ -134,22 +93,13 @@ export class OrganizationDashboardComponent {
   }
 
   private getOrganizationUsers() {
-    this.organizationsService.getUsers(this.id).subscribe({
-      next: (res: UserDto[]) => {
-        this.users = res;
+    this.organizationsService.getUsers(this.id, 1, 5).subscribe({
+      next: (res: PagedResponse<UserDetailsDto>) => {
+        this.users = res.content;
       },
+      //Dodaj kiedyś obsługę błędów jak wpadniesz na fajny pomysł jak to zrobić
       error: (err: HttpErrorResponse) => {
-        if (err.error instanceof Error) {
-          // Błąd po stronie klienta (np. brak połączenia z internetem)
-          console.error('Client-side error occurred:', err.error.message);
-        } else {
-          // Błąd po stronie serwera (kod HTTP i odpowiedź serwera)
-          console.log(
-            `Server-side error occurred. Status: ${err.status}, Message: ${err.message}`,
-          );
-          console.log('Response body:', err.error); // Może zawierać dodatkowe informacje z serwera
-        }
-        // Możesz dostosować obsługę błędów według swoich potrzeb
+        console.error('An error occurred:', err);
       },
     });
   }
