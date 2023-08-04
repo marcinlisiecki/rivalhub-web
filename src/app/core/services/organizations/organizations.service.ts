@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { EventDto } from '@app/core/interfaces/EventDto';
 import { UserDetailsDto } from '@app/core/interfaces/UserDetailsDto';
 import { PagedResponse } from '@app/core/interfaces/PagedResponse';
+import { Station } from '@interfaces/Station';
 
 @Injectable({
   providedIn: 'root',
@@ -49,6 +50,12 @@ export class OrganizationsService {
     return this.http.get<any>(
       environment.apiUrl + `/organizations/${id}/users`,
       { params: params },
+    );
+  }
+
+  getOrganizationStations(organizationId: number): Observable<Station[]> {
+    return this.http.get<Station[]>(
+      environment.apiUrl + `/organizations/${organizationId}/stations`,
     );
   }
 }

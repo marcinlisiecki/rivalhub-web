@@ -24,8 +24,10 @@ import { CookieModule } from 'ngx-cookie';
 import { AddStationComponent } from './features/station/add-station/add-station.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthenticateInterceptor } from './core/interceptors/authenticate/authenticate.interceptor';
-import {InviteUserComponent} from "./features/organization/invite-user/invite-user.component";
+import { InviteUserComponent } from './features/organization/invite-user/invite-user.component';
 import { EventModule } from './features/event/event.module';
+import { ViewStationsComponent } from './features/station/view-stations/view-stations.component';
+import { TableModule } from 'primeng/table';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,8 @@ import { EventModule } from './features/event/event.module';
     NavItemComponent,
     AddStationComponent,
     InviteUserComponent,
-    AddReservationComponent
+    AddReservationComponent,
+    ViewStationsComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,7 +61,8 @@ import { EventModule } from './features/event/event.module';
     FormsModule,
     CalendarModule,
     EventModule,
-],
+    TableModule,
+  ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

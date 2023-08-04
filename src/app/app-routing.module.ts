@@ -10,6 +10,7 @@ import { authenticateGuard } from './core/guards/authenticate/authenticate.guard
 import { NewEventComponent } from './features/event/new-event/new-event.component';
 import { InviteUserComponent } from './features/organization/invite-user/invite-user.component';
 import { AddReservationComponent } from './features/reservation/add-reservation/add-reservation.component';
+import { ViewStationsComponent } from '@app/features/station/view-stations/view-stations.component';
 
 const routes: Routes = [
   {
@@ -43,6 +44,11 @@ const routes: Routes = [
   {
     path: 'organizations/:id/stations/new',
     component: AddStationComponent,
+    canActivate: [authenticateGuard],
+  },
+  {
+    path: 'organizations/:id/stations',
+    component: ViewStationsComponent,
     canActivate: [authenticateGuard],
   },
   {
