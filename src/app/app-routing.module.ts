@@ -40,7 +40,6 @@ const routes: Routes = [
     component: AddReservationComponent,
     canActivate: [authenticateGuard],
   },
-
   {
     path: 'organizations/:id/stations/new',
     component: AddStationComponent,
