@@ -22,4 +22,11 @@ export class OrganizationsService {
       environment.apiUrl + '/users/organizations',
     );
   }
+
+  //choose one organization
+  choose(id: number): Observable<Organization> {
+    return this.http.get<Organization>(
+      environment.apiUrl + `/organizations/${id}`,
+    );
+  }
 }

@@ -26,10 +26,6 @@ export class MyOrganizationsComponent {
     return 'assets/img/avatars/avatarplaceholder.png';
   }
 
-  createURL(id: number): string {
-    return `/organization/${id}`;
-  }
-
   isDefaultAvatar(imageUrl: string | null): boolean {
     return imageUrl === null;
   }

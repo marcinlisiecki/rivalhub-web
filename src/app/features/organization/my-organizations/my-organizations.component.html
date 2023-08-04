@@ -5,7 +5,7 @@
       [ngStyle]="{
         'background-image': 'url(' + getImagePath(organization.imageUrl) + ')'
       }"
-      [href]="createURL(organization.id)"
+      [routerLink]="organization.id.toString()"
     >
       <span
         class="organization-name"
