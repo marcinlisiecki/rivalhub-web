@@ -1,0 +1,20 @@
+@import 'src/scss/variables';
+
+.card-checkbox {
+  display: flex;
+  align-items: center;
+  column-gap: 0.5rem;
+  border: 2px solid $shade600;
+  border-radius: $borderRadius;
+  padding: 1rem;
+  cursor: pointer;
+  transition: border-color 0.3s;
+
+  &:hover {
+    border-color: $shade800;
+  }
+
+  &-selected {
+    border-color: $primaryColor !important;
+  }
+}

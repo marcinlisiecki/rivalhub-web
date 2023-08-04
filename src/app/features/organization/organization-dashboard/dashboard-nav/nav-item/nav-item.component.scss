@@ -1,7 +1,10 @@
 @import 'src/scss/variables';
 .nav-item {
-    color:$textSecondaryColor;
-    padding:5px 10px;
-    text-decoration: none;
-    
+  color: $textSecondaryColor;
+  padding: 5px 10px;
+  text-decoration: none;
+
+  &-disabled {
+    color: $shade500;
+  }
 }

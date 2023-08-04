@@ -1,8 +1,46 @@
-<app-nav-item class="nav-item" title="Wydarzenia"></app-nav-item>
-<app-nav-item class="nav-item" title="Kalendarz"></app-nav-item>
-<app-nav-item class="nav-item" title="Zaproś użytkownika"></app-nav-item>
-<app-nav-item class="nav-item" title="Stanowiska"></app-nav-item>
-<app-nav-item class="nav-item" title="Rezerwacje"></app-nav-item>
-<app-nav-item class="nav-item" title="Ranking"></app-nav-item>
-<app-nav-item class="nav-item" title="Ustawienia organizacji"></app-nav-item>
-<app-nav-item class="nav-item" title="Członkowie"></app-nav-item>
+<div class="nav-container">
+  <app-nav-item
+    class="nav-item"
+    title="Wydarzenia"
+    href="/organizations/{{ organizationId }}/events/new"
+  ></app-nav-item>
+  <app-nav-item
+    class="nav-item"
+    title="Kalendarz"
+    href="#"
+    [disabled]="true"
+  ></app-nav-item>
+  <app-nav-item
+    class="nav-item"
+    title="Zaproś użytkownika"
+    href="/organizations/{{ organizationId }}/invite"
+  ></app-nav-item>
+  <app-nav-item
+    class="nav-item"
+    title="Stanowiska"
+    href="/organizations/{{ organizationId }}/stations/new"
+  ></app-nav-item>
+  <app-nav-item
+    class="nav-item"
+    title="Rezerwacje"
+    href="/organizations/{{ organizationId }}/reservations/new"
+  ></app-nav-item>
+  <app-nav-item
+    class="nav-item"
+    title="Ranking"
+    [disabled]="true"
+    href="#"
+  ></app-nav-item>
+  <app-nav-item
+    class="nav-item"
+    href="#"
+    title="Ustawienia organizacji"
+    [disabled]="true"
+  ></app-nav-item>
+  <app-nav-item
+    href="#"
+    class="nav-item"
+    title="Członkowie"
+    [disabled]="true"
+  ></app-nav-item>
+</div>

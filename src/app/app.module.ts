@@ -24,7 +24,8 @@ import { CookieModule } from 'ngx-cookie';
 import { AddStationComponent } from './features/station/add-station/add-station.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthenticateInterceptor } from './core/interceptors/authenticate/authenticate.interceptor';
-import { InviteUserComponent } from './features/organization/invite-user/invite-user.component';
+import {InviteUserComponent} from "./features/organization/invite-user/invite-user.component";
+import { EventModule } from './features/event/event.module';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,7 @@ import { InviteUserComponent } from './features/organization/invite-user/invite-
     NavItemComponent,
     AddStationComponent,
     InviteUserComponent,
-    AddReservationComponent,
+    AddReservationComponent
   ],
   imports: [
     BrowserModule,
@@ -51,13 +52,13 @@ import { InviteUserComponent } from './features/organization/invite-user/invite-
     LayoutModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    SharedModule,
     AuthModule,
     CookieModule.withOptions(),
     CheckboxModule,
     FormsModule,
     CalendarModule,
-  ],
+    EventModule,
+],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

@@ -57,13 +57,14 @@ export class LoginComponent {
           this.router.navigateByUrl('/organizations').then();
           return;
         }
+
+        this.isLoading = false;
         this.apiError = 'Wystąpił nieoczekiwany błąd';
       },
       error: (err: unknown) => {
+        this.isLoading = false;
         this.apiError = extractMessage(err);
       },
     });
-
-    this.isLoading = false;
   }
 }
