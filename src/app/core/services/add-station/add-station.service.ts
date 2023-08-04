@@ -13,9 +13,13 @@ export class AddStationService {
     private http: HttpClient,
   ) { }
 
-  addStation(url: string, station: Station): Observable<{}> {
-    const newUrl = environment.apiUrl + url
-    alert(newUrl)
-    return this.http.post(newUrl, station)
+  saveStation(id: string, station: NewStation): Observable<{}> {
+    return this.http.post<NewStation>(
+      environment.apiUrl +
+      "/organizations" +
+      "/" +id.toString() +
+      "/stations"
+      , station
+    );
   }
 }
