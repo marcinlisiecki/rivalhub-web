@@ -1,0 +1,11 @@
+@import 'src/scss/variables';
+
+.wrapper {
+  max-width: $pageWidth;
+  margin: 4rem auto;
+
+  > a {
+    display: block;
+    margin-top: 1rem;
+  }
+}

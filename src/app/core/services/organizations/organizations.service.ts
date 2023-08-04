@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { NewOrganization, Organization } from '../../interfaces/Organization';
 import { environment } from '../../../../environments/enviroment';
 import { Observable } from 'rxjs';
+import { Station } from '@interfaces/Station';
 
 @Injectable({
   providedIn: 'root',
