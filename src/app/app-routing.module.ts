@@ -27,7 +27,7 @@ const routes: Routes = [
     canActivate: [authenticateGuard],
   },
   {
-    path: 'organization',
+    path: 'organizations/:id',
     component: OrganizationDashboardComponent,
   },
   {
@@ -35,12 +35,12 @@ const routes: Routes = [
     component: LoginComponent,
   },
   {
-    path: 'add-reservation',
+    path: 'organizations/:id/reservations/new',
     component: AddReservationComponent,
   },
 
   {
-    path: 'organizations/:id/add-station',
+    path: 'organizations/:id/stations/new',
     component: AddStationComponent,
     canActivate: [authenticateGuard],
   },
