@@ -24,3 +24,22 @@
     border-color: $secondaryButtonActiveBorderColor !important;
   }
 }
+
+.button-flag{
+  background-color: transparent !important;
+  border: 1px !important;
+  padding: 5px;
+  border-radius:5px;
+}
+
+.button-flag:hover{
+  background: $buttonHoverBg !important;
+  border: 4px !important;
+  opacity:0.95;
+}
+
+.button-flag:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
