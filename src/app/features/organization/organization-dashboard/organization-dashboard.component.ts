@@ -5,6 +5,7 @@ import { EventDto } from '@app/core/interfaces/EventDto';
 import { navAnimation } from '@app/core/animations/nav-animation';
 import { OrganizationsService } from '@app/core/services/organizations/organizations.service';
 import { ActivatedRoute } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-organization-dashboard',
@@ -104,12 +105,61 @@ export class OrganizationDashboardComponent {
   }
 
   ngOnInit() {
+    this.getOrganizationInfo();
+    this.getOrgzationEvents();
+    this.getOrganizationUsers();
+  }
+
+  private getOrganizationInfo() {
     this.organizationsService.choose(this.id).subscribe({
       next: (res: Organization) => {
         this.organization = res;
         this.organization.imageUrl = this.getImagePath(res.imageUrl);
       },
+      error: (err: HttpErrorResponse) => {
+        console.error('An error occurred:', err);
+      },
     });
+  }
+
+  private getOrgzationEvents() {
+    this.organizationsService.getEvents(this.id).subscribe({
+      next: (res: EventDto[]) => {
+        this.events = res;
+      },
+      error: (err: HttpErrorResponse) => {
+        console.error('An error occurred:', err);
+      },
+    });
+  }
+
+  private getOrganizationUsers() {
+    this.organizationsService.getUsers(this.id).subscribe({
+      next: (res: UserDto[]) => {
+        this.users = res;
+      },
+      error: (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          // Błąd po stronie klienta (np. brak połączenia z internetem)
+          console.error('Client-side error occurred:', err.error.message);
+        } else {
+          // Błąd po stronie serwera (kod HTTP i odpowiedź serwera)
+          console.log(
+            `Server-side error occurred. Status: ${err.status}, Message: ${err.message}`,
+          );
+          console.log('Response body:', err.error); // Może zawierać dodatkowe informacje z serwera
+        }
+        // Możesz dostosować obsługę błędów według swoich potrzeb
+      },
+    });
+  }
+
+  getImagePath(imageUrl: string | null): string {
+    if (imageUrl !== null) {
+      return imageUrl;
+    }
+
+    return 'assets/img/avatars/avatarplaceholder.png';
   }
 
   toggleNav() {
@@ -119,13 +169,5 @@ export class OrganizationDashboardComponent {
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
     this.mobileView = event.target.innerWidth <= 768;
-  }
-
-  getImagePath(imageUrl: string | null): string {
-    if (imageUrl !== null) {
-      return imageUrl;
-    }
-
-    return 'assets/img/avatars/avatarplaceholder.png';
   }
 }
