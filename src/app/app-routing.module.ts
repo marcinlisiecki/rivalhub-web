@@ -29,6 +29,7 @@ const routes: Routes = [
   {
     path: 'organizations/:id',
     component: OrganizationDashboardComponent,
+    canActivate: [authenticateGuard],
   },
   {
     path: 'login',
@@ -37,6 +38,7 @@ const routes: Routes = [
   {
     path: 'organizations/:id/reservations/new',
     component: AddReservationComponent,
+    canActivate: [authenticateGuard],
   },
 
   {
@@ -47,10 +49,12 @@ const routes: Routes = [
   {
     path: 'organizations/:id/invite',
     component: InviteUserComponent,
+    canActivate: [authenticateGuard],
   },
   {
     path: 'organizations/:id/events/new',
     component: NewEventComponent,
+    canActivate: [authenticateGuard],
   },
 ];
 

@@ -59,14 +59,14 @@ export class RegisterFormComponent {
 
     this.authService.register(credentials).subscribe({
       next: () => {
+        this.isLoading = false;
         this.router.navigateByUrl('/login?registered=true').then();
       },
       error: (err: unknown) => {
+        this.isLoading = false;
         this.apiError = extractMessage(err);
       },
     });
-
-    this.isLoading = false;
   }
 
   get email() {
