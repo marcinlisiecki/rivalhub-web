@@ -4,8 +4,10 @@ import { EventType } from '../../../core/interfaces/event';
 import { categoryTypeToLabel } from '../../../core/utils/event';
 import { STATIONS } from '../../../mock/stations';
 import * as moment from 'moment/moment';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { OrganizationsService } from '@app/core/services/organizations/organizations.service';
+import { NewReservation } from '@interfaces/reservation';
+import { extractMessage } from '@app/core/utils/apiErrors';
 
 @Component({
   selector: 'app-add-reservation',
@@ -26,9 +28,11 @@ export class AddReservationComponent {
   readyDateAndValid: boolean = false;
   emptyData: boolean = false;
   today: Date = new Date();
+  apiError: string | null = null;
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private organizationService: OrganizationsService,
   ) {}
 
@@ -66,8 +70,9 @@ export class AddReservationComponent {
     );
   }
 
-  onSubmit() {
+  fetchStations() {
     this.stations = null;
+    this.selectedStations = [];
 
     if (this.startTime == null || this.finishTime == null) {
       this.emptyData = true;
@@ -83,6 +88,44 @@ export class AddReservationComponent {
     }
 
     this.fetchAvailableStations();
+  }
+
+  toggleSelectedStation(idNumber: number) {
+    const id = idNumber.toString();
+
+    if (this.selectedStations.includes(id)) {
+      this.selectedStations.splice(this.selectedStations.indexOf(id), 1);
+      return;
+    }
+
+    this.selectedStations.push(id);
+  }
+
+  onSubmit() {
+    this.apiError = null;
+
+    if (this.selectedStations.length === 0) {
+      console.log(this.selectedStations);
+      return;
+    }
+
+    const reservation: NewReservation = {
+      startTime: moment(this.startTime).format('DD-MM-yyyy HH:mm'),
+      endTime: moment(this.finishTime).format('DD-MM-yyyy HH:mm'),
+      stationsIdList: this.selectedStations.map((item) => parseFloat(item)),
+    };
+    const organizationId: number = this.route.snapshot.params['id'];
+
+    this.organizationService
+      .newReservation(organizationId, reservation)
+      .subscribe({
+        next: () => {
+          this.router.navigateByUrl(`/organizations/${organizationId}`).then();
+        },
+        error: (err) => {
+          this.apiError = extractMessage(err);
+        },
+      });
   }
 
   protected readonly categoryTypeToLabel = categoryTypeToLabel;

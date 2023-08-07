@@ -43,7 +43,7 @@
     </div>
 
     <div>
-      <p-button styleClass="button-wide" type="submit">
+      <p-button styleClass="button-wide" type="submit" [loading]="isLoading">
         {{ 'button.signIn' | translate }}
       </p-button>
       <p class="api-error-wrapper" *ngIf="apiError">

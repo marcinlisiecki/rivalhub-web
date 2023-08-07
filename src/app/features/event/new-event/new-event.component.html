@@ -35,6 +35,7 @@
     [categoryLabel]="categoryTypeToLabel(selectedEventType)"
     [selectedStations]="selectedStations"
     [stations]="getOnlyCategoryStations()"
+    (toggleStation)="toggleSelectedStation($event)"
   >
   </app-station-selector>
 </section>

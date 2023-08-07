@@ -8,6 +8,7 @@ import { UserDetailsDto } from '@app/core/interfaces/UserDetailsDto';
 import { PagedResponse } from '@app/core/interfaces/PagedResponse';
 import { Station } from '@interfaces/Station';
 import { EventType } from '@interfaces/event';
+import { NewReservation } from '@interfaces/reservation';
 
 @Injectable({
   providedIn: 'root',
@@ -83,6 +84,16 @@ export class OrganizationsService {
       {
         params,
       },
+    );
+  }
+
+  newReservation(
+    organizationId: number,
+    reservation: NewReservation,
+  ): Observable<{}> {
+    return this.http.post<Station[]>(
+      environment.apiUrl + `/organizations/${organizationId}/reservations`,
+      reservation,
     );
   }
 }

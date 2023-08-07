@@ -36,7 +36,7 @@
       styleClass="button-wide p-button-secondary"
       [style]="{ 'margin-top': '10px' }"
       type="submit"
-      (onClick)="onSubmit()"
+      (onClick)="fetchStations()"
       >Zatwierdź date
     </p-button>
   </div>
@@ -49,6 +49,7 @@
       <app-category-stations-selector
         [categoryLabel]="categoryTypeToLabel(category)"
         [stations]="getCategoryStations(category) || []"
+        (toggleStation)="toggleSelectedStation($event)"
         [selectedStations]="selectedStations"
       >
       </app-category-stations-selector>
@@ -63,5 +64,5 @@
     *ngIf="readyDateAndValid && stations !== null && stations.length === 0"
   ></app-no-available-stations>
 
-  <p-button>Zapisz</p-button>
+  <p-button (onClick)="onSubmit()">Zapisz</p-button>
 </section>

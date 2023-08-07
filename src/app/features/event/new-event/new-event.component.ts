@@ -114,6 +114,17 @@ export class NewEventComponent {
     }, 1000);
   }
 
+  toggleSelectedStation(idNumber: number) {
+    const id = idNumber.toString();
+
+    if (this.selectedStations.includes(id)) {
+      this.selectedStations.splice(this.selectedStations.indexOf(id), 1);
+      return;
+    }
+
+    this.selectedStations.push(id);
+  }
+
   setFormStep(nextStep: AddEventFormStep): void {
     if (nextStep === AddEventFormStep.RESERVATION && !this.validateDates()) {
       return;
@@ -121,6 +132,7 @@ export class NewEventComponent {
 
     if (nextStep === AddEventFormStep.RESERVATION) {
       this.fetchAvailableStations();
+      this.selectedStations = [];
     }
 
     this.formStepIndex = nextStep;

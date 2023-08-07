@@ -8,6 +8,7 @@
     [stations]="stations"
     [selectedStations]="selectedStations"
     [categoryLabel]="categoryLabel"
+    (toggleStation)="toggleStation.emit($event)"
   >
   </app-category-stations-selector>
 
