@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../../../core/services/auth/auth.service';
-import { RegisterCredentials } from '../../../core/interfaces/auth';
+import { AuthService } from '@app/core/services/auth/auth.service';
+import { RegisterCredentials } from '@interfaces/auth/register-credentials';
 import { Router } from '@angular/router';
-import { extractMessage } from '../../../core/utils/apiErrors';
+import { extractMessage } from '@app/core/utils/apiErrors';
 
 @Component({
   selector: 'app-register-form',
@@ -27,6 +27,11 @@ export class RegisterFormComponent {
   isLoading: boolean = false;
   passwordPrompt: string = '';
 
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+  ) {}
+
   setPasswordPrompt(): string {
     let lang: string = <string>localStorage.getItem('currentLanguage');
     if (lang === 'pl') {
@@ -35,11 +40,6 @@ export class RegisterFormComponent {
       return 'Enter password';
     }
   }
-
-  constructor(
-    private authService: AuthService,
-    private router: Router,
-  ) {}
 
   onSubmit() {
     this.apiError = null;

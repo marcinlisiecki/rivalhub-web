@@ -1,20 +1,22 @@
-import { Component, HostListener } from '@angular/core';
-import { Organization } from '@interfaces/Organization';
-import { EventDto } from '@interfaces/EventDto';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { navAnimation } from '@app/core/animations/nav-animation';
 import { OrganizationsService } from '@app/core/services/organizations/organizations.service';
 import { ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { ViewService } from '@app/core/services/view/view.service';
-import { UserDetailsDto } from '@interfaces/UserDetailsDto';
-import { PagedResponse } from '@app/core/interfaces/PagedResponse';
+import { EventDto } from '@interfaces/event/event-dto';
+import { Organization } from '@interfaces/organization/organization';
+import { PagedResponse } from '@interfaces/generic/paged-response';
+import { UserDetailsDto } from '@interfaces/user/user-details-dto';
+import { Subscription } from 'rxjs';
+
 @Component({
   selector: 'app-organization-dashboard',
   templateUrl: './organization-dashboard.component.html',
   styleUrls: ['./organization-dashboard.component.scss'],
   animations: [navAnimation],
 })
-export class OrganizationDashboardComponent {
+export class OrganizationDashboardComponent implements OnInit, OnDestroy {
   navVisible: boolean = false;
   mobileView!: boolean;
   events: EventDto[] = [
@@ -47,6 +49,9 @@ export class OrganizationDashboardComponent {
   users!: UserDetailsDto[];
   id!: number;
 
+  resizeEventSub?: Subscription;
+  paramsSub?: Subscription;
+
   constructor(
     private organizationsService: OrganizationsService,
     private route: ActivatedRoute,
@@ -55,17 +60,24 @@ export class OrganizationDashboardComponent {
 
   ngOnInit() {
     this.mobileView = this.viewService.mobileView;
-    this.viewService.resizeEvent.subscribe((value: boolean) => {
-      this.mobileView = value;
-    });
+    this.resizeEventSub = this.viewService.resizeEvent.subscribe(
+      (value: boolean) => {
+        this.mobileView = value;
+      },
+    );
 
-    this.route.params.subscribe((params) => {
+    this.paramsSub = this.route.params.subscribe((params) => {
       this.id = params['id'];
     });
 
     this.getOrganizationInfo();
     this.getOrganizationUsers();
     // this.getOrgzationEvents();
+  }
+
+  ngOnDestroy(): void {
+    this.resizeEventSub?.unsubscribe();
+    this.paramsSub?.unsubscribe();
   }
 
   private getOrganizationInfo() {

@@ -1,5 +1,6 @@
-import { AvailableEvent, EventType } from '../interfaces/event';
+import { EventType } from '@interfaces/event/event-type';
 import { MenuItem } from 'primeng/api';
+import { AvailableEvent } from '@interfaces/event/available-event';
 
 export const AVAILABLE_EVENTS: AvailableEvent[] = [
   {

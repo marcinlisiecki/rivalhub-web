@@ -4,8 +4,3 @@ export interface Organization {
   invitationHash: string;
   imageUrl: string | null;
 }
-
-export interface NewOrganization {
-  name: string;
-  imageUrl?: string;
-}

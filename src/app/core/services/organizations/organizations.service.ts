@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { NewOrganization, Organization } from '../../interfaces/Organization';
 import { environment } from '../../../../environments/enviroment';
 import { Observable } from 'rxjs';
-import { EventDto } from '@app/core/interfaces/EventDto';
-import { UserDetailsDto } from '@app/core/interfaces/UserDetailsDto';
-import { PagedResponse } from '@app/core/interfaces/PagedResponse';
-import { Station } from '@interfaces/Station';
-import { EventType } from '@interfaces/event';
-import { NewReservation } from '@interfaces/reservation';
+import { EventType } from '@interfaces/event/event-type';
+import { EventDto } from '@interfaces/event/event-dto';
+import { Organization } from '@interfaces/organization/organization';
+import { NewOrganization } from '@interfaces/organization/new-organization';
+import { PagedResponse } from '@interfaces/generic/paged-response';
+import { NewReservation } from '@interfaces/reservation/new-reservation';
+import { Station } from '@interfaces/station/station';
+import { UserDetailsDto } from '@interfaces/user/user-details-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -51,7 +52,7 @@ export class OrganizationsService {
     params = params.append('size', size.toString());
     return this.http.get<any>(
       environment.apiUrl + `/organizations/${id}/users`,
-      { params: params },
+      { params },
     );
   }
 

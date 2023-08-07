@@ -1,15 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {
-  LoginCredentials,
-  LoginResponse,
-  RegisterCredentials,
-} from '../../interfaces/auth';
+import { LoginCredentials } from '@interfaces/auth/login-credentials';
+import { RegisterCredentials } from '@interfaces/auth/register-credentials';
+import { LoginResponse } from '@interfaces/auth/login-response';
 import { Observable, Subject, tap } from 'rxjs';
 import { environment } from '../../../../environments/enviroment';
-import { CookieService } from 'ngx-cookie';
 import { JwtService } from '../jwt/jwt.service';
-import { NavigationEnd, NavigationStart, Router } from '@angular/router';
+import { NavigationStart, Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +16,6 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    private cookieService: CookieService,
     private jwtService: JwtService,
     private router: Router,
   ) {
@@ -43,7 +39,7 @@ export class AuthService {
       .pipe(
         tap((result: any) => {
           if (result?.token) {
-            this.cookieService.put('token', result.token);
+            this.jwtService.setToken(result.token);
           }
 
           this.authSubject.next(this.isAuth());
@@ -53,7 +49,7 @@ export class AuthService {
   }
 
   logout() {
-    this.cookieService.remove('token');
+    this.jwtService.removeToken();
     this.authSubject.next(false);
     this.router.navigateByUrl('/login').then();
   }

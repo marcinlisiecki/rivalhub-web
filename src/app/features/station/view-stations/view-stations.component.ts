@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Station } from '@interfaces/Station';
 import { categoryTypeToLabel } from '@app/core/utils/event';
 import { ActivatedRoute } from '@angular/router';
 import { OrganizationsService } from '@app/core/services/organizations/organizations.service';
 import { extractMessage } from '@app/core/utils/apiErrors';
+import { Station } from '@interfaces/station/station';
 
 @Component({
   selector: 'app-view-stations',
