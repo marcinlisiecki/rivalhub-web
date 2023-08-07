@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Station } from '../../core/interfaces/Station';
+
+import { Station } from '@interfaces/station/station';
 
 @Component({
   selector: 'app-category-stations-selector',

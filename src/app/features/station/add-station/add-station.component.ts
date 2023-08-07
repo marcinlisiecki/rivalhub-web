@@ -2,12 +2,12 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AddStationService } from '@app/core/services/add-station/add-station.service';
-import { NewStation } from '@interfaces/Station';
-import { EventType } from '@interfaces/event';
+import { EventType } from '@interfaces/event/event-type';
 import {
   categoryTypeToLabel,
   labelToCategoryType,
 } from '@app/core/utils/event';
+import { NewStation } from '@interfaces/station/new-station';
 
 @Component({
   selector: 'app-add-station',

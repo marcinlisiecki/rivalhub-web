@@ -4,8 +4,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { subscribeOn } from 'rxjs';
 import { OrganizationsService } from '../../../core/services/organizations/organizations.service';
 import { Router } from '@angular/router';
-import { NewOrganization } from '../../../core/interfaces/Organization';
 import { extractMessage } from '../../../core/utils/apiErrors';
+import { NewOrganization } from '@interfaces/organization/new-organization';
 
 @Component({
   selector: 'app-add-organization',
@@ -17,11 +17,6 @@ export class AddOrganizationComponent {
   imageURL: string = 'assets/img/avatars/avatarplaceholder.png';
   error: string | undefined;
 
-  constructor(
-    private organizationService: OrganizationsService,
-    private router: Router,
-  ) {}
-
   addForm = new FormGroup({
     name: new FormControl('', [
       Validators.required,
@@ -31,6 +26,11 @@ export class AddOrganizationComponent {
   });
   apiError: null | string = null;
   isLoading: boolean = false;
+
+  constructor(
+    private organizationService: OrganizationsService,
+    private router: Router,
+  ) {}
 
   onFileSelectClicked(event: FileSelectEvent) {
     this.uploadedFile = event.files[0];

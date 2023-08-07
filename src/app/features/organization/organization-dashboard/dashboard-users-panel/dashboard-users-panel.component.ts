@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { UserDetailsDto } from '@interfaces/UserDetailsDto';
+
+import { UserDetailsDto } from '@interfaces/user/user-details-dto';
 
 @Component({
   selector: 'app-dashboard-users-panel',

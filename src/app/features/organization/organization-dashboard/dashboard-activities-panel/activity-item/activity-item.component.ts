@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { EventDto } from '@app/core/interfaces/EventDto';
+
+import { EventDto } from '@interfaces/event/event-dto';
 
 @Component({
   selector: 'app-activity-item',

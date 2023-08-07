@@ -1,16 +1,18 @@
-import { Component } from '@angular/core';
-import { Organization } from 'src/app/core/interfaces/Organization';
+import { Component, OnInit } from '@angular/core';
 import { OrganizationsService } from '../../../core/services/organizations/organizations.service';
+import { Organization } from '@interfaces/organization/organization';
 
 @Component({
   selector: 'app-my-organizations',
   templateUrl: './my-organizations.component.html',
   styleUrls: ['./my-organizations.component.scss'],
 })
-export class MyOrganizationsComponent {
+export class MyOrganizationsComponent implements OnInit {
   organizations: Organization[] = [];
 
-  constructor(private organizationsService: OrganizationsService) {
+  constructor(private organizationsService: OrganizationsService) {}
+
+  ngOnInit(): void {
     this.organizationsService.getMy().subscribe({
       next: (res: Organization[]) => {
         this.organizations = res;

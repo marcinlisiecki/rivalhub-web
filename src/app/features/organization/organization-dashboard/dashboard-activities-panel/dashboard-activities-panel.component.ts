@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { EventDto } from '@interfaces/EventDto';
+
+import { EventDto } from '@interfaces/event/event-dto';
 
 @Component({
   selector: 'app-dashboard-activities-panel',

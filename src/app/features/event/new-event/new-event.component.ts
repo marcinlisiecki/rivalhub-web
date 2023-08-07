@@ -1,11 +1,6 @@
 import { Component } from '@angular/core';
-import {
-  AvailableEvent,
-  EventType,
-  AddEventFormStep,
-} from '../../../core/interfaces/event';
+import { EventType } from '@interfaces/event/event-type';
 import { DialogService } from 'primeng/dynamicdialog';
-import { Station } from '../../../core/interfaces/Station';
 import { STATIONS } from '../../../mock/stations';
 import { MenuItem } from 'primeng/api';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -17,6 +12,9 @@ import { categoryTypeToLabel } from '../../../core/utils/event';
 import * as moment from 'moment';
 import { OrganizationsService } from '@app/core/services/organizations/organizations.service';
 import { ActivatedRoute } from '@angular/router';
+import { AvailableEvent } from '@interfaces/event/available-event';
+import { AddEventFormStep } from '@interfaces/event/add-event-form-step';
+import { Station } from '@interfaces/station/station';
 
 @Component({
   selector: 'app-new-event',

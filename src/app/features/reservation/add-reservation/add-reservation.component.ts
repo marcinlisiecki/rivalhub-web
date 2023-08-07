@@ -1,13 +1,13 @@
 import { Component, Input } from '@angular/core';
-import { Station } from '../../../core/interfaces/Station';
-import { EventType } from '../../../core/interfaces/event';
+import { EventType } from '@interfaces/event/event-type';
 import { categoryTypeToLabel } from '../../../core/utils/event';
 import { STATIONS } from '../../../mock/stations';
 import * as moment from 'moment/moment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OrganizationsService } from '@app/core/services/organizations/organizations.service';
-import { NewReservation } from '@interfaces/reservation';
 import { extractMessage } from '@app/core/utils/apiErrors';
+import { NewReservation } from '@interfaces/reservation/new-reservation';
+import { Station } from '@interfaces/station/station';
 
 @Component({
   selector: 'app-add-reservation',

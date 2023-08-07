@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { AddEventFormStep } from '../../../../core/interfaces/event';
 import { FormGroup } from '@angular/forms';
+import { AddEventFormStep } from '@interfaces/event/add-event-form-step';
 
 @Component({
   selector: 'app-date-selector',

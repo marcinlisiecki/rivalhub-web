@@ -1,10 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import {
-  AddEventFormStep,
-  AvailableEvent,
-  EventType,
-} from '../../../../core/interfaces/event';
+import { EventType } from '@interfaces/event/event-type';
 import { categoryTypeToLabel } from '../../../../core/utils/event';
+import { AvailableEvent } from '@interfaces/event/available-event';
+import { AddEventFormStep } from '@interfaces/event/add-event-form-step';
 
 @Component({
   selector: 'app-category-selector',

@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { MenuItem, MessageService, MenuItemCommandEvent } from 'primeng/api';
 import { AuthService } from '../../services/auth/auth.service';
-
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -10,12 +10,13 @@ import { AuthService } from '../../services/auth/auth.service';
   styleUrls: ['./header.component.scss'],
   providers: [TranslateService, MessageService],
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit, OnDestroy {
   isLoggedIn: boolean = true;
   flagItems: MenuItem[] | undefined;
   profileItems: MenuItem[] | undefined;
   currentLanguage: string = '';
   pathOfFlag: string = '';
+  authServiceSub?: Subscription;
   flag: { [key: string]: string } = {
     pl: 'assets/img/pl-flag.png',
     en: 'assets/img/uk-flag.png',
@@ -25,10 +26,6 @@ export class HeaderComponent {
     private translate: TranslateService,
     private authService: AuthService,
   ) {
-    this.authService.isAuthObservable().subscribe((val: boolean) => {
-      this.isLoggedIn = val;
-    });
-
     this.profileLogoutLangSetter(this.currentLanguage);
 
     //ustawianie localstorage i jezyka domyslnego
@@ -53,6 +50,18 @@ export class HeaderComponent {
       },
     ];
     this.useLanguage(<string>this.currentLanguage);
+  }
+
+  ngOnDestroy(): void {
+    this.authServiceSub?.unsubscribe();
+  }
+
+  ngOnInit(): void {
+    this.authServiceSub = this.authService
+      .isAuthObservable()
+      .subscribe((val: boolean) => {
+        this.isLoggedIn = val;
+      });
   }
 
   useLanguage(lang: string) {

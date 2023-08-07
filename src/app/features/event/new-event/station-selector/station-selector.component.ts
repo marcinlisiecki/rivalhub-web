@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { AddEventFormStep } from '../../../../core/interfaces/event';
-import { Station } from '../../../../core/interfaces/Station';
+import { AddEventFormStep } from '@interfaces/event/add-event-form-step';
+import { Station } from '@interfaces/station/station';
 
 @Component({
   selector: 'app-station-selector',

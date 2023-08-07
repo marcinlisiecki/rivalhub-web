@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { Organization } from '@interfaces/Organization';
+
+import { Organization } from '@interfaces/organization/organization';
 @Component({
   selector: 'app-dashboard-header',
   templateUrl: './dashboard-header.component.html',
