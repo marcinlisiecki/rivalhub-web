@@ -7,6 +7,7 @@ import { EventDto } from '@app/core/interfaces/EventDto';
 import { UserDetailsDto } from '@app/core/interfaces/UserDetailsDto';
 import { PagedResponse } from '@app/core/interfaces/PagedResponse';
 import { Station } from '@interfaces/Station';
+import { EventType } from '@interfaces/event';
 
 @Injectable({
   providedIn: 'root',
@@ -56,6 +57,32 @@ export class OrganizationsService {
   getOrganizationStations(organizationId: number): Observable<Station[]> {
     return this.http.get<Station[]>(
       environment.apiUrl + `/organizations/${organizationId}/stations`,
+    );
+  }
+
+  getAvailableStations(
+    organizationId: number,
+    start: string,
+    end: string,
+    type?: EventType,
+  ): Observable<Station[]> {
+    const params: HttpParams = new HttpParams({
+      fromObject: {
+        onlyAvailable: true,
+        start,
+        end,
+      },
+    });
+
+    if (type) {
+      params.append('type', type);
+    }
+
+    return this.http.get<Station[]>(
+      environment.apiUrl + `/organizations/${organizationId}/stations`,
+      {
+        params,
+      },
     );
   }
 }
