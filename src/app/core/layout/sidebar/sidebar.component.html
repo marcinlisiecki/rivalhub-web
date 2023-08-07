@@ -1,26 +1,37 @@
 <p-sidebar [(visible)]="sidebarVisible" position="right">
     <ng-template pTemplate="header">
+
         <a class="header-logo-wrapper" routerLink="/">
             <img priority ngSrc="assets/img/logo.png" height="40" width="60" alt="Logo" />
         </a>
+
+        <p-button *ngIf="mobileView" styleClass="p-button-secondary" (onClick)="logout()"><i class="pi pi-sign-out"></i></p-button>
+
     </ng-template>
     <ng-template pTemplate="content">
-        <app-sidebar-section *ngIf="mobileView" class="sidebar-section" title="Nawigacja"></app-sidebar-section>
-        <app-section-item *ngIf="mobileView" routerLink="/organizations" icon="pi-briefcase" title="Moje organizacje"
+
+        <app-sidebar-section *ngIf="mobileView" class="sidebar-section"
+            title="Nawigacja"></app-sidebar-section>
+        <app-section-item *ngIf="mobileView && isLoggedIn" routerLink="/organizations" icon="pi-briefcase" title="Moje organizacje"
             class="section-item"></app-section-item>
-        <app-section-item *ngIf="mobileView" routerLink="/organizations/new" icon="pi-plus" title="Dodaj organizację"
+        <app-section-item *ngIf="mobileView && isLoggedIn" routerLink="/organizations/new" icon="pi-plus"
+            title="Dodaj organizację" class="section-item"></app-section-item>
+        <app-section-item *ngIf="mobileView && !isLoggedIn" routerLink="/register" icon="pi-user-plus"
+            title="Rejestracja" class="section-item"></app-section-item>
+        <app-section-item *ngIf="mobileView && !isLoggedIn" routerLink="/login" icon="pi-sign-in"
+            title="Logowanie" class="section-item"></app-section-item>
+
+
+        <app-sidebar-section *ngIf="isLoggedIn" class="sidebar-section" [title]="selectedOrganization"></app-sidebar-section>
+        <app-section-item *ngIf="isLoggedIn" routerLink="/organizations/1" icon="pi-info-circle" title="Moja organizacja"
             class="section-item"></app-section-item>
-        <app-sidebar-section class="sidebar-section" title="NCDC"></app-sidebar-section>
-        <app-section-item routerLink="#" icon="pi-info-circle" title="Moja organizacja" class="section-item"></app-section-item>
-        <app-section-item routerLink="#" icon="pi-globe" title="Ranking" class="section-item"></app-section-item>
-        <app-sidebar-section class="sidebar-section" title="Dominik Matuszewski"></app-sidebar-section>
-        <app-section-item routerLink="#" icon="pi-chart-bar" title="Statystyki" class="section-item"></app-section-item>
-        <app-section-item routerLink="#" icon="pi-car" title="Autko" class="section-item"></app-section-item>
-        <app-section-item routerLink="#" icon="pi-heart-fill" title="Lepsze życie" class="section-item"></app-section-item>
+        <!-- <app-section-item *ngIf="isLoggedIn" routerLink="#" icon="pi-globe" title="Ranking" class="section-item"></app-section-item> -->
+        <app-sidebar-section *ngIf="isLoggedIn" class="sidebar-section" [title]="user.name"></app-sidebar-section>
+        <!-- <app-section-item *ngIf="isLoggedIn" routerLink="#" icon="pi-chart-bar" title="Statystyki" class="section-item"></app-section-item> -->
+
     </ng-template>
-    <ng-template pTemplate="footer">Footer Content</ng-template>
 
 </p-sidebar>
 
-<p-button [@openSidebar]="sidebarVisible" [@sidebarMobile]="mobileView" styleClass="p-button-secondary" class="button-absolute"
-    (click)="toggleSidebar()"><i class="pi pi-align-justify"></i></p-button>
+<p-button [@openSidebar]="sidebarVisible" *ngIf="isLoggedIn || mobileView" [@sidebarMobile]="mobileView" styleClass="p-button-secondary"
+    class="button-absolute" (click)="toggleSidebar()"><i class="pi pi-align-justify"></i></p-button>
