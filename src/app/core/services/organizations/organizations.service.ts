@@ -10,6 +10,7 @@ import { PagedResponse } from '@interfaces/generic/paged-response';
 import { NewReservation } from '@interfaces/reservation/new-reservation';
 import { Station } from '@interfaces/station/station';
 import { UserDetailsDto } from '@interfaces/user/user-details-dto';
+import { Reservation } from '@interfaces/reservation/reservation';
 
 @Injectable({
   providedIn: 'root',
@@ -59,6 +60,14 @@ export class OrganizationsService {
   getOrganizationStations(organizationId: number): Observable<Station[]> {
     return this.http.get<Station[]>(
       environment.apiUrl + `/organizations/${organizationId}/stations`,
+    );
+  }
+
+  getOrganizationReservations(
+    organizationId: number,
+  ): Observable<Reservation[]> {
+    return this.http.get<Reservation[]>(
+      environment.apiUrl + `/organizations/${organizationId}/reservations`,
     );
   }
 
