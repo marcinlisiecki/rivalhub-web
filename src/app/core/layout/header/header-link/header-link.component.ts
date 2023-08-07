@@ -6,5 +6,5 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./header-link.component.scss'],
 })
 export class HeaderLinkComponent {
-  @Input() href: string = '';
+  @Input() routerLink: string = '';
 }

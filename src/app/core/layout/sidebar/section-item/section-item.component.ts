@@ -7,6 +7,6 @@ import { Component, Input } from '@angular/core';
 })
 export class SectionItemComponent {
   @Input({ required: true }) icon!: string;
-  @Input({ required: true }) link!: string;
+  @Input({ required: true }) routerLink!: string;
   @Input({ required: true }) title!: string;
 }

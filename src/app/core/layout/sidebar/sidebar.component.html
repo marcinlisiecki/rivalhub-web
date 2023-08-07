@@ -1,14 +1,26 @@
 <p-sidebar [(visible)]="sidebarVisible" position="right">
-    
-    <app-header *ngIf="mobileView"></app-header>
-    <app-sidebar-section class="sidebar-section" title="NCDC"></app-sidebar-section>
-    <app-section-item link="#" icon="pi-briefcase" title="Moja organizacja" class="section-item"></app-section-item>
-    <app-section-item link="#" icon="pi-globe" title="Ranking" class="section-item"></app-section-item>
-    <app-sidebar-section class="sidebar-section" title="Dominik Matuszewski"></app-sidebar-section>
-    <app-section-item link="#" icon="pi-chart-bar" title="Statystyki" class="section-item"></app-section-item>
-    <app-section-item link="#" icon="pi-car" title="Autko" class="section-item"></app-section-item>
-    <app-section-item link="#" icon="pi-heart-fill" title="Lepsze życie" class="section-item"></app-section-item>
+    <ng-template pTemplate="header">
+        <a class="header-logo-wrapper" routerLink="/">
+            <img priority ngSrc="assets/img/logo.png" height="40" width="60" alt="Logo" />
+        </a>
+    </ng-template>
+    <ng-template pTemplate="content">
+        <app-sidebar-section *ngIf="mobileView" class="sidebar-section" title="Nawigacja"></app-sidebar-section>
+        <app-section-item *ngIf="mobileView" routerLink="/organizations" icon="pi-briefcase" title="Moje organizacje"
+            class="section-item"></app-section-item>
+        <app-section-item *ngIf="mobileView" routerLink="/organizations/new" icon="pi-plus" title="Dodaj organizację"
+            class="section-item"></app-section-item>
+        <app-sidebar-section class="sidebar-section" title="NCDC"></app-sidebar-section>
+        <app-section-item routerLink="#" icon="pi-info-circle" title="Moja organizacja" class="section-item"></app-section-item>
+        <app-section-item routerLink="#" icon="pi-globe" title="Ranking" class="section-item"></app-section-item>
+        <app-sidebar-section class="sidebar-section" title="Dominik Matuszewski"></app-sidebar-section>
+        <app-section-item routerLink="#" icon="pi-chart-bar" title="Statystyki" class="section-item"></app-section-item>
+        <app-section-item routerLink="#" icon="pi-car" title="Autko" class="section-item"></app-section-item>
+        <app-section-item routerLink="#" icon="pi-heart-fill" title="Lepsze życie" class="section-item"></app-section-item>
+    </ng-template>
+    <ng-template pTemplate="footer">Footer Content</ng-template>
+
 </p-sidebar>
 
-<p-button [@openSidebar]="sidebarVisible" styleClass="p-button-secondary" class="button-absolute"
+<p-button [@openSidebar]="sidebarVisible" [@sidebarMobile]="mobileView" styleClass="p-button-secondary" class="button-absolute"
     (click)="toggleSidebar()"><i class="pi pi-align-justify"></i></p-button>

@@ -1,11 +1,14 @@
 import { Component } from '@angular/core';
-import { navAnimation } from 'src/app/core/animations/sidebar-animation';
+import {
+  navBtnAnimation,
+  navBtnAnimationMobile,
+} from 'src/app/core/animations/sidebar-animation';
 import { ViewService } from '@app/core/services/view/view.service';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
-  animations: [navAnimation],
+  animations: [navBtnAnimation, navBtnAnimationMobile],
 })
 export class SidebarComponent {
   sidebarVisible: boolean = false;
