@@ -14,9 +14,16 @@ import { CategorySelectorComponent } from './new-event/category-selector/categor
 import { BasicInfoComponent } from './new-event/basic-info/basic-info.component';
 import { DateSelectorComponent } from './new-event/date-selector/date-selector.component';
 import { StationSelectorComponent } from './new-event/station-selector/station-selector.component';
+import {ProgressSpinnerModule} from "primeng/progressspinner";
 
 @NgModule({
-  declarations: [NewEventComponent, CategorySelectorComponent, BasicInfoComponent, DateSelectorComponent, StationSelectorComponent],
+  declarations: [
+    NewEventComponent,
+    CategorySelectorComponent,
+    BasicInfoComponent,
+    DateSelectorComponent,
+    StationSelectorComponent,
+  ],
   imports: [
     CommonModule,
     CardModule,
@@ -29,6 +36,7 @@ import { StationSelectorComponent } from './new-event/station-selector/station-s
     ReactiveFormsModule,
     FormsModule,
     SharedModule,
+    ProgressSpinnerModule,
   ],
 })
 export class EventModule {}

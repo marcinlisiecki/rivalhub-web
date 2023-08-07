@@ -14,6 +14,9 @@ import {
   AVAILABLE_EVENTS,
 } from '../../../core/constants/event';
 import { categoryTypeToLabel } from '../../../core/utils/event';
+import * as moment from 'moment';
+import { OrganizationsService } from '@app/core/services/organizations/organizations.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-new-event',
@@ -29,7 +32,7 @@ export class NewEventComponent {
   events: AvailableEvent[] = AVAILABLE_EVENTS;
   selectedEventType: EventType | null = null;
 
-  stations: Station[] = STATIONS;
+  stations: Station[] | null = null;
   selectedStations: string[] = [];
 
   dateError: string | null = null;
@@ -51,9 +54,16 @@ export class NewEventComponent {
     ),
   });
 
-  getOnlyCategoryStations(): Station[] {
-    return this.stations.filter(
-      (station) => station.type === this.selectedEventType,
+  constructor(
+    private organizationService: OrganizationsService,
+    private route: ActivatedRoute,
+  ) {}
+
+  getOnlyCategoryStations(): Station[] | null {
+    return (
+      this.stations?.filter(
+        (station) => station.type === this.selectedEventType,
+      ) || null
     );
   }
 
@@ -69,9 +79,60 @@ export class NewEventComponent {
     return true;
   }
 
+  fetchAvailableStations() {
+    this.stations = null;
+
+    const startDate = this.dateForm.get('startDate')?.value;
+    const endDate = this.dateForm.get('endDate')?.value;
+
+    const formattedStartDate: string =
+      moment(startDate).format('DD-MM-yyyy HH:mm');
+    const formattedEndDate: string = moment(endDate).format('DD-MM-yyyy HH:mm');
+    const organizationId: number = this.route.snapshot.params['id'];
+
+    if (this.selectedEventType === null) {
+      return;
+    }
+
+    setTimeout(() => {
+      if (this.selectedEventType === null) {
+        return;
+      }
+
+      this.organizationService
+        .getAvailableStations(
+          organizationId,
+          formattedStartDate,
+          formattedEndDate,
+          this.selectedEventType,
+        )
+        .subscribe({
+          next: (stations: Station[]) => {
+            this.stations = stations;
+          },
+        });
+    }, 1000);
+  }
+
+  toggleSelectedStation(idNumber: number) {
+    const id = idNumber.toString();
+
+    if (this.selectedStations.includes(id)) {
+      this.selectedStations.splice(this.selectedStations.indexOf(id), 1);
+      return;
+    }
+
+    this.selectedStations.push(id);
+  }
+
   setFormStep(nextStep: AddEventFormStep): void {
     if (nextStep === AddEventFormStep.RESERVATION && !this.validateDates()) {
       return;
+    }
+
+    if (nextStep === AddEventFormStep.RESERVATION) {
+      this.fetchAvailableStations();
+      this.selectedStations = [];
     }
 
     this.formStepIndex = nextStep;

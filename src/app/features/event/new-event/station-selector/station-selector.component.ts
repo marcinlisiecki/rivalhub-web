@@ -9,11 +9,12 @@ import { Station } from '../../../../core/interfaces/Station';
 })
 export class StationSelectorComponent {
   @Input() categoryLabel!: string;
-  @Input() stations!: Station[];
+  @Input() stations: Station[] | null = null;
   @Input() selectedStations!: string[];
 
   @Output() setFormStep: EventEmitter<AddEventFormStep> =
     new EventEmitter<AddEventFormStep>();
+  @Output() toggleStation: EventEmitter<number> = new EventEmitter<number>();
 
   protected readonly AddEventFormStep = AddEventFormStep;
   protected readonly String = String;
