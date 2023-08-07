@@ -32,7 +32,7 @@ export class NewEventComponent {
   events: AvailableEvent[] = AVAILABLE_EVENTS;
   selectedEventType: EventType | null = null;
 
-  stations: Station[] = [];
+  stations: Station[] | null = null;
   selectedStations: string[] = [];
 
   dateError: string | null = null;
@@ -59,9 +59,11 @@ export class NewEventComponent {
     private route: ActivatedRoute,
   ) {}
 
-  getOnlyCategoryStations(): Station[] {
-    return this.stations.filter(
-      (station) => station.type === this.selectedEventType,
+  getOnlyCategoryStations(): Station[] | null {
+    return (
+      this.stations?.filter(
+        (station) => station.type === this.selectedEventType,
+      ) || null
     );
   }
 
@@ -78,6 +80,8 @@ export class NewEventComponent {
   }
 
   fetchAvailableStations() {
+    this.stations = null;
+
     const startDate = this.dateForm.get('startDate')?.value;
     const endDate = this.dateForm.get('endDate')?.value;
 
@@ -90,18 +94,24 @@ export class NewEventComponent {
       return;
     }
 
-    this.organizationService
-      .getAvailableStations(
-        organizationId,
-        formattedStartDate,
-        formattedEndDate,
-        this.selectedEventType,
-      )
-      .subscribe({
-        next: (stations: Station[]) => {
-          this.stations = stations;
-        },
-      });
+    setTimeout(() => {
+      if (this.selectedEventType === null) {
+        return;
+      }
+
+      this.organizationService
+        .getAvailableStations(
+          organizationId,
+          formattedStartDate,
+          formattedEndDate,
+          this.selectedEventType,
+        )
+        .subscribe({
+          next: (stations: Station[]) => {
+            this.stations = stations;
+          },
+        });
+    }, 1000);
   }
 
   setFormStep(nextStep: AddEventFormStep): void {
