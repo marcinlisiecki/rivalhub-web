@@ -3,6 +3,9 @@ import { Station } from '../../../core/interfaces/Station';
 import { EventType } from '../../../core/interfaces/event';
 import { categoryTypeToLabel } from '../../../core/utils/event';
 import { STATIONS } from '../../../mock/stations';
+import * as moment from 'moment/moment';
+import { ActivatedRoute } from '@angular/router';
+import { OrganizationsService } from '@app/core/services/organizations/organizations.service';
 
 @Component({
   selector: 'app-add-reservation',
@@ -12,9 +15,9 @@ import { STATIONS } from '../../../mock/stations';
 export class AddReservationComponent {
   @Input() isInModal: boolean = false;
 
-  stations: Station[] = STATIONS;
+  stations: Station[] | null = null;
 
-  types = new Set(this.stations.map((station) => station.type));
+  types: Set<string> = new Set<string>();
   selectedStations: string[] = [];
   date: any;
   startTime: Date = new Date();
@@ -24,11 +27,48 @@ export class AddReservationComponent {
   emptyData: boolean = false;
   today: Date = new Date();
 
-  getCategoryStations(category: EventType) {
-    return this.stations.filter((station) => station.type === category);
+  constructor(
+    private route: ActivatedRoute,
+    private organizationService: OrganizationsService,
+  ) {}
+
+  fetchAvailableStations() {
+    this.stations = null;
+
+    const formattedStartDate: string = moment(this.startTime).format(
+      'DD-MM-yyyy HH:mm',
+    );
+    const formattedEndDate: string = moment(this.finishTime).format(
+      'DD-MM-yyyy HH:mm',
+    );
+    const organizationId: number = this.route.snapshot.params['id'];
+
+    setTimeout(() => {
+      this.organizationService
+        .getAvailableStations(
+          organizationId,
+          formattedStartDate,
+          formattedEndDate,
+        )
+        .subscribe({
+          next: (stations: Station[]) => {
+            this.types = new Set(stations.map((station) => station.type));
+
+            this.stations = stations;
+          },
+        });
+    }, 1000);
+  }
+
+  getCategoryStations(category: EventType | string): Station[] | null {
+    return (
+      this.stations?.filter((station) => station.type === category) || null
+    );
   }
 
   onSubmit() {
+    this.stations = null;
+
     if (this.startTime == null || this.finishTime == null) {
       this.emptyData = true;
       return;
@@ -41,7 +81,8 @@ export class AddReservationComponent {
       this.invalidDate = false;
       this.readyDateAndValid = true;
     }
-    return;
+
+    this.fetchAvailableStations();
   }
 
   protected readonly categoryTypeToLabel = categoryTypeToLabel;

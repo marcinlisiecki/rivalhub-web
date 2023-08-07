@@ -41,16 +41,27 @@
     </p-button>
   </div>
 
-  <div class="form-container" *ngIf="readyDateAndValid">
+  <div
+    class="form-container"
+    *ngIf="readyDateAndValid && stations !== null && stations.length !== 0"
+  >
     <li class="form-container-list" *ngFor="let category of types">
       <app-category-stations-selector
         [categoryLabel]="categoryTypeToLabel(category)"
-        [stations]="getCategoryStations(category)"
+        [stations]="getCategoryStations(category) || []"
         [selectedStations]="selectedStations"
       >
       </app-category-stations-selector>
     </li>
   </div>
+
+  <app-centered-spinner
+    *ngIf="readyDateAndValid && stations === null"
+  ></app-centered-spinner>
+
+  <app-no-available-stations
+    *ngIf="readyDateAndValid && stations !== null && stations.length === 0"
+  ></app-no-available-stations>
 
   <p-button>Zapisz</p-button>
 </section>
