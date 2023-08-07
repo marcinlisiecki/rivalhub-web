@@ -1,6 +1,5 @@
 import {
   animate,
-  animation,
   keyframes,
   state,
   style,

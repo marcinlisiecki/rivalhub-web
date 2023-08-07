@@ -1,0 +1,14 @@
+<p-sidebar [(visible)]="sidebarVisible" position="right">
+    
+    <app-header *ngIf="mobileView"></app-header>
+    <app-sidebar-section class="sidebar-section" title="NCDC"></app-sidebar-section>
+    <app-section-item link="#" icon="pi-briefcase" title="Moja organizacja" class="section-item"></app-section-item>
+    <app-section-item link="#" icon="pi-globe" title="Ranking" class="section-item"></app-section-item>
+    <app-sidebar-section class="sidebar-section" title="Dominik Matuszewski"></app-sidebar-section>
+    <app-section-item link="#" icon="pi-chart-bar" title="Statystyki" class="section-item"></app-section-item>
+    <app-section-item link="#" icon="pi-car" title="Autko" class="section-item"></app-section-item>
+    <app-section-item link="#" icon="pi-heart-fill" title="Lepsze życie" class="section-item"></app-section-item>
+</p-sidebar>
+
+<p-button [@openSidebar]="sidebarVisible" styleClass="p-button-secondary" class="button-absolute"
+    (click)="toggleSidebar()"><i class="pi pi-align-justify"></i></p-button>

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { MenuItem, MessageService, MenuItemCommandEvent } from 'primeng/api';
 import { AuthService } from '../../services/auth/auth.service';
-
+import { ViewService } from '@app/core/services/view/view.service';
 
 @Component({
   selector: 'app-header',
@@ -20,10 +20,18 @@ export class HeaderComponent {
     pl: 'assets/img/pl-flag.png',
     en: 'assets/img/uk-flag.png',
   };
+  mobileView!: boolean;
+  ngOnInit() {
+    this.mobileView = this.viewService.mobileView;
+    this.viewService.resizeEvent.subscribe((value: boolean) => {
+      this.mobileView = value;
+    });
+  }
 
   constructor(
     private translate: TranslateService,
     private authService: AuthService,
+    private viewService: ViewService,
   ) {
     this.authService.isAuthObservable().subscribe((val: boolean) => {
       this.isLoggedIn = val;

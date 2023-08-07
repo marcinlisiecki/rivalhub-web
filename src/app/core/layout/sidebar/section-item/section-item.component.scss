@@ -1,0 +1,15 @@
+@import 'src/scss/variables';
+
+.item-link {
+    color: $textSecondaryColor;
+    text-decoration: none;
+    font-size: $textSm;
+    transition: color 0.3s;
+    display: block;
+    padding:15px;
+    width: 100%;
+
+    &:hover {
+        color: $textColor;
+    }
+}
