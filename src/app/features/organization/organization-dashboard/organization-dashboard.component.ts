@@ -9,6 +9,7 @@ import { Organization } from '@interfaces/organization/organization';
 import { PagedResponse } from '@interfaces/generic/paged-response';
 import { UserDetailsDto } from '@interfaces/user/user-details-dto';
 import { Subscription } from 'rxjs';
+import { Reservation } from '@interfaces/reservation/reservation';
 
 @Component({
   selector: 'app-organization-dashboard',
@@ -19,6 +20,7 @@ import { Subscription } from 'rxjs';
 export class OrganizationDashboardComponent implements OnInit, OnDestroy {
   navVisible: boolean = false;
   mobileView!: boolean;
+  reservations: Reservation[] = [];
   events: EventDto[] = [
     {
       id: 1,
@@ -72,7 +74,26 @@ export class OrganizationDashboardComponent implements OnInit, OnDestroy {
 
     this.getOrganizationInfo();
     this.getOrganizationUsers();
+    this.getOrganizationReservations();
     // this.getOrgzationEvents();
+  }
+
+  getOrganizationReservations() {
+    this.organizationsService.getOrganizationReservations(this.id).subscribe({
+      next: (res: Reservation[]) => {
+        // Only temporarily TODO
+        const alreadyAdded: number[] = [];
+
+        for (const reservation of res) {
+          if (alreadyAdded.includes(reservation.id)) {
+            continue;
+          }
+
+          alreadyAdded.push(reservation.id);
+          this.reservations.push(reservation);
+        }
+      },
+    });
   }
 
   ngOnDestroy(): void {

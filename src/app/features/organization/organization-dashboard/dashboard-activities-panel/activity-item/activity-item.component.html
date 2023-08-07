@@ -1,7 +1,15 @@
-    <p class="name">{{event.name}}</p>
-    <p class="place">{{event.place}}</p>
-    <p class="participants">{{event.participantIds.length}} użytkowników bierze dział</p>
-    <div class="bottom">
-        <p class="date">{{event.date.toLocaleDateString()}} {{event.beginEndTime}}</p>
-        <p-button styleClass="p-button-secondary">Zobacz wydarzenie</p-button>
-    </div>
+<p class="name">Rezerwacja</p>
+<div class="content">
+  <div class="stations">
+    <p *ngFor="let station of reservation.stationList">
+      {{ station.name }}
+    </p>
+  </div>
+  <div class="bottom">
+    <p class="date">
+      {{ moment(reservation.startTime).format('DD.MM.yyyy HH:mm') }} -
+      {{ moment(reservation.endTime).format('DD.MM.yyyy HH:mm') }}
+    </p>
+    <p-button styleClass="p-button-secondary">Zobacz wydarzenie</p-button>
+  </div>
+</div>
