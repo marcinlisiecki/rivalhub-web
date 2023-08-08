@@ -1,20 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { EventType } from '@interfaces/event/event-type';
 import { DialogService } from 'primeng/dynamicdialog';
-import { STATIONS } from '../../../mock/stations';
 import { MenuItem } from 'primeng/api';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import {
-  ADD_EVENT_FORM_STEPS,
-  AVAILABLE_EVENTS,
-} from '../../../core/constants/event';
-import { categoryTypeToLabel } from '../../../core/utils/event';
-import * as moment from 'moment';
+import { AVAILABLE_EVENTS } from '@app/core/constants/event';
+import { categoryTypeToLabel } from '@app/core/utils/event';
 import { OrganizationsService } from '@app/core/services/organizations/organizations.service';
 import { ActivatedRoute } from '@angular/router';
 import { AvailableEvent } from '@interfaces/event/available-event';
 import { AddEventFormStep } from '@interfaces/event/add-event-form-step';
 import { Station } from '@interfaces/station/station';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-new-event',
@@ -22,9 +18,9 @@ import { Station } from '@interfaces/station/station';
   styleUrls: ['./new-event.component.scss'],
   providers: [DialogService],
 })
-export class NewEventComponent {
+export class NewEventComponent implements OnInit {
   formStep: AddEventFormStep = AddEventFormStep.CATEGORY;
-  formSteps: MenuItem[] = ADD_EVENT_FORM_STEPS;
+  formSteps: MenuItem[] = [];
   formStepIndex: number = 0;
 
   events: AvailableEvent[] = AVAILABLE_EVENTS;
@@ -55,7 +51,30 @@ export class NewEventComponent {
   constructor(
     private organizationService: OrganizationsService,
     private route: ActivatedRoute,
+    private translateService: TranslateService,
   ) {}
+
+  ngOnInit(): void {
+    this.setStepsMenu();
+    this.translateService.onLangChange.subscribe(() => this.setStepsMenu());
+  }
+
+  setStepsMenu() {
+    this.formSteps = [
+      {
+        label: this.translateService.instant('event.new.steps.category'),
+      },
+      {
+        label: this.translateService.instant('event.new.steps.info'),
+      },
+      {
+        label: this.translateService.instant('event.new.steps.date'),
+      },
+      {
+        label: this.translateService.instant('event.new.steps.reservation'),
+      },
+    ];
+  }
 
   getOnlyCategoryStations(): Station[] | null {
     return (
