@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./hero.component.scss'],
 })
 export class HeroComponent {
-  value: boolean;
+  value!: boolean;
 
   constructor(
     private authService: AuthService,
@@ -17,7 +17,7 @@ export class HeroComponent {
     if (this.value) {
       setTimeout(() => {
         this.router.navigateByUrl('/organizations').then();
-      }, 3000);
+      }, 1000);
     }
   }
 }
