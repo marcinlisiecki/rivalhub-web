@@ -1,26 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AuthService } from '@app/core/services/auth/auth.service';
 import { Router } from '@angular/router';
-
 @Component({
   selector: 'app-hero',
   templateUrl: './hero.component.html',
   styleUrls: ['./hero.component.scss'],
 })
-export class HeroComponent implements OnInit {
-  value!: boolean;
+export class HeroComponent {
+  value: boolean;
 
   constructor(
     private authService: AuthService,
     private router: Router,
-  ) {}
-
-  ngOnInit(): void {
+  ) {
     this.value = this.authService.isAuth();
-
     if (this.value) {
       setTimeout(() => {
-        this.router.navigateByUrl('/my-organizations').then();
+        this.router.navigateByUrl('/organizations').then();
       }, 3000);
     }
   }

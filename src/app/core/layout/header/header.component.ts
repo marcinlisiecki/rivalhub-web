@@ -1,15 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { MenuItem, MessageService, MenuItemCommandEvent } from 'primeng/api';
-import { AuthService } from '../../services/auth/auth.service';
-import { ViewService } from '@app/core/services/view/view.service';
+import { MenuItem } from 'primeng/api';
+import { AuthService } from '@app/core/services/auth/auth.service';
 import { Subscription } from 'rxjs';
+import { ViewService } from '@app/core/services/view/view.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
-  providers: [TranslateService, MessageService],
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   isLoggedIn: boolean = true;
@@ -17,28 +16,34 @@ export class HeaderComponent implements OnInit, OnDestroy {
   profileItems: MenuItem[] | undefined;
   currentLanguage: string = '';
   pathOfFlag: string = '';
-  authServiceSub?: Subscription;
   flag: { [key: string]: string } = {
     pl: 'assets/img/pl-flag.png',
     en: 'assets/img/uk-flag.png',
   };
   mobileView!: boolean;
+  authSubscription: Subscription | undefined;
+  mobileViewSubscription: Subscription | undefined;
 
   constructor(
     private translate: TranslateService,
     private authService: AuthService,
     private viewService: ViewService,
-  ) {
-    this.profileLogoutLangSetter(this.currentLanguage);
+  ) {}
 
-    //ustawianie localstorage i jezyka domyslnego
-    if (localStorage.getItem('currentLanguage') === null) {
-      this.currentLanguage = <string>translate.getBrowserLang();
-      this.pathOfFlag = this.flag[this.currentLanguage];
-      localStorage.setItem('currentLanguage', this.currentLanguage);
-    } else {
-      this.currentLanguage = <string>localStorage.getItem('currentLanguage');
-    }
+  ngOnInit() {
+    this.authSubscription = this.authService
+      .isAuthObservable()
+      .subscribe((val: boolean) => {
+        this.isLoggedIn = val;
+      });
+    this.mobileView = this.viewService.mobileView;
+    this.viewService.resizeEvent.subscribe((value: boolean) => {
+      this.mobileView = value;
+    });
+
+    this.profileLogoutLangSetter(this.currentLanguage);
+    this.setDefaultLanguage();
+
     // items dla menu
     this.flagItems = [
       {
@@ -56,24 +61,21 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.authServiceSub?.unsubscribe();
+    this.authSubscription?.unsubscribe();
+    this.mobileViewSubscription?.unsubscribe();
   }
 
-  ngOnInit(): void {
-    this.authServiceSub = this.authService
-      .isAuthObservable()
-      .subscribe((val: boolean) => {
-        this.isLoggedIn = val;
-      });
-
-    this.mobileView = this.viewService.mobileView;
-    this.viewService.resizeEvent.subscribe((value: boolean) => {
-      this.mobileView = value;
-    });
+  setDefaultLanguage(): void {
+    if (localStorage.getItem('currentLanguage') === null) {
+      this.currentLanguage = <string>this.translate.getBrowserLang();
+      this.pathOfFlag = this.flag[this.currentLanguage];
+      localStorage.setItem('currentLanguage', this.currentLanguage);
+    } else {
+      this.currentLanguage = <string>localStorage.getItem('currentLanguage');
+    }
   }
-
   useLanguage(lang: string) {
-    //ustawienie wybranego jezyka
+
     this.pathOfFlag = this.flag[lang];
     this.translate.use(lang);
     this.currentLanguage = lang;

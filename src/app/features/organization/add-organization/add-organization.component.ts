@@ -2,9 +2,9 @@ import { Component, Input } from '@angular/core';
 import { FileSelectEvent } from 'primeng/fileupload';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { subscribeOn } from 'rxjs';
-import { OrganizationsService } from '../../../core/services/organizations/organizations.service';
+import { OrganizationsService } from '@app/core/services/organizations/organizations.service';
 import { Router } from '@angular/router';
-import { extractMessage } from '../../../core/utils/apiErrors';
+import { extractMessage } from '@app/core/utils/apiErrors';
 import { NewOrganization } from '@interfaces/organization/new-organization';
 
 @Component({
