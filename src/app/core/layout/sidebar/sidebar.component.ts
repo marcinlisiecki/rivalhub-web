@@ -5,7 +5,7 @@ import {
 } from 'src/app/core/animations/sidebar-animation';
 import { ViewService } from '@app/core/services/view/view.service';
 import { AuthService } from '@app/core/services/auth/auth.service';
-import { UserDetailsDto } from '@app/core/interfaces/UserDetailsDto';
+import { UserDetailsDto } from '@app/core/interfaces/user/user-details-dto';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
