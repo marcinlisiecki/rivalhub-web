@@ -20,7 +20,7 @@ export class HeroComponent implements OnInit {
 
     if (this.value) {
       setTimeout(() => {
-        this.router.navigateByUrl('/my-organizations').then();
+        this.router.navigateByUrl('/organizations').then();
       }, 3000);
     }
   }
