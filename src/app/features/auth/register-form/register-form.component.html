@@ -1,4 +1,4 @@
-<p-card header="Rejestracja" styleClass="centered-form">
+<p-card [header]="'header.register' | translate" styleClass="centered-form">
   <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
     <div class="input-box">
       <label for="email">{{ 'input.email' | translate }}</label>

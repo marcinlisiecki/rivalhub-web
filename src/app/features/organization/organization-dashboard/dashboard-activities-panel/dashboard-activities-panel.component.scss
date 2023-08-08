@@ -1,8 +1,14 @@
 @import 'src/scss/variables';
+
+.list-wrapper {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+}
+
 .item-container {
-    border: $dashboardBorder;
-    border-radius: $dashboardRadius;
-    margin: 5px;
-    padding: 5px 25px;
-    background-color: $panelContentBg;
+  border: $dashboardBorder;
+  border-radius: $dashboardRadius;
+  padding: 1rem;
+  background-color: $panelContentBg;
 }

@@ -12,6 +12,14 @@ export class JwtService {
     return this.cookieService.get('token');
   }
 
+  setToken(token: string) {
+    this.cookieService.put('token', token);
+  }
+
+  removeToken() {
+    this.cookieService.remove('token');
+  }
+
   decodeToken(token: string) {
     return jwtDecode(token);
   }

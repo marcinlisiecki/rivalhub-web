@@ -4,16 +4,17 @@
   max-width: $nonBgFormWidth;
   margin: 4rem auto;
   display: flex;
-  align-items: flex-start;
+  align-items: stretch;
   flex-direction: column;
+  row-gap: 1rem;
+
   .invalid-data {
     color: $primaryDarkColor;
   }
   .form-container {
     display: flex;
-    align-items: flex-start; 
+    align-items: flex-start;
     flex-direction: column;
-    margin-bottom: 20px;
     &-input {
       width: 450px;
       padding: 0px;
@@ -24,6 +25,8 @@
     &-list {
       list-style-type: none;
       margin: 3px;
+      width: 100%;
+      display: block;
       &-element {
         margin: 0px;
         padding: 0px;

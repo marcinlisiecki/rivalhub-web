@@ -14,9 +14,17 @@ import { AnimateModule } from 'primeng/animate';
 import { CategoryStationsSelectorComponent } from './category-stations-selector/category-stations-selector.component';
 import { CheckboxModule } from 'primeng/checkbox';
 import { FormsModule } from '@angular/forms';
+import { NoAvailableStationsComponent } from './no-available-stations/no-available-stations.component';
+import { CenteredSpinnerComponent } from './centered-spinner/centered-spinner.component';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @NgModule({
-  declarations: [ValidationErrorComponent, CategoryStationsSelectorComponent],
+  declarations: [
+    ValidationErrorComponent,
+    CategoryStationsSelectorComponent,
+    NoAvailableStationsComponent,
+    CenteredSpinnerComponent,
+  ],
   exports: [
     ValidationErrorComponent,
     CardModule,
@@ -30,6 +38,8 @@ import { FormsModule } from '@angular/forms';
     SidebarModule,
     ToggleButtonModule,
     AnimateModule,
+    CenteredSpinnerComponent,
+    NoAvailableStationsComponent,
   ],
   imports: [
     CommonModule,
@@ -45,6 +55,7 @@ import { FormsModule } from '@angular/forms';
     AnimateModule,
     CheckboxModule,
     FormsModule,
+    ProgressSpinnerModule,
   ],
 })
 export class SharedModule {}

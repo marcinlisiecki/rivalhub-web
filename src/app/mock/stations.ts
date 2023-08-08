@@ -1,5 +1,5 @@
-import { Station } from '../core/interfaces/Station';
-import { EventType } from '../core/interfaces/event';
+import { EventType } from '@interfaces/event/event-type';
+import { Station } from '@interfaces/station/station';
 
 export const STATIONS: Station[] = [
   {

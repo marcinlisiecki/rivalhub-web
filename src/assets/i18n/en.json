@@ -8,7 +8,7 @@
 	"header.organisationAdd": "Add an organization",
 	"header.organisationShow": "My organizations",
 	"header.profile": "Profile",
-	"header.register": "Registration",
+	"header.register": "Sign up",
 	"input.email": "Email adress",
 	"input.emailError": " Incorrect email address",
 	"input.emailWarning": "Email address is required",

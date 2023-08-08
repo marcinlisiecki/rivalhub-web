@@ -4,11 +4,20 @@
   </header>
 
   <app-category-stations-selector
+    *ngIf="stations !== null && stations.length !== 0"
     [stations]="stations"
     [selectedStations]="selectedStations"
     [categoryLabel]="categoryLabel"
+    (toggleStation)="toggleStation.emit($event)"
   >
   </app-category-stations-selector>
+
+  <app-centered-spinner *ngIf="stations === null"> </app-centered-spinner>
+
+  <app-no-available-stations
+    *ngIf="stations !== null && stations?.length === 0"
+  >
+  </app-no-available-stations>
 
   <p-divider></p-divider>
 

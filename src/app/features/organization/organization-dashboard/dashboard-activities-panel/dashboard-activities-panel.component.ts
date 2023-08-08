@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { EventDto } from '@interfaces/EventDto';
+
+import { Reservation } from '@interfaces/reservation/reservation';
 
 @Component({
   selector: 'app-dashboard-activities-panel',
@@ -7,5 +8,5 @@ import { EventDto } from '@interfaces/EventDto';
   styleUrls: ['./dashboard-activities-panel.component.scss'],
 })
 export class DashboardActivitiesPanelComponent {
-  @Input({ required: true }) events!: EventDto[];
+  @Input({ required: true }) reservations!: Reservation[];
 }
