@@ -6,34 +6,24 @@ import { HeaderLinkComponent } from './header/header-link/header-link.component'
 import { MenuModule } from 'primeng/menu';
 import { ToastModule } from 'primeng/toast';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { BrowserModule } from '@angular/platform-browser';
-import { ButtonModule } from 'primeng/button';
+import {ButtonModule} from "primeng/button";
+import {SharedModule} from "@app/shared/shared.module";
+import {TranslateModule} from "@ngx-translate/core";
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { SidebarSectionComponent } from './sidebar/sidebar-section/sidebar-section.component';
 import { SectionItemComponent } from './sidebar/section-item/section-item.component';
 import { SidebarModule } from 'primeng/sidebar';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 
-export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
-}
+
 @NgModule({
-  declarations: [
-    HeaderComponent,
-    HeaderLinkComponent,
-    SidebarComponent,
+  declarations: [HeaderComponent, HeaderLinkComponent,SidebarComponent,
     SidebarSectionComponent,
-    SectionItemComponent,
-  ],
-  exports: [
-    HeaderComponent,
-    HeaderLinkComponent,
-    SidebarComponent,
+    SectionItemComponent,],
+  exports: [HeaderComponent, HeaderLinkComponent,SidebarComponent,
     SidebarModule,
-    ToggleButtonModule,
-  ],
+    ToggleButtonModule,],
   imports: [
     BrowserModule,
     CommonModule,
@@ -43,16 +33,11 @@ export function HttpLoaderFactory(http: HttpClient) {
     MenuModule,
     ToastModule,
     HttpClientModule,
+    ButtonModule,
+    SharedModule,
+    TranslateModule,
     SidebarModule,
     ToggleButtonModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient],
-      },
-    }),
-    ButtonModule,
   ],
 })
 export class LayoutModule {}
