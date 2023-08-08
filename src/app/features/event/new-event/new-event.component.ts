@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { EventType } from '@interfaces/event/event-type';
 import { DialogService } from 'primeng/dynamicdialog';
 import { MenuItem } from 'primeng/api';
@@ -11,6 +11,7 @@ import { AvailableEvent } from '@interfaces/event/available-event';
 import { AddEventFormStep } from '@interfaces/event/add-event-form-step';
 import { Station } from '@interfaces/station/station';
 import { TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-new-event',
@@ -18,7 +19,7 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./new-event.component.scss'],
   providers: [DialogService],
 })
-export class NewEventComponent implements OnInit {
+export class NewEventComponent implements OnInit, OnDestroy {
   formStep: AddEventFormStep = AddEventFormStep.CATEGORY;
   formSteps: MenuItem[] = [];
   formStepIndex: number = 0;
@@ -30,6 +31,8 @@ export class NewEventComponent implements OnInit {
   selectedStations: string[] = [];
 
   dateError: string | null = null;
+
+  onLangChangeSub?: Subscription;
 
   basicInfoForm: FormGroup = new FormGroup({
     name: new FormControl('', [
@@ -56,7 +59,13 @@ export class NewEventComponent implements OnInit {
 
   ngOnInit(): void {
     this.setStepsMenu();
-    this.translateService.onLangChange.subscribe(() => this.setStepsMenu());
+    this.onLangChangeSub = this.translateService.onLangChange.subscribe(() =>
+      this.setStepsMenu(),
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.onLangChangeSub?.unsubscribe();
   }
 
   setStepsMenu() {
