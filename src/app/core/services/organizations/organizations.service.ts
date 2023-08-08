@@ -106,4 +106,16 @@ export class OrganizationsService {
       reservation,
     );
   }
+
+  sendInvitation(id: number, emailAddress: string) {
+    return this.http.get(
+      environment.apiUrl + `/organizations/${id}/invite/${emailAddress}`
+    )
+  }
+
+  addUserToOrganization(id: number, hash: string) {
+    return this.http.get(
+      environment.apiUrl + `/organizations/${id}/invitation/${hash}`
+    )
+  }
 }

@@ -1,19 +1,19 @@
 <div class="content-wrapper">
-  <p-card header="Zaproś użytkownika" styleClass="centered-form" subheader="Do organizacji XXX">
+  <p-card header="Zaproś użytkownika" styleClass="centered-form" subheader="Do organizacji {{ organization.name }}">
     <form [formGroup]="inviteForm" (ngSubmit)="onSubmit()" class="invite-form">
       <div class="input-box">
         <label for="email">Adres email</label>
-          <input
-            id="email"
-            formControlName="email"
-            pInputText
-            name="email"
-            type="email"
-            placeholder="jan.kowalski@example.com"
-          />
+        <input
+          id="email"
+          formControlName="email"
+          pInputText
+          name="email"
+          type="email"
+          placeholder="jan.kowalski@example.com"
+        />
         <div *ngIf="email?.invalid && email?.touched">
           <app-validation-error *ngIf="email?.errors?.['required']">
-            Adres email jest wymagany
+          Adres email jest wymagany
           </app-validation-error>
         </div>
       </div>
@@ -22,7 +22,7 @@
 
     <div class="invite-link">
       <p>Albo udostępnij link</p>
-      <span class="supporting-text">https://exmaple.com/invite/434354325</span>
+      <span class="supporting-text">{{ organizationUrl }}</span>
     </div>
   </p-card>
 </div>
