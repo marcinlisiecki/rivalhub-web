@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { MenuItem, MessageService, MenuItemCommandEvent } from 'primeng/api';
 import { AuthService } from '../../services/auth/auth.service';
+import { ViewService } from '@app/core/services/view/view.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -21,10 +22,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
     pl: 'assets/img/pl-flag.png',
     en: 'assets/img/uk-flag.png',
   };
+  mobileView!: boolean;
 
   constructor(
     private translate: TranslateService,
     private authService: AuthService,
+    private viewService: ViewService,
   ) {
     this.profileLogoutLangSetter(this.currentLanguage);
 
@@ -62,6 +65,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
       .subscribe((val: boolean) => {
         this.isLoggedIn = val;
       });
+
+    this.mobileView = this.viewService.mobileView;
+    this.viewService.resizeEvent.subscribe((value: boolean) => {
+      this.mobileView = value;
+    });
   }
 
   useLanguage(lang: string) {

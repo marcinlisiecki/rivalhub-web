@@ -2,19 +2,19 @@
   <div class="header-content">
     <div class="header-left">
       <a class="header-logo-wrapper" routerLink="/">
-        <img ngSrc="assets/img/logo.png" height="40" width="60" alt="Logo" />
+        <img priority ngSrc="assets/img/logo.png" height="40" width="60" alt="Logo" />
       </a>
       <nav>
         <ul>
           <li>
-            <app-header-link href="/">{{
+            <app-header-link routerLink="/">{{
               'header.main-page' | translate
             }}</app-header-link>
           </li>
         </ul>
       </nav>
     </div>
-    <nav>
+    <nav *ngIf="!mobileView">
       <ul>
         <li>
           <p-toast></p-toast>
@@ -35,36 +35,36 @@
           </button>
         </li>
         <li *ngIf="!isLoggedIn">
-          <app-header-link href="/register">
+          <app-header-link routerLink="/register">
             {{ 'header.register' | translate }}
           </app-header-link>
         </li>
         <li *ngIf="!isLoggedIn">
-          <app-header-link href="/login">
+          <app-header-link routerLink="/login">
             {{ 'header.login' | translate }}
           </app-header-link>
         </li>
 
         <!--        <li *ngIf="isLoggedIn">-->
-        <!--          <app-header-link href="/calendar">-->
+        <!--          <app-header-link routerLink="/calendar">-->
         <!--            {{ 'header.calendar' | translate }}-->
         <!--          </app-header-link>-->
         <!--        </li>-->
 
         <li *ngIf="isLoggedIn">
-          <app-header-link href="/organizations/new">
+          <app-header-link routerLink="/organizations/new">
             {{ 'header.organisationAdd' | translate }}
           </app-header-link>
         </li>
 
         <li *ngIf="isLoggedIn">
-          <app-header-link href="/organizations">
+          <app-header-link routerLink="/organizations">
             {{ 'header.organisationShow' | translate }}
           </app-header-link>
         </li>
 
         <li *ngIf="isLoggedIn">
-          <app-header-link href="/profile" (click)="profileMenu.toggle($event)">
+          <app-header-link routerLink="/profile" (click)="profileMenu.toggle($event)">
             {{ 'header.profile' | translate }}
             <i class="pi pi-angle-down"></i>
           </app-header-link>
