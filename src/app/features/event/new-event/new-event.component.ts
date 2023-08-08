@@ -83,9 +83,6 @@ export class NewEventComponent {
     const startDate = this.dateForm.get('startDate')?.value;
     const endDate = this.dateForm.get('endDate')?.value;
 
-    const formattedStartDate: string =
-      moment(startDate).format('DD-MM-yyyy HH:mm');
-    const formattedEndDate: string = moment(endDate).format('DD-MM-yyyy HH:mm');
     const organizationId: number = this.route.snapshot.params['id'];
 
     if (this.selectedEventType === null) {
@@ -100,8 +97,8 @@ export class NewEventComponent {
       this.organizationService
         .getAvailableStations(
           organizationId,
-          formattedStartDate,
-          formattedEndDate,
+          startDate,
+          endDate,
           this.selectedEventType,
         )
         .subscribe({

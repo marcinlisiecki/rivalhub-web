@@ -38,22 +38,11 @@ export class AddReservationComponent {
 
   fetchAvailableStations() {
     this.stations = null;
-
-    const formattedStartDate: string = moment(this.startTime).format(
-      'DD-MM-yyyy HH:mm',
-    );
-    const formattedEndDate: string = moment(this.finishTime).format(
-      'DD-MM-yyyy HH:mm',
-    );
     const organizationId: number = this.route.snapshot.params['id'];
 
     setTimeout(() => {
       this.organizationService
-        .getAvailableStations(
-          organizationId,
-          formattedStartDate,
-          formattedEndDate,
-        )
+        .getAvailableStations(organizationId, this.startTime, this.finishTime)
         .subscribe({
           next: (stations: Station[]) => {
             this.types = new Set(stations.map((station) => station.type));
@@ -105,13 +94,12 @@ export class AddReservationComponent {
     this.apiError = null;
 
     if (this.selectedStations.length === 0) {
-      console.log(this.selectedStations);
       return;
     }
 
     const reservation: NewReservation = {
-      startTime: moment(this.startTime).format('DD-MM-yyyy HH:mm'),
-      endTime: moment(this.finishTime).format('DD-MM-yyyy HH:mm'),
+      startTime: this.startTime,
+      endTime: this.finishTime,
       stationsIdList: this.selectedStations.map((item) => parseFloat(item)),
     };
     const organizationId: number = this.route.snapshot.params['id'];
