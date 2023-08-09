@@ -1,0 +1,13 @@
+<h4>Historia</h4>
+
+<div class="list-wrapper">
+  <app-history
+    class="item-container"
+    *ngFor="let event of events"
+    [event]="event"
+  ></app-history>
+  <div>
+    <p-button styleClass="p-button-sm p-button-secondary button-wide button-show-more">Pokaż więcej</p-button>
+  </div>
+</div>
+

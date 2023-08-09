@@ -2,7 +2,7 @@ export interface EventDto {
   id: number;
   name: string;
   place: string;
-  date: Date;
-  beginEndTime: string;
+  startTime: Date;
+  endTime: Date;
   participantIds: number[];
 }
