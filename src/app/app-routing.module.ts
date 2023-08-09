@@ -13,6 +13,7 @@ import { AddReservationComponent } from './features/reservation/add-reservation/
 import { HeroComponent } from '@app/features/landing/hero/hero.component';
 import { ViewStationsComponent } from '@app/features/station/view-stations/view-stations.component';
 import {JoinOrganizationComponent} from "@app/features/organization/join-organization/join-organization.component";
+import {joinGuard} from "@app/core/guards/join-organization/join.guard";
 
 const routes: Routes = [
   {
@@ -71,6 +72,7 @@ const routes: Routes = [
   {
     path: 'organizations/:id/invitation/:hash',
     component: JoinOrganizationComponent,
+    canActivate: [joinGuard],
   }
 ];
 

@@ -65,6 +65,7 @@ export class LoginComponent implements OnInit, OnDestroy {
           const url = sessionStorage.getItem("redirectUrl")
           if (url) {
             this.router.navigateByUrl(url).then();
+            sessionStorage.removeItem("redirectUrl")
           } else {
             this.router.navigateByUrl('/organizations').then();
           }

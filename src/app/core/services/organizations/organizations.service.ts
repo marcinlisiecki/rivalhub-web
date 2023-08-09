@@ -125,7 +125,7 @@ export class OrganizationsService {
     )
   }
 
-  addUserToOrganization(id: number, hash: string) {
+  addUserToOrganization(id: number, hash: string): Observable<Object> {
     return this.http.get(
       environment.apiUrl + `/organizations/${id}/invitation/${hash}`
     )

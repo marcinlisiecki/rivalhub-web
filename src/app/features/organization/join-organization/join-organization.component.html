@@ -1,6 +1,13 @@
 <div class="main-container">
-  <h1>Dołączyć do "{{ organizationName }}"?</h1>
-  <form (submit)="onSubmit()" class="invite-form">
-    <p-button styleClass="button-wide" type="submit"  >Dołącz</p-button>
-  </form>
+  <h1>Dołączyć do "{{ organization.name }}"?</h1>
+    <p-button
+      styleClass="button-wide"
+      type="submit"
+      (onClick)="onSubmit()"
+    >
+      Dołącz
+    </p-button>
+  <app-validation-error *ngIf="responseError">
+    {{ responseError }}
+  </app-validation-error>
 </div>
