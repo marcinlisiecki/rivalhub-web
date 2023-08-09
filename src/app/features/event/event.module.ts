@@ -15,6 +15,7 @@ import { BasicInfoComponent } from './new-event/basic-info/basic-info.component'
 import { DateSelectorComponent } from './new-event/date-selector/date-selector.component';
 import { StationSelectorComponent } from './new-event/station-selector/station-selector.component';
 import {ProgressSpinnerModule} from "primeng/progressspinner";
+import { AddUserPingPongComponent } from './new-event/add-user-ping-pong/add-user-ping-pong.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import {ProgressSpinnerModule} from "primeng/progressspinner";
     BasicInfoComponent,
     DateSelectorComponent,
     StationSelectorComponent,
+    AddUserPingPongComponent,
   ],
   imports: [
     CommonModule,

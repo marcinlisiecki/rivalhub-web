@@ -77,6 +77,9 @@ export class NewEventComponent implements OnInit, OnDestroy {
         label: this.translateService.instant('event.new.steps.info'),
       },
       {
+        label: this.translateService.instant('event.new.steps.addUsers'),
+      },
+      {
         label: this.translateService.instant('event.new.steps.date'),
       },
       {
