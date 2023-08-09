@@ -1,0 +1,48 @@
+<section class="form-step-wrapper">
+  <header>
+    <h1>Data i czas wydarzenia</h1>
+  </header>
+
+  <form class="time-selector-wrapper" [formGroup]="dateForm">
+    <div class="input-box">
+      <label for="startDate">Data rozpoczęcia</label>
+      <p-calendar
+        inputId="startDate"
+        styleClass="input-wide"
+        [showTime]="true"
+        [showIcon]="true"
+        dateFormat="dd-mm-yy"
+        formControlName="startDate"
+      ></p-calendar>
+    </div>
+    <div class="input-box">
+      <label for="endDate">Data zakończenia</label>
+      <p-calendar
+        inputId="endDate"
+        styleClass="input-wide"
+        dateFormat="dd-mm-yy"
+        [showTime]="true"
+        [showIcon]="true"
+        formControlName="endDate"
+      ></p-calendar>
+    </div>
+  </form>
+
+  <p-divider></p-divider>
+
+  <div class="form-step-navigation">
+    <p-button
+      styleClass="p-button-outlined"
+      (onClick)="setFormStep.emit(AddEventFormStep.BASIC_INFO)"
+    >
+      Powrót
+    </p-button>
+    <p-button (onClick)="setFormStep.emit(AddEventFormStep.RESERVATION)">
+      Dalej
+    </p-button>
+  </div>
+
+  <app-validation-error *ngIf="dateError !== null">
+    {{ dateError }}
+  </app-validation-error>
+</section>

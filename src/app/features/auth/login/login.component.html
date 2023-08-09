@@ -1,0 +1,56 @@
+<p-card [header]="'header.login' | translate" styleClass="centered-form">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div class="registered-message-wrapper" *ngIf="registered">
+      <p-messages severity="success">
+        <ng-template pTemplate>
+          <div>{{ 'input.success' | translate }}</div>
+        </ng-template>
+      </p-messages>
+    </div>
+    <div class="input-box">
+      <label for="email">{{ 'input.email' | translate }}</label>
+      <input
+        id="email"
+        formControlName="email"
+        pInputText
+        name="email"
+        type="email"
+        placeholder="jan.kowalski@example.com"
+      />
+      <div *ngIf="email?.invalid && email?.touched">
+        <app-validation-error *ngIf="email?.errors?.['required']">
+          {{ 'input.emailWarning' | translate }}
+        </app-validation-error>
+      </div>
+    </div>
+
+    <div class="input-box">
+      <label for="password">{{ 'input.password' | translate }}</label>
+      <p-password
+        [feedback]="false"
+        formControlName="password"
+        name="password"
+        inputId="password"
+        styleClass="input-wide"
+        inputStyleClass="input-wide"
+        placeholder="********"
+      ></p-password>
+      <div *ngIf="password?.invalid && password?.touched">
+        <app-validation-error *ngIf="password?.errors?.['required']">
+          {{ 'input.passwordWarning' | translate }}
+        </app-validation-error>
+      </div>
+    </div>
+
+    <div>
+      <p-button styleClass="button-wide" type="submit" [loading]="isLoading">
+        {{ 'button.signIn' | translate }}
+      </p-button>
+      <p class="api-error-wrapper" *ngIf="apiError">
+        <app-validation-error>
+          {{ apiError }}
+        </app-validation-error>
+      </p>
+    </div>
+  </form>
+</p-card>

@@ -1,0 +1,8 @@
+<h4>Ostatnia aktywność</h4>
+<div class="list-wrapper">
+  <app-activity-item
+    class="item-container"
+    *ngFor="let reservation of reservations"
+    [reservation]="reservation"
+  ></app-activity-item>
+</div>

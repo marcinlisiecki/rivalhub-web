@@ -1,0 +1,83 @@
+<p-card [header]="'header.register' | translate" styleClass="centered-form">
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <div class="input-box">
+      <label for="email">{{ 'input.email' | translate }}</label>
+      <input
+        formControlName="email"
+        pInputText
+        name="email"
+        id="email"
+        type="email"
+        placeholder="jan.kowalski@example.com"
+      />
+      <div *ngIf="email?.invalid && email?.touched">
+        <app-validation-error *ngIf="email?.errors?.['required']">
+          {{ 'input.emailWarning' | translate }}
+        </app-validation-error>
+        <app-validation-error *ngIf="email?.errors?.['email']">
+          {{ 'input.emailError' | translate }}
+        </app-validation-error>
+      </div>
+    </div>
+
+    <div class="input-box">
+      <label for="name">{{ 'input.userName' | translate }}</label>
+      <input
+        pInputText
+        name="name"
+        id="name"
+        type="text"
+        placeholder="jan.kowal"
+        formControlName="name"
+      />
+      <div *ngIf="name?.invalid && name?.touched">
+        <app-validation-error *ngIf="name?.errors?.['required']">
+          {{ 'input.userNameRequired' | translate }}
+        </app-validation-error>
+        <app-validation-error *ngIf="name?.errors?.['minlength']">
+          {{ 'input.userNameMin' | translate }}
+        </app-validation-error>
+        <app-validation-error *ngIf="name?.errors?.['maxlength']">
+          {{ 'input.userNameMax' | translate }}
+        </app-validation-error>
+      </div>
+    </div>
+
+    <div class="input-box">
+      <label for="password">{{ 'input.password' | translate }}</label>
+      <p-password
+        name="password"
+        inputId="password"
+        [toggleMask]="true"
+        styleClass="input-wide"
+        class="password"
+        inputStyleClass="input-wide"
+        placeholder="********"
+        formControlName="password"
+        [promptLabel]="setPasswordPrompt()"
+        [weakLabel]="'input.passwordWeakLabel' | translate"
+        [mediumLabel]="'input.passwordMediumLabel' | translate"
+        [strongLabel]="'input.passwordStrongLabel' | translate"
+      ></p-password>
+      <div *ngIf="password?.invalid && password?.touched">
+        <app-validation-error *ngIf="password?.errors?.['required']">
+          {{ 'input.passwordWarning' | translate }}
+        </app-validation-error>
+        <app-validation-error *ngIf="password?.errors?.['minlength']">
+          {{ 'input.passwordMin' | translate }}
+        </app-validation-error>
+      </div>
+    </div>
+
+    <div>
+      <p-button styleClass="button-wide" type="submit" [loading]="isLoading">
+        {{ 'button.signUp' | translate }}
+      </p-button>
+      <p class="api-error-wrapper" *ngIf="apiError">
+        <app-validation-error>
+          {{ apiError }}
+        </app-validation-error>
+      </p>
+    </div>
+  </form>
+</p-card>

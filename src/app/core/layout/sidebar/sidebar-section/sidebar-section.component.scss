@@ -1,0 +1,11 @@
+@import 'src/scss/variables';
+
+.section-title {
+    color: $textSecondaryColor;
+    font-size: $textVerySmall;
+padding-left:15px;}
+
+.section-item {
+    color: $textSecondaryColor;
+    font-size: $textBase;
+}

@@ -1,0 +1,42 @@
+@import 'src/scss/variables';
+
+.organizations-container {
+    display: flex;
+    flex-wrap: wrap;
+    width: $pageWidth;
+    margin: 0 auto;
+    .organization-card {
+        display: flex;
+        margin: 10px;
+
+
+
+        .organization-link {
+            display: flex;
+            width: 200px;
+            height: 200px;
+
+            justify-content: center;
+            align-items: center;
+
+            text-decoration: none;
+            border-radius: $dashboardRadius;
+
+            background-repeat: no-repeat;
+            background-size: cover;
+
+            &:hover {
+                //red border
+                border: 2.5px solid red;
+            }
+
+        }
+
+        .organization-name {
+            backdrop-filter: blur(5px);
+            color: black;
+            font-size: 16px;
+            font-weight: $weightMedium;
+        }
+    }
+}

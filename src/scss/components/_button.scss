@@ -1,0 +1,43 @@
+.button-wide {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  column-gap: 0.5rem;
+}
+
+.button-absolute {
+  position: absolute;
+  right:0;
+}
+
+.p-button-overwrite {
+  color: $secondaryButtonTextColor !important;
+  background: $secondaryButtonBg !important;
+  border: $secondaryButtonBorder !important;
+
+  outline: 0 none !important;
+
+  &:enabled:active {
+    background: $secondaryButtonActiveBg !important;
+    color: $secondaryButtonTextActiveColor !important;
+    border-color: $secondaryButtonActiveBorderColor !important;
+  }
+}
+
+.button-flag {
+  background-color: transparent !important;
+  border: 1px !important;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.button-flag:hover {
+  background: $buttonHoverBg !important;
+  border: 4px !important;
+  opacity: 0.95;
+}
+
+.button-flag:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}

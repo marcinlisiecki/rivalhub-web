@@ -1,0 +1,25 @@
+@import 'src/scss/variables';
+
+
+.avatar {
+    height: 100px;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    height: 100px;
+
+    &-title {
+        text-wrap:balance;
+        margin: 10px 0 10px 15px;
+        font-weight: $weightMedium;
+        color: $textSecondaryColor;
+    }
+
+    &-name {
+        margin: 10px 0 10px 15px;
+        font-weight: $weightBold;
+    }
+
+}

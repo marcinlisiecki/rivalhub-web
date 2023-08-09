@@ -1,0 +1,10 @@
+@import 'src/scss/variables';
+
+.wrapper {
+  max-width: $nonBgFormWidth;
+  margin: 4rem auto;
+
+  > h1 {
+    margin-bottom: 4rem;
+  }
+}

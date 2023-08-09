@@ -1,0 +1,16 @@
+@import 'src/scss/variables';
+
+.header-link {
+  color: $textSecondaryColor;
+  text-decoration: none;
+  font-size: $textSm;
+  transition: color 0.3s;
+
+  &:hover {
+    color: $textColor;
+  }
+
+  &-active {
+    color: $primaryColor !important;
+  }
+}

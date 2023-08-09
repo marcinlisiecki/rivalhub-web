@@ -1,0 +1,33 @@
+<section class="form-step-wrapper">
+  <header>
+    <h1>Rezerwacja</h1>
+  </header>
+
+  <app-category-stations-selector
+    *ngIf="stations !== null && stations.length !== 0"
+    [stations]="stations"
+    [selectedStations]="selectedStations"
+    [categoryLabel]="categoryLabel"
+    (toggleStation)="toggleStation.emit($event)"
+  >
+  </app-category-stations-selector>
+
+  <app-centered-spinner *ngIf="stations === null"> </app-centered-spinner>
+
+  <app-no-available-stations
+    *ngIf="stations !== null && stations?.length === 0"
+  >
+  </app-no-available-stations>
+
+  <p-divider></p-divider>
+
+  <div class="form-step-navigation">
+    <p-button
+      styleClass="p-button-outlined"
+      (onClick)="setFormStep.emit(AddEventFormStep.DATE)"
+    >
+      Powrót
+    </p-button>
+    <p-button> Stwórz wydarzenie </p-button>
+  </div>
+</section>
