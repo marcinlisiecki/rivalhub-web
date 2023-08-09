@@ -9,19 +9,26 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 })
 export class AddUserDialogComponent {
   @Input() userList: UserDetailsDto[] = [];
+  filteredUserList: UserDetailsDto[] = [];
   userSearchQuery: string = '';
-
-  getFilteredUserList(): UserDetailsDto[] {
-    return this.userList.filter((user) =>
-      user.name.toLowerCase().includes(this.userSearchQuery.toLowerCase()),
-    );
-  }
 
   constructor(
     private dialogConfig: DynamicDialogConfig,
     private dialogRef: DynamicDialogRef,
   ) {
     this.userList = dialogConfig.data['userList'];
+    this.filteredUserList = this.userList;
+  }
+
+  setFilteredUserList() {
+    this.filteredUserList = this.userList.filter((user) =>
+      user.name.toLowerCase().includes(this.userSearchQuery.toLowerCase()),
+    );
+  }
+
+  onSearchChange(value: string) {
+    this.userSearchQuery = value;
+    this.setFilteredUserList();
   }
 
   handleAddUser(user: UserDetailsDto) {

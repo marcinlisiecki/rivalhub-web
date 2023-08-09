@@ -4,9 +4,9 @@
   </header>
 
   <section class="teams">
-    <div class="team">
-      <h2>Drużyna 1</h2>
-      <div *ngFor="let user of teams[0]" class="team-member">
+    <div class="team" *ngFor="let team of teams; let teamIndex = index">
+      <h2>Drużyna {{ teamIndex + 1 }}</h2>
+      <div *ngFor="let user of teams[teamIndex]" class="team-member">
         <div class="team-member-data">
           <div class="team-member-avatar"></div>
           <p>{{ user.name }}</p>
@@ -14,42 +14,16 @@
         <div
           class="team-member-remove-button"
           *ngIf="user.email !== loggedInUserEmail && user"
-          (click)="removeUser(0, user)"
+          (click)="removeUser(teamIndex, user)"
         >
           <i class="pi pi-times-circle"></i>
         </div>
       </div>
 
       <div
-        *ngFor="let i of Array(2 - teams[0].length)"
+        *ngFor="let i of Array(2 - teams[teamIndex].length)"
         class="team-add-button"
-        (click)="openAddUserDialog(0)"
-      >
-        <i class="pi pi-plus"></i>
-        <p>Dodaj użytkownika</p>
-      </div>
-    </div>
-
-    <div class="team">
-      <h2>Drużyna 2</h2>
-      <div *ngFor="let user of teams[1]" class="team-member">
-        <div class="team-member-data">
-          <div class="team-member-avatar"></div>
-          <p>{{ user.name }}</p>
-        </div>
-        <div
-          class="team-member-remove-button"
-          *ngIf="user.email !== loggedInUserEmail && user"
-          (click)="removeUser(1, user)"
-        >
-          <i class="pi pi-times-circle"></i>
-        </div>
-      </div>
-
-      <div
-        *ngFor="let i of Array(2 - teams[1].length)"
-        class="team-add-button"
-        (click)="openAddUserDialog(1)"
+        (click)="openAddUserDialog(teamIndex)"
       >
         <i class="pi pi-plus"></i>
         <p>Dodaj użytkownika</p>
