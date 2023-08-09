@@ -54,6 +54,8 @@
         inputStyleClass="input-wide"
         placeholder="********"
         formControlName="password"
+        [mediumRegex]="MEDIUM_REGEX"
+        [strongRegex]="STRONG_REGEX"
         [promptLabel]="setPasswordPrompt()"
         [weakLabel]="'input.passwordWeakLabel' | translate"
         [mediumLabel]="'input.passwordMediumLabel' | translate"

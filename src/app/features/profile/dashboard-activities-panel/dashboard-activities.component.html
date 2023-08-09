@@ -1,0 +1,11 @@
+<h4>Ostatnia aktywność</h4>
+<div class="list-wrapper">
+  <app-activity
+    class="item-container"
+    *ngFor="let reservation of reservations"
+    [reservation]="reservation"
+  ></app-activity>
+  <div>
+    <p-button styleClass="p-button-sm p-button-secondary button-wide button-show-more">Pokaż więcej</p-button>
+  </div>
+</div>
