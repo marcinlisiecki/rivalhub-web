@@ -17,7 +17,7 @@
         <div class="user-avatar"></div>
         <p>{{ user.name }}</p>
       </div>
-      <div class="user-add-button">
+      <div class="user-add-button" (click)="handleAddUser(user)">
         <i class="pi pi-plus"></i>
       </div>
     </div>

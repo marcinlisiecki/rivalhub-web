@@ -6,11 +6,16 @@
   <section class="teams">
     <div class="team">
       <h2>Drużyna 1</h2>
-      <div class="team-member">
+      <div *ngFor="let user of teams[0]" class="team-member">
         <div class="team-member-avatar"></div>
-        <p>Smok Smokowski</p>
+        <p>{{ user.name }}</p>
       </div>
-      <div class="team-add-button" (click)="openAddUserDialog(0)">
+
+      <div
+        *ngFor="let i of Array(2 - teams[0].length)"
+        class="team-add-button"
+        (click)="openAddUserDialog(0)"
+      >
         <i class="pi pi-plus"></i>
         <p>Dodaj użytkownika</p>
       </div>
@@ -18,11 +23,16 @@
 
     <div class="team">
       <h2>Drużyna 2</h2>
-      <div class="team-add-button" (click)="openAddUserDialog(1)">
-        <i class="pi pi-plus"></i>
-        <p>Dodaj użytkownika</p>
+      <div *ngFor="let user of teams[1]" class="team-member">
+        <div class="team-member-avatar"></div>
+        <p>{{ user.name }}</p>
       </div>
-      <div class="team-add-button" (click)="openAddUserDialog(1)">
+
+      <div
+        *ngFor="let i of Array(2 - teams[1].length)"
+        class="team-add-button"
+        (click)="openAddUserDialog(1)"
+      >
         <i class="pi pi-plus"></i>
         <p>Dodaj użytkownika</p>
       </div>

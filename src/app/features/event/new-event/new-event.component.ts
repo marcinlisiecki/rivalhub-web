@@ -82,6 +82,15 @@ export class NewEventComponent implements OnInit, OnDestroy {
     this.fetchUserList();
   }
 
+  handleAddUser(data?: { user?: UserDetailsDto; teamIndex?: number }) {
+    if (!data || !data.user || data.teamIndex === undefined) {
+      return;
+    }
+
+    this.teams[data.teamIndex].push(data.user);
+    this.notAddedUserList = this.getOnlyNotAddedUserList();
+  }
+
   fetchUserList() {
     const organizationId = this.route.snapshot.params['id'];
 

@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { UserDetailsDto } from '@interfaces/user/user-details-dto';
-import { DynamicDialogConfig } from 'primeng/dynamicdialog';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { AddTeamUser } from '@interfaces/event/add-team-user';
 
 @Component({
   selector: 'app-add-user-dialog',
@@ -17,7 +18,17 @@ export class AddUserDialogComponent {
     );
   }
 
-  constructor(private dialogConfig: DynamicDialogConfig) {
+  constructor(
+    private dialogConfig: DynamicDialogConfig,
+    private dialogRef: DynamicDialogRef,
+  ) {
     this.userList = dialogConfig.data['userList'];
+  }
+
+  handleAddUser(user: UserDetailsDto) {
+    this.dialogRef.close({
+      teamIndex: this.dialogConfig.data['teamIndex'],
+      user,
+    });
   }
 }

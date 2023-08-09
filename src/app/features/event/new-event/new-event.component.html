@@ -25,6 +25,8 @@
     *ngIf="formStep === AddEventFormStep.ADD_USERS"
     (setFormStep)="setFormStep($event)"
     [userList]="notAddedUserList"
+    (handleAddUser)="handleAddUser($event)"
+    [teams]="teams"
   >
   </app-add-user-ping-pong>
 

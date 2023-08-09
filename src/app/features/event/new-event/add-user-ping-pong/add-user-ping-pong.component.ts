@@ -4,6 +4,7 @@ import { AddEventUser } from '@interfaces/event/add-event-user';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AddUserDialogComponent } from '@app/features/event/new-event/add-user-dialog/add-user-dialog.component';
 import { UserDetailsDto } from '@interfaces/user/user-details-dto';
+import { AddTeamUser } from '@interfaces/event/add-team-user';
 
 @Component({
   selector: 'app-add-user-ping-pong',
@@ -11,10 +12,11 @@ import { UserDetailsDto } from '@interfaces/user/user-details-dto';
   styleUrls: ['./add-user-ping-pong.component.scss'],
 })
 export class AddUserPingPongComponent {
-  @Input() firstTeamUsers: AddEventUser[] = [];
-  @Input() secondTeamUsers: AddEventUser[] = [];
+  @Input() teams: AddEventUser[][] = [];
   @Input() userList: UserDetailsDto[] = [];
 
+  @Output() handleAddUser: EventEmitter<AddTeamUser> =
+    new EventEmitter<AddTeamUser>();
   @Output() setFormStep: EventEmitter<AddEventFormStep> =
     new EventEmitter<AddEventFormStep>();
 
@@ -31,7 +33,12 @@ export class AddUserPingPongComponent {
       header: 'Dodaj użytkownika',
       width: '25rem',
     });
+
+    this.addUserDialogRef.onClose.subscribe((res) => {
+      this.handleAddUser.emit({ teamIndex: res?.teamIndex, user: res?.user });
+    });
   }
 
   protected readonly AddEventFormStep = AddEventFormStep;
+  protected readonly Array = Array;
 }
