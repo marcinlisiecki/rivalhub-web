@@ -1,0 +1,15 @@
+<div class="avatar">
+  <p-image styleClass="dashboard-header-image" [src]="getImagePath(user.profilePictureUrl)" alt="Image"></p-image>
+</div>
+<div class="info">
+  <div>
+    <p class="info-title">{{user.email}}</p>
+    <h4 class="info-name">{{user.name}}</h4>
+  </div>
+
+  <div>
+    <p-button styleClass="p-button-sm" (onClick)="showModal(user)">Edytuj profil</p-button>
+  </div>
+
+
+</div>

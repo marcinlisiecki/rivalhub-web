@@ -17,6 +17,7 @@ import { FormsModule } from '@angular/forms';
 import { NoAvailableStationsComponent } from './no-available-stations/no-available-stations.component';
 import { CenteredSpinnerComponent } from './centered-spinner/centered-spinner.component';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { LayoutModule } from '@angular/cdk/layout';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     AnimateModule,
     CenteredSpinnerComponent,
     NoAvailableStationsComponent,
+    LayoutModule,
   ],
   imports: [
     CommonModule,
@@ -56,6 +58,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     CheckboxModule,
     FormsModule,
     ProgressSpinnerModule,
+    LayoutModule,
   ],
 })
 export class SharedModule {}

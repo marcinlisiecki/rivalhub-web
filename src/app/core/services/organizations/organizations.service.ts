@@ -118,4 +118,16 @@ export class OrganizationsService {
       },
     );
   }
+
+  sendInvitation(id: number, emailAddress: string) {
+    return this.http.get(
+      environment.apiUrl + `/organizations/${id}/invite/${emailAddress}`
+    )
+  }
+
+  addUserToOrganization(id: number, hash: string): Observable<Object> {
+    return this.http.get(
+      environment.apiUrl + `/organizations/${id}/invitation/${hash}`
+    )
+  }
 }

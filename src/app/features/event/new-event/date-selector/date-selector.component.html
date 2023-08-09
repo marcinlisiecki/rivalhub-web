@@ -11,6 +11,7 @@
         styleClass="input-wide"
         [showTime]="true"
         [showIcon]="true"
+        [minDate]="today"
         dateFormat="dd-mm-yy"
         formControlName="startDate"
       ></p-calendar>
@@ -23,6 +24,7 @@
         dateFormat="dd-mm-yy"
         [showTime]="true"
         [showIcon]="true"
+        [minDate]="today"
         formControlName="endDate"
       ></p-calendar>
     </div>
