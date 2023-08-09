@@ -15,7 +15,6 @@
         pInputText
         name="email"
         type="email"
-        placeholder="jan.kowalski@example.com"
       />
       <div *ngIf="email?.invalid && email?.touched">
         <app-validation-error *ngIf="email?.errors?.['required']">
@@ -33,7 +32,6 @@
         inputId="password"
         styleClass="input-wide"
         inputStyleClass="input-wide"
-        placeholder="********"
       ></p-password>
       <div *ngIf="password?.invalid && password?.touched">
         <app-validation-error *ngIf="password?.errors?.['required']">

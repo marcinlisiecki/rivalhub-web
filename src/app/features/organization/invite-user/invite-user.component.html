@@ -3,17 +3,16 @@
     <form [formGroup]="inviteForm" (ngSubmit)="onSubmit()" class="invite-form">
       <div class="input-box">
         <label for="email">Adres email</label>
-        <input
-          id="email"
-          formControlName="email"
-          pInputText
-          name="email"
-          type="email"
-          placeholder="jan.kowalski@example.com"
-        />
+          <input
+            id="email"
+            formControlName="email"
+            pInputText
+            name="email"
+            type="email"
+          />
         <div *ngIf="email?.invalid && email?.touched">
           <app-validation-error *ngIf="email?.errors?.['required']">
-          Adres email jest wymagany
+            Adres email jest wymagany
           </app-validation-error>
         </div>
       </div>
