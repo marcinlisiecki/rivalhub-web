@@ -43,7 +43,6 @@ export class SidebarComponent implements OnInit, OnDestroy {
     this.mobileView = this.viewService.mobileView;
     this.mobileViewSubscription = this.viewService.resizeSubject.subscribe(
       (value: boolean) => {
-        console.log(value);
         this.mobileView = value;
       },
     );

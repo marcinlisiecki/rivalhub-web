@@ -1,21 +1,18 @@
-import { HostListener, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ViewService {
-  mobileView: boolean = window.innerWidth <= 768 ? true : false;
+  mobileView!: boolean;
 
   resizeSubject = new Subject<boolean>();
-
-  constructor() {
-    this.resizeSubject.next(this.mobileView);
-  }
-
-  @HostListener('window:resize', ['$event'])
-  onResize(event: Event) {
-    this.mobileView = (event.target as Window).innerWidth <= 768;
-    this.resizeSubject.next(this.mobileView);
+  constructor(breakpointObserver: BreakpointObserver) {
+    breakpointObserver.observe(['(min-width: 768px)']).subscribe((result) => {
+      this.mobileView = !result.matches;
+      this.resizeSubject.next(this.mobileView);
+    });
   }
 }

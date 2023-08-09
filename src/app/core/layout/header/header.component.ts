@@ -43,6 +43,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       },
     );
 
+    //TODO move translation to separate service
     this.profileLogoutLangSetter(this.currentLanguage);
     this.setDefaultLanguage();
 
@@ -83,7 +84,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     localStorage.setItem('currentLanguage', this.currentLanguage);
     this.profileLogoutLangSetter(this.currentLanguage);
   }
-
   profileLogoutLangSetter(lang: string) {
     if (lang === 'pl') {
       this.logout = 'Wyloguj się';
