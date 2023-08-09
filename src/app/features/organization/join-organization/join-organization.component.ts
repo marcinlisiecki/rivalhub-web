@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {OrganizationsService} from "@app/core/services/organizations/organizations.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {Organization} from "@interfaces/organization/organization";
+import {extractMessage} from "@app/core/utils/apiErrors";
 
 @Component({
   selector: 'app-join-organization',
@@ -14,6 +15,8 @@ export class JoinOrganizationComponent implements OnInit {
   public organizationHash: string = ''
   public organization!: Organization
   public responseError?: string
+  public mainMessage: string = ""
+  public isLoaded = false
 
   constructor(
     private route: ActivatedRoute,
@@ -33,8 +36,11 @@ export class JoinOrganizationComponent implements OnInit {
     this.organizationService.choose(id).subscribe({
       next: (resource: Organization) => {
         this.organization = resource
+        this.mainMessage = `Dołączyć do "${this.organization.name}"?`
+        this.isLoaded = true
       },
       error: (error: HttpErrorResponse) => {
+        this.mainMessage = extractMessage(error)
         this.organization = error.error
       }
     })

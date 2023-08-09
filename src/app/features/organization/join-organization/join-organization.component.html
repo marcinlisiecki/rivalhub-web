@@ -1,6 +1,7 @@
 <div class="main-container">
-  <h1>Dołączyć do "{{ organization.name }}"?</h1>
+  <h1>{{ mainMessage }}</h1>
     <p-button
+      *ngIf="isLoaded"
       styleClass="button-wide"
       type="submit"
       (onClick)="onSubmit()"
