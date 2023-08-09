@@ -21,10 +21,10 @@ export class MyOrganizationsComponent implements OnInit {
   }
 
   getImagePath(imageUrl: string | null): string {
+    this.checkDefaultAvatar(imageUrl);
     if (imageUrl !== null) {
       return imageUrl;
     }
-
     return 'assets/img/avatars/avatarplaceholder.png';
   }
 
