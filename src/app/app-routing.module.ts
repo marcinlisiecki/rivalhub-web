@@ -12,6 +12,7 @@ import { InviteUserComponent } from './features/organization/invite-user/invite-
 import { AddReservationComponent } from './features/reservation/add-reservation/add-reservation.component';
 import { HeroComponent } from '@app/features/landing/hero/hero.component';
 import { ViewStationsComponent } from '@app/features/station/view-stations/view-stations.component';
+import {ProfileComponent} from "@app/features/profile/profile.component";
 
 const routes: Routes = [
   {
@@ -65,6 +66,12 @@ const routes: Routes = [
   {
     path: 'organizations/:id/events/new',
     component: NewEventComponent,
+    canActivate: [authenticateGuard],
+  },
+
+  {
+    path: 'profile/:id',
+    component: ProfileComponent,
     canActivate: [authenticateGuard],
   },
 ];
