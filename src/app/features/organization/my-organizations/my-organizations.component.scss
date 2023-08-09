@@ -1,42 +1,45 @@
 @import 'src/scss/variables';
 
 .organizations-container {
+  display: flex;
+  flex-wrap: wrap;
+  width: $pageWidth;
+  margin: 0 auto;
+  .organization-card {
     display: flex;
-    flex-wrap: wrap;
-    width: $pageWidth;
-    margin: 0 auto;
-    .organization-card {
-        display: flex;
-        margin: 10px;
+    margin: 10px;
+    flex-direction: column;
 
+    .organization-link {
+      display: flex;
+      width: 200px;
+      height: 200px;
 
+      justify-content: center;
+      align-items: center;
 
-        .organization-link {
-            display: flex;
-            width: 200px;
-            height: 200px;
+      text-decoration: none;
+      border-radius: $dashboardRadius;
 
-            justify-content: center;
-            align-items: center;
+      background-repeat: no-repeat;
+      background-size: cover;
 
-            text-decoration: none;
-            border-radius: $dashboardRadius;
-
-            background-repeat: no-repeat;
-            background-size: cover;
-
-            &:hover {
-                //red border
-                border: 2.5px solid red;
-            }
-
-        }
-
-        .organization-name {
-            backdrop-filter: blur(5px);
-            color: black;
-            font-size: 16px;
-            font-weight: $weightMedium;
-        }
+      &:hover {
+        //red border
+        border: 2.5px solid red;
+      }
     }
+
+    .organization-name {
+      width: 200px;
+      margin-top: 10px;
+      backdrop-filter: blur(5px);
+      text-align: center;
+      color: white;
+      font-size: 16px;
+      font-weight: $weightMedium;
+      flex-wrap: wrap;
+      overflow-wrap: break-word;
+    }
+  }
 }

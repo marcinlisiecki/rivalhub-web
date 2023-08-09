@@ -35,8 +35,4 @@ export class MyOrganizationsComponent implements OnInit {
   checkDefaultAvatar(imageUrl: string | null) {
     this.isDefaultAvatar = imageUrl === null ? true : false;
   }
-
-  displayName(name: string): string {
-    return name.length > 20 ? name.slice(0, 20) + '...' : name;
-  }
 }
