@@ -1,20 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { EventType } from '@interfaces/event/event-type';
 import { DialogService } from 'primeng/dynamicdialog';
-import { STATIONS } from '../../../mock/stations';
 import { MenuItem } from 'primeng/api';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import {
-  ADD_EVENT_FORM_STEPS,
-  AVAILABLE_EVENTS,
-} from '../../../core/constants/event';
-import { categoryTypeToLabel } from '../../../core/utils/event';
-import * as moment from 'moment';
+import { AVAILABLE_EVENTS } from '@app/core/constants/event';
+import { categoryTypeToLabel } from '@app/core/utils/event';
 import { OrganizationsService } from '@app/core/services/organizations/organizations.service';
 import { ActivatedRoute } from '@angular/router';
 import { AvailableEvent } from '@interfaces/event/available-event';
 import { AddEventFormStep } from '@interfaces/event/add-event-form-step';
 import { Station } from '@interfaces/station/station';
+import { TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-new-event',
@@ -22,9 +19,9 @@ import { Station } from '@interfaces/station/station';
   styleUrls: ['./new-event.component.scss'],
   providers: [DialogService],
 })
-export class NewEventComponent {
+export class NewEventComponent implements OnInit, OnDestroy {
   formStep: AddEventFormStep = AddEventFormStep.CATEGORY;
-  formSteps: MenuItem[] = ADD_EVENT_FORM_STEPS;
+  formSteps: MenuItem[] = [];
   formStepIndex: number = 0;
 
   events: AvailableEvent[] = AVAILABLE_EVENTS;
@@ -34,6 +31,8 @@ export class NewEventComponent {
   selectedStations: string[] = [];
 
   dateError: string | null = null;
+
+  onLangChangeSub?: Subscription;
 
   basicInfoForm: FormGroup = new FormGroup({
     name: new FormControl('', [
@@ -55,7 +54,36 @@ export class NewEventComponent {
   constructor(
     private organizationService: OrganizationsService,
     private route: ActivatedRoute,
+    private translateService: TranslateService,
   ) {}
+
+  ngOnInit(): void {
+    this.setStepsMenu();
+    this.onLangChangeSub = this.translateService.onLangChange.subscribe(() =>
+      this.setStepsMenu(),
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.onLangChangeSub?.unsubscribe();
+  }
+
+  setStepsMenu() {
+    this.formSteps = [
+      {
+        label: this.translateService.instant('event.new.steps.category'),
+      },
+      {
+        label: this.translateService.instant('event.new.steps.info'),
+      },
+      {
+        label: this.translateService.instant('event.new.steps.date'),
+      },
+      {
+        label: this.translateService.instant('event.new.steps.reservation'),
+      },
+    ];
+  }
 
   getOnlyCategoryStations(): Station[] | null {
     return (
@@ -83,9 +111,6 @@ export class NewEventComponent {
     const startDate = this.dateForm.get('startDate')?.value;
     const endDate = this.dateForm.get('endDate')?.value;
 
-    const formattedStartDate: string =
-      moment(startDate).format('DD-MM-yyyy HH:mm');
-    const formattedEndDate: string = moment(endDate).format('DD-MM-yyyy HH:mm');
     const organizationId: number = this.route.snapshot.params['id'];
 
     if (this.selectedEventType === null) {
@@ -100,8 +125,8 @@ export class NewEventComponent {
       this.organizationService
         .getAvailableStations(
           organizationId,
-          formattedStartDate,
-          formattedEndDate,
+          startDate,
+          endDate,
           this.selectedEventType,
         )
         .subscribe({

@@ -11,12 +11,17 @@ import { NewReservation } from '@interfaces/reservation/new-reservation';
 import { Station } from '@interfaces/station/station';
 import { UserDetailsDto } from '@interfaces/user/user-details-dto';
 import { Reservation } from '@interfaces/reservation/reservation';
+import * as moment from 'moment/moment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class OrganizationsService {
   constructor(private http: HttpClient) {}
+
+  formatDate(date: Date): string {
+    return moment(date).format('DD-MM-yyyy HH:mm');
+  }
 
   add(newOrganization: NewOrganization): Observable<{}> {
     return this.http.post<{}>(
@@ -73,15 +78,18 @@ export class OrganizationsService {
 
   getAvailableStations(
     organizationId: number,
-    start: string,
-    end: string,
+    start: Date,
+    end: Date,
     type?: EventType,
   ): Observable<Station[]> {
+    const formattedStart = this.formatDate(start);
+    const formattedEnd = this.formatDate(end);
+
     const params: HttpParams = new HttpParams({
       fromObject: {
         onlyAvailable: true,
-        start,
-        end,
+        start: formattedStart,
+        end: formattedEnd,
       },
     });
 
@@ -103,7 +111,11 @@ export class OrganizationsService {
   ): Observable<{}> {
     return this.http.post<Station[]>(
       environment.apiUrl + `/organizations/${organizationId}/reservations`,
-      reservation,
+      {
+        stationsIdList: reservation.stationsIdList,
+        startTime: this.formatDate(reservation.startTime),
+        endTime: this.formatDate(reservation.endTime),
+      },
     );
   }
 }
