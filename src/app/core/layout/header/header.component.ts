@@ -12,8 +12,8 @@ import { ViewService } from '@app/core/services/view/view.service';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   isLoggedIn: boolean = true;
-  flagItems: MenuItem[] | undefined;
-  profileItems: MenuItem[] | undefined;
+  logout!: string;
+  flagItems?: MenuItem[];
   currentLanguage: string = '';
   pathOfFlag: string = '';
   flag: { [key: string]: string } = {
@@ -21,8 +21,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     en: 'assets/img/uk-flag.png',
   };
   mobileView!: boolean;
-  authSubscription: Subscription | undefined;
-  mobileViewSubscription: Subscription | undefined;
+  authSubscription?: Subscription;
+  mobileViewSubscription?: Subscription;
 
   constructor(
     private translate: TranslateService,
@@ -37,9 +37,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.isLoggedIn = val;
       });
     this.mobileView = this.viewService.mobileView;
-    this.viewService.resizeEvent.subscribe((value: boolean) => {
-      this.mobileView = value;
-    });
+    this.mobileViewSubscription = this.viewService.resizeSubject.subscribe(
+      (value: boolean) => {
+        this.mobileView = value;
+      },
+    );
 
     this.profileLogoutLangSetter(this.currentLanguage);
     this.setDefaultLanguage();
@@ -75,7 +77,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
   }
   useLanguage(lang: string) {
-
     this.pathOfFlag = this.flag[lang];
     this.translate.use(lang);
     this.currentLanguage = lang;
@@ -84,22 +85,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   profileLogoutLangSetter(lang: string) {
-    let logout: string;
     if (lang === 'pl') {
-      logout = 'Wyloguj się';
+      this.logout = 'Wyloguj się';
     } else {
-      logout = 'Logout';
+      this.logout = 'Logout';
     }
-
-    this.profileItems = [
-      {
-        escape: false,
-        label: `<span class="header-menu-item">${logout}</span>`,
-        icon: 'pi pi-sign-out',
-        command: () => {
-          this.authService.logout();
-        },
-      },
-    ];
   }
 }

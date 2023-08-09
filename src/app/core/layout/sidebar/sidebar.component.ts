@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   navBtnAnimation,
   navBtnAnimationMobile,
@@ -6,17 +6,19 @@ import {
 import { ViewService } from '@app/core/services/view/view.service';
 import { AuthService } from '@app/core/services/auth/auth.service';
 import { UserDetailsDto } from '@app/core/interfaces/user/user-details-dto';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
   animations: [navBtnAnimation, navBtnAnimationMobile],
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent implements OnInit, OnDestroy {
   sidebarVisible: boolean = false;
   isLoggedIn: boolean = true;
-
+  mobileViewSubscription?: Subscription;
   mobileView!: boolean;
+
   selectedOrganization: string = 'NCDC';
   user: UserDetailsDto = {
     id: 0,
@@ -29,16 +31,22 @@ export class SidebarComponent implements OnInit {
     private viewService: ViewService,
     private authService: AuthService,
   ) {}
+  ngOnDestroy(): void {
+    this.mobileViewSubscription?.unsubscribe();
+  }
 
-  ngOnInit() {
-    this.mobileView = this.viewService.mobileView;
-    this.viewService.resizeEvent.subscribe((value: boolean) => {
-      this.mobileView = value;
-    });
-
+  ngOnInit(): void {
     this.authService.isAuthObservable().subscribe((val: boolean) => {
       this.isLoggedIn = val;
     });
+
+    this.mobileView = this.viewService.mobileView;
+    this.mobileViewSubscription = this.viewService.resizeSubject.subscribe(
+      (value: boolean) => {
+        console.log(value);
+        this.mobileView = value;
+      },
+    );
   }
 
   logout() {

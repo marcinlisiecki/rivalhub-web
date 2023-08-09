@@ -1,4 +1,5 @@
-import { Injectable, EventEmitter } from '@angular/core';
+import { HostListener, Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -6,14 +7,15 @@ import { Injectable, EventEmitter } from '@angular/core';
 export class ViewService {
   mobileView: boolean = window.innerWidth <= 768 ? true : false;
 
-  resizeEvent = new EventEmitter<boolean>();
+  resizeSubject = new Subject<boolean>();
 
   constructor() {
-    window.addEventListener('resize', this.onResize.bind(this));
+    this.resizeSubject.next(this.mobileView);
   }
 
-  onResize(event: any) {
-    this.mobileView = event.target.innerWidth <= 768;
-    this.resizeEvent.emit(this.mobileView);
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    this.mobileView = (event.target as Window).innerWidth <= 768;
+    this.resizeSubject.next(this.mobileView);
   }
 }
