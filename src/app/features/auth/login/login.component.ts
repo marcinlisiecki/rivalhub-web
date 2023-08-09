@@ -63,11 +63,9 @@ export class LoginComponent implements OnInit, OnDestroy {
       next: (res) => {
         if (res?.token) {
           this.router.navigateByUrl('/organizations').then();
-          return;
         }
 
         this.isLoading = false;
-        this.apiError = 'Wystąpił nieoczekiwany błąd';
       },
       error: (err: unknown) => {
         this.isLoading = false;

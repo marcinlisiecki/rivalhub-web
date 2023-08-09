@@ -29,5 +29,9 @@
 	"landing.text2": " to idealne narzędzie dla Ciebie i Twojej firmy!",
 	"landing.text3": "Niech pasja do rywalizacji popchnie Cię do osiągania niesamowitych rzeczy. ",
 	"landing.text4": " jest Twoim towarzyszem w tej ekscytującej podróży ku lepszym wynikom i zyskanemu szacunkowi u kolegów z pracy. Zarejestruj się już teraz i rozpocznij swoją rywalizacyjną przygodę już dziś!",
-	"landing.welcome": "WITAMY W "
+	"landing.welcome": "WITAMY W ",
+  "event.new.steps.category": "Kategorie",
+  "event.new.steps.info": "Informacje",
+  "event.new.steps.date": "Data i czas",
+  "event.new.steps.reservation": "Rezerwacja"
 }

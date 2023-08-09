@@ -60,9 +60,9 @@ export class OrganizationDashboardComponent implements OnInit, OnDestroy {
     private viewService: ViewService,
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.mobileView = this.viewService.mobileView;
-    this.resizeEventSub = this.viewService.resizeEvent.subscribe(
+    this.resizeEventSub = this.viewService.resizeSubject.subscribe(
       (value: boolean) => {
         this.mobileView = value;
       },
@@ -147,10 +147,5 @@ export class OrganizationDashboardComponent implements OnInit, OnDestroy {
 
   toggleNav() {
     this.navVisible = !this.navVisible;
-  }
-  //update mobileView on window resize
-  @HostListener('window:resize', ['$event'])
-  onResize(event: any) {
-    this.mobileView = event.target.innerWidth <= 768;
   }
 }

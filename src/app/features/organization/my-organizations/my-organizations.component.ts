@@ -9,7 +9,7 @@ import { Organization } from '@interfaces/organization/organization';
 })
 export class MyOrganizationsComponent implements OnInit {
   organizations: Organization[] = [];
-
+  isDefaultAvatar!: boolean;
   constructor(private organizationsService: OrganizationsService) {}
 
   ngOnInit(): void {
@@ -32,8 +32,8 @@ export class MyOrganizationsComponent implements OnInit {
     return `/organizations/${id}`;
   }
 
-  isDefaultAvatar(imageUrl: string | null): boolean {
-    return imageUrl === null;
+  checkDefaultAvatar(imageUrl: string | null) {
+    this.isDefaultAvatar = imageUrl === null ? true : false;
   }
 
   displayName(name: string): string {
