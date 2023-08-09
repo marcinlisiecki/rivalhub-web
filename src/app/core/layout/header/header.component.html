@@ -2,15 +2,10 @@
   <div class="header-content">
     <div class="header-left">
       <a class="header-logo-wrapper" routerLink="/">
-        <img priority ngSrc="assets/img/logo.png" height="40" width="60" alt="Logo" />
+        <img priority ngSrc="assets/img/logo.png" height="50" width="75" alt="Logo" />
       </a>
       <nav>
         <ul>
-          <li>
-            <app-header-link routerLink="/">{{
-              'header.main-page' | translate
-            }}</app-header-link>
-          </li>
           <li>
             <p-toast></p-toast>
             <p-menu styleClass="header-menu-flag" #menu [model]="flagItems" [popup]="true"></p-menu>
