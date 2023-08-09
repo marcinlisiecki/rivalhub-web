@@ -17,6 +17,7 @@ import { SidebarModule } from 'primeng/sidebar';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { HeaderLoggedInComponent } from './header/header-logged-in/header-logged-in.component';
 import { HeaderNotLoggedInComponent } from './header/header-not-logged-in/header-not-logged-in.component';
+import { LanguageButtonComponent } from './header/language-button/language-button.component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { HeaderNotLoggedInComponent } from './header/header-not-logged-in/header
     SidebarSectionComponent,
     SectionItemComponent,
     HeaderLoggedInComponent,
-    HeaderNotLoggedInComponent,],
+    HeaderNotLoggedInComponent,
+    LanguageButtonComponent,],
   exports: [HeaderComponent, HeaderLinkComponent,SidebarComponent,
     SidebarModule,
     ToggleButtonModule,],

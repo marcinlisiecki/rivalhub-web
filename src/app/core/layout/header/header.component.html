@@ -7,11 +7,7 @@
       <nav>
         <ul>
           <li>
-            <p-toast></p-toast>
-            <p-menu styleClass="header-menu-flag" #menu [model]="flagItems" [popup]="true"></p-menu>
-            <button class="button-flag" (click)="menu.toggle($event)">
-              <img id="flag" [src]="pathOfFlag" alt="flag" width="24" height="12" />
-            </button>
+            <app-lang-btn></app-lang-btn>
           </li>
         </ul>
       </nav>
