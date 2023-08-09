@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { categoryTypeToLabel } from '@app/core/utils/event';
 import { ActivatedRoute } from '@angular/router';
-import { OrganizationsService } from '@app/core/services/organizations/organizations.service';
 import { extractMessage } from '@app/core/utils/apiErrors';
-import { Station } from '@interfaces/station/station';
+import { EditStation } from '@app/core/interfaces/station/edit-station';
+import { StationsService } from '@app/core/services/stations/stations.service';
 
 @Component({
   selector: 'app-view-stations',
@@ -11,13 +11,14 @@ import { Station } from '@interfaces/station/station';
   styleUrls: ['./view-stations.component.scss'],
 })
 export class ViewStationsComponent implements OnInit {
-  stations: Station[] = [];
+  stations: EditStation[] = [];
   organizationId!: number;
   apiError: string | null = null;
+  edit: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
-    private organizationService: OrganizationsService,
+    private stationsService: StationsService,
   ) {
     this.route.params.subscribe((params) => {
       this.organizationId = params['id'];
@@ -25,10 +26,10 @@ export class ViewStationsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.organizationService
-      .getOrganizationStations(this.organizationId)
+    this.stationsService
+      .getOrganizationEditStations(this.organizationId)
       .subscribe({
-        next: (res: Station[]) => {
+        next: (res: EditStation[]) => {
           this.stations = res;
         },
         error: (err: unknown) => {

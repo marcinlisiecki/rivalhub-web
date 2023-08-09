@@ -8,6 +8,7 @@ import { OrganizationsService } from '@app/core/services/organizations/organizat
 import { extractMessage } from '@app/core/utils/apiErrors';
 import { NewReservation } from '@interfaces/reservation/new-reservation';
 import { Station } from '@interfaces/station/station';
+import { StationsService } from '@app/core/services/stations/stations.service';
 
 @Component({
   selector: 'app-add-reservation',
@@ -34,6 +35,7 @@ export class AddReservationComponent {
     private route: ActivatedRoute,
     private router: Router,
     private organizationService: OrganizationsService,
+    private stationsService: StationsService,
   ) {}
 
   fetchAvailableStations() {
@@ -41,7 +43,7 @@ export class AddReservationComponent {
     const organizationId: number = this.route.snapshot.params['id'];
 
     setTimeout(() => {
-      this.organizationService
+      this.stationsService
         .getAvailableStations(organizationId, this.startTime, this.finishTime)
         .subscribe({
           next: (stations: Station[]) => {

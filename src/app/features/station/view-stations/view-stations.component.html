@@ -7,15 +7,18 @@
         <th>ID</th>
         <th>Nazwa</th>
         <th>Typ</th>
+        <th>Aktywne</th>
+        <th class="action-cell">Akcje</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-station>
-      <tr>
-        <td>{{ station.id }}</td>
-        <td>{{ station.name }}</td>
-        <td>{{ categoryTypeToLabel(station.type) }}</td>
+      <tr *ngIf="!station.edit" (editEvent)="station.edit=true" app-view-station [station]="station" >
+      </tr>
+      <tr *ngIf="station.edit" (cancelEditEvent)="station.edit=false" app-edit-station [station]="station" >
       </tr>
     </ng-template>
+
+
   </p-table>
 
   <a routerLink="/organizations/{{ organizationId }}/stations/new">

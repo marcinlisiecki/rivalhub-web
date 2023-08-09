@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../../environments/enviroment';
 import { Observable } from 'rxjs';
-import { EventType } from '@interfaces/event/event-type';
 import { EventDto } from '@interfaces/event/event-dto';
 import { Organization } from '@interfaces/organization/organization';
 import { NewOrganization } from '@interfaces/organization/new-organization';
@@ -62,46 +61,11 @@ export class OrganizationsService {
     );
   }
 
-  getOrganizationStations(organizationId: number): Observable<Station[]> {
-    return this.http.get<Station[]>(
-      environment.apiUrl + `/organizations/${organizationId}/stations`,
-    );
-  }
-
   getOrganizationReservations(
     organizationId: number,
   ): Observable<Reservation[]> {
     return this.http.get<Reservation[]>(
       environment.apiUrl + `/organizations/${organizationId}/reservations`,
-    );
-  }
-
-  getAvailableStations(
-    organizationId: number,
-    start: Date,
-    end: Date,
-    type?: EventType,
-  ): Observable<Station[]> {
-    const formattedStart = this.formatDate(start);
-    const formattedEnd = this.formatDate(end);
-
-    const params: HttpParams = new HttpParams({
-      fromObject: {
-        onlyAvailable: true,
-        start: formattedStart,
-        end: formattedEnd,
-      },
-    });
-
-    if (type) {
-      params.append('type', type);
-    }
-
-    return this.http.get<Station[]>(
-      environment.apiUrl + `/organizations/${organizationId}/stations`,
-      {
-        params,
-      },
     );
   }
 

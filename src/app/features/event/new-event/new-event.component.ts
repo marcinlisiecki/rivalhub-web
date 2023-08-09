@@ -12,6 +12,7 @@ import { AddEventFormStep } from '@interfaces/event/add-event-form-step';
 import { Station } from '@interfaces/station/station';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
+import { StationsService } from '@app/core/services/stations/stations.service';
 
 @Component({
   selector: 'app-new-event',
@@ -52,7 +53,7 @@ export class NewEventComponent implements OnInit, OnDestroy {
   });
 
   constructor(
-    private organizationService: OrganizationsService,
+    private stationsService: StationsService,
     private route: ActivatedRoute,
     private translateService: TranslateService,
   ) {}
@@ -122,7 +123,7 @@ export class NewEventComponent implements OnInit, OnDestroy {
         return;
       }
 
-      this.organizationService
+      this.stationsService
         .getAvailableStations(
           organizationId,
           startDate,
