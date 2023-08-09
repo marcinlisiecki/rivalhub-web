@@ -53,6 +53,7 @@ import {History} from "@app/features/profile/dashboard-history-panel/activity-it
     CookieModule.withOptions(),
     EventModule,
     TranslateModule.forRoot({
+      defaultLanguage: 'pl',
       loader: {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,
