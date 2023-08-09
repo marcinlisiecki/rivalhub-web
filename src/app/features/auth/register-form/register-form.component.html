@@ -8,7 +8,6 @@
         name="email"
         id="email"
         type="email"
-        placeholder="jan.kowalski@example.com"
       />
       <div *ngIf="email?.invalid && email?.touched">
         <app-validation-error *ngIf="email?.errors?.['required']">
@@ -27,7 +26,6 @@
         name="name"
         id="name"
         type="text"
-        placeholder="jan.kowal"
         formControlName="name"
       />
       <div *ngIf="name?.invalid && name?.touched">
@@ -52,7 +50,6 @@
         styleClass="input-wide"
         class="password"
         inputStyleClass="input-wide"
-        placeholder="********"
         formControlName="password"
         [mediumRegex]="MEDIUM_REGEX"
         [strongRegex]="STRONG_REGEX"

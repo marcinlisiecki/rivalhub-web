@@ -9,7 +9,6 @@
             pInputText
             name="email"
             type="email"
-            placeholder="jan.kowalski@example.com"
           />
         <div *ngIf="email?.invalid && email?.touched">
           <app-validation-error *ngIf="email?.errors?.['required']">
