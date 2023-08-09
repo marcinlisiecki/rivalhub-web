@@ -4,6 +4,7 @@ import { AuthService } from '@app/core/services/auth/auth.service';
 import { RegisterCredentials } from '@interfaces/auth/register-credentials';
 import { Router } from '@angular/router';
 import { extractMessage } from '@app/core/utils/apiErrors';
+import { MEDIUM_REGEX, STRONG_REGEX } from '@app/core/constants/password';
 
 @Component({
   selector: 'app-register-form',
@@ -25,7 +26,6 @@ export class RegisterFormComponent {
   });
   apiError: null | string = null;
   isLoading: boolean = false;
-  passwordPrompt: string = '';
 
   constructor(
     private authService: AuthService,
@@ -80,4 +80,7 @@ export class RegisterFormComponent {
   get password() {
     return this.registerForm.get('password');
   }
+
+  protected readonly MEDIUM_REGEX = MEDIUM_REGEX;
+  protected readonly STRONG_REGEX = STRONG_REGEX;
 }
