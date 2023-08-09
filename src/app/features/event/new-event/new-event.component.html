@@ -21,6 +21,16 @@
     [basicInfoForm]="basicInfoForm"
   ></app-basic-info>
 
+  <app-add-user-ping-pong
+    *ngIf="formStep === AddEventFormStep.ADD_USERS"
+    (setFormStep)="setFormStep($event)"
+    [userList]="notAddedUserList"
+    (handleAddUser)="handleAddUser($event)"
+    [teams]="teams"
+    (handleRemoveUser)="handleRemoveUser($event)"
+  >
+  </app-add-user-ping-pong>
+
   <app-date-selector
     *ngIf="formStep === AddEventFormStep.DATE"
     (setFormStep)="setFormStep($event)"
