@@ -38,6 +38,12 @@
     justify-content: center;
     align-items: center;
     column-gap: 0.5rem;
+    transition: border-color 0.3s;
+    cursor: pointer;
+
+    &:hover {
+      border-color: $primaryColor;
+    }
 
     p {
       margin: 0;

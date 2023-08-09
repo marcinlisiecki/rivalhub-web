@@ -12,6 +12,9 @@ import { AddEventFormStep } from '@interfaces/event/add-event-form-step';
 import { Station } from '@interfaces/station/station';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
+import { AddEventUser } from '@interfaces/event/add-event-user';
+import { UserDetailsDto } from '@interfaces/user/user-details-dto';
+import { PagedResponse } from '@interfaces/generic/paged-response';
 
 @Component({
   selector: 'app-new-event',
@@ -31,6 +34,19 @@ export class NewEventComponent implements OnInit, OnDestroy {
   selectedStations: string[] = [];
 
   dateError: string | null = null;
+
+  teams: AddEventUser[][] = [
+    [
+      {
+        id: 1,
+        name: 'Smok Smokowski',
+      },
+    ],
+    [],
+  ];
+
+  userList: UserDetailsDto[] = [];
+  notAddedUserList: UserDetailsDto[] = [];
 
   onLangChangeSub?: Subscription;
 
@@ -62,6 +78,39 @@ export class NewEventComponent implements OnInit, OnDestroy {
     this.onLangChangeSub = this.translateService.onLangChange.subscribe(() =>
       this.setStepsMenu(),
     );
+
+    this.fetchUserList();
+  }
+
+  fetchUserList() {
+    const organizationId = this.route.snapshot.params['id'];
+
+    this.organizationService.getUsers(organizationId, 0, 1000).subscribe({
+      next: (res: PagedResponse<UserDetailsDto>) => {
+        this.userList = res.content;
+        this.notAddedUserList = this.getOnlyNotAddedUserList();
+      },
+    });
+  }
+
+  getOnlyNotAddedUserList() {
+    let notAddedList: UserDetailsDto[] = [];
+
+    this.userList.forEach((user) => {
+      let found: boolean = false;
+
+      this.teams.forEach((team) => {
+        if (team.findIndex((item) => item.id === user.id) !== -1) {
+          found = true;
+        }
+      });
+
+      if (!found) {
+        notAddedList.push(user);
+      }
+    });
+
+    return notAddedList;
   }
 
   ngOnDestroy(): void {
