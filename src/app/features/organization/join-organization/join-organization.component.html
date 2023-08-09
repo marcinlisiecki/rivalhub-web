@@ -1,0 +1,14 @@
+<div class="main-container">
+  <h1>{{ mainMessage }}</h1>
+    <p-button
+      *ngIf="isLoaded"
+      styleClass="button-wide"
+      type="submit"
+      (onClick)="onSubmit()"
+    >
+      Dołącz
+    </p-button>
+  <app-validation-error *ngIf="responseError">
+    {{ responseError }}
+  </app-validation-error>
+</div>
