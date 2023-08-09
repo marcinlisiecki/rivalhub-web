@@ -1,6 +1,6 @@
-import { UserDetailsDto } from '@interfaces/user/user-details-dto';
+import { AddEventUser } from '@interfaces/event/add-event-user';
 
 export interface AddTeamUser {
   teamIndex: number;
-  user: UserDetailsDto;
+  user: AddEventUser;
 }

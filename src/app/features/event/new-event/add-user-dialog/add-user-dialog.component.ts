@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { UserDetailsDto } from '@interfaces/user/user-details-dto';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { AddTeamUser } from '@interfaces/event/add-team-user';
 
 @Component({
   selector: 'app-add-user-dialog',

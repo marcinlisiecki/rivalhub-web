@@ -7,8 +7,17 @@
     <div class="team">
       <h2>Drużyna 1</h2>
       <div *ngFor="let user of teams[0]" class="team-member">
-        <div class="team-member-avatar"></div>
-        <p>{{ user.name }}</p>
+        <div class="team-member-data">
+          <div class="team-member-avatar"></div>
+          <p>{{ user.name }}</p>
+        </div>
+        <div
+          class="team-member-remove-button"
+          *ngIf="user.email !== loggedInUserEmail && user"
+          (click)="removeUser(0, user)"
+        >
+          <i class="pi pi-times-circle"></i>
+        </div>
       </div>
 
       <div
@@ -24,8 +33,17 @@
     <div class="team">
       <h2>Drużyna 2</h2>
       <div *ngFor="let user of teams[1]" class="team-member">
-        <div class="team-member-avatar"></div>
-        <p>{{ user.name }}</p>
+        <div class="team-member-data">
+          <div class="team-member-avatar"></div>
+          <p>{{ user.name }}</p>
+        </div>
+        <div
+          class="team-member-remove-button"
+          *ngIf="user.email !== loggedInUserEmail && user"
+          (click)="removeUser(1, user)"
+        >
+          <i class="pi pi-times-circle"></i>
+        </div>
       </div>
 
       <div
@@ -48,7 +66,10 @@
     >
       Powrót
     </p-button>
-    <p-button (onClick)="setFormStep.emit(AddEventFormStep.DATE)">
+    <p-button
+      (onClick)="setFormStep.emit(AddEventFormStep.DATE)"
+      [disabled]="teams[0].length === 0 || teams[1].length === 0"
+    >
       Dalej
     </p-button>
   </div>

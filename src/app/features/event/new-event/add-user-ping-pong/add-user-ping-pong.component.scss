@@ -18,14 +18,38 @@
   &-member {
     display: flex;
     align-items: center;
-    column-gap: 0.75rem;
+    justify-content: space-between;
     height: 3rem;
+
+    &-data {
+      display: flex;
+      align-items: center;
+      column-gap: 0.75rem;
+    }
 
     &-avatar {
       width: 2rem;
       height: 2rem;
       border-radius: 50rem;
       background-color: $shade600;
+    }
+
+    &-remove-button {
+      width: 2.5rem;
+      height: 2.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      border-radius: 100rem;
+
+      i {
+        color: $dangerColor;
+      }
+
+      &:hover {
+        background-color: transparentize($shade600, 0.5);
+      }
     }
   }
 

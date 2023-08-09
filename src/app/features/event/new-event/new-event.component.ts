@@ -40,6 +40,7 @@ export class NewEventComponent implements OnInit, OnDestroy {
       {
         id: 1,
         name: 'Smok Smokowski',
+        email: 'test@test.pl',
       },
     ],
     [],
@@ -82,12 +83,23 @@ export class NewEventComponent implements OnInit, OnDestroy {
     this.fetchUserList();
   }
 
-  handleAddUser(data?: { user?: UserDetailsDto; teamIndex?: number }) {
+  handleAddUser(data?: { user?: AddEventUser; teamIndex?: number }) {
     if (!data || !data.user || data.teamIndex === undefined) {
       return;
     }
 
     this.teams[data.teamIndex].push(data.user);
+    this.notAddedUserList = this.getOnlyNotAddedUserList();
+  }
+
+  handleRemoveUser(data?: { user?: AddEventUser; teamIndex?: number }) {
+    if (!data || !data.user || data.teamIndex === undefined) {
+      return;
+    }
+
+    this.teams[data.teamIndex] = this.teams[data.teamIndex].filter(
+      (item) => item.id !== data?.user?.id,
+    );
     this.notAddedUserList = this.getOnlyNotAddedUserList();
   }
 
