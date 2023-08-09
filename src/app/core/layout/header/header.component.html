@@ -11,66 +11,19 @@
               'header.main-page' | translate
             }}</app-header-link>
           </li>
+          <li>
+            <p-toast></p-toast>
+            <p-menu styleClass="header-menu-flag" #menu [model]="flagItems" [popup]="true"></p-menu>
+            <button class="button-flag" (click)="menu.toggle($event)">
+              <img id="flag" [src]="pathOfFlag" alt="flag" width="24" height="12" />
+            </button>
+          </li>
         </ul>
       </nav>
     </div>
     <nav *ngIf="!mobileView">
-      <ul>
-        <li>
-          <p-toast></p-toast>
-          <p-menu
-            styleClass="header-menu-flag"
-            #menu
-            [model]="flagItems"
-            [popup]="true"
-          ></p-menu>
-          <button class="button-flag" (click)="menu.toggle($event)">
-          <img
-            id="flag"
-            [src]="pathOfFlag"
-            alt="flag"
-            width="24"
-            height="12"
-          />
-          </button>
-        </li>
-        <li *ngIf="!isLoggedIn">
-          <app-header-link routerLink="/register">
-            {{ 'header.register' | translate }}
-          </app-header-link>
-        </li>
-        <li *ngIf="!isLoggedIn">
-          <app-header-link routerLink="/login">
-            {{ 'header.login' | translate }}
-          </app-header-link>
-        </li>
-
-        <!--        <li *ngIf="isLoggedIn">-->
-        <!--          <app-header-link routerLink="/calendar">-->
-        <!--            {{ 'header.calendar' | translate }}-->
-        <!--          </app-header-link>-->
-        <!--        </li>-->
-
-        <li *ngIf="isLoggedIn">
-          <app-header-link routerLink="/organizations/new">
-            {{ 'header.organisationAdd' | translate }}
-          </app-header-link>
-        </li>
-
-        <li *ngIf="isLoggedIn">
-          <app-header-link routerLink="/organizations">
-            {{ 'header.organisationShow' | translate }}
-          </app-header-link>
-        </li>
-
-        <li *ngIf="isLoggedIn">
-          <app-header-link routerLink="/profile" (click)="profileMenu.toggle($event)">
-            {{ 'header.profile' | translate }}
-            <i class="pi pi-angle-down"></i>
-          </app-header-link>
-          <p-menu [model]="profileItems" #profileMenu [popup]="true"></p-menu>
-        </li>
-      </ul>
+      <app-header-logged-in [logout]="logout" *ngIf="isLoggedIn"></app-header-logged-in>
+      <app-header-not-logged-in *ngIf="!isLoggedIn"></app-header-not-logged-in>
     </nav>
   </div>
 </header>
