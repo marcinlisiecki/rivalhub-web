@@ -14,5 +14,7 @@ export class DateSelectorComponent {
   @Output() setFormStep: EventEmitter<AddEventFormStep> =
     new EventEmitter<AddEventFormStep>();
 
+  today: Date = new Date();
+
   protected readonly AddEventFormStep = AddEventFormStep;
 }
