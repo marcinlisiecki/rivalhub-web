@@ -62,10 +62,18 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.authService.login(credentials).subscribe({
       next: (res) => {
         if (res?.token) {
-          this.router.navigateByUrl('/organizations').then();
+          const url = sessionStorage.getItem("redirectUrl")
+          if (url) {
+            this.router.navigateByUrl(url).then();
+            sessionStorage.removeItem("redirectUrl")
+          } else {
+            this.router.navigateByUrl('/organizations').then();
+          }
+          return;
         }
 
         this.isLoading = false;
+        this.apiError = 'Wystąpił nieoczekiwany błąd';
       },
       error: (err: unknown) => {
         this.isLoading = false;

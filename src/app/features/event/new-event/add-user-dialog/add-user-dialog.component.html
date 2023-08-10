@@ -1,0 +1,30 @@
+<section class="wrapper">
+  <div class="input-box">
+    <label for="name">Nazwa użytkownika</label>
+    <input
+      pInputText
+      type="text"
+      name=""
+      id="name"
+      class="input-wide"
+      [ngModel]="userSearchQuery"
+      (ngModelChange)="onSearchChange($event)"
+    />
+  </div>
+
+  <div class="users">
+    <div class="user" *ngFor="let user of filteredUserList">
+      <div class="user-data">
+        <div class="user-avatar"></div>
+        <p>{{ user.name }}</p>
+      </div>
+      <div class="user-add-button" (click)="handleAddUser(user)">
+        <i class="pi pi-plus"></i>
+      </div>
+    </div>
+  </div>
+
+  <div class="no-users" *ngIf="filteredUserList.length === 0">
+    Nie znaleziono żadnych użytkowników
+  </div>
+</section>

@@ -7,11 +7,7 @@
       }"
       [routerLink]="createURL(organization.id)"
     >
-      <span
-        class="organization-name"
-        *ngIf="isDefaultAvatar"
-        >{{ displayName(organization.name) }}</span
-      >
     </a>
+    <span class="organization-name">{{ organization.name }}</span>
   </div>
 </div>

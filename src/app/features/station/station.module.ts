@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AddStationComponent } from '@app/features/station/add-station/add-station.component';
 import { ViewStationsComponent } from '@app/features/station/view-stations/view-stations.component';
 import { TableModule } from 'primeng/table';
 import { SharedModule } from '@app/shared/shared.module';
@@ -13,7 +12,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { ConfirmationService } from 'primeng/api';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 @NgModule({
-  declarations: [AddStationComponent, ViewStationsComponent],
+  declarations: [ViewStationsComponent],
   imports: [
     RouterModule,
     CommonModule,
@@ -27,7 +26,7 @@ import { ConfirmPopupModule } from 'primeng/confirmpopup';
     InputSwitchModule,
     ConfirmPopupModule,
   ],
-  exports: [AddStationComponent, ViewStationsComponent],
+  exports: [ViewStationsComponent],
   providers: [ConfirmationService],
 })
 export class StationModule {}

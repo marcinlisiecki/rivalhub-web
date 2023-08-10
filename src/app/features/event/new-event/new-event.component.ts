@@ -13,6 +13,9 @@ import { Station } from '@interfaces/station/station';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { StationsService } from '@app/core/services/stations/stations.service';
+import { AddEventUser } from '@interfaces/event/add-event-user';
+import { UserDetailsDto } from '@interfaces/user/user-details-dto';
+import { PagedResponse } from '@interfaces/generic/paged-response';
 
 @Component({
   selector: 'app-new-event',
@@ -32,6 +35,20 @@ export class NewEventComponent implements OnInit, OnDestroy {
   selectedStations: string[] = [];
 
   dateError: string | null = null;
+
+  teams: AddEventUser[][] = [
+    [
+      {
+        id: 1,
+        name: 'Smok Smokowski',
+        email: 'test@test.pl',
+      },
+    ],
+    [],
+  ];
+
+  userList: UserDetailsDto[] = [];
+  notAddedUserList: UserDetailsDto[] = [];
 
   onLangChangeSub?: Subscription;
 
@@ -54,6 +71,7 @@ export class NewEventComponent implements OnInit, OnDestroy {
 
   constructor(
     private stationsService: StationsService,
+    private organizationsService: OrganizationsService,
     private route: ActivatedRoute,
     private translateService: TranslateService,
   ) {}
@@ -63,6 +81,59 @@ export class NewEventComponent implements OnInit, OnDestroy {
     this.onLangChangeSub = this.translateService.onLangChange.subscribe(() =>
       this.setStepsMenu(),
     );
+
+    this.fetchUserList();
+  }
+
+  handleAddUser(data?: { user?: AddEventUser; teamIndex?: number }) {
+    if (!data || !data.user || data.teamIndex === undefined) {
+      return;
+    }
+
+    this.teams[data.teamIndex].push(data.user);
+    this.notAddedUserList = this.getOnlyNotAddedUserList();
+  }
+
+  handleRemoveUser(data?: { user?: AddEventUser; teamIndex?: number }) {
+    if (!data || !data.user || data.teamIndex === undefined) {
+      return;
+    }
+
+    this.teams[data.teamIndex] = this.teams[data.teamIndex].filter(
+      (item) => item.id !== data?.user?.id,
+    );
+    this.notAddedUserList = this.getOnlyNotAddedUserList();
+  }
+
+  fetchUserList() {
+    const organizationId = this.route.snapshot.params['id'];
+
+    this.organizationsService.getUsers(organizationId, 0, 1000).subscribe({
+      next: (res: PagedResponse<UserDetailsDto>) => {
+        this.userList = res.content;
+        this.notAddedUserList = this.getOnlyNotAddedUserList();
+      },
+    });
+  }
+
+  getOnlyNotAddedUserList() {
+    let notAddedList: UserDetailsDto[] = [];
+
+    this.userList.forEach((user) => {
+      let found: boolean = false;
+
+      this.teams.forEach((team) => {
+        if (team.findIndex((item) => item.id === user.id) !== -1) {
+          found = true;
+        }
+      });
+
+      if (!found) {
+        notAddedList.push(user);
+      }
+    });
+
+    return notAddedList;
   }
 
   ngOnDestroy(): void {
@@ -76,6 +147,9 @@ export class NewEventComponent implements OnInit, OnDestroy {
       },
       {
         label: this.translateService.instant('event.new.steps.info'),
+      },
+      {
+        label: this.translateService.instant('event.new.steps.addUsers'),
       },
       {
         label: this.translateService.instant('event.new.steps.date'),

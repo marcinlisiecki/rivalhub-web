@@ -14,6 +14,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterLink, RouterModule } from '@angular/router';
 import { SharedModule } from '@app/shared/shared.module';
 import { InviteUserComponent } from '@app/features/organization/invite-user/invite-user.component';
+import { JoinOrganizationComponent } from './join-organization/join-organization.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { InviteUserComponent } from '@app/features/organization/invite-user/invi
     DashboardActivitiesPanelComponent,
     ActivityItemComponent,
     InviteUserComponent,
+    JoinOrganizationComponent,
   ],
   imports: [
     RouterModule,
