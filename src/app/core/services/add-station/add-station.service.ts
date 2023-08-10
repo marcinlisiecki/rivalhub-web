@@ -10,7 +10,7 @@ import { NewStation } from '@interfaces/station/new-station';
 export class AddStationService {
   constructor(private http: HttpClient) {}
 
-  saveStation(id: string, station: NewStation): Observable<NewStation> {
+  saveStation(id: number, station: NewStation): Observable<NewStation> {
     return this.http.post<NewStation>(
       environment.apiUrl + `/organizations/${id}/stations`,
       station,
