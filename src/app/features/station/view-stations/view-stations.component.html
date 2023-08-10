@@ -95,6 +95,7 @@
   </p-table>
 
 
+  <app-validation-error *ngIf="inputError">{{ inputError }}</app-validation-error>
   <app-validation-error *ngIf="apiError">{{ apiError }}</app-validation-error>
 
 </section>

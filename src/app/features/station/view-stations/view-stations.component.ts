@@ -17,7 +17,7 @@ export class ViewStationsComponent implements OnInit {
   stations: Station[] = [];
   organizationId!: number;
   apiError: string | null = null;
-  edit: boolean = false;
+  inputError: string | null = null;
 
   newStation: NewStation = {
     name: '',
@@ -112,6 +112,12 @@ export class ViewStationsComponent implements OnInit {
   }
 
   onRowAdd() {
+    //validate inputerror between 3 and 255
+    if (this.newStation.name.length < 3 || this.newStation.name.length > 255) {
+      this.inputError = 'Nazwa stanowiska musi mieć od 3 do 255 znaków';
+      return;
+    }
+    this.inputError = null;
     this.addNewStation();
   }
 
