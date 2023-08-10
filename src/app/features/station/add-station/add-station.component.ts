@@ -19,7 +19,7 @@ export class AddStationComponent implements OnInit {
 
   public organizationId!: number
   public stationType = Object.keys(EventType);
-  public selectedType = "Ping Pong"
+  public selectedType: string
   public errorResponse!: string
 
   addStationForm = new FormGroup({
@@ -31,7 +31,9 @@ export class AddStationComponent implements OnInit {
     private route: ActivatedRoute,
     private addStationService: AddStationService,
     private router: Router,
-  ) {}
+  ) {
+    this.selectedType = categoryTypeToLabel(this.stationType[0])
+  }
 
   ngOnInit() {
     this.route.params.subscribe(params => {

@@ -19,11 +19,11 @@
     <div class="input-box">
       <label for="station-type">Typ stanowiska</label>
       <select
-      id="station-type"
-      formControlName="type"
-      name="type"
-      pInputText
-      #stationTypes (change)="onSelected(stationTypes.value)"
+        id="station-type"
+        formControlName="type"
+        name="type"
+        pInputText
+        #stationTypes (change)="onSelected(stationTypes.value)"
       >
         <option *ngFor="let option of stationType;" >
           {{ categoryTypeToLabel(option) }}
