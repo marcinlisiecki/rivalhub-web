@@ -4,6 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { extractMessage } from '@app/core/utils/apiErrors';
 import { EditStation } from '@app/core/interfaces/station/edit-station';
 import { StationsService } from '@app/core/services/stations/stations.service';
+import { EventType } from '@interfaces/event/event-type';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-view-stations',
@@ -15,6 +17,10 @@ export class ViewStationsComponent implements OnInit {
   organizationId!: number;
   apiError: string | null = null;
   edit: boolean = false;
+
+  clonedStations: { [s: string]: EditStation } = {};
+
+  stationTypes: any = Object.keys(EventType);
 
   constructor(
     private route: ActivatedRoute,
@@ -31,11 +37,39 @@ export class ViewStationsComponent implements OnInit {
       .subscribe({
         next: (res: EditStation[]) => {
           this.stations = res;
+          this.stations.forEach((station) => {
+            station.active = true;
+          });
         },
         error: (err: unknown) => {
           this.apiError = extractMessage(err);
         },
       });
+  }
+
+  editStation(station: EditStation) {
+    this.stationsService.editStation(this.organizationId, station).subscribe({
+      next: (res: any) => {
+        console.log(res);
+      },
+      error: (err: unknown) => {
+        this.apiError = extractMessage(err);
+      },
+    });
+  }
+
+  onRowEditInit(station: EditStation) {
+    this.clonedStations[station.id.toString() as string] = { ...station };
+  }
+
+  onRowEditSave(station: EditStation) {
+    console.log(station);
+    this.editStation(station);
+  }
+
+  onRowEditCancel(station: EditStation, index: number) {
+    this.stations[index] = this.clonedStations[station.id.toString() as string];
+    delete this.clonedStations[station.id.toString() as string];
   }
 
   protected readonly categoryTypeToLabel = categoryTypeToLabel;

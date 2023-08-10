@@ -27,7 +27,8 @@ export class StationsService {
     organizationId: number,
   ): Observable<EditStation[]> {
     return this.http.get<EditStation[]>(
-      environment.apiUrl + `/organizations/${organizationId}/stations`,
+      environment.apiUrl +
+        `/organizations/${organizationId}/stations?showInactive=true`,
     );
   }
 
@@ -57,6 +58,22 @@ export class StationsService {
       {
         params,
       },
+    );
+  }
+
+  editStation(organizationId: number, station: EditStation) {
+    const params: HttpParams = new HttpParams({
+      fromObject: {
+        name: station.name,
+        type: station.type,
+        active: station.active,
+      },
+    });
+
+    return this.http.patch(
+      environment.apiUrl +
+        `/organizations/${organizationId}/stations/${station.id}`,
+      { params },
     );
   }
 }

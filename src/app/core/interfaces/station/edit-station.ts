@@ -5,5 +5,4 @@ export interface EditStation {
   name: string;
   type: EventType;
   active: boolean;
-  edit: boolean;
 }

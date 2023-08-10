@@ -6,11 +6,11 @@ import { TableModule } from 'primeng/table';
 import { SharedModule } from '@app/shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { EditStationComponent } from './view-stations/edit-station/edit-station.component';
-import { ViewStationComponent } from './view-stations/view-station/view-station.component';
+import { DropdownModule } from 'primeng/dropdown';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [AddStationComponent, ViewStationsComponent, EditStationComponent, ViewStationComponent],
+  declarations: [AddStationComponent, ViewStationsComponent],
   imports: [
     RouterModule,
     CommonModule,
@@ -18,6 +18,8 @@ import { ViewStationComponent } from './view-stations/view-station/view-station.
     TableModule,
     SharedModule,
     ReactiveFormsModule,
+    DropdownModule,
+    FormsModule,
   ],
   exports: [AddStationComponent, ViewStationsComponent],
 })
