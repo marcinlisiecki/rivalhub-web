@@ -6,6 +6,12 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class LanguageService extends TranslateService {
   currentLanguage: string = <string>localStorage.getItem('currentLanguage');
+  flag: { [key: string]: string } = {
+    pl: 'assets/img/pl-flag.png',
+    en: 'assets/img/uk-flag.png',
+    cs: 'assets/img/cs-flag.png',
+    da: 'assets/img/da-flag.png',
+  };
 
   useLanguage(lang: string): void {
     this.use(lang);
