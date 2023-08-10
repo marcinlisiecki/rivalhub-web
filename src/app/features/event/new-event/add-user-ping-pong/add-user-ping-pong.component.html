@@ -1,0 +1,50 @@
+<section class="form-step-wrapper">
+  <header>
+    <h1>Dodaj użytkowników</h1>
+  </header>
+
+  <section class="teams">
+    <div class="team" *ngFor="let team of teams; let teamIndex = index">
+      <h2>Drużyna {{ teamIndex + 1 }}</h2>
+      <div *ngFor="let user of teams[teamIndex]" class="team-member">
+        <div class="team-member-data">
+          <div class="team-member-avatar"></div>
+          <p>{{ user.name }}</p>
+        </div>
+        <div
+          class="team-member-remove-button"
+          *ngIf="user.email !== loggedInUserEmail && user"
+          (click)="removeUser(teamIndex, user)"
+        >
+          <i class="pi pi-times-circle"></i>
+        </div>
+      </div>
+
+      <div
+        *ngFor="let i of Array(2 - teams[teamIndex].length)"
+        class="team-add-button"
+        (click)="openAddUserDialog(teamIndex)"
+      >
+        <i class="pi pi-plus"></i>
+        <p>Dodaj użytkownika</p>
+      </div>
+    </div>
+  </section>
+
+  <p-divider></p-divider>
+
+  <div class="form-step-navigation">
+    <p-button
+      styleClass="p-button-outlined"
+      (onClick)="setFormStep.emit(AddEventFormStep.BASIC_INFO)"
+    >
+      Powrót
+    </p-button>
+    <p-button
+      (onClick)="setFormStep.emit(AddEventFormStep.DATE)"
+      [disabled]="teams[0].length === 0 || teams[1].length === 0"
+    >
+      Dalej
+    </p-button>
+  </div>
+</section>

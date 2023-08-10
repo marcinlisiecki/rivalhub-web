@@ -31,5 +31,6 @@
   "event.new.steps.category": "Kategorie",
   "event.new.steps.info": "Informacje",
   "event.new.steps.date": "Data i czas",
+  "event.new.steps.addUsers": "Dodaj użytkowników",
   "event.new.steps.reservation": "Rezerwacja"
 }
