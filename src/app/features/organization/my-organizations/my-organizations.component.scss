@@ -1,5 +1,40 @@
 @import 'src/scss/variables';
 
+.wrapper {
+  width: $pageWidth;
+  margin: 2rem auto 0 auto;
+  display: flex;
+}
+
+.invitations {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.5rem;
+
+  h1 {
+    padding: 0;
+    margin: 0 0 1rem 0;
+    font-size: $textLg;
+  }
+}
+
+.invitation {
+  background-color: $panelContentBg;
+  border-radius: $borderRadius;
+  padding: 0.5rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: 1rem;
+
+  p {
+    padding: 0;
+    margin: 0;
+    font-weight: $weightMedium;
+  }
+}
+
 .verify-account-info {
   margin: 1rem 0;
   display: flex;
@@ -9,9 +44,8 @@
 .organizations-container {
   display: flex;
   flex-wrap: wrap;
-  width: $pageWidth;
-  margin: 2rem auto 0 auto;
   gap: 0.8rem;
+  flex: 1;
 
   .organization-card {
     display: flex;

@@ -1,13 +1,33 @@
-<div class="organizations-container">
-  <div class="organization-card" *ngFor="let organization of organizations">
-    <a
-      class="organization-link"
-      [ngStyle]="{
-        'background-image': 'url(' + getImagePath(organization.imageUrl) + ')'
-      }"
-      [routerLink]="createURL(organization.id)"
-    >
-    </a>
-    <span class="organization-name">{{ organization.name }}</span>
+<div class="wrapper">
+  <div class="organizations-container">
+    <div class="organization-card" *ngFor="let organization of organizations">
+      <a
+        class="organization-link"
+        [ngStyle]="{
+          'background-image': 'url(' + getImagePath(organization.imageUrl) + ')'
+        }"
+        [routerLink]="createURL(organization.id)"
+      >
+      </a>
+      <span class="organization-name">{{ organization.name }}</span>
+    </div>
   </div>
+  <p-divider layout="vertical"></p-divider>
+  <section class="invitations">
+    <h1>Zaproszenia do organizacji</h1>
+
+    <div *ngFor="let invitation of invitations" class="invitation">
+      <p>{{ invitation.organization.name }}</p>
+      <div>
+        <p-button
+          styleClass="p-button-text p-button-success"
+          icon="pi pi-check"
+        ></p-button>
+        <p-button
+          styleClass="p-button-text p-button-danger"
+          icon="pi pi-times"
+        ></p-button>
+      </div>
+    </div>
+  </section>
 </div>

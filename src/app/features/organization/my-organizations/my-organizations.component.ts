@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { OrganizationsService } from '../../../core/services/organizations/organizations.service';
 import { Organization } from '@interfaces/organization/organization';
+import { Invitation } from '@interfaces/organization/invitation';
 
 @Component({
   selector: 'app-my-organizations',
@@ -10,7 +11,11 @@ import { Organization } from '@interfaces/organization/organization';
 export class MyOrganizationsComponent implements OnInit {
   organizations: Organization[] = [];
   isDefaultAvatar!: boolean;
-  constructor(private organizationsService: OrganizationsService) {}
+  invitations: Invitation[] = [];
+
+  constructor(private organizationsService: OrganizationsService) {
+    this.invitations = JSON.parse(localStorage.getItem('invitations') || '[]');
+  }
 
   ngOnInit(): void {
     this.organizationsService.getMy().subscribe({
