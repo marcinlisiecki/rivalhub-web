@@ -1,29 +1,30 @@
 <ul>
+  <!--        <li *ngIf="isLoggedIn">-->
+  <!--          <app-header-link routerLink="/calendar">-->
+  <!--            {{ 'header.calendar' | language }}-->
+  <!--          </app-header-link>-->
+  <!--        </li>-->
 
+  <li>
+    <app-header-link routerLink="/organizations/new">
+      {{ 'header.organisationAdd' | translate }}
+    </app-header-link>
+  </li>
 
-    <!--        <li *ngIf="isLoggedIn">-->
-    <!--          <app-header-link routerLink="/calendar">-->
-    <!--            {{ 'header.calendar' | translate }}-->
-    <!--          </app-header-link>-->
-    <!--        </li>-->
+  <li>
+    <app-header-link routerLink="/organizations">
+      {{ 'header.organisationShow' | translate }}
+    </app-header-link>
+  </li>
 
-    <li>
-        <app-header-link routerLink="/organizations/new">
-            {{ 'header.organisationAdd' | translate }}
-        </app-header-link>
-    </li>
-
-    <li>
-        <app-header-link routerLink="/organizations">
-            {{ 'header.organisationShow' | translate }}
-        </app-header-link>
-    </li>
-
-    <li>
-        <app-header-link routerLink="/profile" (click)="profileMenu.toggle($event)">
-            {{ 'header.profile' | translate }}
-            <i class="pi pi-angle-down"></i>
-        </app-header-link>
-        <p-menu [model]="profileItems" #profileMenu [popup]="true"></p-menu>
-    </li>
+  <li>
+    <app-header-link
+      routerLink="/profile"
+      (click)="profileMenu.toggle($event); itemChange()"
+    >
+      {{ 'header.profile' | translate }}
+      <i class="pi pi-angle-down"></i>
+    </app-header-link>
+    <p-menu [model]="profileItems" #profileMenu [popup]="true"></p-menu>
+  </li>
 </ul>

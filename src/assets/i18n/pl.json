@@ -2,8 +2,14 @@
 	"api.error": "Wystąpił nieoczekiwany błąd",
 	"button.signIn": "Zaloguj się",
 	"button.signUp": "Zarejestruj się",
+	"event.new.steps.addUsers": "Dodaj użytkowników",
+	"event.new.steps.category": "Kategorie",
+	"event.new.steps.date": "Data i czas",
+	"event.new.steps.info": "Informacje",
+	"event.new.steps.reservation": "Rezerwacja",
 	"header.calendar": "Kalendarz",
 	"header.login": "Logowanie",
+	"header.logout": "Wyloguj się",
 	"header.main-page": "Strona główna",
 	"header.organisationAdd": "Dodaj organizację",
 	"header.organisationShow": "Moje organizacje",
@@ -27,10 +33,5 @@
 	"landing.join": "Dołącz do nas już dzisiaj i zacznij intensywną rywalizację o swoje cele!",
 	"landing.text1": "Czy kochasz rywalizację? Czy uwielbiasz grać w bilard, piłkarzyki albo paletki ze współpracownikami lub szefem swojej firmy? Jeśli tak, to ",
 	"landing.text2": " to idealne narzędzie dla Ciebie i Twojej firmy!",
-	"landing.welcome": "WITAMY W ",
-  "event.new.steps.category": "Kategorie",
-  "event.new.steps.info": "Informacje",
-  "event.new.steps.date": "Data i czas",
-  "event.new.steps.addUsers": "Dodaj użytkowników",
-  "event.new.steps.reservation": "Rezerwacja"
+	"landing.welcome": "WITAMY W "
 }
