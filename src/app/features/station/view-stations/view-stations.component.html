@@ -4,11 +4,11 @@
   <p-table [value]="stations" styleClass="p-datatable-striped" dataKey="id" editMode="row">
     <ng-template pTemplate="header">
       <tr>
-        <th>ID</th>
-        <th>Nazwa</th>
-        <th>Typ</th>
-        <th>Aktywny</th>
-        <th></th>
+        <th style="width:10%">ID</th>
+        <th style="width:30%">Nazwa</th>
+        <th style="width:30%">Typ</th>
+        <th style="width:15%">Aktywny</th>
+        <th style="width:15%"></th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-station let-editing="editing" let-ri="rowIndex">
@@ -38,10 +38,11 @@
         <td>
           <p-cellEditor>
             <ng-template pTemplate="input">
-              <input type="checkbox" [(ngModel)]="station.active" />
+                  <p-checkbox [(ngModel)]="station.active" [binary]="true" inputId="binary"></p-checkbox>
             </ng-template>
             <ng-template pTemplate="output">
-              {{station.active}}
+              <i *ngIf="station.active" class="pi pi-check" style="color: green"></i>
+              <i *ngIf="!station.active" class="pi pi-times" style="color: red"></i>
             </ng-template>
           </p-cellEditor>
         </td>
@@ -59,7 +60,12 @@
     </ng-template>
   </p-table>
 
-  <a routerLink="/organizations/{{ organizationId }}/stations/new">
-    <p-button>Dodaj stanowisko</p-button>
-  </a>
+  <div class="add-section">
+    <a routerLink="/organizations/{{ organizationId }}/stations/new">
+      <p-button>Dodaj stanowisko</p-button>
+    </a>
+      <app-validation-error *ngIf="apiError">{{ apiError }}</app-validation-error>
+
+  </div>
+
 </section>

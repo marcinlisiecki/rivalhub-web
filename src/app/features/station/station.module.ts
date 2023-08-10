@@ -8,6 +8,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { DropdownModule } from 'primeng/dropdown';
 import { FormsModule } from '@angular/forms';
+import { CheckboxModule } from 'primeng/checkbox';
 
 @NgModule({
   declarations: [AddStationComponent, ViewStationsComponent],
@@ -20,6 +21,7 @@ import { FormsModule } from '@angular/forms';
     ReactiveFormsModule,
     DropdownModule,
     FormsModule,
+    CheckboxModule,
   ],
   exports: [AddStationComponent, ViewStationsComponent],
 })

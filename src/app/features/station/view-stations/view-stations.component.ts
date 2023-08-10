@@ -37,9 +37,6 @@ export class ViewStationsComponent implements OnInit {
       .subscribe({
         next: (res: EditStation[]) => {
           this.stations = res;
-          this.stations.forEach((station) => {
-            station.active = true;
-          });
         },
         error: (err: unknown) => {
           this.apiError = extractMessage(err);
@@ -47,11 +44,9 @@ export class ViewStationsComponent implements OnInit {
       });
   }
 
-  editStation(station: EditStation) {
-    this.stationsService.editStation(this.organizationId, station).subscribe({
-      next: (res: any) => {
-        console.log(res);
-      },
+  editStation(station: EditStation): void {
+    this.stationsService.updateStation(this.organizationId, station).subscribe({
+      next: () => {},
       error: (err: unknown) => {
         this.apiError = extractMessage(err);
       },

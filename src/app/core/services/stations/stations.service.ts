@@ -61,19 +61,15 @@ export class StationsService {
     );
   }
 
-  editStation(organizationId: number, station: EditStation) {
-    const params: HttpParams = new HttpParams({
-      fromObject: {
-        name: station.name,
-        type: station.type,
-        active: station.active,
-      },
-    });
-
-    return this.http.patch(
+  updateStation(organizationId: number, station: EditStation): Observable<any> {
+    const stationDto = {
+      name: station.name,
+      type: station.type,
+      active: station.active.toString(),
+    };
+    const url =
       environment.apiUrl +
-        `/organizations/${organizationId}/stations/${station.id}`,
-      { params },
-    );
+      `/organizations/${organizationId}/stations/${station.id}`;
+    return this.http.patch(url, stationDto);
   }
 }
