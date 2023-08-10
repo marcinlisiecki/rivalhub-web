@@ -113,6 +113,8 @@ export class ViewStationsComponent implements OnInit {
 
   onRowAdd() {
     //validate inputerror between 3 and 255
+    //trim name
+    this.newStation.name = this.newStation.name.trim();
     if (this.newStation.name.length < 3 || this.newStation.name.length > 255) {
       this.inputError = 'Nazwa stanowiska musi mieć od 3 do 255 znaków';
       return;
