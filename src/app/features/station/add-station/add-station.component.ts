@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AddStationService } from '@app/core/services/add-station/add-station.service';
@@ -8,63 +8,62 @@ import {
   labelToCategoryType,
 } from '@app/core/utils/event';
 import { NewStation } from '@interfaces/station/new-station';
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-add-station',
   templateUrl: './add-station.component.html',
   styleUrls: ['./add-station.component.scss'],
 })
-export class AddStationComponent {
+export class AddStationComponent implements OnInit {
+
+  public organizationId!: number
+  public stationType = Object.keys(EventType);
+  public selectedType: string
+  public errorResponse!: string
+
+  addStationForm = new FormGroup({
+    name: new FormControl('', [Validators.required, Validators.minLength(2)]),
+    type: new FormControl('', [Validators.required]),
+  });
+
   constructor(
     private route: ActivatedRoute,
     private addStationService: AddStationService,
     private router: Router,
-  ) {}
+  ) {
+    this.selectedType = categoryTypeToLabel(this.stationType[0])
+  }
 
-  public stationType = Object.keys(EventType);
-  selectedOption = this.stationType[0];
-
-  addStationForm = new FormGroup({
-    name: new FormControl('', [Validators.required, Validators.minLength(1)]),
-    type: new FormControl('', [Validators.required]),
-  });
+  ngOnInit() {
+    this.route.params.subscribe(params => {
+      this.organizationId = params['id']
+    })
+  }
 
   onSubmit() {
-    const id = this.route.snapshot.paramMap.get('id') ?? '';
-    if (id == '') {
-      return;
+    const stationName = this.addStationForm.get('name')?.value
+    if (stationName == null || this.selectedType == null) {
+      return
     }
 
-    if (this.stationType == null) {
-      return;
+    const newStation: NewStation = {
+      name : stationName,
+      type : labelToCategoryType(this.selectedType)
     }
 
-    if (!this.addStationForm.valid) {
-      this.addStationForm.markAllAsTouched();
-      return;
-    }
-
-    if (this.name?.value == null) {
-      return;
-    }
-
-    if (this.type?.value == null) {
-      return;
-    }
-
-    const station: NewStation = {
-      name: this.name.value,
-      type: labelToCategoryType(this.type.value),
-    };
-
-    this.addStationService.saveStation(id, station).subscribe(
-      (savedStation) => {
-        this.router.navigateByUrl(`/organizations/${id}/stations`).then();
+    this.addStationService.saveStation(this.organizationId, newStation).subscribe({
+      next: (newStation: NewStation) => {
+        this.router.navigateByUrl('/organizations').then()
       },
-      (error) => {
-        console.log('Error has ocurred.');
-      },
-    );
+      error: (error: HttpErrorResponse) => {
+        this.errorResponse = "Coś poszło nie tak"
+      }
+    })
+  }
+
+  onSelected(value: string) {
+    this.selectedType = value
   }
 
   get name() {
