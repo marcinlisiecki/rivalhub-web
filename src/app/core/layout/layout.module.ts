@@ -9,7 +9,6 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import {ButtonModule} from "primeng/button";
 import {SharedModule} from "@app/shared/shared.module";
-import {TranslateModule} from "@ngx-translate/core";
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { SidebarSectionComponent } from './sidebar/sidebar-section/sidebar-section.component';
 import { SectionItemComponent } from './sidebar/section-item/section-item.component';
@@ -18,6 +17,7 @@ import { ToggleButtonModule } from 'primeng/togglebutton';
 import { HeaderLoggedInComponent } from './header/header-logged-in/header-logged-in.component';
 import { HeaderNotLoggedInComponent } from './header/header-not-logged-in/header-not-logged-in.component';
 import { LanguageButtonComponent } from './header/language-button/language-button.component';
+import {TranslateModule} from "@ngx-translate/core";
 
 
 @NgModule({
@@ -41,9 +41,9 @@ import { LanguageButtonComponent } from './header/language-button/language-butto
     HttpClientModule,
     ButtonModule,
     SharedModule,
-    TranslateModule,
     SidebarModule,
     ToggleButtonModule,
+    TranslateModule,
   ],
 })
 export class LayoutModule {}

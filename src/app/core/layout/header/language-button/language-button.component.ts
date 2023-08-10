@@ -21,7 +21,6 @@ export class LanguageButtonComponent implements OnInit {
     private lang: LanguageService,
     ) {}
   ngOnInit() {
-    this.lang.setLocalStorage()
     this.pathOfFlag = this.flag[this.lang.currentLanguage];
     this.flagItems = [
       {

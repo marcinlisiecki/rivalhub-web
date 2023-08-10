@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AuthService } from '@app/core/services/auth/auth.service';
 import { MenuItem } from 'primeng/api';
+import { LanguageService } from '@app/core/services/language/language.service';
 
 @Component({
   selector: 'app-header-logged-in',
@@ -9,10 +10,20 @@ import { MenuItem } from 'primeng/api';
 })
 export class HeaderLoggedInComponent implements OnInit {
   profileItems?: MenuItem[];
-  @Input() logout!: string;
-  constructor(private authService: AuthService) {}
+  logout!: string;
+  constructor(
+    private authService: AuthService,
+    private lang: LanguageService,
+  ) {}
 
   ngOnInit(): void {
+    setTimeout(() => {
+      this.itemChange();
+    }, 100);
+  }
+
+  itemChange() {
+    this.logout = this.lang.instant('header.logout');
     this.profileItems = [
       {
         escape: false,
@@ -24,4 +35,6 @@ export class HeaderLoggedInComponent implements OnInit {
       },
     ];
   }
+
+  protected readonly alert = alert;
 }
