@@ -9,7 +9,7 @@ import * as moment from 'moment';
   templateUrl: './history.component.html',
   styleUrls: ['./history.component.scss'],
 })
-export class History {
+export class HistoryComponent {
   @Input({ required: true }) event!: EventDto;
   protected readonly moment = moment;
 }

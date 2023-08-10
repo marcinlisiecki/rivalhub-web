@@ -20,26 +20,11 @@ import {
   TranslateService,
 } from '@ngx-translate/core';
 import { MessageService } from 'primeng/api';
-import {TranslateHttpLoader} from "@ngx-translate/http-loader";
-import { ProfileComponent } from './features/profile/profile.component';
-import { DashboardComponent } from './features/profile/dashboard/dashboard.component';
-import {
-    DashboardActivitiesComponent
-} from "@app/features/profile/dashboard-activities-panel/dashboard-activities.component";
-import {ActivityComponent} from "@app/features/profile/dashboard-activities-panel/activity-item/activity.component";
-import {DashboardHistoryComponent} from "@app/features/profile/dashboard-history-panel/dashboard-history.component";
-import {History} from "@app/features/profile/dashboard-history-panel/activity-item/history.component";
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { ProfileModule } from './features/profile/profile.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    ProfileComponent,
-    DashboardComponent,
-    DashboardActivitiesComponent,
-    ActivityComponent,
-    DashboardHistoryComponent,
-    History,
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -64,6 +49,7 @@ import {History} from "@app/features/profile/dashboard-history-panel/activity-it
     OrganizationModule,
     ReservationModule,
     StationModule,
+    ProfileModule,
   ],
 
   providers: [
