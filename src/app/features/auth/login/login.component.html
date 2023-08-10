@@ -7,6 +7,15 @@
         </ng-template>
       </p-messages>
     </div>
+
+    <div class="registered-message-wrapper" *ngIf="invitation">
+      <p-messages severity="info">
+        <ng-template pTemplate>
+          Musisz być zlogowany, aby dołączyć do organizacji.
+        </ng-template>
+      </p-messages>
+    </div>
+
     <div class="input-box">
       <label for="email">{{ 'input.email' | translate }}</label>
       <input

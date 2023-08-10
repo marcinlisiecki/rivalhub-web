@@ -18,6 +18,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   });
 
   registered: boolean = false;
+  invitation: boolean = false;
+
   apiError: string | null = null;
   isLoading: boolean = false;
   queryParamsSub?: Subscription;
@@ -31,6 +33,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.queryParamsSub = this.route.queryParams.subscribe((params) => {
       this.registered = params['registered'];
+      this.invitation = params['invitation'];
     });
   }
 
@@ -62,10 +65,10 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.authService.login(credentials).subscribe({
       next: (res) => {
         if (res?.token) {
-          const url = sessionStorage.getItem("redirectUrl")
+          const url = sessionStorage.getItem('redirectUrl');
           if (url) {
             this.router.navigateByUrl(url).then();
-            sessionStorage.removeItem("redirectUrl")
+            sessionStorage.removeItem('redirectUrl');
           } else {
             this.router.navigateByUrl('/organizations').then();
           }
