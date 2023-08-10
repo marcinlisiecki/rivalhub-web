@@ -12,6 +12,7 @@ import { AddEventFormStep } from '@interfaces/event/add-event-form-step';
 import { Station } from '@interfaces/station/station';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
+import { StationsService } from '@app/core/services/stations/stations.service';
 import { AddEventUser } from '@interfaces/event/add-event-user';
 import { UserDetailsDto } from '@interfaces/user/user-details-dto';
 import { PagedResponse } from '@interfaces/generic/paged-response';
@@ -69,7 +70,8 @@ export class NewEventComponent implements OnInit, OnDestroy {
   });
 
   constructor(
-    private organizationService: OrganizationsService,
+    private stationsService: StationsService,
+    private organizationsService: OrganizationsService,
     private route: ActivatedRoute,
     private translateService: TranslateService,
   ) {}
@@ -106,7 +108,7 @@ export class NewEventComponent implements OnInit, OnDestroy {
   fetchUserList() {
     const organizationId = this.route.snapshot.params['id'];
 
-    this.organizationService.getUsers(organizationId, 0, 1000).subscribe({
+    this.organizationsService.getUsers(organizationId, 0, 1000).subscribe({
       next: (res: PagedResponse<UserDetailsDto>) => {
         this.userList = res.content;
         this.notAddedUserList = this.getOnlyNotAddedUserList();
@@ -195,7 +197,7 @@ export class NewEventComponent implements OnInit, OnDestroy {
         return;
       }
 
-      this.organizationService
+      this.stationsService
         .getAvailableStations(
           organizationId,
           startDate,
