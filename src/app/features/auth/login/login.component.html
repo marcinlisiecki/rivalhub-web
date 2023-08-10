@@ -11,7 +11,7 @@
     <div class="registered-message-wrapper" *ngIf="invitation">
       <p-messages severity="info">
         <ng-template pTemplate>
-          Musisz być zlogowany, aby dołączyć do organizacji.
+          Zaloguj się aby dołączyć do organizacji.
         </ng-template>
       </p-messages>
     </div>
@@ -57,6 +57,9 @@
         <app-validation-error>
           {{ apiError }}
         </app-validation-error>
+      </p>
+      <p class="no-account-wrapper">
+        Nie masz konta? <a routerLink="/register">Zarejestruj się</a>
       </p>
     </div>
   </form>

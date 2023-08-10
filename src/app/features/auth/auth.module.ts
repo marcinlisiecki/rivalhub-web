@@ -12,6 +12,7 @@ import { LoginComponent } from './login/login.component';
 import { MessageModule } from 'primeng/message';
 import { LayoutModule } from '../../core/layout/layout.module';
 import { TranslateModule } from '@ngx-translate/core';
+import {RouterLink} from "@angular/router";
 
 @NgModule({
   declarations: [RegisterFormComponent, LoginComponent],
@@ -25,6 +26,7 @@ import { TranslateModule } from '@ngx-translate/core';
     MessageModule,
     LayoutModule,
     TranslateModule,
+    RouterLink,
   ],
   exports: [RegisterFormComponent, LoginComponent],
 })
