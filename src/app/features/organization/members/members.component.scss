@@ -1,0 +1,36 @@
+@import 'src/scss/variables';
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  margin: 20px auto 0 auto;
+  max-width: $pageWidth;
+  flex-wrap: wrap;
+}
+
+.data-card{
+  padding: 5px;
+  margin: 8px 0;
+  font-size: 30px;
+  text-align: center;
+}
+
+.dashboard-container {
+  display: flex;
+  align-items: center;
+  margin: 20px auto 0 auto;
+  max-width: $pageWidth;
+  flex-wrap: wrap;
+
+  &-header {
+    display: flex;
+    align-items: center;
+    height: 140px;
+    margin: 10px auto;
+    flex: 0 0 100%;
+    background-color: $panelContentBg;
+    padding: 10px;
+    border-radius: $dashboardRadius;
+    border: $dashboardBorder;
+  }
+}

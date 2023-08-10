@@ -29,6 +29,7 @@ import {
 import {ActivityComponent} from "@app/features/profile/dashboard-activities-panel/activity-item/activity.component";
 import {DashboardHistoryComponent} from "@app/features/profile/dashboard-history-panel/dashboard-history.component";
 import {History} from "@app/features/profile/dashboard-history-panel/activity-item/history.component";
+import {InfiniteScrollModule} from "ngx-infinite-scroll";
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import {History} from "@app/features/profile/dashboard-history-panel/activity-it
     OrganizationModule,
     ReservationModule,
     StationModule,
+    InfiniteScrollModule,
   ],
 
   providers: [

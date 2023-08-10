@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule, NgOptimizedImage} from '@angular/common';
 import { OrganizationDashboardComponent } from '@app/features/organization/organization-dashboard/organization-dashboard.component';
 import { DashboardUsersPanelComponent } from '@app/features/organization/organization-dashboard/dashboard-users-panel/dashboard-users-panel.component';
 import { UserItemComponent } from '@app/features/organization/organization-dashboard/dashboard-users-panel/user-item/user-item.component';
@@ -15,6 +15,9 @@ import { RouterLink, RouterModule } from '@angular/router';
 import { SharedModule } from '@app/shared/shared.module';
 import { InviteUserComponent } from '@app/features/organization/invite-user/invite-user.component';
 import { JoinOrganizationComponent } from './join-organization/join-organization.component';
+import { MembersComponent } from './members/members.component';
+import {InfiniteScrollModule} from "ngx-infinite-scroll";
+import { MemberCardComponent } from './members/member-card/member-card.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +33,8 @@ import { JoinOrganizationComponent } from './join-organization/join-organization
     ActivityItemComponent,
     InviteUserComponent,
     JoinOrganizationComponent,
+    MembersComponent,
+    MemberCardComponent,
   ],
   imports: [
     RouterModule,
@@ -38,6 +43,8 @@ import { JoinOrganizationComponent } from './join-organization/join-organization
     ReactiveFormsModule,
     RouterLink,
     SharedModule,
+    InfiniteScrollModule,
+    NgOptimizedImage,
   ],
   exports: [
     MyOrganizationsComponent,
