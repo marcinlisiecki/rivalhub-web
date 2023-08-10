@@ -18,6 +18,7 @@ import { NoAvailableStationsComponent } from './no-available-stations/no-availab
 import { CenteredSpinnerComponent } from './centered-spinner/centered-spinner.component';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { LayoutModule } from '@angular/cdk/layout';
+import { VerifyAccountInfoComponent } from './verify-account-info/verify-account-info.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { LayoutModule } from '@angular/cdk/layout';
     CategoryStationsSelectorComponent,
     NoAvailableStationsComponent,
     CenteredSpinnerComponent,
+    VerifyAccountInfoComponent,
   ],
   exports: [
     ValidationErrorComponent,
@@ -42,6 +44,7 @@ import { LayoutModule } from '@angular/cdk/layout';
     CenteredSpinnerComponent,
     NoAvailableStationsComponent,
     LayoutModule,
+    VerifyAccountInfoComponent,
   ],
   imports: [
     CommonModule,

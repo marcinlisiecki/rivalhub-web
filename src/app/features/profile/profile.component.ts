@@ -1,22 +1,22 @@
 import { Component } from '@angular/core';
-import {UserDetailsDto} from "@interfaces/user/user-details-dto";
-import {Reservation} from "@interfaces/reservation/reservation";
-import {EVENTS, RESERVATIONS} from "@app/mock/stations";
-import {EventDto} from "@interfaces/event/event-dto";
+import { UserDetailsDto } from '@interfaces/user/user-details-dto';
+import { Reservation } from '@interfaces/reservation/reservation';
+import { EVENTS, RESERVATIONS } from '@app/mock/stations';
+import { EventDto } from '@interfaces/event/event-dto';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss']
+  styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent {
   user: UserDetailsDto = {
     id: 1,
-    name: "Jakub Buszta",
-    email: "buszta-jakub@wp.pl",
-    profilePictureUrl: "url"
+    name: 'Jakub Buszta',
+    email: 'buszta-jakub@wp.pl',
+    profilePictureUrl: 'url',
+    activationTime: null,
   };
   reservations: Reservation[] = RESERVATIONS;
   events: EventDto[] = EVENTS;
-
 }

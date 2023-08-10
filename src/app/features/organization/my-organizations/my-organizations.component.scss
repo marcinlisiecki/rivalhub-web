@@ -1,5 +1,11 @@
 @import 'src/scss/variables';
 
+.verify-account-info {
+  margin: 1rem 0;
+  display: flex;
+  width: 100%;
+}
+
 .organizations-container {
   display: flex;
   flex-wrap: wrap;
