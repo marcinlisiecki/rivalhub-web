@@ -4,18 +4,20 @@
   max-width: $pageWidth;
   margin: 4rem auto;
 
-  > a {
+  >a {
     display: block;
     margin-top: 1rem;
   }
 
-    .action-cell {
-      display: flex;
-      justify-content: flex-end;
-    }
+  .action-cell {
+    display: flex;
+    justify-content: flex-end;
+  }
 
-    .add-section {
-      margin-top: 1rem;
-      text-align: right;
-    }
+  .add-section {
+    margin-top: 1rem;
+    text-align: right;
+  }
+
+  
 }

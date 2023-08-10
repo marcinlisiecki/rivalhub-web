@@ -2,29 +2,37 @@ import { Component, OnInit } from '@angular/core';
 import { categoryTypeToLabel } from '@app/core/utils/event';
 import { ActivatedRoute } from '@angular/router';
 import { extractMessage } from '@app/core/utils/apiErrors';
-import { EditStation } from '@app/core/interfaces/station/edit-station';
 import { StationsService } from '@app/core/services/stations/stations.service';
 import { EventType } from '@interfaces/event/event-type';
 import { HttpResponse } from '@angular/common/http';
-
+import { Station } from '@app/core/interfaces/station/station';
+import { NewStation } from '@app/core/interfaces/station/new-station';
+import { ConfirmationService } from 'primeng/api';
 @Component({
   selector: 'app-view-stations',
   templateUrl: './view-stations.component.html',
   styleUrls: ['./view-stations.component.scss'],
 })
 export class ViewStationsComponent implements OnInit {
-  stations: EditStation[] = [];
+  stations: Station[] = [];
   organizationId!: number;
   apiError: string | null = null;
   edit: boolean = false;
 
-  clonedStations: { [s: string]: EditStation } = {};
+  newStation: NewStation = {
+    name: '',
+    type: EventType.PING_PONG,
+    active: false,
+  };
+
+  clonedStations: { [s: string]: Station } = {};
 
   stationTypes: any = Object.keys(EventType);
 
   constructor(
     private route: ActivatedRoute,
     private stationsService: StationsService,
+    private confirmationService: ConfirmationService,
   ) {
     this.route.params.subscribe((params) => {
       this.organizationId = params['id'];
@@ -35,7 +43,7 @@ export class ViewStationsComponent implements OnInit {
     this.stationsService
       .getOrganizationEditStations(this.organizationId)
       .subscribe({
-        next: (res: EditStation[]) => {
+        next: (res: Station[]) => {
           this.stations = res;
         },
         error: (err: unknown) => {
@@ -44,7 +52,37 @@ export class ViewStationsComponent implements OnInit {
       });
   }
 
-  editStation(station: EditStation): void {
+  addNewStation() {
+    //new variable station withour id
+    //dodaj rekord do bazy
+    let station: Station;
+
+    this.stationsService
+      .saveStation(this.organizationId, this.newStation)
+      .subscribe({
+        next: (res: Station) => {
+          station = res;
+
+          this.stations.push(station);
+
+          // Przejdź w tryb edycji dla nowego rekordu
+          this.onRowEditInit(station);
+        },
+        error: (err: unknown) => {
+          this.apiError = extractMessage(err);
+          return;
+        },
+      });
+
+    // Resetuj nowy rekord do domyślnych wartości
+    this.newStation = {
+      name: '',
+      type: EventType.PING_PONG,
+      active: false,
+    };
+  }
+
+  editStation(station: Station): void {
     this.stationsService.updateStation(this.organizationId, station).subscribe({
       next: () => {},
       error: (err: unknown) => {
@@ -53,16 +91,49 @@ export class ViewStationsComponent implements OnInit {
     });
   }
 
-  onRowEditInit(station: EditStation) {
+  deleteStation(station: Station): void {
+    this.stationsService
+      .deleteStation(this.organizationId, station.id)
+      .subscribe({
+        next: () => {
+          console.log('ok');
+          this.stations = this.stations.filter(
+            (item) => item.id !== station.id,
+          );
+        },
+        error: (err: unknown) => {
+          this.apiError = extractMessage(err);
+        },
+      });
+  }
+
+  onRowEditInit(station: Station) {
     this.clonedStations[station.id.toString() as string] = { ...station };
   }
 
-  onRowEditSave(station: EditStation) {
-    console.log(station);
+  onRowAdd() {
+    this.addNewStation();
+  }
+
+  onRowEditSave(station: Station) {
     this.editStation(station);
   }
 
-  onRowEditCancel(station: EditStation, index: number) {
+  onRowDelete(event: Event, station: Station) {
+    this.confirmationService.confirm({
+      target: event.target as EventTarget,
+      message: 'Na pewno chcesz usunąć to stanowisko?',
+      acceptLabel: 'Tak',
+      rejectLabel: 'Nie',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.deleteStation(station);
+      },
+      reject: () => {},
+    });
+  }
+
+  onRowEditCancel(station: Station, index: number) {
     this.stations[index] = this.clonedStations[station.id.toString() as string];
     delete this.clonedStations[station.id.toString() as string];
   }

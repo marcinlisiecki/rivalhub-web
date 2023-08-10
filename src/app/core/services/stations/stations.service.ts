@@ -4,8 +4,8 @@ import { environment } from '../../../../environments/enviroment';
 import { Observable } from 'rxjs';
 import { EventType } from '@interfaces/event/event-type';
 import { Station } from '@interfaces/station/station';
-import { EditStation } from '@app/core/interfaces/station/edit-station';
 import * as moment from 'moment';
+import { NewStation } from '@app/core/interfaces/station/new-station';
 
 @Injectable({
   providedIn: 'root',
@@ -23,10 +23,8 @@ export class StationsService {
     );
   }
 
-  getOrganizationEditStations(
-    organizationId: number,
-  ): Observable<EditStation[]> {
-    return this.http.get<EditStation[]>(
+  getOrganizationEditStations(organizationId: number): Observable<Station[]> {
+    return this.http.get<Station[]>(
       environment.apiUrl +
         `/organizations/${organizationId}/stations?showInactive=true`,
     );
@@ -61,7 +59,21 @@ export class StationsService {
     );
   }
 
-  updateStation(organizationId: number, station: EditStation): Observable<any> {
+  saveStation(id: number, station: NewStation): Observable<Station> {
+    return this.http.post<Station>(
+      environment.apiUrl + `/organizations/${id}/stations`,
+      station,
+    );
+  }
+
+  deleteStation(organizationId: number, stationId: number): Observable<{}> {
+    return this.http.delete(
+      environment.apiUrl +
+        `/organizations/${organizationId}/stations/${stationId}`,
+    );
+  }
+
+  updateStation(organizationId: number, station: Station): Observable<{}> {
     const stationDto = {
       name: station.name,
       type: station.type,

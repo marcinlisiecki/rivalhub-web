@@ -9,7 +9,9 @@ import { RouterModule } from '@angular/router';
 import { DropdownModule } from 'primeng/dropdown';
 import { FormsModule } from '@angular/forms';
 import { CheckboxModule } from 'primeng/checkbox';
-
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { ConfirmationService } from 'primeng/api';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
 @NgModule({
   declarations: [AddStationComponent, ViewStationsComponent],
   imports: [
@@ -22,7 +24,10 @@ import { CheckboxModule } from 'primeng/checkbox';
     DropdownModule,
     FormsModule,
     CheckboxModule,
+    InputSwitchModule,
+    ConfirmPopupModule,
   ],
   exports: [AddStationComponent, ViewStationsComponent],
+  providers: [ConfirmationService],
 })
 export class StationModule {}

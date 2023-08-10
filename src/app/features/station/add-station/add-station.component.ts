@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AddStationService } from '@app/core/services/add-station/add-station.service';
 import { EventType } from '@interfaces/event/event-type';
 import {
   categoryTypeToLabel,
   labelToCategoryType,
 } from '@app/core/utils/event';
 import { NewStation } from '@interfaces/station/new-station';
+import { StationsService } from '@app/core/services/stations/stations.service';
 
 @Component({
   selector: 'app-add-station',
@@ -17,7 +17,7 @@ import { NewStation } from '@interfaces/station/new-station';
 export class AddStationComponent {
   constructor(
     private route: ActivatedRoute,
-    private addStationService: AddStationService,
+    private stationsService: StationsService,
     private router: Router,
   ) {}
 
@@ -30,10 +30,11 @@ export class AddStationComponent {
   });
 
   onSubmit() {
-    const id = this.route.snapshot.paramMap.get('id') ?? '';
-    if (id == '') {
+    const idString = this.route.snapshot.paramMap.get('String') ?? '';
+    if (idString == '') {
       return;
     }
+    const id = Number(idString);
 
     if (this.stationType == null) {
       return;
@@ -55,9 +56,10 @@ export class AddStationComponent {
     const station: NewStation = {
       name: this.name.value,
       type: labelToCategoryType(this.type.value),
+      active: true,
     };
 
-    this.addStationService.saveStation(id, station).subscribe(
+    this.stationsService.saveStation(id, station).subscribe(
       (savedStation) => {
         this.router.navigateByUrl(`/organizations/${id}/stations`).then();
       },
