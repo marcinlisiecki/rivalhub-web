@@ -35,6 +35,4 @@ export class HeaderLoggedInComponent implements OnInit {
       },
     ];
   }
-
-  protected readonly alert = alert;
 }
