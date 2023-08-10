@@ -15,13 +15,22 @@ export class LanguageService extends TranslateService {
   }
 
   setLocalStorage(): void {
+    let browserLanguage: string = <string>this.getBrowserLang();
     let localLang: string | null = localStorage.getItem('currentLanguage');
     if (localLang === null) {
-      this.currentLanguage = <string>this.getBrowserLang();
+      if (this.isSupportedLanguage(browserLanguage)) {
+        this.currentLanguage = <string>this.getBrowserLang();
+      } else {
+        this.currentLanguage = this.getDefaultLang();
+      }
       localStorage.setItem('currentLanguage', this.currentLanguage);
     } else {
       this.currentLanguage = localLang;
+      this.setDefaultLang(this.currentLanguage);
     }
-    this.setDefaultLang(this.currentLanguage);
+  }
+
+  isSupportedLanguage(_lang: string): boolean {
+    return this.flag[_lang] !== null;
   }
 }
