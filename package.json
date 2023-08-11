@@ -22,6 +22,8 @@
     "@biesbjerg/ngx-translate-extract-marker": "^1.0.0",
     "@ngx-translate/core": "^15.0.0",
     "@ngx-translate/http-loader": "^8.0.0",
+    "angular-calendar": "^0.31.0",
+    "date-fns": "^2.30.0",
     "jwt-decode": "^3.1.2",
     "moment": "^2.29.4",
     "ngx-cookie": "^6.0.1",
