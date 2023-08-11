@@ -8,28 +8,13 @@
   flex-wrap: wrap;
 
 
-  .dashboard-nav-panel {
-    display: none;
-  }
+  
 
   &-header {
-    display: flex;
-    align-items: center;
+    display: flex;    
     height: 140px;
-    flex: 0 0 100%;
-    background-color: $panelContentBg;
-    padding: 10px;
-    border-radius: $dashboardRadius;
-    border: $dashboardBorder;
-  }
-
-  &-nav {
-    display: flex;
-    align-items: center;
-    flex: 0 0 100%;
-    flex-wrap: wrap;
-    margin-top: 15px;
-  }
+    flex: 0 0 100%;    
+  }  
 
   .dashboard-panels {
     display: flex;
@@ -37,21 +22,22 @@
     flex: 0 0 100%;
     margin-top: 25px;
 
+    &-history {
+        display: flex;
+        align-self: flex-start;
+        flex-direction: column;
+        flex: 0 0 70%;   
+    
+      }
+
     &-activities {
       align-self: flex-start;
       display: flex;
       flex-direction: column;
-      flex: 0 0 70%;
-    }
-
-    &-users {
-      display: flex;
-      align-self: flex-start;
-      flex-direction: column;
       flex: 0 0 20%;
-
-
     }
+
+    
   }
 
 
