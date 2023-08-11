@@ -73,4 +73,8 @@ export class AuthService {
   getUserName(): string | null {
     return this.jwtService.getUserName();
   }
+
+  getActivationTime(): string | null {
+    return this.jwtService.getActivationTime();
+  }
 }

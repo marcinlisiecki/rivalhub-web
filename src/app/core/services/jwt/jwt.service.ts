@@ -28,6 +28,20 @@ export class JwtService {
     return decoded?.sub || null;
   }
 
+  getActivationTimeFromToken(decoded: any): string | null {
+    return decoded?.activationTime || null;
+  }
+
+  getActivationTime(): string | null {
+    const token: string | undefined = this.getToken();
+    if (token === undefined) {
+      return null;
+    }
+
+    const decoded = this.decodeToken(token) || '';
+    return this.getActivationTimeFromToken(decoded);
+  }
+
   getUserIdFromToken(decoded: any): number | null {
     return decoded?.id || null;
   }

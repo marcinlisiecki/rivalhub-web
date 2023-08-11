@@ -25,6 +25,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
     name: 'Dominik Matuszewski',
     email: 'zippek@edu.pl',
     profilePictureUrl: 'https://i.imgur.com/1qB7B9F.png',
+    activationTime: null,
   };
 
   constructor(

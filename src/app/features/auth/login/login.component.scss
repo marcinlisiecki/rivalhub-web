@@ -1,3 +1,14 @@
+@import 'src/scss/variables';
+
 .registered-message-wrapper {
   margin: -1rem 0;
+}
+
+.no-account-wrapper {
+  margin: 1rem 0 0 0;
+  color: $textSecondaryColor;
+
+  a {
+    color: $primaryTextColor;
+  }
 }
