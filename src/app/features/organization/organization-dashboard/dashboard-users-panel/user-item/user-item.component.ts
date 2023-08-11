@@ -26,11 +26,14 @@ export class UserItemComponent implements OnInit {
     const challengeItem: MenuItem = {
       label: 'Rzuć wyzwanie',
       icon: 'pi pi-bolt',
-      command: (event: MenuItemCommandEvent) => {
+      command: (_: MenuItemCommandEvent) => {
         this.router
-          .navigateByUrl(
-            `/organizations/${organizationId}/events/new?challenge=${this.user.id}`,
-          )
+          .navigate(['organizations', organizationId, 'events', 'new'], {
+            queryParams: {
+              challengeId: this.user.id,
+              challengeName: this.user.name,
+            },
+          })
           .then();
       },
     };

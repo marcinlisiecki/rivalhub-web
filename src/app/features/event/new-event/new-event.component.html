@@ -1,5 +1,5 @@
 <section class="wrapper">
-  <h1>Nowe wydarzenie</h1>
+  <h1>{{ isChallenge ? 'Nowe wyzwanie' : 'Nowe wydarzenie' }}</h1>
 
   <p-steps
     [model]="formSteps"

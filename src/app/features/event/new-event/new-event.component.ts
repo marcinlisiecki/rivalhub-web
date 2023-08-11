@@ -17,6 +17,7 @@ import { AddEventUser } from '@interfaces/event/add-event-user';
 import { UserDetailsDto } from '@interfaces/user/user-details-dto';
 import { PagedResponse } from '@interfaces/generic/paged-response';
 import { AuthService } from '@app/core/services/auth/auth.service';
+import { LanguageService } from '@app/core/services/language/language.service';
 
 @Component({
   selector: 'app-new-event',
@@ -28,6 +29,7 @@ export class NewEventComponent implements OnInit, OnDestroy {
   formStep: AddEventFormStep = AddEventFormStep.CATEGORY;
   formSteps: MenuItem[] = [];
   formStepIndex: number = 0;
+  isChallenge: boolean = false;
 
   events: AvailableEvent[] = AVAILABLE_EVENTS;
   selectedEventType: EventType | null = null;
@@ -65,9 +67,10 @@ export class NewEventComponent implements OnInit, OnDestroy {
     private stationsService: StationsService,
     private organizationsService: OrganizationsService,
     private route: ActivatedRoute,
-    private translateService: TranslateService,
+    // private translateService: TranslateService,
     private authService: AuthService,
     private router: Router,
+    private languageService: LanguageService,
   ) {}
 
   ngOnInit(): void {
@@ -84,8 +87,22 @@ export class NewEventComponent implements OnInit, OnDestroy {
       name: this.authService.getUserName() || '',
     });
 
-    this.setStepsMenu();
-    this.onLangChangeSub = this.translateService.onLangChange.subscribe(() =>
+    const challengeId = this.route.snapshot.queryParams['challengeId'];
+    const challengeName = this.route.snapshot.queryParams['challengeName'];
+    if (
+      challengeId &&
+      challengeName &&
+      challengeId !== this.authService.getUserId()
+    ) {
+      this.isChallenge = true;
+      this.teams[1].push({
+        id: parseInt(challengeId),
+        name: challengeName,
+      });
+    }
+
+    setTimeout(() => this.setStepsMenu(), 100);
+    this.onLangChangeSub = this.languageService.onLangChange.subscribe(() =>
       this.setStepsMenu(),
     );
 
@@ -150,19 +167,19 @@ export class NewEventComponent implements OnInit, OnDestroy {
   setStepsMenu() {
     this.formSteps = [
       {
-        label: this.translateService.instant('event.new.steps.category'),
+        label: this.languageService.instant('event.new.steps.category'),
       },
       {
-        label: this.translateService.instant('event.new.steps.info'),
+        label: this.languageService.instant('event.new.steps.info'),
       },
       {
-        label: this.translateService.instant('event.new.steps.addUsers'),
+        label: this.languageService.instant('event.new.steps.addUsers'),
       },
       {
-        label: this.translateService.instant('event.new.steps.date'),
+        label: this.languageService.instant('event.new.steps.date'),
       },
       {
-        label: this.translateService.instant('event.new.steps.reservation'),
+        label: this.languageService.instant('event.new.steps.reservation'),
       },
     ];
   }
