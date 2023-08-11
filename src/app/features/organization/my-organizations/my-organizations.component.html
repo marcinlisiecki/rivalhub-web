@@ -16,14 +16,6 @@
   <section class="invitations">
     <h1>Zaproszenia do organizacji</h1>
 
-    <div class="verify-account-wrapper">
-      <p-messages severity="info" *ngIf="!isAccountVerified">
-        <ng-template pTemplate>
-          Musisz zweryfikować konto, aby móc dołączyć do organizacji
-        </ng-template>
-      </p-messages>
-    </div>
-
     <div *ngFor="let invitation of invitations" class="invitation">
       <p>{{ invitation.organization.name }}</p>
       <div>

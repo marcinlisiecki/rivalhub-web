@@ -33,6 +33,13 @@ export class AuthService {
     return this.http.post(environment.apiUrl + '/register', credentials);
   }
 
+  refreshAuth() {
+    let isAuth = this.isAuth();
+
+    this.authSubject.next(!isAuth);
+    this.authSubject.next(isAuth);
+  }
+
   login(credentials: LoginCredentials): Observable<LoginResponse> {
     return this.http
       .post<LoginResponse>(environment.apiUrl + '/login', credentials)
