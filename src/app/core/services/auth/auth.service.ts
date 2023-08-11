@@ -1,8 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpResponse,
+  HttpResponseBase,
+} from '@angular/common/http';
 import { LoginCredentials } from '@interfaces/auth/login-credentials';
 import { RegisterCredentials } from '@interfaces/auth/register-credentials';
-import { LoginResponse } from '@interfaces/auth/login-response';
+import { AuthResponse } from '@interfaces/auth/login-response';
 import { Observable, Subject, tap } from 'rxjs';
 import { environment } from '../../../../environments/enviroment';
 import { JwtService } from '../jwt/jwt.service';
@@ -29,8 +33,25 @@ export class AuthService {
     });
   }
 
-  register(credentials: RegisterCredentials): Observable<{}> {
-    return this.http.post(environment.apiUrl + '/register', credentials);
+  register(credentials: RegisterCredentials): Observable<AuthResponse> {
+    return this.http
+      .post<AuthResponse>(environment.apiUrl + '/register', credentials)
+      .pipe(tap((res) => this.handleSetJwt(res)));
+  }
+
+  login(credentials: LoginCredentials): Observable<AuthResponse> {
+    return this.http
+      .post<AuthResponse>(environment.apiUrl + '/login', credentials)
+      .pipe(tap((res) => this.handleSetJwt(res)));
+  }
+
+  handleSetJwt(response: AuthResponse) {
+    if (response?.token) {
+      this.jwtService.setToken(response.token);
+    }
+
+    this.authSubject.next(this.isAuth());
+    return response;
   }
 
   refreshAuth() {
@@ -38,21 +59,6 @@ export class AuthService {
 
     this.authSubject.next(!isAuth);
     this.authSubject.next(isAuth);
-  }
-
-  login(credentials: LoginCredentials): Observable<LoginResponse> {
-    return this.http
-      .post<LoginResponse>(environment.apiUrl + '/login', credentials)
-      .pipe(
-        tap((result: any) => {
-          if (result?.token) {
-            this.jwtService.setToken(result.token);
-          }
-
-          this.authSubject.next(this.isAuth());
-          return result;
-        }),
-      );
   }
 
   logout() {

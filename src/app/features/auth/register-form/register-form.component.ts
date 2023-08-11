@@ -5,6 +5,7 @@ import { RegisterCredentials } from '@interfaces/auth/register-credentials';
 import { Router } from '@angular/router';
 import { extractMessage } from '@app/core/utils/apiErrors';
 import { MEDIUM_REGEX, STRONG_REGEX } from '@app/core/constants/password';
+import { InvitationsService } from '@app/core/services/invitations/invitations.service';
 
 @Component({
   selector: 'app-register-form',
@@ -30,6 +31,7 @@ export class RegisterFormComponent {
   constructor(
     private authService: AuthService,
     private router: Router,
+    private invitationService: InvitationsService,
   ) {}
 
   setPasswordPrompt(): string {
@@ -58,9 +60,13 @@ export class RegisterFormComponent {
     };
 
     this.authService.register(credentials).subscribe({
-      next: () => {
+      next: (res) => {
+        if (res?.token) {
+          this.router.navigateByUrl('/organizations?registered').then();
+          this.invitationService.setUserIds();
+        }
+
         this.isLoading = false;
-        this.router.navigateByUrl('/login?registered=true').then();
       },
       error: (err: unknown) => {
         this.isLoading = false;
