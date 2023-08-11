@@ -7,6 +7,7 @@ import { extractMessage } from '@app/core/utils/apiErrors';
 import { Subscription } from 'rxjs';
 import { Invitation } from '@interfaces/organization/invitation';
 import { InvitationsService } from '@app/core/services/invitations/invitations.service';
+import { OrganizationsService } from '@app/core/services/organizations/organizations.service';
 
 @Component({
   selector: 'app-login',
@@ -31,6 +32,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private router: Router,
     private authService: AuthService,
     private invitationService: InvitationsService,
+    private organizationsService: OrganizationsService,
   ) {}
 
   ngOnInit(): void {
@@ -73,15 +75,28 @@ export class LoginComponent implements OnInit, OnDestroy {
           let invitations = this.invitationService.getInvitations();
           const userId = this.authService.getUserId();
 
-          invitations = invitations.map((item) => {
-            if (item.userId === null) {
-              item.userId = userId;
-            }
+          this.organizationsService.getMy().subscribe((organizations) => {
+            const newInvitations: Invitation[] = [];
 
-            return item;
+            invitations.forEach((item) => {
+              if (
+                this.invitationService.checkIfAlreadyInOrganization(
+                  item,
+                  organizations,
+                )
+              ) {
+                return;
+              }
+
+              if (item.userId === null) {
+                item.userId = userId;
+              }
+
+              newInvitations.push(item);
+            });
+
+            localStorage.setItem('invitations', JSON.stringify(newInvitations));
           });
-
-          localStorage.setItem('invitations', JSON.stringify(invitations));
         }
 
         this.isLoading = false;
