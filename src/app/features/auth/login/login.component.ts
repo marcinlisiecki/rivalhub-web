@@ -5,6 +5,7 @@ import { LoginCredentials } from '@interfaces/auth/login-credentials';
 import { AuthService } from '@app/core/services/auth/auth.service';
 import { extractMessage } from '@app/core/utils/apiErrors';
 import { Subscription } from 'rxjs';
+import { Invitation } from '@interfaces/organization/invitation';
 
 @Component({
   selector: 'app-login',
@@ -65,14 +66,25 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.authService.login(credentials).subscribe({
       next: (res) => {
         if (res?.token) {
-          const url = sessionStorage.getItem('redirectUrl');
-          if (url) {
-            this.router.navigateByUrl(url).then();
-            sessionStorage.removeItem('redirectUrl');
-          } else {
-            this.router.navigateByUrl('/organizations').then();
+          this.router.navigateByUrl('/organizations').then();
+
+          if (localStorage.getItem('invitations')) {
+            let invitations: Invitation[] = JSON.parse(
+              localStorage.getItem('invitations') as string,
+            );
+
+            const userId = this.authService.getUserId();
+
+            invitations = invitations.map((item) => {
+              if (item.userId === null) {
+                item.userId = userId;
+              }
+
+              return item;
+            });
+
+            localStorage.setItem('invitations', JSON.stringify(invitations));
           }
-          return;
         }
 
         this.isLoading = false;

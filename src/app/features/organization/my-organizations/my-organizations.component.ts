@@ -2,6 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { OrganizationsService } from '../../../core/services/organizations/organizations.service';
 import { Organization } from '@interfaces/organization/organization';
 import { Invitation } from '@interfaces/organization/invitation';
+import { AuthService } from '@app/core/services/auth/auth.service';
+import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
+import { extractMessage } from '@app/core/utils/apiErrors';
+import { MessageService } from 'primeng/api';
+import { InvitationsService } from '@app/core/services/invitations/invitations.service';
 
 @Component({
   selector: 'app-my-organizations',
@@ -13,8 +19,14 @@ export class MyOrganizationsComponent implements OnInit {
   isDefaultAvatar!: boolean;
   invitations: Invitation[] = [];
 
-  constructor(private organizationsService: OrganizationsService) {
-    this.invitations = JSON.parse(localStorage.getItem('invitations') || '[]');
+  constructor(
+    private organizationsService: OrganizationsService,
+    private authService: AuthService,
+    private router: Router,
+    private invitationService: InvitationsService,
+    private messageService: MessageService,
+  ) {
+    this.setMyInvitations();
   }
 
   ngOnInit(): void {
@@ -23,6 +35,39 @@ export class MyOrganizationsComponent implements OnInit {
         this.organizations = res;
       },
     });
+  }
+
+  acceptInvitation(invitation: Invitation) {
+    this.organizationsService
+      .addUserToOrganization(invitation.organization.id, invitation.hash)
+      .subscribe({
+        next: () => {
+          this.setMyInvitations();
+          this.router
+            .navigateByUrl(`/organizations/${invitation.organization.id}`)
+            .then();
+        },
+        error: (err: HttpErrorResponse) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Wystąpił błąd',
+            detail: extractMessage(err),
+          });
+        },
+      });
+  }
+
+  rejectInvitation(invitation: Invitation) {
+    this.invitationService.removeInvitation(invitation.hash);
+    this.setMyInvitations();
+  }
+
+  setMyInvitations() {
+    const userId = this.authService.getUserId();
+
+    this.invitations = (
+      JSON.parse(localStorage.getItem('invitations') || '[]') as Invitation[]
+    ).filter((item) => item.userId == userId);
   }
 
   getImagePath(imageUrl: string | null): string {

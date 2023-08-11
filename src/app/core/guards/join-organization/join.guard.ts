@@ -3,42 +3,47 @@ import { AuthService } from '@app/core/services/auth/auth.service';
 import { inject } from '@angular/core';
 import { Invitation } from '@interfaces/organization/invitation';
 import { OrganizationsService } from '@app/core/services/organizations/organizations.service';
+import { InvitationsService } from '@app/core/services/invitations/invitations.service';
 
 export const joinGuard: CanActivateFn = (route, state) => {
-  const authService: AuthService = inject(AuthService);
-  const router: Router = inject(Router);
+  const authService = inject(AuthService);
+  const router = inject(Router);
   const organizationsService = inject(OrganizationsService);
-
-  if (authService.isAuth()) {
-    return true;
-  }
+  const invitationService = inject(InvitationsService);
 
   const organizationId: number = route.params['id'];
   organizationsService.choose(organizationId).subscribe((organization) => {
-    console.log(route);
-
     const invitation: Invitation = {
       hash: route.url[route.url.length - 1].toString(),
+      userId: authService.isAuth() ? authService.getUserId() : null,
       organization: {
         name: organization.name,
         id: organization.id,
       },
     };
 
-    if (localStorage.getItem('invitations') === null) {
-      localStorage.setItem('invitations', JSON.stringify([]));
+    if (authService.isAuth()) {
+      organizationsService.getMy().subscribe((organizations) => {
+        let alreadyInOrganization = false;
+
+        organizations.forEach((item) => {
+          if (item.id === invitation.organization.id) {
+            alreadyInOrganization = true;
+          }
+        });
+
+        if (!alreadyInOrganization) {
+          invitationService.addInvitation(invitation);
+        }
+      });
+    } else {
+      invitationService.addInvitation(invitation);
     }
-
-    const invitations: Invitation[] = JSON.parse(
-      localStorage.getItem('invitations') as string,
-    );
-
-    if (invitations.findIndex((item) => item.hash === invitation.hash) === -1) {
-      invitations.push(invitation);
-    }
-
-    localStorage.setItem('invitations', JSON.stringify(invitations));
   });
+
+  if (authService.isAuth()) {
+    return true;
+  }
 
   router.navigateByUrl('/login?invitation=true').then();
   return false;

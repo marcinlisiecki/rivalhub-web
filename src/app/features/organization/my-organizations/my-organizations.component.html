@@ -22,12 +22,18 @@
         <p-button
           styleClass="p-button-text p-button-success"
           icon="pi pi-check"
+          (click)="acceptInvitation(invitation)"
         ></p-button>
         <p-button
           styleClass="p-button-text p-button-danger"
           icon="pi pi-times"
+          (click)="rejectInvitation(invitation)"
         ></p-button>
       </div>
     </div>
+
+    <app-no-resource-info *ngIf="invitations.length === 0">
+      Brak zaproszeń do organizacji
+    </app-no-resource-info>
   </section>
 </div>

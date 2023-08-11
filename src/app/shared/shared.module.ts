@@ -19,6 +19,7 @@ import { CenteredSpinnerComponent } from './centered-spinner/centered-spinner.co
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { LayoutModule } from '@angular/cdk/layout';
 import { VerifyAccountInfoComponent } from './verify-account-info/verify-account-info.component';
+import { NoResourceInfoComponent } from './no-resource-info/no-resource-info.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { VerifyAccountInfoComponent } from './verify-account-info/verify-account
     NoAvailableStationsComponent,
     CenteredSpinnerComponent,
     VerifyAccountInfoComponent,
+    NoResourceInfoComponent,
   ],
   exports: [
     ValidationErrorComponent,
@@ -45,6 +47,7 @@ import { VerifyAccountInfoComponent } from './verify-account-info/verify-account
     NoAvailableStationsComponent,
     LayoutModule,
     VerifyAccountInfoComponent,
+    NoResourceInfoComponent,
   ],
   imports: [
     CommonModule,

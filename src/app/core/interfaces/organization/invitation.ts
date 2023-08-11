@@ -1,5 +1,6 @@
 export interface Invitation {
   hash: string;
+  userId: number | null;
   organization: InvitationOrganization;
 }
 
