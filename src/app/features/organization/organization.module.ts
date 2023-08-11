@@ -16,6 +16,7 @@ import { SharedModule } from '@app/shared/shared.module';
 import { InviteUserComponent } from '@app/features/organization/invite-user/invite-user.component';
 import { JoinOrganizationComponent } from './join-organization/join-organization.component';
 import {TranslateModule} from "@ngx-translate/core";
+import {MessageModule} from "primeng/message";
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import {TranslateModule} from "@ngx-translate/core";
     RouterLink,
     SharedModule,
     TranslateModule,
+    MessageModule,
   ],
   exports: [
     MyOrganizationsComponent,

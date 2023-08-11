@@ -14,16 +14,22 @@ export class InvitationsService {
   addInvitation(invitation: Invitation) {
     const invitations: Invitation[] = this.getInvitations();
 
-    if (invitations.findIndex((item) => item.hash === invitation.hash) === -1) {
+    if (
+      invitations.findIndex(
+        (item) =>
+          item.hash === invitation.hash && item.userId === invitation.userId,
+      ) === -1
+    ) {
       invitations.push(invitation);
     }
 
     localStorage.setItem('invitations', JSON.stringify(invitations));
   }
 
-  removeInvitation(hash: string) {
+  removeInvitation(invitation: Invitation) {
     let invitations: Invitation[] = this.getInvitations().filter(
-      (item) => item.hash !== hash,
+      (item) =>
+        item.hash !== invitation.hash || item.userId !== invitation.userId,
     );
 
     localStorage.setItem('invitations', JSON.stringify(invitations));

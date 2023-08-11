@@ -8,6 +8,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { extractMessage } from '@app/core/utils/apiErrors';
 import { MessageService } from 'primeng/api';
 import { InvitationsService } from '@app/core/services/invitations/invitations.service';
+import { UsersService } from '@app/core/services/users/users.service';
 
 @Component({
   selector: 'app-my-organizations',
@@ -18,6 +19,7 @@ export class MyOrganizationsComponent implements OnInit {
   organizations: Organization[] = [];
   isDefaultAvatar!: boolean;
   invitations: Invitation[] = [];
+  isAccountVerified: boolean = true;
 
   constructor(
     private organizationsService: OrganizationsService,
@@ -25,15 +27,27 @@ export class MyOrganizationsComponent implements OnInit {
     private router: Router,
     private invitationService: InvitationsService,
     private messageService: MessageService,
+    private usersService: UsersService,
   ) {
     this.setMyInvitations();
   }
 
   ngOnInit(): void {
+    this.setMyOrganizations();
+    this.checkIfAccountIsVerified();
+  }
+
+  setMyOrganizations() {
     this.organizationsService.getMy().subscribe({
       next: (res: Organization[]) => {
         this.organizations = res;
       },
+    });
+  }
+
+  checkIfAccountIsVerified() {
+    this.usersService.getMe().subscribe((user) => {
+      this.isAccountVerified = user.activationTime !== null;
     });
   }
 
@@ -58,7 +72,7 @@ export class MyOrganizationsComponent implements OnInit {
   }
 
   rejectInvitation(invitation: Invitation) {
-    this.invitationService.removeInvitation(invitation.hash);
+    this.invitationService.removeInvitation(invitation);
     this.setMyInvitations();
   }
 
@@ -83,6 +97,6 @@ export class MyOrganizationsComponent implements OnInit {
   }
 
   checkDefaultAvatar(imageUrl: string | null) {
-    this.isDefaultAvatar = imageUrl === null ? true : false;
+    this.isDefaultAvatar = imageUrl === null;
   }
 }

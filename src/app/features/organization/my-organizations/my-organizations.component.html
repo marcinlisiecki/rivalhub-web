@@ -16,18 +16,28 @@
   <section class="invitations">
     <h1>Zaproszenia do organizacji</h1>
 
+    <div class="verify-account-wrapper">
+      <p-messages severity="info" *ngIf="!isAccountVerified">
+        <ng-template pTemplate>
+          Musisz zweryfikować konto, aby móc dołączyć do organizacji
+        </ng-template>
+      </p-messages>
+    </div>
+
     <div *ngFor="let invitation of invitations" class="invitation">
       <p>{{ invitation.organization.name }}</p>
       <div>
         <p-button
+          [disabled]="!isAccountVerified"
           styleClass="p-button-text p-button-success"
           icon="pi pi-check"
-          (click)="acceptInvitation(invitation)"
+          (onClick)="acceptInvitation(invitation)"
         ></p-button>
         <p-button
+          [disabled]="!isAccountVerified"
           styleClass="p-button-text p-button-danger"
           icon="pi pi-times"
-          (click)="rejectInvitation(invitation)"
+          (onClick)="rejectInvitation(invitation)"
         ></p-button>
       </div>
     </div>
