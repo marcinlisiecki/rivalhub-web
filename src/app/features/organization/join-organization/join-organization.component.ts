@@ -97,7 +97,9 @@ export class JoinOrganizationComponent implements OnInit {
             this.organizationHash,
             this.authService.getUserId(),
           );
-          this.router.navigate(['/organizations']).then();
+          this.router
+            .navigateByUrl(`/organizations/${this.organizationId}`)
+            .then();
         },
         error: (error: HttpErrorResponse) => {
           this.responseError = error.error.message;

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Invitation } from '@interfaces/organization/invitation';
+import { Organization } from '@interfaces/organization/organization';
 
 @Injectable({
   providedIn: 'root',
@@ -32,5 +33,20 @@ export class InvitationsService {
     );
 
     localStorage.setItem('invitations', JSON.stringify(invitations));
+  }
+
+  checkIfAlreadyInOrganization(
+    invitation: Invitation,
+    organizations: Organization[],
+  ) {
+    let alreadyInOrganization = false;
+
+    organizations.forEach((organization) => {
+      if (organization.id === invitation.organization.id) {
+        alreadyInOrganization = true;
+      }
+    });
+
+    return alreadyInOrganization;
   }
 }

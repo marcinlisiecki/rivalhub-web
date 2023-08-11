@@ -24,15 +24,12 @@ export const joinGuard: CanActivateFn = (route, state) => {
 
     if (authService.isAuth()) {
       organizationsService.getMy().subscribe((organizations) => {
-        let alreadyInOrganization = false;
-
-        organizations.forEach((item) => {
-          if (item.id === invitation.organization.id) {
-            alreadyInOrganization = true;
-          }
-        });
-
-        if (!alreadyInOrganization) {
+        if (
+          !invitationService.checkIfAlreadyInOrganization(
+            invitation,
+            organizations,
+          )
+        ) {
           invitationService.addInvitation(invitation);
         }
       });

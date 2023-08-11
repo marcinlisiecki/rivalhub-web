@@ -28,12 +28,11 @@ export class MyOrganizationsComponent implements OnInit {
     private invitationService: InvitationsService,
     private messageService: MessageService,
     private usersService: UsersService,
-  ) {
-    this.setMyInvitations();
-  }
+  ) {}
 
   ngOnInit(): void {
     this.setMyOrganizations();
+    this.setMyInvitations();
     this.checkIfAccountIsVerified();
   }
 
@@ -41,6 +40,7 @@ export class MyOrganizationsComponent implements OnInit {
     this.organizationsService.getMy().subscribe({
       next: (res: Organization[]) => {
         this.organizations = res;
+        this.setMyInvitations();
       },
     });
   }
@@ -56,7 +56,10 @@ export class MyOrganizationsComponent implements OnInit {
       .addUserToOrganization(invitation.organization.id, invitation.hash)
       .subscribe({
         next: () => {
-          this.setMyInvitations();
+          this.invitationService.removeInvitation(
+            invitation.hash,
+            this.authService.getUserId(),
+          );
           this.router
             .navigateByUrl(`/organizations/${invitation.organization.id}`)
             .then();
@@ -81,7 +84,16 @@ export class MyOrganizationsComponent implements OnInit {
 
     this.invitations = (
       JSON.parse(localStorage.getItem('invitations') || '[]') as Invitation[]
-    ).filter((item) => item.userId == userId);
+    ).filter((item) => {
+      if (item.userId !== userId) {
+        return false;
+      }
+
+      return !this.invitationService.checkIfAlreadyInOrganization(
+        item,
+        this.organizations,
+      );
+    });
   }
 
   getImagePath(imageUrl: string | null): string {

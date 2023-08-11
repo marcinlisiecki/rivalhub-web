@@ -6,6 +6,7 @@ import { AuthService } from '@app/core/services/auth/auth.service';
 import { extractMessage } from '@app/core/utils/apiErrors';
 import { Subscription } from 'rxjs';
 import { Invitation } from '@interfaces/organization/invitation';
+import { InvitationsService } from '@app/core/services/invitations/invitations.service';
 
 @Component({
   selector: 'app-login',
@@ -29,6 +30,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
+    private invitationService: InvitationsService,
   ) {}
 
   ngOnInit(): void {
@@ -68,23 +70,18 @@ export class LoginComponent implements OnInit, OnDestroy {
         if (res?.token) {
           this.router.navigateByUrl('/organizations').then();
 
-          if (localStorage.getItem('invitations')) {
-            let invitations: Invitation[] = JSON.parse(
-              localStorage.getItem('invitations') as string,
-            );
+          let invitations = this.invitationService.getInvitations();
+          const userId = this.authService.getUserId();
 
-            const userId = this.authService.getUserId();
+          invitations = invitations.map((item) => {
+            if (item.userId === null) {
+              item.userId = userId;
+            }
 
-            invitations = invitations.map((item) => {
-              if (item.userId === null) {
-                item.userId = userId;
-              }
+            return item;
+          });
 
-              return item;
-            });
-
-            localStorage.setItem('invitations', JSON.stringify(invitations));
-          }
+          localStorage.setItem('invitations', JSON.stringify(invitations));
         }
 
         this.isLoading = false;
