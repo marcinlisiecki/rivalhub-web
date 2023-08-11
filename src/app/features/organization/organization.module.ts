@@ -15,6 +15,9 @@ import { RouterLink, RouterModule } from '@angular/router';
 import { SharedModule } from '@app/shared/shared.module';
 import { InviteUserComponent } from '@app/features/organization/invite-user/invite-user.component';
 import { JoinOrganizationComponent } from './join-organization/join-organization.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { MessageModule } from 'primeng/message';
+import { SpinnerModule } from 'primeng/spinner';
 
 @NgModule({
   declarations: [
@@ -38,6 +41,9 @@ import { JoinOrganizationComponent } from './join-organization/join-organization
     ReactiveFormsModule,
     RouterLink,
     SharedModule,
+    TranslateModule,
+    MessageModule,
+    SpinnerModule,
   ],
   exports: [
     MyOrganizationsComponent,

@@ -7,6 +7,15 @@
         </ng-template>
       </p-messages>
     </div>
+
+    <div class="registered-message-wrapper" *ngIf="invitation">
+      <p-messages severity="info">
+        <ng-template pTemplate>
+          Zaloguj się aby dołączyć do organizacji.
+        </ng-template>
+      </p-messages>
+    </div>
+
     <div class="input-box">
       <label for="email">{{ 'input.email' | translate }}</label>
       <input
@@ -48,6 +57,9 @@
         <app-validation-error>
           {{ apiError }}
         </app-validation-error>
+      </p>
+      <p class="no-account-wrapper">
+        Nie masz konta? <a routerLink="/register">Zarejestruj się</a>
       </p>
     </div>
   </form>

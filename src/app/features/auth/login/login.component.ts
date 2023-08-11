@@ -5,6 +5,9 @@ import { LoginCredentials } from '@interfaces/auth/login-credentials';
 import { AuthService } from '@app/core/services/auth/auth.service';
 import { extractMessage } from '@app/core/utils/apiErrors';
 import { Subscription } from 'rxjs';
+import { Invitation } from '@interfaces/organization/invitation';
+import { InvitationsService } from '@app/core/services/invitations/invitations.service';
+import { OrganizationsService } from '@app/core/services/organizations/organizations.service';
 
 @Component({
   selector: 'app-login',
@@ -18,6 +21,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   });
 
   registered: boolean = false;
+  invitation: boolean = false;
+
   apiError: string | null = null;
   isLoading: boolean = false;
   queryParamsSub?: Subscription;
@@ -26,11 +31,14 @@ export class LoginComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
+    private invitationService: InvitationsService,
+    private organizationsService: OrganizationsService,
   ) {}
 
   ngOnInit(): void {
     this.queryParamsSub = this.route.queryParams.subscribe((params) => {
       this.registered = params['registered'];
+      this.invitation = params['invitation'];
     });
   }
 
@@ -62,18 +70,36 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.authService.login(credentials).subscribe({
       next: (res) => {
         if (res?.token) {
-          const url = sessionStorage.getItem("redirectUrl")
-          if (url) {
-            this.router.navigateByUrl(url).then();
-            sessionStorage.removeItem("redirectUrl")
-          } else {
-            this.router.navigateByUrl('/organizations').then();
-          }
-          return;
+          this.router.navigateByUrl('/organizations').then();
+
+          let invitations = this.invitationService.getInvitations();
+          const userId = this.authService.getUserId();
+
+          this.organizationsService.getMy().subscribe((organizations) => {
+            const newInvitations: Invitation[] = [];
+
+            invitations.forEach((item) => {
+              if (
+                this.invitationService.checkIfAlreadyInOrganization(
+                  item,
+                  organizations,
+                )
+              ) {
+                return;
+              }
+
+              if (item.userId === null) {
+                item.userId = userId;
+              }
+
+              newInvitations.push(item);
+            });
+
+            localStorage.setItem('invitations', JSON.stringify(newInvitations));
+          });
         }
 
         this.isLoading = false;
-        this.apiError = 'Wystąpił nieoczekiwany błąd';
       },
       error: (err: unknown) => {
         this.isLoading = false;

@@ -1,0 +1,15 @@
+@import 'src/scss/variables';
+
+.wrapper {
+  width: 100%;
+  padding: 1.5rem;
+  border: 2px solid $shade700;
+  border-radius: $borderRadius;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  p {
+    margin: 0;
+  }
+}
