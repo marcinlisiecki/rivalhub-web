@@ -100,7 +100,6 @@ export class LoginComponent implements OnInit, OnDestroy {
         }
 
         this.isLoading = false;
-        this.apiError = 'Wystąpił nieoczekiwany błąd';
       },
       error: (err: unknown) => {
         this.isLoading = false;
