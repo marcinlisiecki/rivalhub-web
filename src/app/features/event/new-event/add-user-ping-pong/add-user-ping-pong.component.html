@@ -13,7 +13,7 @@
         </div>
         <div
           class="team-member-remove-button"
-          *ngIf="user.email !== loggedInUserEmail && user"
+          *ngIf="user.id !== loggedInUserId && user"
           (click)="removeUser(teamIndex, user)"
         >
           <i class="pi pi-times-circle"></i>

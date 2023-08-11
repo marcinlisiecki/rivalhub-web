@@ -28,6 +28,14 @@ export class JwtService {
     return decoded?.sub || null;
   }
 
+  getUserIdFromToken(decoded: any): number | null {
+    return decoded?.id || null;
+  }
+
+  getUserNameFromToken(decoded: any): string | null {
+    return decoded?.name || null;
+  }
+
   getUserEmail(): string | null {
     const token: string | undefined = this.getToken();
     if (token === undefined) {
@@ -36,6 +44,26 @@ export class JwtService {
 
     const decoded = this.decodeToken(token) || '';
     return this.getUserEmailFromToken(decoded);
+  }
+
+  getUserId(): number | null {
+    const token: string | undefined = this.getToken();
+    if (token === undefined) {
+      return null;
+    }
+
+    const decoded = this.decodeToken(token) || '';
+    return this.getUserIdFromToken(decoded);
+  }
+
+  getUserName(): string | null {
+    const token: string | undefined = this.getToken();
+    if (token === undefined) {
+      return null;
+    }
+
+    const decoded = this.decodeToken(token) || '';
+    return this.getUserNameFromToken(decoded);
   }
 
   getExpiration(decoded: any): number | null {

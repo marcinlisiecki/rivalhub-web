@@ -6,7 +6,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AVAILABLE_EVENTS } from '@app/core/constants/event';
 import { categoryTypeToLabel } from '@app/core/utils/event';
 import { OrganizationsService } from '@app/core/services/organizations/organizations.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AvailableEvent } from '@interfaces/event/available-event';
 import { AddEventFormStep } from '@interfaces/event/add-event-form-step';
 import { Station } from '@interfaces/station/station';
@@ -16,6 +16,7 @@ import { StationsService } from '@app/core/services/stations/stations.service';
 import { AddEventUser } from '@interfaces/event/add-event-user';
 import { UserDetailsDto } from '@interfaces/user/user-details-dto';
 import { PagedResponse } from '@interfaces/generic/paged-response';
+import { AuthService } from '@app/core/services/auth/auth.service';
 
 @Component({
   selector: 'app-new-event',
@@ -36,16 +37,7 @@ export class NewEventComponent implements OnInit, OnDestroy {
 
   dateError: string | null = null;
 
-  teams: AddEventUser[][] = [
-    [
-      {
-        id: 1,
-        name: 'Smok Smokowski',
-        email: 'test@test.pl',
-      },
-    ],
-    [],
-  ];
+  teams: AddEventUser[][] = [[], []];
 
   userList: UserDetailsDto[] = [];
   notAddedUserList: UserDetailsDto[] = [];
@@ -74,9 +66,24 @@ export class NewEventComponent implements OnInit, OnDestroy {
     private organizationsService: OrganizationsService,
     private route: ActivatedRoute,
     private translateService: TranslateService,
+    private authService: AuthService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
+    if (
+      this.authService.getUserName() === null ||
+      this.authService.getUserId() === null
+    ) {
+      this.router.navigateByUrl('/login').then();
+      return;
+    }
+
+    this.teams[0].push({
+      id: this.authService.getUserId() || 0,
+      name: this.authService.getUserName() || '',
+    });
+
     this.setStepsMenu();
     this.onLangChangeSub = this.translateService.onLangChange.subscribe(() =>
       this.setStepsMenu(),
