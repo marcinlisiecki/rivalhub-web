@@ -1,3 +1,5 @@
 <h4>Członkowie</h4>
 
-<app-user-item class="user-item" *ngFor="let user of users" [user]="user"></app-user-item>
+<div class="wrapper">
+  <app-user-item *ngFor="let user of users" [user]="user"></app-user-item>
+</div>
