@@ -3,7 +3,11 @@
 .wrapper {
   max-width: $pageWidth;
   margin: 2rem auto 0 auto;
+}
+
+.content {
   display: flex;
+  margin-top: 2rem;
 }
 
 .invitations {
@@ -17,8 +21,10 @@
 
   h1 {
     padding: 0;
-    margin: 0;
+    margin: 0 0 0.5rem 0;
     font-size: $textLg;
+    font-weight: $weightRegular;
+    color: $textSecondaryColor;
   }
 }
 
