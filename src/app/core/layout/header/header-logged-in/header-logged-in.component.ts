@@ -10,29 +10,14 @@ import { LanguageService } from '@app/core/services/language/language.service';
 })
 export class HeaderLoggedInComponent implements OnInit {
   profileItems?: MenuItem[];
-  logout!: string;
   constructor(
     private authService: AuthService,
     private lang: LanguageService,
   ) {}
 
-  ngOnInit(): void {
-    setTimeout(() => {
-      this.itemChange();
-    }, 100);
-  }
+  ngOnInit(): void {}
 
-  itemChange() {
-    this.logout = this.lang.instant('header.logout');
-    this.profileItems = [
-      {
-        escape: false,
-        label: `<span class="header-menu-item">${this.logout}</span>`,
-        icon: 'pi pi-sign-out',
-        command: () => {
-          this.authService.logout();
-        },
-      },
-    ];
+  logout() {
+    this.authService.logout();
   }
 }

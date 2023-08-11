@@ -33,5 +33,5 @@
 
 </p-sidebar>
 
-<p-button [@openSidebar]="sidebarVisible" *ngIf="isLoggedIn || mobileView" [@sidebarMobile]="mobileView" styleClass="p-button-secondary"
+<p-button [@openSidebar]="sidebarVisible" [@sidebarMobile]="mobileView" *ngIf="isLoggedIn || mobileView" styleClass="p-button-secondary"
     class="button-absolute" (click)="toggleSidebar()"><i class="pi pi-align-justify"></i></p-button>

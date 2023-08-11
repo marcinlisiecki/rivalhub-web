@@ -1,13 +1,15 @@
+<!-- Widok profilu: -->
+<!-- Najpierw imie i nazwisko później email -->
+<!-- Odnośnie eventów dodać nazwe organizacji (pill??????) -->
+<!-- Gdy niezalogowany zwracać jakiś brak danych -->
+<!-- Ostatnia aktywność z boku a historia na głownym -->
+<!-- Wspólne organizacje w których jesteśmy -->
+
+
 <div class="dashboard-container">
+  <div *ngIf="sticky" style="height:140px"></div>
+  <app-dashboard [user]="user" *ngIf="user" [sticky]="sticky" [ngClass]='{"dashboard-container-sticky":sticky}' class="dashboard-container-header"></app-dashboard>
 
-  <!-- Widok profilu: -->
-  <!-- Najpierw imie i nazwisko później email -->
-  <!-- Odnośnie eventów dodać nazwe organizacji (pill??????) -->
-  <!-- Gdy niezalogowany zwracać jakiś brak danych -->
-  <!-- Ostatnia aktywność z boku a historia na głownym -->
-  <!-- Wspólne organizacje w których jesteśmy -->
-
-  <app-dashboard *ngIf="user" class="dashboard-container-header"></app-dashboard>
 
   <div class="dashboard-panels">
     <app-dashboard-history class="dashboard-panels-history"></app-dashboard-history>

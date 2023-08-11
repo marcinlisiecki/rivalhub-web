@@ -8,20 +8,13 @@ import { UserDetailsDto } from '@interfaces/user/user-details-dto';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent {
-  // @Input({ required: true })
-  user: UserDetailsDto = {
-    id: 1,
-    name: 'Jakub Buszta',
-    email: 'buszta-jakub@wp.pl',
-    profilePictureUrl: 'assets/img/avatars/avatarplaceholder.png',
-    activationTime: null,
-  };
+  @Input({ required: true }) user!: UserDetailsDto;
+  @Input() sticky: boolean = false;
 
   getImagePath(imageUrl: string | null): string {
     if (imageUrl !== null) {
       return imageUrl;
     }
-
     return 'assets/img/avatars/avatarplaceholder.png';
   }
 

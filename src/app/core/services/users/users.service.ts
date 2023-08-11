@@ -13,4 +13,8 @@ export class UsersService {
   getMe(): Observable<UserDetailsDto> {
     return this.http.get<UserDetailsDto>(environment.apiUrl + '/users/me');
   }
+
+  getUser(id: number): Observable<UserDetailsDto> {
+    return this.http.get<UserDetailsDto>(environment.apiUrl + `/users/${id}`);
+  }
 }
