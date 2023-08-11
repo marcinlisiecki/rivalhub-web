@@ -61,6 +61,12 @@ export class OrganizationsService {
     );
   }
 
+  getAllUsers(id: number) {
+    return this.http.get<UserDetailsDto[]>(
+      environment.apiUrl + `/organizations/${id}/users/all`
+    )
+  }
+
   getOrganizationReservations(
     organizationId: number,
   ): Observable<Reservation[]> {

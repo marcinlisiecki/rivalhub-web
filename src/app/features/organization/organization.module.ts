@@ -10,7 +10,7 @@ import { DashboardActivitiesPanelComponent } from '@app/features/organization/or
 import { ActivityItemComponent } from '@app/features/organization/organization-dashboard/dashboard-activities-panel/activity-item/activity-item.component';
 import { AddOrganizationComponent } from '@app/features/organization/add-organization/add-organization.component';
 import { MyOrganizationsComponent } from '@app/features/organization/my-organizations/my-organizations.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { RouterLink, RouterModule } from '@angular/router';
 import { SharedModule } from '@app/shared/shared.module';
 import { InviteUserComponent } from '@app/features/organization/invite-user/invite-user.component';
@@ -45,6 +45,7 @@ import { MemberCardComponent } from './members/member-card/member-card.component
     SharedModule,
     InfiniteScrollModule,
     NgOptimizedImage,
+    FormsModule,
   ],
   exports: [
     MyOrganizationsComponent,

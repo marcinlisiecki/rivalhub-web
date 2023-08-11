@@ -1,17 +1,31 @@
 <div class="wrapper">
-  <div
-    class="dashboard-container"
-    infiniteScroll
-    [infiniteScrollDistance]="2"
-    [infiniteScrollThrottle]="500"
-    (scrolled)="onScroll()"
-    [scrollWindow]="false"
-    >
-    <app-member-card
-      *ngFor="let user of users" [user]="user"
-      class="dashboard-container-header">
-
-    </app-member-card>
-    <div *ngIf="isLoading">Loading...</div>
+  <div>
+    <input type="text" [(ngModel)]="searchQuery" (input)="onSearchInputChange()" >
+    <div *ngIf="searchQuery; else infiniteScrollContent">
+      <app-member-card
+      *ngFor="let filteredUser of filteredUsers" [user]="filteredUser"
+      class="dashboard-container-header"
+      >
+      </app-member-card>
+    </div>
   </div>
+    <ng-template #infiniteScrollContent>
+      <div
+        class="dashboard-container"
+        infiniteScroll
+        [infiniteScrollDistance]="2"
+        [infiniteScrollThrottle]="500"
+        (scrolled)="onScroll()"
+        [scrollWindow]="true"
+        >
+        <app-member-card
+          *ngFor="let user of users" [user]="user"
+          class="dashboard-container-header">
+
+        </app-member-card>
+      </div>
+      <div *ngIf="noMore">
+        Koniec
+      </div>
+    </ng-template>
 </div>
