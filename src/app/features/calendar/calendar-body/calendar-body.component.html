@@ -1,23 +1,23 @@
-<div class="body">
-<div [ngSwitch]="view">
-  <mwl-calendar-month-view
-    *ngSwitchCase="'month'"
-    [viewDate]="viewDate"
-    [events]="events"
-    [activeDayIsOpen]="true"
-  >
-  </mwl-calendar-month-view>
-  <mwl-calendar-week-view
-    *ngSwitchCase="'week'"
-    [viewDate]="viewDate"
-    [events]="events"
-  >
-  </mwl-calendar-week-view>
-  <mwl-calendar-day-view
-    *ngSwitchCase="'day'"
-    [viewDate]="viewDate"
-    [events]="events"
-  >
-  </mwl-calendar-day-view>
-</div>
+<div class="demo-app">
+  <div class="demo-app-sidebar">
+    <div class="demo-app-sidebar-section">
+      <label>
+        <input
+          type="checkbox"
+          [checked]="calendarOptions().weekends"
+          (change)="handleWeekendsToggle()"
+        />
+        toggle weekends
+      </label>
+    </div>
+
+    <div class="demo-app-main">
+      <full-calendar *ngIf="calendarVisible()" [options]="calendarOptions()">
+        <ng-template #eventContent let-arg>
+          <b>{{ arg.timeText }}</b>
+          <i>{{ arg.event.title }}</i>
+        </ng-template>
+      </full-calendar>
+    </div>
+  </div>
 </div>
