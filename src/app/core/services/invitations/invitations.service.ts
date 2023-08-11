@@ -26,10 +26,9 @@ export class InvitationsService {
     localStorage.setItem('invitations', JSON.stringify(invitations));
   }
 
-  removeInvitation(invitation: Invitation) {
+  removeInvitation(hash: string, userId: number | null) {
     let invitations: Invitation[] = this.getInvitations().filter(
-      (item) =>
-        item.hash !== invitation.hash || item.userId !== invitation.userId,
+      (item) => item.hash !== hash || item.userId !== userId,
     );
 
     localStorage.setItem('invitations', JSON.stringify(invitations));

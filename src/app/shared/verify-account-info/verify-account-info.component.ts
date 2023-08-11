@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UsersService } from '@app/core/services/users/users.service';
 import { UserDetailsDto } from '@interfaces/user/user-details-dto';
 import { AuthService } from '@app/core/services/auth/auth.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-verify-account-info',
@@ -14,6 +15,7 @@ export class VerifyAccountInfoComponent implements OnInit {
   constructor(
     private usersService: UsersService,
     private authService: AuthService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -35,5 +37,9 @@ export class VerifyAccountInfoComponent implements OnInit {
         });
       }
     });
+  }
+
+  show(): boolean {
+    return !this.router.url.toString().includes('invitation');
   }
 }

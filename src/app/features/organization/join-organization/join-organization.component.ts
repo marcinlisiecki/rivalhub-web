@@ -4,6 +4,9 @@ import { OrganizationsService } from '@app/core/services/organizations/organizat
 import { HttpErrorResponse } from '@angular/common/http';
 import { Organization } from '@interfaces/organization/organization';
 import { extractMessage } from '@app/core/utils/apiErrors';
+import { UsersService } from '@app/core/services/users/users.service';
+import { InvitationsService } from '@app/core/services/invitations/invitations.service';
+import { AuthService } from '@app/core/services/auth/auth.service';
 
 @Component({
   selector: 'app-join-organization',
@@ -17,11 +20,15 @@ export class JoinOrganizationComponent implements OnInit {
   public responseError?: string;
   public mainMessage: string = '';
   public isLoaded = false;
+  isAccountVerified: null | boolean = null;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private organizationService: OrganizationsService,
+    private usersService: UsersService,
+    private invitationService: InvitationsService,
+    private authService: AuthService,
   ) {}
 
   ngOnInit() {
@@ -32,6 +39,13 @@ export class JoinOrganizationComponent implements OnInit {
 
     this.loadOrganizationInfo(this.organizationId);
     this.checkIfAlreadyInOrganization();
+    this.checkIfAccountIsVerified();
+  }
+
+  checkIfAccountIsVerified() {
+    this.usersService.getMe().subscribe((user) => {
+      this.isAccountVerified = user.activationTime !== null;
+    });
   }
 
   checkIfAlreadyInOrganization() {
@@ -78,7 +92,11 @@ export class JoinOrganizationComponent implements OnInit {
     this.organizationService
       .addUserToOrganization(this.organizationId, this.organizationHash)
       .subscribe({
-        next: (organization) => {
+        next: () => {
+          this.invitationService.removeInvitation(
+            this.organizationHash,
+            this.authService.getUserId(),
+          );
           this.router.navigate(['/organizations']).then();
         },
         error: (error: HttpErrorResponse) => {

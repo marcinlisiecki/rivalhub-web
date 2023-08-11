@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { OrganizationsService } from '../../../core/services/organizations/organizations.service';
+import { OrganizationsService } from '@app/core/services/organizations/organizations.service';
 import { Organization } from '@interfaces/organization/organization';
 import { Invitation } from '@interfaces/organization/invitation';
 import { AuthService } from '@app/core/services/auth/auth.service';
@@ -72,7 +72,7 @@ export class MyOrganizationsComponent implements OnInit {
   }
 
   rejectInvitation(invitation: Invitation) {
-    this.invitationService.removeInvitation(invitation);
+    this.invitationService.removeInvitation(invitation.hash, invitation.userId);
     this.setMyInvitations();
   }
 
