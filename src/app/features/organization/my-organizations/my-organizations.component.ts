@@ -3,7 +3,7 @@ import { OrganizationsService } from '@app/core/services/organizations/organizat
 import { Organization } from '@interfaces/organization/organization';
 import { Invitation } from '@interfaces/organization/invitation';
 import { AuthService } from '@app/core/services/auth/auth.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { extractMessage } from '@app/core/utils/apiErrors';
 import { MessageService } from 'primeng/api';
@@ -28,12 +28,24 @@ export class MyOrganizationsComponent implements OnInit {
     private invitationService: InvitationsService,
     private messageService: MessageService,
     private usersService: UsersService,
+    private route: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
     this.setMyOrganizations();
     this.setMyInvitations();
     this.checkIfAccountIsVerified();
+
+    const registered = this.route.snapshot.queryParams['registered'];
+    if (registered) {
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Pomyślnie zarejestrowano i zalogowano',
+        detail:
+          'Na podany adres mailowy został wysłany link do aktywacji konta.',
+        life: 1000 * 15,
+      });
+    }
   }
 
   setMyOrganizations() {
