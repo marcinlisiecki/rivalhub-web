@@ -19,6 +19,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MessageModule } from 'primeng/message';
 import { SpinnerModule } from 'primeng/spinner';
 import { ContextMenuModule } from 'primeng/contextmenu';
+import { ConfiguratorComponent } from './configurator/configurator.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { ContextMenuModule } from 'primeng/contextmenu';
     ActivityItemComponent,
     InviteUserComponent,
     JoinOrganizationComponent,
+    ConfiguratorComponent,
   ],
   imports: [
     RouterModule,

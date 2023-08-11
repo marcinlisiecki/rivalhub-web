@@ -1,0 +1,35 @@
+@import 'src/scss/variables';
+
+.wrapper {
+  max-width: $nonBgFormWidth;
+  margin: 4rem auto;
+
+  > h2 {
+    margin-bottom: 3rem;
+    font-size: $textLg;
+    font-weight: $weightRegular;
+    color: $textSecondaryColor;
+  }
+}
+
+.categories {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+
+  &-item {
+    aspect-ratio: 1 / 1;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    i {
+      font-size: 2rem;
+    }
+  }
+}
+
+.form-step-navigation {
+  display: flex;
+  justify-content: space-between;
+}
