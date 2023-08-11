@@ -23,7 +23,7 @@ export class AddUserPingPongComponent {
   @Output() setFormStep: EventEmitter<AddEventFormStep> =
     new EventEmitter<AddEventFormStep>();
 
-  loggedInUserEmail!: string | null;
+  loggedInUserId!: number | null;
 
   addUserDialogRef?: DynamicDialogRef;
 
@@ -31,7 +31,7 @@ export class AddUserPingPongComponent {
     private dialogService: DialogService,
     private authService: AuthService,
   ) {
-    this.loggedInUserEmail = authService.getUserEmail();
+    this.loggedInUserId = authService.getUserId();
   }
 
   removeUser(teamIndex: number, user: AddEventUser) {

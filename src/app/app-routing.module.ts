@@ -5,7 +5,6 @@ import { AddOrganizationComponent } from './features/organization/add-organizati
 import { MyOrganizationsComponent } from './features/organization/my-organizations/my-organizations.component';
 import { OrganizationDashboardComponent } from './features/organization/organization-dashboard/organization-dashboard.component';
 import { LoginComponent } from './features/auth/login/login.component';
-import { AddStationComponent } from './features/station/add-station/add-station.component';
 import { authenticateGuard } from './core/guards/authenticate/authenticate.guard';
 import { NewEventComponent } from './features/event/new-event/new-event.component';
 import { InviteUserComponent } from './features/organization/invite-user/invite-user.component';
@@ -50,11 +49,6 @@ const routes: Routes = [
   {
     path: 'organizations/:id/reservations/new',
     component: AddReservationComponent,
-    canActivate: [authenticateGuard],
-  },
-  {
-    path: 'organizations/:id/stations/new',
-    component: AddStationComponent,
     canActivate: [authenticateGuard],
   },
   {

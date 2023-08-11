@@ -2,8 +2,14 @@
 	"api.error": "An unexpected error has occurred",
 	"button.signIn": "Sign in",
 	"button.signUp": "Sign up",
+	"event.new.steps.addUsers": "Add users",
+	"event.new.steps.category": "Category",
+	"event.new.steps.date": "Date and time",
+	"event.new.steps.info": "Information",
+	"event.new.steps.reservation": "Reservation",
 	"header.calendar": "Calendar",
 	"header.login": "Log In",
+	"header.logout": "Log out",
 	"header.main-page": "Home",
 	"header.organisationAdd": "Add an organization",
 	"header.organisationShow": "My organizations",
@@ -27,10 +33,5 @@
 	"landing.join": "Join us today and start competing intensely for your goals! ",
 	"landing.text1": "Do you love competition? Do you love to play billiards, foosball or paddle with your co-workers or your boss? If so ",
 	"landing.text2": " is the perfect tool for you and your business!",
-	"landing.welcome": "WELCOME TO ",
-  "event.new.steps.category": "Category",
-  "event.new.steps.info": "Information",
-  "event.new.steps.date": "Date and time",
-  "event.new.steps.addUsers": "Add users",
-  "event.new.steps.reservation": "Reservation"
+	"landing.welcome": "WELCOME TO "
 }
