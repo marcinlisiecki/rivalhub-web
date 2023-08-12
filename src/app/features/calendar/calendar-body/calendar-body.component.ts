@@ -1,11 +1,8 @@
 import {
   Component,
   signal,
-  ChangeDetectorRef,
   WritableSignal,
   OnInit,
-  effect,
-  Injector,
   OnDestroy,
 } from '@angular/core';
 import { CalendarOptions } from '@fullcalendar/core';
@@ -20,11 +17,7 @@ import { LanguageService } from '@app/core/services/language/language.service';
 export class CalendarBodyComponent implements OnInit, OnDestroy {
   calendarVisible = signal(true);
   calendarOptions!: WritableSignal<CalendarOptions>;
-  constructor(
-    private lang: LanguageService,
-    private calendarService: CalendarService,
-    private injector: Injector,
-  ) {}
+  constructor(private calendarService: CalendarService) {}
 
   ngOnInit() {
     this.calendarOptions = this.calendarService.options;
