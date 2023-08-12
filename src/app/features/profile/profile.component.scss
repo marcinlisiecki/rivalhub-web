@@ -7,27 +7,26 @@
   max-width: $pageWidth;
   flex-wrap: wrap;
   position: relative;
-
+  padding:0 5px;
+  flex-grow:1;
+  
   &-sticky {
     position: sticky;
     top: 0;
     z-index: 1;
-    height: 60px !important;
+    height: 70px;
   }
 
   &-header {
     display: flex;
     height: 140px;
     flex: $flexRow;
-    padding: 0 5px;
   }
 
   .dashboard-panels {
     display: flex;
     justify-content: space-between;
     flex: $flexRow;
-    margin-top: 25px;
-    gap: 20px;
 
     &-history,
     &-activities {
@@ -41,7 +40,7 @@
     }
 
     &-activities {
-      flex: 0 0 35%;
+      flex: 0 0 33%;
 
     }
   }
@@ -56,6 +55,7 @@
     margin: 20px 5px;
     max-width: $pageWidth;
     flex-wrap: wrap;
+      padding: 0 5px;
 
     &-header {
       display: flex;

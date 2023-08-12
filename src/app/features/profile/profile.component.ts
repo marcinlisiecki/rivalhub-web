@@ -6,17 +6,21 @@ import { EVENTS, RESERVATIONS } from '@app/mock/stations';
 import { EventDto } from '@interfaces/event/event-dto';
 import { UsersService } from '@app/core/services/users/users.service';
 import { ActivatedRoute } from '@angular/router';
+import { Subject, debounceTime, fromEvent } from 'rxjs';
+import { headerCompactAnimation } from '@app/core/animations/header-animation';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss'],
+  animations: [headerCompactAnimation],
 })
 export class ProfileComponent implements OnInit {
   user!: UserDetailsDto;
   reservations: Reservation[] = RESERVATIONS;
   events: EventDto[] = EVENTS;
   sticky: boolean = false;
+  private scrollSubject = new Subject<Event>();
 
   constructor(
     private usersService: UsersService,
@@ -31,33 +35,32 @@ export class ProfileComponent implements OnInit {
       console.log(user);
       this.user = user;
     });
+
+    this.scrollSubject.pipe(debounceTime(10)).subscribe((event: Event) => {
+      this.handleScroll(event);
+    });
   }
 
   @HostListener('window:scroll', ['$event'])
   onScroll(event: Event) {
+    this.scrollSubject.next(event);
+  }
+
+  handleScroll(event: Event) {
     const dashboardElement = this.el.nativeElement.querySelector(
       '.dashboard-container-header',
     );
-    //check if dashboardelement exists
     if (!dashboardElement) return;
     const dashboardRect = dashboardElement.getBoundingClientRect();
 
-    const dashboardTop = dashboardRect.top + 60;
+    const dashboardTop = dashboardRect.top + 140;
 
-    console.log('TOP:', dashboardTop);
-    console.log('Scroll', window.scrollY);
+    // console.log('TOP:', dashboardTop);
+    // console.log('Scroll', window.scrollY);
     if (window.scrollY >= dashboardTop && !this.sticky) {
       this.sticky = true;
     } else if (window.scrollY < dashboardTop && this.sticky) {
       this.sticky = false;
-    }
-  }
-
-  private checkAvatar(url: string): string {
-    if (url === null) {
-      return 'https://www.gravatar.com/avatar/0';
-    } else {
-      return url;
     }
   }
 }

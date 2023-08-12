@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { headerCompactAnimation } from '@app/core/animations/header-animation';
 import { Organization } from '@interfaces/organization/organization';
 import { UserDetailsDto } from '@interfaces/user/user-details-dto';
 
@@ -11,12 +12,12 @@ export class DashboardComponent {
   @Input({ required: true }) user!: UserDetailsDto;
   @Input() sticky: boolean = false;
 
-  getImagePath(imageUrl: string | null): string {
-    if (imageUrl !== null) {
-      return imageUrl;
+  checkAvatar(url: string): string {
+    if (url === null) {
+      return 'https://www.gravatar.com/avatar/0';
+    } else {
+      return url;
     }
-    return 'assets/img/avatars/avatarplaceholder.png';
   }
-
   showModal(user: UserDetailsDto) {}
 }
