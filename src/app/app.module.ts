@@ -22,6 +22,7 @@ import {
 import { MessageService } from 'primeng/api';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ProfileModule } from './features/profile/profile.module';
+import { UserModule } from './features/user/user.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -50,6 +51,7 @@ import { ProfileModule } from './features/profile/profile.module';
     ReservationModule,
     StationModule,
     ProfileModule,
+    UserModule,
   ],
 
   providers: [

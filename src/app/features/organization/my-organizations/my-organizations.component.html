@@ -1,49 +1,50 @@
-<div class="wrapper">
-  <div class="organizations-container">
-    <div class="organization-card" *ngFor="let organization of organizations">
-      <a
-        class="organization-link"
-        [ngStyle]="{
-          'background-image': 'url(' + getImagePath(organization.imageUrl) + ')'
-        }"
-        [routerLink]="createURL(organization.id)"
-      >
-      </a>
-      <span class="organization-name">{{ organization.name }}</span>
-    </div>
-  </div>
-  <p-divider layout="vertical"></p-divider>
-  <section class="invitations">
-    <h1>Zaproszenia do organizacji</h1>
+<section class="wrapper">
+  <header>
+    <h1>Moje organizacje</h1>
+  </header>
 
-    <div class="verify-account-wrapper">
-      <p-messages severity="info" *ngIf="!isAccountVerified">
-        <ng-template pTemplate>
-          Musisz zweryfikować konto, aby móc dołączyć do organizacji
-        </ng-template>
-      </p-messages>
-    </div>
-
-    <div *ngFor="let invitation of invitations" class="invitation">
-      <p>{{ invitation.organization.name }}</p>
-      <div>
-        <p-button
-          [disabled]="!isAccountVerified"
-          styleClass="p-button-text p-button-success"
-          icon="pi pi-check"
-          (onClick)="acceptInvitation(invitation)"
-        ></p-button>
-        <p-button
-          [disabled]="!isAccountVerified"
-          styleClass="p-button-text p-button-danger"
-          icon="pi pi-times"
-          (onClick)="rejectInvitation(invitation)"
-        ></p-button>
+  <div class="content">
+    <div class="organizations-container">
+      <div class="organization-card" *ngFor="let organization of organizations">
+        <a
+          class="organization-link"
+          [ngStyle]="{
+            'background-image':
+              'url(' + getImagePath(organization.imageUrl) + ')'
+          }"
+          [routerLink]="createURL(organization.id)"
+        >
+        </a>
+        <span class="organization-name">{{ organization.name }}</span>
       </div>
     </div>
 
-    <app-no-resource-info *ngIf="invitations.length === 0">
-      Brak zaproszeń do organizacji
-    </app-no-resource-info>
-  </section>
-</div>
+    <section class="invitations">
+      <header>
+        <h1>Zaproszenia</h1>
+      </header>
+
+      <div *ngFor="let invitation of invitations" class="invitation">
+        <p>{{ invitation.organization.name }}</p>
+        <div>
+          <p-button
+            [disabled]="!isAccountVerified"
+            styleClass="p-button-text p-button-success"
+            icon="pi pi-check"
+            (onClick)="acceptInvitation(invitation)"
+          ></p-button>
+          <p-button
+            [disabled]="!isAccountVerified"
+            styleClass="p-button-text p-button-danger"
+            icon="pi pi-times"
+            (onClick)="rejectInvitation(invitation)"
+          ></p-button>
+        </div>
+      </div>
+
+      <app-no-resource-info *ngIf="invitations.length === 0">
+        Brak nowych zaproszeń do organizacji
+      </app-no-resource-info>
+    </section>
+  </div>
+</section>

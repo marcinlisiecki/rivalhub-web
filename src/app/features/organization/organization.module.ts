@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { OrganizationDashboardComponent } from '@app/features/organization/organization-dashboard/organization-dashboard.component';
 import { DashboardUsersPanelComponent } from '@app/features/organization/organization-dashboard/dashboard-users-panel/dashboard-users-panel.component';
 import { UserItemComponent } from '@app/features/organization/organization-dashboard/dashboard-users-panel/user-item/user-item.component';
@@ -18,6 +18,7 @@ import { JoinOrganizationComponent } from './join-organization/join-organization
 import { TranslateModule } from '@ngx-translate/core';
 import { MessageModule } from 'primeng/message';
 import { SpinnerModule } from 'primeng/spinner';
+import { ContextMenuModule } from 'primeng/contextmenu';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,8 @@ import { SpinnerModule } from 'primeng/spinner';
     TranslateModule,
     MessageModule,
     SpinnerModule,
+    NgOptimizedImage,
+    ContextMenuModule,
   ],
   exports: [
     MyOrganizationsComponent,

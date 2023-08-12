@@ -1,12 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Invitation } from '@interfaces/organization/invitation';
 import { Organization } from '@interfaces/organization/organization';
+import { AuthService } from '@app/core/services/auth/auth.service';
+import { OrganizationsService } from '@app/core/services/organizations/organizations.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class InvitationsService {
-  constructor() {}
+  constructor(
+    private authService: AuthService,
+    private organizationsService: OrganizationsService,
+  ) {}
 
   getInvitations(): Invitation[] {
     return JSON.parse(localStorage.getItem('invitations') || '[]');
@@ -48,5 +53,28 @@ export class InvitationsService {
     });
 
     return alreadyInOrganization;
+  }
+
+  setUserIds() {
+    let invitations = this.getInvitations();
+    const userId = this.authService.getUserId();
+
+    this.organizationsService.getMy().subscribe((organizations) => {
+      const newInvitations: Invitation[] = [];
+
+      invitations.forEach((item) => {
+        if (this.checkIfAlreadyInOrganization(item, organizations)) {
+          return;
+        }
+
+        if (item.userId === null) {
+          item.userId = userId;
+        }
+
+        newInvitations.push(item);
+      });
+
+      localStorage.setItem('invitations', JSON.stringify(newInvitations));
+    });
   }
 }
