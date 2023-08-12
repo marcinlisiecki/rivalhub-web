@@ -16,10 +16,11 @@ export class LanguageButtonComponent implements OnInit {
   constructor(private lang: LanguageService) {}
   ngOnInit(): void {
     this.flag = this.lang.flag;
-    this.pathOfFlag = this.flag[this.lang.currentLanguage];
+    this.pathOfFlag = this.flag[this.lang.currentLanguage()];
     /**
      * TODO: generowanie tablicy flagItems dynamicznie
      * */
+
     this.flagItems = [
       {
         label: `<img src="${this.flag['pl']}" alt="pl" width="24" height="15"/>`,

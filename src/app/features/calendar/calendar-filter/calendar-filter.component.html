@@ -1,1 +1,9 @@
 <p-button styleClass="button-filter">Filtry</p-button>
+<label>
+  <input
+    type="checkbox"
+    [checked]="calendarOptions().weekends"
+    (change)="handleWeekendsToggle()"
+  />
+  Przełącz dwudzionek
+</label>
