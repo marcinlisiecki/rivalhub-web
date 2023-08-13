@@ -1,0 +1,37 @@
+<div class="menu-comp">
+  <div class="Organisation">
+    <p>Organizacja</p>
+    <div *ngFor="let organisation of organisations" class="field-checkbox">
+      <p-checkbox
+        name="organisations"
+        [value]="organisation"
+        [(ngModel)]="selectedCategories"
+        [inputId]="organisation.key"
+      ></p-checkbox>
+      <label [for]="organisation.key">{{ organisation.name }}</label>
+    </div>
+  </div>
+
+  <div>
+    <p>Typ wydarzenia</p>
+    <div *ngFor="let type of types" class="field-checkbox">
+      <p-checkbox
+        name="types"
+        [value]="type"
+        [(ngModel)]="selectedTypes"
+        [inputId]="type.key"
+      ></p-checkbox>
+      <label [for]="type.key">{{ type.name }}</label>
+    </div>
+  </div>
+
+  <div>
+    <p-checkbox
+      [(ngModel)]="selectedWeeks"
+      [binary]="weekend()"
+      inputId="weekend"
+      (onChange)="toggleWeekends()"
+    ></p-checkbox>
+    <label for="weekend"> Dwudzionek</label>
+  </div>
+</div>

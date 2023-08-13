@@ -1,0 +1,20 @@
+#btn {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 25dvh;
+}
+
+.menu {
+  border: 2px solid #263238;
+  box-shadow:
+    0 11px 15px -7px rgba(0, 0, 0, 0.2),
+    0px 24px 38px 3px rgba(0, 0, 0, 0.14),
+    0px 9px 46px 8px rgba(0, 0, 0, 0.12);
+  z-index: 1005;
+  height: 100%;
+  width: 25dvh;
+  margin: 0.5rem auto;
+  background: #161d21;
+  padding: 1rem;
+}

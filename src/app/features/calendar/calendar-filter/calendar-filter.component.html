@@ -1,9 +1,12 @@
-<p-button styleClass="button-filter">Filtry</p-button>
-<label>
-  <input
-    type="checkbox"
-    [checked]="calendarOptions().weekends"
-    (change)="handleWeekendsToggle()"
-  />
-  Przełącz dwudzionek
-</label>
+<span id="btn">
+  <p-button
+    #btn
+    (click)="displayMenu = !displayMenu"
+    label="Filtry"
+    styleClass="button-filter"
+    icon="pi pi-angle-down"
+  ></p-button>
+  <div class="menu" *ngIf="displayMenu">
+    <app-calendar-filter-menu></app-calendar-filter-menu>
+  </div>
+</span>

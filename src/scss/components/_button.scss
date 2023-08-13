@@ -54,6 +54,7 @@
 }
 
 .button-filter {
-  width: auto;
-  height: 5px;
+  width: auto !important;
+  height: 5px !important;
+  max-height: 5px !important;
 }

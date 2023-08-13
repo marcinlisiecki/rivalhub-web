@@ -1,7 +1,13 @@
-<div class="demo-app-main">
-  <full-calendar *ngIf="calendarVisible()" [options]="calendarOptions()">
+<div class="calendar-body">
+  <full-calendar
+    #calendar
+    *ngIf="calendarVisible()"
+    [options]="calendarOptions()"
+  >
+    <!--    Template pojedyńczego dnia na kalendarzu-->
     <ng-template #eventContent let-arg>
-      <b>{{ arg.timeText }}</b>
+      <b>{{ arg.timeText + ' ' }}</b>
+      <i>{{ arg.event.extendedProps.organisation + ' ' }}</i>
       <i>{{ arg.event.title }}</i>
     </ng-template>
   </full-calendar>

@@ -7,6 +7,10 @@ import { MenuModule } from 'primeng/menu';
 import { CalendarFilterComponent } from './calendar-filter/calendar-filter.component';
 import { SharedModule } from '@app/shared/shared.module';
 import { FullCalendarModule } from '@fullcalendar/angular';
+import { FormsModule } from '@angular/forms';
+import { ToastModule } from 'primeng/toast';
+import { FilterMenuComponent } from './calendar-filter/filter-menu/filter-menu.component';
+import { CheckboxModule } from 'primeng/checkbox';
 
 @NgModule({
   declarations: [
@@ -14,8 +18,17 @@ import { FullCalendarModule } from '@fullcalendar/angular';
     CalendarComponent,
     CalendarBodyComponent,
     CalendarFilterComponent,
+    FilterMenuComponent,
   ],
-  imports: [CommonModule, MenuModule, SharedModule, FullCalendarModule],
+  imports: [
+    CommonModule,
+    MenuModule,
+    SharedModule,
+    FullCalendarModule,
+    FormsModule,
+    ToastModule,
+    CheckboxModule,
+  ],
   exports: [CalendarEventsComponent, CalendarComponent, CalendarBodyComponent],
 })
 export class CalendarModule {}

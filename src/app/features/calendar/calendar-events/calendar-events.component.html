@@ -1,8 +1,20 @@
-<div class="filters">
-  <ol>
-    <li>Punkt pierwszy</li>
-    <li>Punkt drugi</li>
-    <li>Punkt trzeci</li>
-  </ol>
-
+<div class="events">
+  <div
+    *ngIf="currentDayEvents().length !== 0; then eventContent; else noEvents"
+  ></div>
 </div>
+
+<ng-template #eventContent>
+  <li *ngFor="let event of currentDayEvents()">
+    <i>{{ event.extendedProps['organisation'] }}</i>
+    <br />
+    <i>{{ event.title }}</i>
+    <br />
+    <b>{{ event.startStr + ' - ' + event.endStr }} </b>
+  </li>
+</ng-template>
+<ng-template #noEvents>
+  <div>
+    <p>brak LoL</p>
+  </div>
+</ng-template>

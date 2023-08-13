@@ -2,29 +2,51 @@
 
 .calendar {
   margin: 5rem auto;
+  max-height: 50dvh;
+  z-index: 2;
+}
+
+.mid {
+  display: flex;
+  margin: auto;
+  max-width: $pageWidth;
+  justify-content: center;
+  border: 2px solid #334155;
+  width: auto;
 }
 
 .content {
   display: flex;
+  width: 80dvw;
   margin: auto;
-  width: 100%;
-  height: 100%;
-  max-width: $pageWidth;
   justify-content: flex-start;
-  border: 2px solid #334155;
+
   padding: 2rem;
 }
 
 .left {
-  width: 33dvh;
+  display: flex;
+  width: 0;
   margin-right: 5px;
+  z-index: 1001;
 }
 .right {
   width: 100%;
+  height: 65dvh;
+  overflow: hidden;
 }
 
 .button {
+  position: absolute;
+  width: 25px;
+  height: 15px;
   display: flex;
-  width: 100%;
-  justify-content: center;
+  justify-content: flex-start;
+  top: 5px;
+  left: 35rem;
+  z-index: 1005;
+}
+
+p-toggleButton {
+  display: flex;
 }
