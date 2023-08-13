@@ -11,7 +11,7 @@
     </a>
   </ng-template>
   <ng-template pTemplate="content">
-    <section>
+    <section *ngIf="isLoggedIn">
       <div class="organizations">
         <div
           class="organization"
@@ -114,59 +114,5 @@
         </ul>
       </nav>
     </section>
-
-    <!--    <app-sidebar-section-->
-    <!--      *ngIf="mobileView"-->
-    <!--      class="sidebar-section"-->
-    <!--      title="Nawigacja"-->
-    <!--    ></app-sidebar-section>-->
-    <!--    <app-section-item-->
-    <!--      *ngIf="mobileView && isLoggedIn"-->
-    <!--      routerLink="/organizations"-->
-    <!--      icon="pi-briefcase"-->
-    <!--      title="Moje organizacje"-->
-    <!--      class="section-item"-->
-    <!--    ></app-section-item>-->
-    <!--    <app-section-item-->
-    <!--      *ngIf="mobileView && isLoggedIn"-->
-    <!--      routerLink="/organizations/new"-->
-    <!--      icon="pi-plus"-->
-    <!--      title="Dodaj organizację"-->
-    <!--      class="section-item"-->
-    <!--    ></app-section-item>-->
-    <!--    <app-section-item-->
-    <!--      *ngIf="mobileView && !isLoggedIn"-->
-    <!--      routerLink="/register"-->
-    <!--      icon="pi-user-plus"-->
-    <!--      title="Rejestracja"-->
-    <!--      class="section-item"-->
-    <!--    ></app-section-item>-->
-    <!--    <app-section-item-->
-    <!--      *ngIf="mobileView && !isLoggedIn"-->
-    <!--      routerLink="/login"-->
-    <!--      icon="pi-sign-in"-->
-    <!--      title="Logowanie"-->
-    <!--      class="section-item"-->
-    <!--    ></app-section-item>-->
-
-    <!--    <app-sidebar-section-->
-    <!--      *ngIf="isLoggedIn"-->
-    <!--      class="sidebar-section"-->
-    <!--      [title]="selectedOrganization"-->
-    <!--    ></app-sidebar-section>-->
-    <!--    <app-section-item-->
-    <!--      *ngIf="isLoggedIn"-->
-    <!--      routerLink="/organizations/1"-->
-    <!--      icon="pi-info-circle"-->
-    <!--      title="Moja organizacja"-->
-    <!--      class="section-item"-->
-    <!--    ></app-section-item>-->
-    <!--    &lt;!&ndash; <app-section-item *ngIf="isLoggedIn" routerLink="#" icon="pi-globe" title="Ranking" class="section-item"></app-section-item> &ndash;&gt;-->
-    <!--    <app-sidebar-section-->
-    <!--      *ngIf="isLoggedIn"-->
-    <!--      class="sidebar-section"-->
-    <!--      [title]="user.name"-->
-    <!--    ></app-sidebar-section>-->
-    <!--    &lt;!&ndash; <app-section-item *ngIf="isLoggedIn" routerLink="#" icon="pi-chart-bar" title="Statystyki" class="section-item"></app-section-item> &ndash;&gt;-->
   </ng-template>
 </p-sidebar>
