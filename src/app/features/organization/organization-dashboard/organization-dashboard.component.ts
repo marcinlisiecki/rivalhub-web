@@ -10,6 +10,7 @@ import { PagedResponse } from '@interfaces/generic/paged-response';
 import { UserDetailsDto } from '@interfaces/user/user-details-dto';
 import { Subscription } from 'rxjs';
 import { Reservation } from '@interfaces/reservation/reservation';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-organization-dashboard',
@@ -58,6 +59,7 @@ export class OrganizationDashboardComponent implements OnInit, OnDestroy {
     private organizationsService: OrganizationsService,
     private route: ActivatedRoute,
     private viewService: ViewService,
+    private messageService: MessageService,
   ) {}
 
   ngOnInit(): void {
@@ -75,6 +77,16 @@ export class OrganizationDashboardComponent implements OnInit, OnDestroy {
     this.getOrganizationInfo();
     this.getOrganizationUsers();
     this.getOrganizationReservations();
+
+    this.route.queryParams.subscribe((queryParams) => {
+      if (queryParams['configured']) {
+        this.messageService.add({
+          severity: 'success',
+          life: 1000 * 10,
+          summary: 'Pomyślnie skonfigurowao organizację',
+        });
+      }
+    });
     // this.getOrgzationEvents();
   }
 
