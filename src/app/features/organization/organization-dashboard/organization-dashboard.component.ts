@@ -1,7 +1,7 @@
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { navAnimation } from '@app/core/animations/nav-animation';
 import { OrganizationsService } from '@app/core/services/organizations/organizations.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { ViewService } from '@app/core/services/view/view.service';
 import { EventDto } from '@interfaces/event/event-dto';
@@ -58,6 +58,7 @@ export class OrganizationDashboardComponent implements OnInit, OnDestroy {
   constructor(
     private organizationsService: OrganizationsService,
     private route: ActivatedRoute,
+    private router: Router,
     private viewService: ViewService,
     private messageService: MessageService,
   ) {}
@@ -78,15 +79,21 @@ export class OrganizationDashboardComponent implements OnInit, OnDestroy {
     this.getOrganizationUsers();
     this.getOrganizationReservations();
 
-    this.route.queryParams.subscribe((queryParams) => {
-      if (queryParams['configured']) {
-        this.messageService.add({
-          severity: 'success',
-          life: 1000 * 10,
-          summary: 'Pomyślnie skonfigurowao organizację',
-        });
-      }
-    });
+    const configured = this.route.snapshot.queryParams['configured'];
+    if (configured) {
+      this.messageService.add({
+        severity: 'success',
+        life: 1000 * 10,
+        summary: 'Pomyślnie skonfigurowao organizację',
+      });
+      this.router
+        .navigate([], {
+          relativeTo: this.route,
+          queryParams: {},
+        })
+        .then();
+    }
+
     // this.getOrgzationEvents();
   }
 
