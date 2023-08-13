@@ -6,6 +6,7 @@ import { EventType } from '@interfaces/event/event-type';
 import { Station } from '@interfaces/station/station';
 import * as moment from 'moment';
 import { NewStation } from '@app/core/interfaces/station/new-station';
+import {ClosestStationAvailable} from "@interfaces/station/closest-station-available";
 
 @Injectable({
   providedIn: 'root',
@@ -27,6 +28,34 @@ export class StationsService {
     return this.http.get<Station[]>(
       environment.apiUrl +
         `/organizations/${organizationId}/stations?showInactive=true`,
+    );
+  }
+
+  getClosestAvailableStations(
+    organizationId: number,
+    start: Date,
+    end: Date,
+    type?: EventType,
+  ): Observable<ClosestStationAvailable[]> {
+    const formattedStart = this.formatDate(start);
+    const formattedEnd = this.formatDate(end);
+
+    const params: HttpParams = new HttpParams({
+      fromObject: {
+        start: formattedStart,
+        end: formattedEnd,
+      },
+    });
+
+    if (type) {
+      params.append('type', type);
+    }
+
+    return this.http.get<ClosestStationAvailable[]>(
+      environment.apiUrl + `/organizations/${organizationId}/event-stations`,
+      {
+        params,
+      },
     );
   }
 

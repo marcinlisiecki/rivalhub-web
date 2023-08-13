@@ -62,6 +62,7 @@
 
   <app-no-available-stations
     *ngIf="readyDateAndValid && stations !== null && stations.length === 0"
+    [closestAvailable]="closestAvailable"
   ></app-no-available-stations>
 
   <p-button (onClick)="onSubmit()">Zapisz</p-button>

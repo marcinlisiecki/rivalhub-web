@@ -9,6 +9,7 @@ import { extractMessage } from '@app/core/utils/apiErrors';
 import { NewReservation } from '@interfaces/reservation/new-reservation';
 import { Station } from '@interfaces/station/station';
 import { StationsService } from '@app/core/services/stations/stations.service';
+import { ClosestStationAvailable } from '@interfaces/station/closest-station-available';
 
 @Component({
   selector: 'app-add-reservation',
@@ -30,6 +31,7 @@ export class AddReservationComponent {
   emptyData: boolean = false;
   today: Date = new Date();
   apiError: string | null = null;
+  closestAvailable: ClosestStationAvailable[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -38,21 +40,46 @@ export class AddReservationComponent {
     private stationsService: StationsService,
   ) {}
 
+  fetchClosestAvailableStations() {
+    const organizationId: number = this.route.snapshot.params['id'];
+    this.stationsService
+      .getClosestAvailableStations(
+        organizationId,
+        this.startTime,
+        this.finishTime,
+      )
+      .subscribe({
+        next: (availableStations: ClosestStationAvailable[]) => {
+          this.closestAvailable = availableStations;
+        },
+      });
+  }
+
+  getOrganizationCategories() {
+    const organizationId: number = this.route.snapshot.params['id'];
+    this.organizationService.getEventsCategories(organizationId).subscribe({
+      next: (avaliableCategories: EventType[]) => {
+        this.types = new Set(avaliableCategories);
+        console.log(avaliableCategories);
+      },
+    });
+  }
+
   fetchAvailableStations() {
     this.stations = null;
     const organizationId: number = this.route.snapshot.params['id'];
-
+    this.getOrganizationCategories();
     setTimeout(() => {
+      this.organizationService.getEvents(organizationId);
       this.stationsService
         .getAvailableStations(organizationId, this.startTime, this.finishTime)
         .subscribe({
           next: (stations: Station[]) => {
-            this.types = new Set(stations.map((station) => station.type));
-
             this.stations = stations;
           },
         });
     }, 1000);
+    this.fetchClosestAvailableStations();
   }
 
   getCategoryStations(category: EventType | string): Station[] | null {

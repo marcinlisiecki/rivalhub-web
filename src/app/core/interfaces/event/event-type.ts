@@ -1,4 +1,7 @@
 export enum EventType {
   PING_PONG = 'PING_PONG',
   BILLIARDS = 'BILLIARDS',
+  TABLE_FOOTBALL = 'TABLE_FOOTBALL',
+  DARTS = 'DARTS',
+  PULL_UPS = 'PULL_UPS',
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../../environments/enviroment';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { EventDto } from '@interfaces/event/event-dto';
 import { Organization } from '@interfaces/organization/organization';
 import { NewOrganization } from '@interfaces/organization/new-organization';
@@ -11,6 +11,7 @@ import { Station } from '@interfaces/station/station';
 import { UserDetailsDto } from '@interfaces/user/user-details-dto';
 import { Reservation } from '@interfaces/reservation/reservation';
 import * as moment from 'moment/moment';
+import { EventType } from '@interfaces/event/event-type';
 
 @Injectable({
   providedIn: 'root',
@@ -85,13 +86,19 @@ export class OrganizationsService {
 
   sendInvitation(id: number, emailAddress: string) {
     return this.http.get(
-      environment.apiUrl + `/organizations/${id}/invite/${emailAddress}`
-    )
+      environment.apiUrl + `/organizations/${id}/invite/${emailAddress}`,
+    );
   }
 
   addUserToOrganization(id: number, hash: string): Observable<Object> {
     return this.http.get(
-      environment.apiUrl + `/organizations/${id}/invitation/${hash}`
-    )
+      environment.apiUrl + `/organizations/${id}/invitation/${hash}`,
+    );
+  }
+
+  getEventsCategories(id: number): Observable<EventType[]> {
+    return this.http.get<EventType[]>(
+      environment.apiUrl + `/organizations/${id}/event-types`,
+    );
   }
 }
