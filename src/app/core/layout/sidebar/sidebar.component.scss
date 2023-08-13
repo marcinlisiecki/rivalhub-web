@@ -1,1 +1,56 @@
+@import 'src/scss/variables';
 
+.organizations {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  width: 100%;
+  gap: 0.5rem;
+}
+
+.organization {
+  border-radius: $borderRadius;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.1s;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+
+  &:hover {
+    transform: scale(0.97);
+  }
+}
+
+h1 {
+  font-size: $textBase;
+  font-weight: $weightRegular;
+}
+
+.nav {
+  ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    row-gap: 1.2rem;
+    padding: 0;
+
+    li a {
+      text-decoration: none;
+      display: flex;
+      column-gap: 0.8rem;
+      align-items: center;
+      color: $textSecondaryColor;
+
+      p {
+        padding: 0;
+        margin: 0;
+      }
+
+      i {
+        font-size: 1.1rem;
+      }
+    }
+  }
+}
