@@ -19,7 +19,9 @@
     icon="pi pi-arrow-right"
     iconPos="right"
     label="Dalej"
-    (click)="setStep.emit(OrganizationConfiguratorStep.STATIONS)"
+    [loading]="isLoading"
+    [disabled]="isLoading"
+    (onClick)="setStep.emit(OrganizationConfiguratorStep.STATIONS)"
   >
   </p-button>
   <p-button
@@ -27,6 +29,8 @@
     label="Pomiń wstępną konfigurację"
     iconPos="right"
     icon="pi pi-angle-double-right"
+    [disabled]="isLoading"
+    (onClick)="skipConfiguration()"
   >
   </p-button>
 </div>

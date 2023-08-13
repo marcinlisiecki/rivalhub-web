@@ -4,30 +4,20 @@
 
 <p-divider></p-divider>
 
-<div class="form-step-navigation space-between">
-  <div>
-    <p-button
-      icon="pi pi-arrow-left"
-      iconPos="left"
-      label="Powrót"
-      styleClass="p-button-outlined"
-      (click)="setStep.emit(OrganizationConfiguratorStep.CATEGORIES)"
-    >
-    </p-button>
-    <p-button
-      icon="pi pi-arrow-right"
-      iconPos="right"
-      label="Dalej"
-      (click)="setStep.emit(OrganizationConfiguratorStep.SETTINGS)"
-    >
-    </p-button>
-  </div>
-
+<div class="form-step-navigation">
   <p-button
-    styleClass="p-button-text p-button-secondary"
-    label="Pomiń wstępną konfigurację"
+    icon="pi pi-arrow-left"
+    iconPos="left"
+    label="Powrót"
+    styleClass="p-button-outlined"
+    (click)="setStep.emit(OrganizationConfiguratorStep.CATEGORIES)"
+  >
+  </p-button>
+  <p-button
+    icon="pi pi-arrow-right"
     iconPos="right"
-    icon="pi pi-angle-double-right"
+    label="Dalej"
+    (click)="setStep.emit(OrganizationConfiguratorStep.SETTINGS)"
   >
   </p-button>
 </div>

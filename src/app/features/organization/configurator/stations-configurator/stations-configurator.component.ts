@@ -9,6 +9,7 @@ import { OrganizationConfiguratorStep } from '@interfaces/organization/organizat
 export class StationsConfiguratorComponent {
   @Output() setStep: EventEmitter<OrganizationConfiguratorStep> =
     new EventEmitter<OrganizationConfiguratorStep>();
+
   protected readonly OrganizationConfiguratorStep =
     OrganizationConfiguratorStep;
 }

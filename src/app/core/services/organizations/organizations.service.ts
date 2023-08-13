@@ -94,4 +94,14 @@ export class OrganizationsService {
       environment.apiUrl + `/organizations/${id}/invitation/${hash}`,
     );
   }
+
+  setOrganizationSettings(
+    id: number,
+    onlyAdminCanSeeInvitationLink: boolean,
+  ): Observable<{}> {
+    return this.http.get<{}>(
+      environment.apiUrl +
+        `/organizations/${id}/admin?onlyAdminCanSeeInvitationLink=${onlyAdminCanSeeInvitationLink}`,
+    );
+  }
 }

@@ -1,0 +1,29 @@
+<h2>Ustawienia</h2>
+
+<form [formGroup]="settingsForm">
+  <h3>Ustawienia zapraszania</h3>
+  <p-checkbox
+    formControlName="onlyAdminCanSeeInvitationLink"
+    [binary]="true"
+    label="Tylko administratorzy mogą widzeć link do zapraszania do organizacji"
+  ></p-checkbox>
+</form>
+
+<p-divider></p-divider>
+
+<div class="form-step-navigation">
+  <p-button
+    icon="pi pi-arrow-left"
+    iconPos="left"
+    label="Powrót"
+    styleClass="p-button-outlined"
+    (click)="setStep.emit(OrganizationConfiguratorStep.STATIONS)"
+  >
+  </p-button>
+  <p-button
+    icon="pi pi-check"
+    iconPos="right"
+    label="Zapisz"
+    (onClick)="saveOrganizationSettings.emit()"
+  ></p-button>
+</div>

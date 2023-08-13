@@ -2,11 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { EventsService } from '@app/core/services/events/events.service';
 import { EventType } from '@interfaces/event/event-type';
 import { categoryTypeToLabel } from '@app/core/utils/event';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AddEventFormStep } from '@interfaces/event/add-event-form-step';
 import { OrganizationConfiguratorStep } from '@interfaces/organization/organization-configurator-step';
 import { firstValueFrom } from 'rxjs';
 import { extractMessage } from '@app/core/utils/apiErrors';
+import { OrganizationsService } from '@app/core/services/organizations/organizations.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { FormControl, FormGroup } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-configurator',
@@ -21,20 +25,38 @@ export class ConfiguratorComponent implements OnInit {
   activeEventTypes: EventType[] = [];
   organizationId: number;
 
+  settingsForm: FormGroup = new FormGroup({
+    onlyAdminCanSeeInvitationLink: new FormControl(true, []),
+  });
+
+  isCategoryStepLoading: boolean = false;
+
   constructor(
     private eventsService: EventsService,
     private route: ActivatedRoute,
+    private organizationsService: OrganizationsService,
+    private router: Router,
+    private messageService: MessageService,
   ) {
     this.organizationId = parseInt(this.route.snapshot.params['id']);
   }
 
   async setStep(newStep: OrganizationConfiguratorStep) {
     if (newStep === OrganizationConfiguratorStep.STATIONS) {
+      this.isCategoryStepLoading = true;
+
       try {
         await this.setOrganizationEventTypes();
       } catch (err) {
-        console.log(extractMessage(err));
+        this.messageService.add({
+          severity: 'error',
+          life: 1000 * 10,
+          summary: 'Wystąpił błąd',
+          detail: extractMessage(err),
+        });
       }
+
+      this.isCategoryStepLoading = false;
     }
 
     this.configuratorStep = newStep;
@@ -75,6 +97,31 @@ export class ConfiguratorComponent implements OnInit {
 
       resolve();
     });
+  }
+
+  saveOrganizationSettings() {
+    this.organizationsService
+      .setOrganizationSettings(
+        this.organizationId,
+        this.settingsForm.get('onlyAdminCanSeeInvitationLink')?.value,
+      )
+      .subscribe({
+        next: () => {
+          this.router
+            .navigateByUrl(
+              `/organizations/${this.organizationId}?configured=true`,
+            )
+            .then();
+        },
+        error: (err: HttpErrorResponse) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Wystąpił błąd',
+            life: 1000 * 10,
+            detail: extractMessage(err),
+          });
+        },
+      });
   }
 
   toggleAvailableEventType(eventType: EventType) {
