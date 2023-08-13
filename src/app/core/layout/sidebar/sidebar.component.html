@@ -62,7 +62,7 @@
       </nav>
     </section>
 
-    <section *ngIf="selectedOrganization === null">
+    <section *ngIf="selectedOrganization === null && isLoggedIn">
       <p>Wybierz organizację</p>
     </section>
 

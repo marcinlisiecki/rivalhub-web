@@ -64,6 +64,7 @@ export class AuthService {
   logout() {
     this.jwtService.removeToken();
     this.authSubject.next(false);
+    localStorage.setItem('selectedOrganization', '');
     this.router.navigateByUrl('/login').then();
   }
 

@@ -39,7 +39,10 @@ export class SidebarComponent implements OnInit, OnDestroy {
     private organizationService: OrganizationsService,
   ) {
     this.fetchOrganizations();
+    this.setSelectedOrganization();
+  }
 
+  setSelectedOrganization() {
     if (localStorage.getItem('selectedOrganization')) {
       this.selectedOrganization = JSON.parse(
         localStorage.getItem('selectedOrganization') as string,
@@ -75,6 +78,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.authService.isAuthObservable().subscribe((val: boolean) => {
       this.isLoggedIn = val;
+      this.setSelectedOrganization();
+      this.fetchOrganizations();
     });
 
     this.mobileView = this.viewService.mobileView;
@@ -87,5 +92,6 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   logout() {
     this.authService.logout();
+    this.selectedOrganization = null;
   }
 }
