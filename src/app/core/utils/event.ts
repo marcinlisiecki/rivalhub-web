@@ -3,11 +3,11 @@ import { EventType } from '@interfaces/event/event-type';
 export const categoryTypeToLabel = (eventType: EventType | string): string => {
   return (
     {
-      [EventType.PING_PONG]: 'Ping Pong',
-      [EventType.BILLIARDS]: 'Bilard',
-      [EventType.PULL_UPS]: 'Podciągniecia',
-      [EventType.DARTS]: 'Rzutki',
-      [EventType.TABLE_FOOTBALL]: 'Piłkarzyki',
+      [EventType.PING_PONG]: 'eventType.pingPong',
+      [EventType.BILLIARDS]: 'eventType.billiards',
+      [EventType.PULL_UPS]: 'eventType.pullUps',
+      [EventType.DARTS]: 'eventType.darts',
+      [EventType.TABLE_FOOTBALL]: 'eventType.tableFootball',
     }[eventType] || ''
   );
 };

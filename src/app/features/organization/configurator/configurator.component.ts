@@ -11,6 +11,7 @@ import { OrganizationsService } from '@app/core/services/organizations/organizat
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MessageService } from 'primeng/api';
+import { ErrorsService } from '@app/core/services/errors/errors.service';
 
 @Component({
   selector: 'app-configurator',
@@ -36,7 +37,7 @@ export class ConfiguratorComponent implements OnInit {
     private route: ActivatedRoute,
     private organizationsService: OrganizationsService,
     private router: Router,
-    private messageService: MessageService,
+    private errorsService: ErrorsService,
   ) {
     this.organizationId = parseInt(this.route.snapshot.params['id']);
   }
@@ -48,12 +49,7 @@ export class ConfiguratorComponent implements OnInit {
       try {
         await this.setOrganizationEventTypes();
       } catch (err) {
-        this.messageService.add({
-          severity: 'error',
-          life: 1000 * 10,
-          summary: 'Wystąpił błąd',
-          detail: extractMessage(err),
-        });
+        this.errorsService.createErrorMessage(extractMessage(err));
       }
 
       this.isCategoryStepLoading = false;
@@ -114,12 +110,7 @@ export class ConfiguratorComponent implements OnInit {
             .then();
         },
         error: (err: HttpErrorResponse) => {
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Wystąpił błąd',
-            life: 1000 * 10,
-            detail: extractMessage(err),
-          });
+          this.errorsService.createErrorMessage(extractMessage(err));
         },
       });
   }

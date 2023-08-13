@@ -1,11 +1,16 @@
-<h2>Ustawienia</h2>
+<h2>{{ 'organization.configurator.settings.title' | translate }}</h2>
 
 <form [formGroup]="settingsForm">
-  <h3>Ustawienia zapraszania</h3>
+  <h3>
+    {{ 'organization.configurator.settings.invitations.title' | translate }}
+  </h3>
   <p-checkbox
     formControlName="onlyAdminCanSeeInvitationLink"
     [binary]="true"
-    label="Tylko administratorzy mogą widzeć link do zapraszania do organizacji"
+    label="{{
+      'organization.configurator.settings.invitations.linkVisibility'
+        | translate
+    }}"
   ></p-checkbox>
 </form>
 
@@ -15,7 +20,7 @@
   <p-button
     icon="pi pi-arrow-left"
     iconPos="left"
-    label="Powrót"
+    label="{{ 'stepForm.previous' | translate }}"
     styleClass="p-button-outlined"
     (click)="setStep.emit(OrganizationConfiguratorStep.STATIONS)"
   >
@@ -23,7 +28,7 @@
   <p-button
     icon="pi pi-check"
     iconPos="right"
-    label="Zapisz"
+    label="{{ 'form.save' | translate }}"
     (onClick)="saveOrganizationSettings.emit()"
   ></p-button>
 </div>

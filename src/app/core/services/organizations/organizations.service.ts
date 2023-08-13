@@ -22,8 +22,8 @@ export class OrganizationsService {
     return moment(date).format('DD-MM-yyyy HH:mm');
   }
 
-  add(newOrganization: NewOrganization): Observable<{}> {
-    return this.http.post<{}>(
+  add(newOrganization: NewOrganization): Observable<Organization> {
+    return this.http.post<Organization>(
       environment.apiUrl + '/organizations',
       newOrganization,
     );
