@@ -21,4 +21,23 @@ export class EventsService {
       environment.apiUrl + `/organizations/${organizationId}/event-types`,
     );
   }
+
+  addOrganizationEventType(id: number, eventType: EventType): Observable<{}> {
+    return this.http.post<{}>(
+      environment.apiUrl +
+        `/organizations/${id}/admin/event-types?type=${eventType}`,
+      {},
+    );
+  }
+
+  deleteOrganizationEventType(
+    id: number,
+    eventType: EventType,
+  ): Observable<{}> {
+    return this.http.delete<{}>(
+      environment.apiUrl +
+        `/organizations/${id}/admin/event-types?type=${eventType}`,
+      {},
+    );
+  }
 }

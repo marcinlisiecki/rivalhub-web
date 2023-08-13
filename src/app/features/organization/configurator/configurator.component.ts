@@ -5,6 +5,8 @@ import { categoryTypeToLabel } from '@app/core/utils/event';
 import { ActivatedRoute } from '@angular/router';
 import { AddEventFormStep } from '@interfaces/event/add-event-form-step';
 import { OrganizationConfiguratorStep } from '@interfaces/organization/organization-configurator-step';
+import { firstValueFrom } from 'rxjs';
+import { extractMessage } from '@app/core/utils/apiErrors';
 
 @Component({
   selector: 'app-configurator',
@@ -26,8 +28,53 @@ export class ConfiguratorComponent implements OnInit {
     this.organizationId = parseInt(this.route.snapshot.params['id']);
   }
 
-  setStep(newStep: OrganizationConfiguratorStep) {
+  async setStep(newStep: OrganizationConfiguratorStep) {
+    if (newStep === OrganizationConfiguratorStep.STATIONS) {
+      try {
+        await this.setOrganizationEventTypes();
+      } catch (err) {
+        console.log(extractMessage(err));
+      }
+    }
+
     this.configuratorStep = newStep;
+  }
+
+  setOrganizationEventTypes() {
+    return new Promise<void>(async (resolve, reject) => {
+      const activeEventTypes = this.activeEventTypes;
+      const inactiveEventTypes = this.possibleEventTypes.filter(
+        (type) => !this.activeEventTypes.includes(type),
+      );
+
+      for (let type of activeEventTypes) {
+        try {
+          await firstValueFrom(
+            this.eventsService.addOrganizationEventType(
+              this.organizationId,
+              type,
+            ),
+          );
+        } catch (err) {
+          reject(err);
+        }
+      }
+
+      for (let type of inactiveEventTypes) {
+        try {
+          await firstValueFrom(
+            this.eventsService.deleteOrganizationEventType(
+              this.organizationId,
+              type,
+            ),
+          );
+        } catch (err) {
+          reject(err);
+        }
+      }
+
+      resolve();
+    });
   }
 
   toggleAvailableEventType(eventType: EventType) {
