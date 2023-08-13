@@ -1,10 +1,10 @@
-<section class="user"  [ngClass]='{"info-compact":sticky}'>
+<section class="user"  [ngClass]='{"info-compact":compact}'>
 
   <div class="avatar">
     <img class="dashboard-header-image" [src]="checkAvatar(user.profilePictureUrl)" alt="Image">
   </div>
 <div class="info" >
     <h4 class="info-name">{{user.name}}</h4>
-    <p *ngIf="!sticky" class="info-email">{{user.email}}</p>  
+    <p *ngIf="!compact" class="info-email">{{user.email}}</p>  
 </div>
 </section>

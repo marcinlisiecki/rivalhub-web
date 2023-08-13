@@ -5,8 +5,8 @@
 
 
 <div class="dashboard-container">
-  <div *ngIf="sticky" style="height:140px"></div>
-  <app-dashboard  [user]="user" *ngIf="user" [sticky]="sticky" [ngClass]='{"dashboard-container-sticky":sticky}' class="dashboard-container-header"></app-dashboard>
+  <div *ngIf="compact" style="height:140px"></div>
+  <app-dashboard  [user]="user" *ngIf="user" [compact]="compact" [ngClass]='{"dashboard-container-compact":compact}' class="dashboard-container-header"></app-dashboard>
 
 
   <div class="dashboard-panels">

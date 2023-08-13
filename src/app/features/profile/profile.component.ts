@@ -1,4 +1,10 @@
-import { Component, OnInit, HostListener, ElementRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  HostListener,
+  ElementRef,
+  OnDestroy,
+} from '@angular/core';
 
 import { UserDetailsDto } from '@interfaces/user/user-details-dto';
 import { Reservation } from '@interfaces/reservation/reservation';
@@ -15,11 +21,11 @@ import { headerCompactAnimation } from '@app/core/animations/header-animation';
   styleUrls: ['./profile.component.scss'],
   animations: [headerCompactAnimation],
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, OnDestroy {
   user!: UserDetailsDto;
   reservations: Reservation[] = RESERVATIONS;
   events: EventDto[] = EVENTS;
-  sticky: boolean = false;
+  compact: boolean = false;
   private scrollSubject = new Subject<Event>();
 
   constructor(
@@ -41,6 +47,10 @@ export class ProfileComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(): void {
+    this.scrollSubject.unsubscribe();
+  }
+
   @HostListener('window:scroll', ['$event'])
   onScroll(event: Event) {
     this.scrollSubject.next(event);
@@ -52,15 +62,14 @@ export class ProfileComponent implements OnInit {
     );
     if (!dashboardElement) return;
     const dashboardRect = dashboardElement.getBoundingClientRect();
-
     const dashboardTop = dashboardRect.top + 140;
 
-    // console.log('TOP:', dashboardTop);
-    // console.log('Scroll', window.scrollY);
-    if (window.scrollY >= dashboardTop && !this.sticky) {
-      this.sticky = true;
-    } else if (window.scrollY < dashboardTop && this.sticky) {
-      this.sticky = false;
+    console.log('TOP:', dashboardTop);
+    console.log('Scroll', window.scrollY);
+    if (window.scrollY >= dashboardTop && !this.compact) {
+      this.compact = true;
+    } else if (window.scrollY < dashboardTop && this.compact) {
+      this.compact = false;
     }
   }
 }
