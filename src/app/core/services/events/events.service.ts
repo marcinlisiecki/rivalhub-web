@@ -10,16 +10,14 @@ import { Observable } from 'rxjs';
 export class EventsService {
   constructor(private http: HttpClient) {}
 
-  getAllEventTypesInApp(): Observable<Set<EventType>> {
-    return this.http.get<Set<EventType>>(
+  getAllEventTypesInApp(): Observable<EventType[]> {
+    return this.http.get<EventType[]>(
       environment.apiUrl + '/organizations/event-types',
     );
   }
 
-  getEventTypesInOrganization(
-    organizationId: number,
-  ): Observable<Set<EventType>> {
-    return this.http.get<Set<EventType>>(
+  getEventTypesInOrganization(organizationId: number): Observable<EventType[]> {
+    return this.http.get<EventType[]>(
       environment.apiUrl + `/organizations/${organizationId}/event-types`,
     );
   }

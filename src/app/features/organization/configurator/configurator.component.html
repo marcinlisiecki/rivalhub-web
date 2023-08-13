@@ -1,24 +1,18 @@
 <section class="wrapper">
   <h1>Konfigurator organizacji</h1>
-  <h2>Wybierz jakie kategorie mają być dostępne</h2>
 
-  <section class="categories">
-    <div
-      *ngFor="let type of possibleEventTypes"
-      class="card-checkbox categories-item"
-      [class.card-checkbox-selected]="isEventTypeActive(type)"
-    >
-      <i class="pi pi-calendar"></i>
-      <p>{{ categoryTypeToLabel(type) }}</p>
-    </div>
-  </section>
+  <app-available-events-configurator
+    *ngIf="configuratorStep === OrganizationConfiguratorStep.CATEGORIES"
+    (toggleAvailableEventType)="toggleAvailableEventType($event)"
+    [activeEventTypes]="activeEventTypes"
+    [possibleEventTypes]="possibleEventTypes"
+    (setStep)="setStep($event)"
+  >
+  </app-available-events-configurator>
 
-  <p-divider></p-divider>
-
-  <div class="form-step-navigation">
-    <p-button> Dalej </p-button>
-    <p-button styleClass="p-button-text p-button-secondary">
-      Pomiń wstępną konfigurację
-    </p-button>
-  </div>
+  <app-stations-configurator
+    *ngIf="configuratorStep === OrganizationConfiguratorStep.STATIONS"
+    (setStep)="setStep($event)"
+  >
+  </app-stations-configurator>
 </section>

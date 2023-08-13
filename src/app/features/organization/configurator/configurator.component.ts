@@ -4,6 +4,7 @@ import { EventType } from '@interfaces/event/event-type';
 import { categoryTypeToLabel } from '@app/core/utils/event';
 import { ActivatedRoute } from '@angular/router';
 import { AddEventFormStep } from '@interfaces/event/add-event-form-step';
+import { OrganizationConfiguratorStep } from '@interfaces/organization/organization-configurator-step';
 
 @Component({
   selector: 'app-configurator',
@@ -11,8 +12,11 @@ import { AddEventFormStep } from '@interfaces/event/add-event-form-step';
   styleUrls: ['./configurator.component.scss'],
 })
 export class ConfiguratorComponent implements OnInit {
-  possibleEventTypes: Set<EventType> = new Set();
-  activeEventTypes: Set<EventType> = new Set();
+  configuratorStep: OrganizationConfiguratorStep =
+    OrganizationConfiguratorStep.CATEGORIES;
+
+  possibleEventTypes: EventType[] = [];
+  activeEventTypes: EventType[] = [];
   organizationId: number;
 
   constructor(
@@ -22,18 +26,28 @@ export class ConfiguratorComponent implements OnInit {
     this.organizationId = parseInt(this.route.snapshot.params['id']);
   }
 
+  setStep(newStep: OrganizationConfiguratorStep) {
+    this.configuratorStep = newStep;
+  }
+
+  toggleAvailableEventType(eventType: EventType) {
+    if (this.activeEventTypes.includes(eventType)) {
+      this.activeEventTypes = this.activeEventTypes.filter(
+        (type) => type !== eventType,
+      );
+    } else {
+      this.activeEventTypes.push(eventType);
+    }
+  }
+
   ngOnInit(): void {
     this.fetchAllEventTypes();
     this.fetchActiveEventTypes();
   }
 
-  isEventTypeActive(type: EventType): boolean {
-    return Array.from(this.activeEventTypes).includes(type);
-  }
-
   fetchAllEventTypes() {
     this.eventsService.getAllEventTypesInApp().subscribe({
-      next: (types: Set<EventType>) => {
+      next: (types: EventType[]) => {
         this.possibleEventTypes = types;
       },
     });
@@ -43,7 +57,7 @@ export class ConfiguratorComponent implements OnInit {
     this.eventsService
       .getEventTypesInOrganization(this.organizationId)
       .subscribe({
-        next: (types: Set<EventType>) => {
+        next: (types: EventType[]) => {
           this.activeEventTypes = types;
         },
       });
@@ -51,4 +65,6 @@ export class ConfiguratorComponent implements OnInit {
 
   protected readonly categoryTypeToLabel = categoryTypeToLabel;
   protected readonly AddEventFormStep = AddEventFormStep;
+  protected readonly OrganizationConfiguratorStep =
+    OrganizationConfiguratorStep;
 }

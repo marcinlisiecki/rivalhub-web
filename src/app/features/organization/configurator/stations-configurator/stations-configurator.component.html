@@ -1,0 +1,33 @@
+<h2>Utwórz stanowiska</h2>
+
+<app-view-stations [showHeading]="false"></app-view-stations>
+
+<p-divider></p-divider>
+
+<div class="form-step-navigation space-between">
+  <div>
+    <p-button
+      icon="pi pi-arrow-left"
+      iconPos="left"
+      label="Powrót"
+      styleClass="p-button-outlined"
+      (click)="setStep.emit(OrganizationConfiguratorStep.CATEGORIES)"
+    >
+    </p-button>
+    <p-button
+      icon="pi pi-arrow-right"
+      iconPos="right"
+      label="Dalej"
+      (click)="setStep.emit(OrganizationConfiguratorStep.SETTINGS)"
+    >
+    </p-button>
+  </div>
+
+  <p-button
+    styleClass="p-button-text p-button-secondary"
+    label="Pomiń wstępną konfigurację"
+    iconPos="right"
+    icon="pi pi-angle-double-right"
+  >
+  </p-button>
+</div>

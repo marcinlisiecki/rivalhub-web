@@ -20,6 +20,9 @@ import { MessageModule } from 'primeng/message';
 import { SpinnerModule } from 'primeng/spinner';
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { ConfiguratorComponent } from './configurator/configurator.component';
+import {StationModule} from "@app/features/station/station.module";
+import { AvailableEventsConfiguratorComponent } from './configurator/available-events-configurator/available-events-configurator.component';
+import { StationsConfiguratorComponent } from './configurator/stations-configurator/stations-configurator.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +39,8 @@ import { ConfiguratorComponent } from './configurator/configurator.component';
     InviteUserComponent,
     JoinOrganizationComponent,
     ConfiguratorComponent,
+    AvailableEventsConfiguratorComponent,
+    StationsConfiguratorComponent,
   ],
   imports: [
     RouterModule,
@@ -49,6 +54,7 @@ import { ConfiguratorComponent } from './configurator/configurator.component';
     SpinnerModule,
     NgOptimizedImage,
     ContextMenuModule,
+    StationModule,
   ],
   exports: [
     MyOrganizationsComponent,

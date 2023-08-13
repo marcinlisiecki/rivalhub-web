@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { categoryTypeToLabel } from '@app/core/utils/event';
 import { ActivatedRoute } from '@angular/router';
 import { extractMessage } from '@app/core/utils/apiErrors';
@@ -14,6 +14,8 @@ import { ConfirmationService } from 'primeng/api';
   styleUrls: ['./view-stations.component.scss'],
 })
 export class ViewStationsComponent implements OnInit {
+  @Input() showHeading: boolean = true;
+
   stations: Station[] = [];
   organizationId!: number;
   apiError: string | null = null;
