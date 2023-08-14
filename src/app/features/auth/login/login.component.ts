@@ -5,9 +5,7 @@ import { LoginCredentials } from '@interfaces/auth/login-credentials';
 import { AuthService } from '@app/core/services/auth/auth.service';
 import { extractMessage } from '@app/core/utils/apiErrors';
 import { Subscription } from 'rxjs';
-import { Invitation } from '@interfaces/organization/invitation';
 import { InvitationsService } from '@app/core/services/invitations/invitations.service';
-import { OrganizationsService } from '@app/core/services/organizations/organizations.service';
 
 @Component({
   selector: 'app-login',

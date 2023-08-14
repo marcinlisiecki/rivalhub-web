@@ -10,7 +10,7 @@ import { DashboardActivitiesPanelComponent } from '@app/features/organization/or
 import { ActivityItemComponent } from '@app/features/organization/organization-dashboard/dashboard-activities-panel/activity-item/activity-item.component';
 import { AddOrganizationComponent } from '@app/features/organization/add-organization/add-organization.component';
 import { MyOrganizationsComponent } from '@app/features/organization/my-organizations/my-organizations.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink, RouterModule } from '@angular/router';
 import { SharedModule } from '@app/shared/shared.module';
 import { InviteUserComponent } from '@app/features/organization/invite-user/invite-user.component';
@@ -19,6 +19,12 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MessageModule } from 'primeng/message';
 import { SpinnerModule } from 'primeng/spinner';
 import { ContextMenuModule } from 'primeng/contextmenu';
+import { ConfiguratorComponent } from './configurator/configurator.component';
+import { StationModule } from '@app/features/station/station.module';
+import { AvailableEventsConfiguratorComponent } from './configurator/available-events-configurator/available-events-configurator.component';
+import { StationsConfiguratorComponent } from './configurator/stations-configurator/stations-configurator.component';
+import { SettingsConfiguratorComponent } from './configurator/settings-configurator/settings-configurator.component';
+import { CheckboxModule } from 'primeng/checkbox';
 
 @NgModule({
   declarations: [
@@ -34,6 +40,10 @@ import { ContextMenuModule } from 'primeng/contextmenu';
     ActivityItemComponent,
     InviteUserComponent,
     JoinOrganizationComponent,
+    ConfiguratorComponent,
+    AvailableEventsConfiguratorComponent,
+    StationsConfiguratorComponent,
+    SettingsConfiguratorComponent,
   ],
   imports: [
     RouterModule,
@@ -47,6 +57,9 @@ import { ContextMenuModule } from 'primeng/contextmenu';
     SpinnerModule,
     NgOptimizedImage,
     ContextMenuModule,
+    StationModule,
+    CheckboxModule,
+    FormsModule,
   ],
   exports: [
     MyOrganizationsComponent,

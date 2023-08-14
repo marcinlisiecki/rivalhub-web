@@ -10,7 +10,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AvailableEvent } from '@interfaces/event/available-event';
 import { AddEventFormStep } from '@interfaces/event/add-event-form-step';
 import { Station } from '@interfaces/station/station';
-import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { StationsService } from '@app/core/services/stations/stations.service';
 import { AddEventUser } from '@interfaces/event/add-event-user';

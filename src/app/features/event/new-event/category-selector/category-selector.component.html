@@ -10,7 +10,7 @@
       (click)="selectEvent.emit(event.type)"
     >
       <i class="pi {{ event.icon }}"></i>
-      <p>{{ categoryTypeToLabel(event.type) }}</p>
+      <p>{{ categoryTypeToLabel(event.type) | translate }}</p>
     </div>
   </section>
 

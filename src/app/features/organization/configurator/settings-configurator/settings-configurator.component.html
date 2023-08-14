@@ -1,0 +1,34 @@
+<h2>{{ 'organization.configurator.settings.title' | translate }}</h2>
+
+<form [formGroup]="settingsForm">
+  <h3>
+    {{ 'organization.configurator.settings.invitations.title' | translate }}
+  </h3>
+  <p-checkbox
+    formControlName="onlyAdminCanSeeInvitationLink"
+    [binary]="true"
+    label="{{
+      'organization.configurator.settings.invitations.linkVisibility'
+        | translate
+    }}"
+  ></p-checkbox>
+</form>
+
+<p-divider></p-divider>
+
+<div class="form-step-navigation">
+  <p-button
+    icon="pi pi-arrow-left"
+    iconPos="left"
+    label="{{ 'stepForm.previous' | translate }}"
+    styleClass="p-button-outlined"
+    (click)="setStep.emit(OrganizationConfiguratorStep.STATIONS)"
+  >
+  </p-button>
+  <p-button
+    icon="pi pi-check"
+    iconPos="right"
+    label="{{ 'form.save' | translate }}"
+    (onClick)="saveOrganizationSettings.emit()"
+  ></p-button>
+</div>

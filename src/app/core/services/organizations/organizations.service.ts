@@ -96,9 +96,13 @@ export class OrganizationsService {
     );
   }
 
-  getEventsCategories(id: number): Observable<EventType[]> {
-    return this.http.get<EventType[]>(
-      environment.apiUrl + `/organizations/${id}/event-types`,
+  setOrganizationSettings(
+    id: number,
+    onlyAdminCanSeeInvitationLink: boolean,
+  ): Observable<{}> {
+    return this.http.get<{}>(
+      environment.apiUrl +
+        `/organizations/${id}/admin?onlyAdminCanSeeInvitationLink=${onlyAdminCanSeeInvitationLink}`,
     );
   }
 }

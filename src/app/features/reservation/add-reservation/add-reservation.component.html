@@ -44,7 +44,7 @@
   <div class="form-container" *ngIf="readyDateAndValid">
     <li class="form-container-list" *ngFor="let category of types">
       <app-category-stations-selector
-        [categoryLabel]="categoryTypeToLabel(category)"
+        categoryLabel="{{ categoryTypeToLabel(category) | translate }}"
         [stations]="getCategoryStations(category) || []"
         (toggleStation)="toggleSelectedStation($event)"
         [selectedStations]="selectedStations"
