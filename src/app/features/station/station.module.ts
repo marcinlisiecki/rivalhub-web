@@ -11,6 +11,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { ConfirmationService } from 'primeng/api';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import {TranslateModule} from "@ngx-translate/core";
 @NgModule({
   declarations: [ViewStationsComponent],
   imports: [
@@ -25,6 +26,7 @@ import { ConfirmPopupModule } from 'primeng/confirmpopup';
     CheckboxModule,
     InputSwitchModule,
     ConfirmPopupModule,
+    TranslateModule,
   ],
   exports: [ViewStationsComponent],
   providers: [ConfirmationService],
