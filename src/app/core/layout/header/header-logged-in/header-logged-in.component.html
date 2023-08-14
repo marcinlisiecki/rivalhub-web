@@ -1,23 +1,19 @@
 <ul>
-  <!--        <li *ngIf="isLoggedIn">-->
-  <!--          <app-header-link routerLink="/calendar">-->
-  <!--            {{ 'header.calendar' | language }}-->
-  <!--          </app-header-link>-->
-  <!--        </li>-->
-
-  <li>
+  <li *ngIf="!mobileView">
     <app-header-link routerLink="/organizations/new">
       {{ 'header.organisationAdd' | translate }}
     </app-header-link>
   </li>
 
-  <li>
+  <li *ngIf="!mobileView">
     <app-header-link routerLink="/organizations">
       {{ 'header.organisationShow' | translate }}
     </app-header-link>
   </li>
 
-  <li>
-    <p-button styleClass="p-button-secondary" (onClick)="logout()" icon="pi pi-sign-out"></p-button>
+  <li (click)="showSidebar()">
+    <div class="user-avatar">
+      <i class="pi pi-user"></i>
+    </div>
   </li>
 </ul>

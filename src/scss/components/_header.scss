@@ -1,9 +1,16 @@
 @import 'src/scss/variables';
 
-.header-menu-item {
-  font-size: $textSm;
-}
+.user-avatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: $shade600;
+  border-radius: 50rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 
-.header-menu-flag {
-  width: auto !important;
+  i {
+    color: $textSecondaryColor;
+  }
 }

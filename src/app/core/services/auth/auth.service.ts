@@ -78,6 +78,7 @@ export class AuthService {
     this.jwtService.removeToken();
     this.jwtService.removeRefreshToken();
     this.authSubject.next(false);
+    localStorage.setItem('selectedOrganization', '');
     this.router.navigateByUrl('/login').then();
   }
 

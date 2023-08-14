@@ -1,5 +1,9 @@
 @import 'src/scss/variables';
-
+.inactive-text {
+  text-align: right;
+  font-size: $textSm;
+  font-family: $fontFamily;
+}
 .stations {
   display: grid;
   grid-template-columns: 1fr 1fr;
