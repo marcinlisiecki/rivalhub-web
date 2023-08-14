@@ -100,9 +100,10 @@ export class OrganizationsService {
     id: number,
     onlyAdminCanSeeInvitationLink: boolean,
   ): Observable<{}> {
-    return this.http.get<{}>(
+    return this.http.post<{}>(
       environment.apiUrl +
         `/organizations/${id}/admin?onlyAdminCanSeeInvitationLink=${onlyAdminCanSeeInvitationLink}`,
+      {},
     );
   }
   getEventsCategories(id: number): Observable<EventType[]> {
