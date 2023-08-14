@@ -10,6 +10,7 @@ import { NewReservation } from '@interfaces/reservation/new-reservation';
 import { Station } from '@interfaces/station/station';
 import { StationsService } from '@app/core/services/stations/stations.service';
 import { ClosestStationAvailable } from '@interfaces/station/closest-station-available';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-add-reservation',
@@ -32,6 +33,10 @@ export class AddReservationComponent {
   today: Date = new Date();
   apiError: string | null = null;
   closestAvailable: ClosestStationAvailable[] = [];
+  closestAvailableMap: Map<string, ClosestStationAvailable> = new Map<
+    string,
+    ClosestStationAvailable
+  >();
 
   constructor(
     private route: ActivatedRoute,
@@ -40,6 +45,18 @@ export class AddReservationComponent {
     private stationsService: StationsService,
   ) {}
 
+  formatDate(date: Date): string {
+    return moment(date).format('DD-MM-yyyy HH:mm');
+  }
+
+  findRightCategory(type: string): ClosestStationAvailable {
+    const cat = this.closestAvailable.find(
+      (closest: ClosestStationAvailable) => closest.type === type,
+    );
+    console.log(cat, type);
+
+    return <ClosestStationAvailable>cat;
+  }
   fetchClosestAvailableStations() {
     const organizationId: number = this.route.snapshot.params['id'];
     this.stationsService
@@ -51,6 +68,10 @@ export class AddReservationComponent {
       .subscribe({
         next: (availableStations: ClosestStationAvailable[]) => {
           this.closestAvailable = availableStations;
+          this.closestAvailable.forEach((item) => {
+            item.formatedFirstAvailable = this.formatDate(item.firstAvailable);
+          });
+          // this.closestAvailableMap.set(this.types.value, this.closestAvailable)
         },
       });
   }
@@ -60,7 +81,6 @@ export class AddReservationComponent {
     this.organizationService.getEventsCategories(organizationId).subscribe({
       next: (avaliableCategories: EventType[]) => {
         this.types = new Set(avaliableCategories);
-        console.log(avaliableCategories);
       },
     });
   }

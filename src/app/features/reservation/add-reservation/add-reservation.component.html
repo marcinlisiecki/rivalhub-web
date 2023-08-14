@@ -41,16 +41,14 @@
     </p-button>
   </div>
 
-  <div
-    class="form-container"
-    *ngIf="readyDateAndValid && stations !== null && stations.length !== 0"
-  >
+  <div class="form-container" *ngIf="readyDateAndValid">
     <li class="form-container-list" *ngFor="let category of types">
       <app-category-stations-selector
         [categoryLabel]="categoryTypeToLabel(category)"
         [stations]="getCategoryStations(category) || []"
         (toggleStation)="toggleSelectedStation($event)"
         [selectedStations]="selectedStations"
+        [closestAvailable]="findRightCategory(category)"
       >
       </app-category-stations-selector>
     </li>
@@ -60,10 +58,10 @@
     *ngIf="readyDateAndValid && stations === null"
   ></app-centered-spinner>
 
-  <app-no-available-stations
-    *ngIf="readyDateAndValid && stations !== null && stations.length === 0"
-    [closestAvailable]="closestAvailable"
-  ></app-no-available-stations>
+  <!--  <app-no-available-stations-->
+  <!--    *ngIf="readyDateAndValid && stations !== null && stations.length === 0"-->
+  <!--    [closestAvailable]="closestAvailable"-->
+  <!--  ></app-no-available-stations>-->
 
   <p-button (onClick)="onSubmit()">Zapisz</p-button>
 </section>
