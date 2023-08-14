@@ -45,9 +45,22 @@ export class AuthService {
       .pipe(tap((res) => this.handleSetJwt(res)));
   }
 
+  refreshToken(): Observable<AuthResponse> {
+    const refreshToken = this.jwtService.getRefreshToken();
+
+    return this.http
+      .post<AuthResponse>(
+        environment.apiUrl + '/refresh-token',
+        {},
+        { headers: { Authorization: `Bearer ${refreshToken}` } },
+      )
+      .pipe(tap((res) => this.handleSetJwt(res)));
+  }
+
   handleSetJwt(response: AuthResponse) {
     if (response?.token) {
       this.jwtService.setToken(response.token);
+      this.jwtService.setRefreshToken(response.refreshToken);
     }
 
     this.authSubject.next(this.isAuth());
@@ -63,6 +76,7 @@ export class AuthService {
 
   logout() {
     this.jwtService.removeToken();
+    this.jwtService.removeRefreshToken();
     this.authSubject.next(false);
     localStorage.setItem('selectedOrganization', '');
     this.router.navigateByUrl('/login').then();

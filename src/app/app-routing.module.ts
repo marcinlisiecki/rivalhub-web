@@ -15,6 +15,7 @@ import { JoinOrganizationComponent } from '@app/features/organization/join-organ
 import { joinGuard } from '@app/core/guards/join-organization/join.guard';
 import { ProfileComponent } from '@app/features/profile/profile.component';
 import { ActivateAccountComponent } from '@app/features/user/activate-account/activate-account.component';
+import { ConfiguratorComponent } from '@app/features/organization/configurator/configurator.component';
 
 const routes: Routes = [
   {
@@ -78,6 +79,11 @@ const routes: Routes = [
   {
     path: 'users/confirm/:hash',
     component: ActivateAccountComponent,
+  },
+  {
+    path: 'organizations/:id/configurator',
+    component: ConfiguratorComponent,
+    canActivate: [authenticateGuard],
   },
 ];
 

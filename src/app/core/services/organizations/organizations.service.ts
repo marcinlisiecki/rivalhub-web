@@ -22,8 +22,8 @@ export class OrganizationsService {
     return moment(date).format('DD-MM-yyyy HH:mm');
   }
 
-  add(newOrganization: NewOrganization): Observable<{}> {
-    return this.http.post<{}>(
+  add(newOrganization: NewOrganization): Observable<Organization> {
+    return this.http.post<Organization>(
       environment.apiUrl + '/organizations',
       newOrganization,
     );
@@ -85,13 +85,23 @@ export class OrganizationsService {
 
   sendInvitation(id: number, emailAddress: string) {
     return this.http.get(
-      environment.apiUrl + `/organizations/${id}/invite/${emailAddress}`
-    )
+      environment.apiUrl + `/organizations/${id}/invite/${emailAddress}`,
+    );
   }
 
   addUserToOrganization(id: number, hash: string): Observable<Object> {
     return this.http.get(
-      environment.apiUrl + `/organizations/${id}/invitation/${hash}`
-    )
+      environment.apiUrl + `/organizations/${id}/invitation/${hash}`,
+    );
+  }
+
+  setOrganizationSettings(
+    id: number,
+    onlyAdminCanSeeInvitationLink: boolean,
+  ): Observable<{}> {
+    return this.http.get<{}>(
+      environment.apiUrl +
+        `/organizations/${id}/admin?onlyAdminCanSeeInvitationLink=${onlyAdminCanSeeInvitationLink}`,
+    );
   }
 }

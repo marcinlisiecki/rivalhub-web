@@ -17,6 +17,7 @@ import { StationSelectorComponent } from './new-event/station-selector/station-s
 import {ProgressSpinnerModule} from "primeng/progressspinner";
 import { AddUserPingPongComponent } from './new-event/add-user-ping-pong/add-user-ping-pong.component';
 import { AddUserDialogComponent } from './new-event/add-user-dialog/add-user-dialog.component';
+import {TranslateModule} from "@ngx-translate/core";
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { AddUserDialogComponent } from './new-event/add-user-dialog/add-user-dia
     FormsModule,
     SharedModule,
     ProgressSpinnerModule,
+    TranslateModule,
   ],
 })
 export class EventModule {}
