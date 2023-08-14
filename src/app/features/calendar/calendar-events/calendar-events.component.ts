@@ -2,12 +2,10 @@ import {
   AfterViewInit,
   Component,
   OnInit,
-  signal,
   WritableSignal,
 } from '@angular/core';
 import { CalendarService } from '@app/core/services/calendar/calendar.service';
-import { Calendar, CalendarOptions, EventApi } from '@fullcalendar/core';
-import { EventImpl } from '@fullcalendar/core/internal';
+import { Calendar, EventApi } from '@fullcalendar/core';
 
 @Component({
   selector: 'app-calendar-events',

@@ -3,8 +3,8 @@
     <div class="button">
       <p-toggleButton
         (click)="toggleSidebar()"
-        onIcon="pi pi-arrow-left"
-        offIcon="pi pi-arrow-right"
+        onIcon="{{ sidebarIcon }}"
+        offIcon="{{ sidebarIcon }}"
       ></p-toggleButton>
       <app-calendar-filter></app-calendar-filter>
     </div>
@@ -21,7 +21,9 @@
         </p-sidebar>
       </div>
       <div class="right">
-        <app-calendar-body></app-calendar-body>
+        <app-calendar-body
+          (dateClick)="!sidebarVisible && toggleSidebar()"
+        ></app-calendar-body>
       </div>
     </div>
   </div>

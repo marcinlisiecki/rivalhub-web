@@ -4,11 +4,13 @@
     *ngIf="calendarVisible()"
     [options]="calendarOptions()"
   >
-    <!--    Template pojedyńczego dnia na kalendarzu-->
+    <!--    Template pojedyńczego eventu dnia na kalendarzu-->
     <ng-template #eventContent let-arg>
-      <b>{{ arg.timeText + ' ' }}</b>
-      <i>{{ arg.event.extendedProps.organisation + ' ' }}</i>
-      <i>{{ arg.event.title }}</i>
+      <span>
+        <b>{{ arg.timeText + ' ' }}</b>
+        <i>{{ arg.event.extendedProps.organisation + ' ' }}</i>
+        <i>{{ arg.event.title }}</i>
+      </span>
     </ng-template>
   </full-calendar>
 </div>

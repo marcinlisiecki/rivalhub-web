@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CalendarService } from '@app/core/services/calendar/calendar.service';
 
 @Component({
@@ -6,22 +6,24 @@ import { CalendarService } from '@app/core/services/calendar/calendar.service';
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss'],
 })
-export class CalendarComponent {
+export class CalendarComponent implements OnInit {
   sidebarVisible: boolean = false;
   sidebarWidth = '0';
+  sidebarIcon? = 'pi pi-arrow-right';
+  constructor(private serv: CalendarService) {}
 
-  constructor(private serv: CalendarService) {
-    setTimeout(() => {
-      this.serv.api.view.calendar.updateSize();
-    }, 200);
-  }
+  ngOnInit() {}
+
   toggleSidebar() {
     this.sidebarVisible = !this.sidebarVisible;
     if (this.sidebarVisible) {
+      this.sidebarIcon = 'pi pi-arrow-left';
       this.sidebarWidth = '25dvw';
     } else {
+      this.sidebarIcon = 'pi pi-arrow-right';
       this.sidebarWidth = '0';
     }
+
     setTimeout(() => {
       this.serv.api.view.calendar.updateSize();
     }, 0);

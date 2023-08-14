@@ -3,7 +3,6 @@ import {
   EffectRef,
   Injectable,
   signal,
-  ViewChild,
   WritableSignal,
 } from '@angular/core';
 import {
@@ -17,20 +16,22 @@ import interactionPlugin, { DateClickArg } from '@fullcalendar/interaction';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
-import {
-  createEventId,
-  INITIAL_EVENTS,
-} from '@app/features/calendar/calendar-body/event-utils';
+import { INITIAL_EVENTS } from '@app/features/calendar/calendar-body/event-utils';
 import allLocales from '@fullcalendar/core/locales-all';
 import { LanguageService } from '@app/core/services/language/language.service';
+import { OrganizationsService } from '@app/core/services/organizations/organizations.service';
+import { Organization } from '@interfaces/organization/organization';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CalendarService {
+  organisations: WritableSignal<Organization[]> = signal([]);
   currentDayEvents = signal<EventApi[]>([]);
   currentWeekends = signal(true);
   langChangeEffect: EffectRef;
+  sidebar = signal(false);
   language = this.lang.getCurrentLanguage();
   events = signal<EventApi[]>([]);
   api!: Calendar;
@@ -45,7 +46,7 @@ export class CalendarService {
     initialEvents: INITIAL_EVENTS,
     events: [this.events],
     weekends: true,
-    editable: true,
+    editable: false,
     selectable: true,
     selectMirror: true,
     dayMaxEvents: true,
@@ -63,7 +64,14 @@ export class CalendarService {
     */
   });
 
-  constructor(private lang: LanguageService) {
+  public filter: { selectedOrganisations: Array<string> } = {
+    selectedOrganisations: [],
+  };
+
+  constructor(
+    private lang: LanguageService,
+    private orgServ: OrganizationsService,
+  ) {
     this.langChangeEffect = effect(
       () => {
         this.options.mutate((options) => {
@@ -72,8 +80,6 @@ export class CalendarService {
       },
       { allowSignalWrites: true },
     );
-
-    //console.log(api.getEvents());
   }
 
   handleWeekendsToggle() {
@@ -106,7 +112,7 @@ export class CalendarService {
 
   handleDateClick(arg: DateClickArg) {
     this.currentDayFilter(arg.dateStr);
-    alert('date click! ' + arg.dateStr);
+    alert('Data: ' + arg.dateStr);
   }
 
   handleEvents(events: EventApi[]) {
@@ -126,6 +132,19 @@ export class CalendarService {
         this.currentDayEvents.mutate((ev) => ev.push(event));
       }
     }
+  }
+
+  getOrganisation() {
+    let sub = this.orgServ.getMy().subscribe({
+      next: (res: Organization[]) => {
+        this.organisations.set(res);
+      },
+      //Dodaj kiedyś obsługę błędów jak wpadniesz na fajny pomysł jak to zrobić
+      error: (err: HttpErrorResponse) => {
+        console.error('An error occurred:', err);
+      },
+    });
+    sub.unsubscribe();
   }
 
   setLocalStorage() {

@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { ToastModule } from 'primeng/toast';
 import { FilterMenuComponent } from './calendar-filter/filter-menu/filter-menu.component';
 import { CheckboxModule } from 'primeng/checkbox';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,14 @@ import { CheckboxModule } from 'primeng/checkbox';
     FormsModule,
     ToastModule,
     CheckboxModule,
+    RouterModule,
   ],
-  exports: [CalendarEventsComponent, CalendarComponent, CalendarBodyComponent],
+  exports: [
+    CalendarEventsComponent,
+    CalendarComponent,
+    CalendarBodyComponent,
+    CalendarFilterComponent,
+    FilterMenuComponent,
+  ],
 })
 export class CalendarModule {}

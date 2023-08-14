@@ -1,14 +1,15 @@
 <div class="menu-comp">
   <div class="Organisation">
     <p>Organizacja</p>
-    <div *ngFor="let organisation of organisations" class="field-checkbox">
+    <div *ngFor="let organisation of organisationsArray" class="field-checkbox">
       <p-checkbox
         name="organisations"
-        [value]="organisation"
-        [(ngModel)]="selectedCategories"
-        [inputId]="organisation.key"
+        [value]="organisation.name"
+        [(ngModel)]="selectedOrganisations"
+        [inputId]="organisation.id.toString()"
+        (onChange)="selectedOrganisation()"
       ></p-checkbox>
-      <label [for]="organisation.key">{{ organisation.name }}</label>
+      <label [for]="organisation.id.toString()">{{ organisation.name }}</label>
     </div>
   </div>
 
