@@ -33,10 +33,6 @@ export class AddReservationComponent {
   today: Date = new Date();
   apiError: string | null = null;
   closestAvailable: ClosestStationAvailable[] = [];
-  closestAvailableMap: Map<string, ClosestStationAvailable> = new Map<
-    string,
-    ClosestStationAvailable
-  >();
 
   constructor(
     private route: ActivatedRoute,
@@ -55,7 +51,7 @@ export class AddReservationComponent {
     );
     console.log(cat, type);
 
-    return <ClosestStationAvailable>cat;
+    return cat!;
   }
   fetchClosestAvailableStations() {
     const organizationId: number = this.route.snapshot.params['id'];
@@ -71,7 +67,6 @@ export class AddReservationComponent {
           this.closestAvailable.forEach((item) => {
             item.formatedFirstAvailable = this.formatDate(item.firstAvailable);
           });
-          // this.closestAvailableMap.set(this.types.value, this.closestAvailable)
         },
       });
   }

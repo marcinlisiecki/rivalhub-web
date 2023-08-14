@@ -23,8 +23,8 @@ export class OrganizationsService {
     return moment(date).format('DD-MM-yyyy HH:mm');
   }
 
-  add(newOrganization: NewOrganization): Observable<{}> {
-    return this.http.post<{}>(
+  add(newOrganization: NewOrganization): Observable<Organization> {
+    return this.http.post<Organization>(
       environment.apiUrl + '/organizations',
       newOrganization,
     );
@@ -103,6 +103,11 @@ export class OrganizationsService {
     return this.http.get<{}>(
       environment.apiUrl +
         `/organizations/${id}/admin?onlyAdminCanSeeInvitationLink=${onlyAdminCanSeeInvitationLink}`,
+    );
+  }
+  getEventsCategories(id: number): Observable<EventType[]> {
+    return this.http.get<EventType[]>(
+      environment.apiUrl + `/organizations/${id}/event-types`,
     );
   }
 }
