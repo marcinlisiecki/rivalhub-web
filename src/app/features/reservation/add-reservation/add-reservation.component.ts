@@ -32,7 +32,7 @@ export class AddReservationComponent {
   emptyData: boolean = false;
   today: Date = new Date();
   apiError: string | null = null;
-  closestAvailable!: ClosestStationAvailable[];
+  closestAvailable: ClosestStationAvailable[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -49,7 +49,6 @@ export class AddReservationComponent {
     const cat = this.closestAvailable.find(
       (closest: ClosestStationAvailable) => closest.type === type,
     );
-    console.log(cat, type);
 
     return cat!;
   }
