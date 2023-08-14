@@ -32,7 +32,7 @@ export class AddReservationComponent {
   emptyData: boolean = false;
   today: Date = new Date();
   apiError: string | null = null;
-  closestAvailable: ClosestStationAvailable[] = [];
+  closestAvailable!: ClosestStationAvailable[];
 
   constructor(
     private route: ActivatedRoute,
