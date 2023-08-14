@@ -21,6 +21,7 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { VerifyAccountInfoComponent } from './verify-account-info/verify-account-info.component';
 import { NoResourceInfoComponent } from './no-resource-info/no-resource-info.component';
 import {AccordionModule} from "primeng/accordion";
+import { EventInfoComponent } from './event-info/event-info.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import {AccordionModule} from "primeng/accordion";
     CenteredSpinnerComponent,
     VerifyAccountInfoComponent,
     NoResourceInfoComponent,
+    EventInfoComponent,
   ],
   exports: [
     ValidationErrorComponent,
