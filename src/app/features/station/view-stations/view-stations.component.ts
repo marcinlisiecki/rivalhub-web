@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { categoryTypeToLabel } from '@app/core/utils/event';
 import { ActivatedRoute } from '@angular/router';
 import { extractMessage } from '@app/core/utils/apiErrors';
@@ -8,12 +8,15 @@ import { HttpResponse } from '@angular/common/http';
 import { Station } from '@app/core/interfaces/station/station';
 import { NewStation } from '@app/core/interfaces/station/new-station';
 import { ConfirmationService } from 'primeng/api';
+import { EventsService } from '@app/core/services/events/events.service';
 @Component({
   selector: 'app-view-stations',
   templateUrl: './view-stations.component.html',
   styleUrls: ['./view-stations.component.scss'],
 })
 export class ViewStationsComponent implements OnInit {
+  @Input() showHeading: boolean = true;
+
   stations: Station[] = [];
   organizationId!: number;
   apiError: string | null = null;
@@ -33,6 +36,7 @@ export class ViewStationsComponent implements OnInit {
     private route: ActivatedRoute,
     private stationsService: StationsService,
     private confirmationService: ConfirmationService,
+    private eventsService: EventsService,
   ) {
     this.route.params.subscribe((params) => {
       this.organizationId = params['id'];
@@ -49,6 +53,21 @@ export class ViewStationsComponent implements OnInit {
         error: (err: unknown) => {
           this.apiError = extractMessage(err);
         },
+      });
+
+    this.fetchStationTypes();
+  }
+
+  fetchStationTypes() {
+    this.eventsService
+      .getEventTypesInOrganization(this.organizationId)
+      .subscribe((types) => {
+        this.stationTypes = types;
+        this.newStation = {
+          name: '',
+          type: types[0] || null,
+          active: false,
+        };
       });
   }
 

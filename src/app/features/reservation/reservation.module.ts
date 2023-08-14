@@ -5,6 +5,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from '@app/shared/shared.module';
 import { RouterModule } from '@angular/router';
+import {TranslateModule} from "@ngx-translate/core";
 
 @NgModule({
   declarations: [AddReservationComponent],
@@ -14,6 +15,7 @@ import { RouterModule } from '@angular/router';
     CalendarModule,
     FormsModule,
     SharedModule,
+    TranslateModule,
   ],
   exports: [CommonModule, CalendarModule, FormsModule, SharedModule],
 })

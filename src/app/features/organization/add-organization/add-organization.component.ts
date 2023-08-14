@@ -58,8 +58,10 @@ export class AddOrganizationComponent {
     };
 
     this.organizationService.add(newOrganization).subscribe({
-      next: () => {
-        this.router.navigateByUrl('/organizations').then();
+      next: (organization) => {
+        this.router
+          .navigateByUrl(`/organizations/${organization.id}/configurator`)
+          .then();
       },
       error: (err: unknown) => {
         this.apiError = extractMessage(err);
