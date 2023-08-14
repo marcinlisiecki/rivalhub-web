@@ -10,6 +10,7 @@ import { Subscription } from 'rxjs';
 import { SidebarService } from '@app/core/services/sidebar/sidebar.service';
 import { Organization } from '@interfaces/organization/organization';
 import { OrganizationsService } from '@app/core/services/organizations/organizations.service';
+import { NavigationStart, Router } from '@angular/router';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -19,6 +20,8 @@ import { OrganizationsService } from '@app/core/services/organizations/organizat
 export class SidebarComponent implements OnInit, OnDestroy {
   isLoggedIn: boolean = true;
   mobileViewSubscription?: Subscription;
+  routerSubscription?: Subscription;
+  authSubscription?: Subscription;
   mobileView!: boolean;
 
   user: UserDetailsDto = {
@@ -36,10 +39,45 @@ export class SidebarComponent implements OnInit, OnDestroy {
     private viewService: ViewService,
     private authService: AuthService,
     private sidebarService: SidebarService,
+    private router: Router,
     private organizationService: OrganizationsService,
   ) {
     this.fetchOrganizations();
     this.setSelectedOrganization();
+  }
+
+  ngOnInit(): void {
+    this.authSubscription = this.authService
+      .isAuthObservable()
+      .subscribe((val: boolean) => {
+        if (!val) {
+          localStorage.removeItem('selectedOrganization');
+          this.selectedOrganization = null;
+        }
+
+        this.isLoggedIn = val;
+        this.setSelectedOrganization();
+        this.fetchOrganizations();
+      });
+
+    this.routerSubscription = this.router.events.subscribe((e) => {
+      if (e instanceof NavigationStart) {
+        this.sidebarService.isVisible && this.sidebarService.toggleSidebar();
+      }
+    });
+
+    this.mobileView = this.viewService.mobileView;
+    this.mobileViewSubscription = this.viewService.resizeSubject.subscribe(
+      (value: boolean) => {
+        this.mobileView = value;
+      },
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.mobileViewSubscription?.unsubscribe();
+    this.authSubscription?.unsubscribe();
+    this.routerSubscription?.unsubscribe();
   }
 
   setSelectedOrganization() {
@@ -69,25 +107,6 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   toggleSidebar() {
     this.sidebarService.toggleSidebar();
-  }
-
-  ngOnDestroy(): void {
-    this.mobileViewSubscription?.unsubscribe();
-  }
-
-  ngOnInit(): void {
-    this.authService.isAuthObservable().subscribe((val: boolean) => {
-      this.isLoggedIn = val;
-      this.setSelectedOrganization();
-      this.fetchOrganizations();
-    });
-
-    this.mobileView = this.viewService.mobileView;
-    this.mobileViewSubscription = this.viewService.resizeSubject.subscribe(
-      (value: boolean) => {
-        this.mobileView = value;
-      },
-    );
   }
 
   logout() {

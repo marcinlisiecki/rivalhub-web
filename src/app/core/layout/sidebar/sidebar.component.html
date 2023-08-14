@@ -15,6 +15,9 @@
       <div class="organizations">
         <div
           class="organization"
+          [class.organization-selected]="
+            selectedOrganization?.id === organization.id
+          "
           *ngFor="let organization of organizations"
           (click)="selectOrganization(organization)"
         >
@@ -23,47 +26,63 @@
       </div>
     </section>
 
-    <p-divider *ngIf="selectedOrganization && isLoggedIn"></p-divider>
+    <p-divider *ngIf="isLoggedIn && organizations.length > 0"></p-divider>
 
     <section *ngIf="selectedOrganization && isLoggedIn">
       <h1>{{ selectedOrganization.name }}</h1>
 
       <nav class="nav">
         <ul>
-          <li>
-            <a routerLink="/organizations/{{ selectedOrganization.id }}">
-              <i class="pi pi-home"></i>
-              <p>Strona organizacji</p>
-            </a>
-          </li>
+          <app-section-item
+            icon="pi pi-home"
+            title="Strona organizacji"
+            routerLink="/organizations/{{ selectedOrganization.id }}"
+          >
+          </app-section-item>
 
-          <li>
-            <a
-              routerLink="/organizations/{{
-                selectedOrganization.id
-              }}/events/new"
-            >
-              <i class="pi pi-bolt"></i>
-              <p>Wydarzenia</p>
-            </a>
-          </li>
+          <app-section-item
+            icon="pi pi-bolt"
+            title="Wydarzenia"
+            routerLink="/organizations/{{ selectedOrganization.id }}/events/new"
+          >
+          </app-section-item>
 
-          <li>
-            <a
-              routerLink="/organizations/{{
-                selectedOrganization.id
-              }}/reservations/new"
-            >
-              <i class="pi pi-calendar"></i>
-              <p>Rezerwacje</p>
-            </a>
-          </li>
+          <app-section-item
+            icon="pi pi-calendar"
+            title="Rezerwacje"
+            routerLink="/organizations/{{
+              selectedOrganization.id
+            }}/reservations/new"
+          >
+          </app-section-item>
+
+          <app-section-item
+            icon="pi pi-send"
+            title="Zaproszenia"
+            routerLink="/organizations/{{ selectedOrganization.id }}/invite"
+          >
+          </app-section-item>
+
+          <app-section-item
+            icon="pi pi-desktop"
+            title="Stanowiska"
+            routerLink="/organizations/{{ selectedOrganization.id }}/stations"
+          >
+          </app-section-item>
         </ul>
       </nav>
     </section>
 
-    <section *ngIf="selectedOrganization === null && isLoggedIn">
-      <p>Wybierz organizację</p>
+    <section
+      *ngIf="
+        organizations.length > 0 && selectedOrganization === null && isLoggedIn
+      "
+    >
+      <app-no-resource-info>Wybierz organizację</app-no-resource-info>
+    </section>
+
+    <section *ngIf="organizations.length === 0 && isLoggedIn">
+      <app-no-resource-info> Brak dostępnych organizacji </app-no-resource-info>
     </section>
 
     <p-divider *ngIf="isLoggedIn"></p-divider>
@@ -71,26 +90,28 @@
     <section *ngIf="isLoggedIn">
       <nav class="nav">
         <ul>
-          <li *ngIf="mobileView">
-            <a routerLink="/organizations/new">
-              <i class="pi pi-home"></i>
-              <p>Dodaj organizację</p>
-            </a>
-          </li>
+          <app-section-item
+            *ngIf="mobileView"
+            icon="pi pi-plus-circle"
+            title="Dodaj organizację"
+            routerLink="/organizations/new"
+          >
+          </app-section-item>
 
-          <li *ngIf="mobileView">
-            <a routerLink="/organizations">
-              <i class="pi pi-bolt"></i>
-              <p>Moje organizacje</p>
-            </a>
-          </li>
+          <app-section-item
+            *ngIf="mobileView"
+            icon="pi pi-th-large"
+            title="Moje organizacje"
+            routerLink="/organizations"
+          >
+          </app-section-item>
 
-          <li (click)="logout()">
-            <a routerLink="#">
-              <i class="pi pi-bolt"></i>
-              <p>Wyloguj się</p>
-            </a>
-          </li>
+          <app-section-item
+            icon="pi pi-sign-out"
+            title="Wyloguj się"
+            (click)="logout()"
+          >
+          </app-section-item>
         </ul>
       </nav>
     </section>
@@ -98,19 +119,21 @@
     <section *ngIf="!isLoggedIn">
       <nav class="nav">
         <ul>
-          <li *ngIf="mobileView">
-            <a routerLink="/login">
-              <i class="pi pi-home"></i>
-              <p>Logowanie</p>
-            </a>
-          </li>
+          <app-section-item
+            *ngIf="mobileView"
+            icon="pi pi-sign-in"
+            title="Logowanie"
+            routerLink="/login"
+          >
+          </app-section-item>
 
-          <li *ngIf="mobileView">
-            <a routerLink="/register">
-              <i class="pi pi-bolt"></i>
-              <p>Rejestracja</p>
-            </a>
-          </li>
+          <app-section-item
+            *ngIf="mobileView"
+            icon="pi pi-user-plus"
+            title="Rejestracja"
+            routerLink="/register"
+          >
+          </app-section-item>
         </ul>
       </nav>
     </section>
