@@ -11,6 +11,7 @@ import { SidebarService } from '@app/core/services/sidebar/sidebar.service';
 import { Organization } from '@interfaces/organization/organization';
 import { OrganizationsService } from '@app/core/services/organizations/organizations.service';
 import { NavigationStart, Router } from '@angular/router';
+import { UsersService } from '@app/core/services/users/users.service';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -23,6 +24,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   routerSubscription?: Subscription;
   authSubscription?: Subscription;
   mobileView!: boolean;
+  isAccountActivated: boolean = false;
 
   user: UserDetailsDto = {
     id: 0,
@@ -41,6 +43,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
     private sidebarService: SidebarService,
     private router: Router,
     private organizationService: OrganizationsService,
+    private usersService: UsersService,
   ) {
     this.fetchOrganizations();
     this.setSelectedOrganization();
@@ -72,6 +75,10 @@ export class SidebarComponent implements OnInit, OnDestroy {
         this.mobileView = value;
       },
     );
+
+    this.usersService.getMe().subscribe((user: UserDetailsDto) => {
+      this.isAccountActivated = user.activationTime !== null;
+    });
   }
 
   ngOnDestroy(): void {

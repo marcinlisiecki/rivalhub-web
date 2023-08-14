@@ -3,6 +3,8 @@ import { AuthService } from '@app/core/services/auth/auth.service';
 import { MenuItem } from 'primeng/api';
 import { LanguageService } from '@app/core/services/language/language.service';
 import { SidebarService } from '@app/core/services/sidebar/sidebar.service';
+import { UsersService } from '@app/core/services/users/users.service';
+import { UserDetailsDto } from '@interfaces/user/user-details-dto';
 
 @Component({
   selector: 'app-header-logged-in',
@@ -14,21 +16,27 @@ export class HeaderLoggedInComponent implements OnInit {
 
   profileItems?: MenuItem[];
   logout!: string;
+  isAccountActivated: boolean = false;
 
   constructor(
     private authService: AuthService,
     private lang: LanguageService,
     private sidebarService: SidebarService,
+    private usersService: UsersService,
   ) {}
-
-  showSidebar() {
-    this.sidebarService.toggleSidebar();
-  }
 
   ngOnInit(): void {
     setTimeout(() => {
       this.itemChange();
     }, 100);
+
+    this.usersService.getMe().subscribe((user: UserDetailsDto) => {
+      this.isAccountActivated = user.activationTime !== null;
+    });
+  }
+
+  showSidebar() {
+    this.sidebarService.toggleSidebar();
   }
 
   itemChange() {
