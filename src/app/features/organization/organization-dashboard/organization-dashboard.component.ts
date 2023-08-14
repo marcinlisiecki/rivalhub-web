@@ -73,11 +73,11 @@ export class OrganizationDashboardComponent implements OnInit, OnDestroy {
 
     this.paramsSub = this.route.params.subscribe((params) => {
       this.id = params['id'];
+      this.getOrganizationInfo();
+      this.getOrganizationUsers();
+      this.getOrganizationReservations();
     });
 
-    this.getOrganizationInfo();
-    this.getOrganizationUsers();
-    this.getOrganizationReservations();
 
     const configured = this.route.snapshot.queryParams['configured'];
     if (configured) {

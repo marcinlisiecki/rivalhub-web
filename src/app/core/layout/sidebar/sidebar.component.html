@@ -1,37 +1,141 @@
-<p-sidebar [(visible)]="sidebarVisible" position="right">
-    <ng-template pTemplate="header">
+<p-sidebar [visible]="isVisible()" (onHide)="toggleSidebar()" position="right">
+  <ng-template pTemplate="header">
+    <a class="header-logo-wrapper" routerLink="/">
+      <img
+        priority
+        ngSrc="assets/img/logo.png"
+        height="40"
+        width="60"
+        alt="Logo"
+      />
+    </a>
+  </ng-template>
+  <ng-template pTemplate="content">
+    <section *ngIf="isLoggedIn">
+      <div class="organizations">
+        <div
+          class="organization"
+          [class.organization-selected]="
+            selectedOrganization?.id === organization.id
+          "
+          *ngFor="let organization of organizations"
+          (click)="selectOrganization(organization)"
+        >
+          <img src="assets/img/avatars/avatarplaceholder.png" alt="" />
+        </div>
+      </div>
+    </section>
 
-        <a class="header-logo-wrapper" routerLink="/">
-            <img priority ngSrc="assets/img/logo.png" height="40" width="60" alt="Logo" />
-        </a>
+    <p-divider *ngIf="isLoggedIn && organizations.length > 0"></p-divider>
 
-        <p-button *ngIf="mobileView" styleClass="p-button-secondary" (onClick)="logout()"><i class="pi pi-sign-out"></i></p-button>
+    <section *ngIf="selectedOrganization && isLoggedIn">
+      <h1>{{ selectedOrganization.name }}</h1>
 
-    </ng-template>
-    <ng-template pTemplate="content">
+      <nav class="nav">
+        <ul>
+          <app-section-item
+            icon="pi pi-home"
+            title="Strona organizacji"
+            routerLink="/organizations/{{ selectedOrganization.id }}"
+          >
+          </app-section-item>
 
-        <app-sidebar-section *ngIf="mobileView" class="sidebar-section"
-            title="Nawigacja"></app-sidebar-section>
-        <app-section-item *ngIf="mobileView && isLoggedIn" routerLink="/organizations" icon="pi-briefcase" title="Moje organizacje"
-            class="section-item"></app-section-item>
-        <app-section-item *ngIf="mobileView && isLoggedIn" routerLink="/organizations/new" icon="pi-plus"
-            title="Dodaj organizację" class="section-item"></app-section-item>
-        <app-section-item *ngIf="mobileView && !isLoggedIn" routerLink="/register" icon="pi-user-plus"
-            title="Rejestracja" class="section-item"></app-section-item>
-        <app-section-item *ngIf="mobileView && !isLoggedIn" routerLink="/login" icon="pi-sign-in"
-            title="Logowanie" class="section-item"></app-section-item>
+          <app-section-item
+            icon="pi pi-bolt"
+            title="Wydarzenia"
+            routerLink="/organizations/{{ selectedOrganization.id }}/events/new"
+          >
+          </app-section-item>
 
+          <app-section-item
+            icon="pi pi-calendar"
+            title="Rezerwacje"
+            routerLink="/organizations/{{
+              selectedOrganization.id
+            }}/reservations/new"
+          >
+          </app-section-item>
 
-        <app-sidebar-section *ngIf="isLoggedIn" class="sidebar-section" [title]="selectedOrganization"></app-sidebar-section>
-        <app-section-item *ngIf="isLoggedIn" routerLink="/organizations/1" icon="pi-info-circle" title="Moja organizacja"
-            class="section-item"></app-section-item>
-        <!-- <app-section-item *ngIf="isLoggedIn" routerLink="#" icon="pi-globe" title="Ranking" class="section-item"></app-section-item> -->
-        <app-sidebar-section *ngIf="isLoggedIn" class="sidebar-section" [title]="user.name"></app-sidebar-section>
-        <!-- <app-section-item *ngIf="isLoggedIn" routerLink="#" icon="pi-chart-bar" title="Statystyki" class="section-item"></app-section-item> -->
+          <app-section-item
+            icon="pi pi-send"
+            title="Zaproszenia"
+            routerLink="/organizations/{{ selectedOrganization.id }}/invite"
+          >
+          </app-section-item>
 
-    </ng-template>
+          <app-section-item
+            icon="pi pi-desktop"
+            title="Stanowiska"
+            routerLink="/organizations/{{ selectedOrganization.id }}/stations"
+          >
+          </app-section-item>
+        </ul>
+      </nav>
+    </section>
 
+    <section
+      *ngIf="
+        organizations.length > 0 && selectedOrganization === null && isLoggedIn
+      "
+    >
+      <app-no-resource-info>Wybierz organizację</app-no-resource-info>
+    </section>
+
+    <section *ngIf="organizations.length === 0 && isLoggedIn">
+      <app-no-resource-info> Brak dostępnych organizacji </app-no-resource-info>
+    </section>
+
+    <p-divider *ngIf="isLoggedIn"></p-divider>
+
+    <section *ngIf="isLoggedIn">
+      <nav class="nav">
+        <ul>
+          <app-section-item
+            *ngIf="mobileView"
+            icon="pi pi-plus-circle"
+            title="Dodaj organizację"
+            routerLink="/organizations/new"
+          >
+          </app-section-item>
+
+          <app-section-item
+            *ngIf="mobileView"
+            icon="pi pi-th-large"
+            title="Moje organizacje"
+            routerLink="/organizations"
+          >
+          </app-section-item>
+
+          <app-section-item
+            icon="pi pi-sign-out"
+            title="Wyloguj się"
+            (click)="logout()"
+          >
+          </app-section-item>
+        </ul>
+      </nav>
+    </section>
+
+    <section *ngIf="!isLoggedIn">
+      <nav class="nav">
+        <ul>
+          <app-section-item
+            *ngIf="mobileView"
+            icon="pi pi-sign-in"
+            title="Logowanie"
+            routerLink="/login"
+          >
+          </app-section-item>
+
+          <app-section-item
+            *ngIf="mobileView"
+            icon="pi pi-user-plus"
+            title="Rejestracja"
+            routerLink="/register"
+          >
+          </app-section-item>
+        </ul>
+      </nav>
+    </section>
+  </ng-template>
 </p-sidebar>
-
-<p-button [@openSidebar]="sidebarVisible" *ngIf="isLoggedIn || mobileView" [@sidebarMobile]="mobileView" styleClass="p-button-secondary"
-    class="button-absolute" (click)="toggleSidebar()"><i class="pi pi-align-justify"></i></p-button>

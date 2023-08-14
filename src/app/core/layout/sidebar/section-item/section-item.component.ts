@@ -6,7 +6,7 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./section-item.component.scss'],
 })
 export class SectionItemComponent {
-  @Input({ required: true }) icon!: string;
-  @Input({ required: true }) routerLink!: string;
-  @Input({ required: true }) title!: string;
+  @Input() icon!: string;
+  @Input() routerLink!: string;
+  @Input() title!: string;
 }
