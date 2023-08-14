@@ -11,3 +11,11 @@ export const categoryTypeToLabel = (eventType: EventType | string): string => {
     }[eventType] || ''
   );
 };
+
+export const labelToCategoryType = (label: string): EventType=> {
+ const eventTypeMap: Record<string, EventType> = {
+   'Ping Pong': EventType.PING_PONG,
+   'Bilard': EventType.BILLIARDS
+ }
+ return eventTypeMap[label]
+}

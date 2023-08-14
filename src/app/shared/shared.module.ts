@@ -20,6 +20,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { LayoutModule } from '@angular/cdk/layout';
 import { VerifyAccountInfoComponent } from './verify-account-info/verify-account-info.component';
 import { NoResourceInfoComponent } from './no-resource-info/no-resource-info.component';
+import {AccordionModule} from "primeng/accordion";
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import { NoResourceInfoComponent } from './no-resource-info/no-resource-info.com
     FormsModule,
     ProgressSpinnerModule,
     LayoutModule,
+    AccordionModule,
   ],
 })
 export class SharedModule {}
