@@ -72,7 +72,7 @@ const routes: Routes = [
     canActivate: [joinGuard],
   },
   {
-    path: 'profile',
+    path: 'profiles/:id',
     component: ProfileComponent,
     canActivate: [authenticateGuard],
   },

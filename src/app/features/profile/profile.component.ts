@@ -14,6 +14,7 @@ import { UsersService } from '@app/core/services/users/users.service';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, debounceTime, fromEvent } from 'rxjs';
 import { headerCompactAnimation } from '@app/core/animations/header-animation';
+import { AuthService } from '@app/core/services/auth/auth.service';
 
 @Component({
   selector: 'app-profile',
@@ -23,24 +24,38 @@ import { headerCompactAnimation } from '@app/core/animations/header-animation';
 })
 export class ProfileComponent implements OnInit, OnDestroy {
   user!: UserDetailsDto;
-  reservations: Reservation[] = RESERVATIONS;
-  events: EventDto[] = EVENTS;
+  reservations!: Reservation[];
+  events!: EventDto[];
   compact: boolean = false;
   private scrollSubject = new Subject<Event>();
+  isMe!: boolean;
 
   constructor(
     private usersService: UsersService,
     private route: ActivatedRoute,
     private el: ElementRef,
+    private authService: AuthService,
   ) {}
 
   ngOnInit(): void {
     const userId = this.route.snapshot.params['id'];
 
-    this.usersService.getMe().subscribe((user: UserDetailsDto) => {
-      console.log(user);
+    this.usersService.getUser(userId).subscribe((user: UserDetailsDto) => {
       this.user = user;
+      this.isMe = this.user.email === this.authService.getUserEmail();
     });
+
+    this.usersService
+      .getCommonEvents(userId)
+      .subscribe((events: EventDto[]) => {
+        this.events = events;
+      });
+
+    this.usersService
+      .getCommonReservations(userId)
+      .subscribe((reservations: Reservation[]) => {
+        this.reservations = reservations;
+      });
 
     this.scrollSubject.pipe(debounceTime(10)).subscribe((event: Event) => {
       this.handleScroll(event);

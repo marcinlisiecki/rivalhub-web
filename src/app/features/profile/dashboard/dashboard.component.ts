@@ -11,6 +11,7 @@ import { UserDetailsDto } from '@interfaces/user/user-details-dto';
 export class DashboardComponent {
   @Input({ required: true }) user!: UserDetailsDto;
   @Input() compact: boolean = false;
+  @Input() isMe!: boolean;
 
   checkAvatar(url: string): string {
     if (url === null) {
