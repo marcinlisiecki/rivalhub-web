@@ -64,8 +64,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     const dashboardRect = dashboardElement.getBoundingClientRect();
     const dashboardTop = dashboardRect.top + 140;
 
-    console.log('TOP:', dashboardTop);
-    console.log('Scroll', window.scrollY);
+    // console.log('TOP:', dashboardTop);
+    // console.log('Scroll', window.scrollY);
     if (window.scrollY >= dashboardTop && !this.compact) {
       this.compact = true;
     } else if (window.scrollY < dashboardTop && this.compact) {

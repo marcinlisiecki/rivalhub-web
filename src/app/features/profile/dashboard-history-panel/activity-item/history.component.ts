@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 
 import { EventDto } from '@interfaces/event/event-dto';
-import { Reservation } from '@interfaces/reservation/reservation';
 import * as moment from 'moment';
 
 @Component({
@@ -11,5 +10,6 @@ import * as moment from 'moment';
 })
 export class HistoryComponent {
   @Input({ required: true }) event!: EventDto;
+
   protected readonly moment = moment;
 }
