@@ -6,7 +6,7 @@
 
 <div class="dashboard-container">
   <div *ngIf="compact" style="height:140px"></div>
-  <app-dashboard [isMe]="isMe"  [user]="user" *ngIf="user" [compact]="compact" [ngClass]='{"dashboard-container-compact":compact}' class="dashboard-container-header"></app-dashboard>
+  <app-dashboard-profile [isMe]="isMe"  [user]="user" *ngIf="user" [compact]="compact" [ngClass]='{"dashboard-container-compact":compact}' class="dashboard-container-header"></app-dashboard-profile>
 
 
   <div class="dashboard-panels">

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProfileComponent } from '@app/features/profile/profile.component';
-import { DashboardComponent } from '@app/features/profile/dashboard/dashboard.component';
+import { DashboardProfileComponent } from './dashboard-profile/dashboard-profile.component';
 import { DashboardActivitiesComponent } from '@app/features/profile/dashboard-activities-panel/dashboard-activities.component';
 import { ActivityComponent } from '@app/features/profile/dashboard-activities-panel/activity-item/activity.component';
 import { DashboardHistoryComponent } from '@app/features/profile/dashboard-history-panel/dashboard-history.component';
@@ -11,7 +11,7 @@ import { SharedModule } from '@app/shared/shared.module';
 @NgModule({
   declarations: [
     ProfileComponent,
-    DashboardComponent,
+    DashboardProfileComponent,
     DashboardActivitiesComponent,
     ActivityComponent,
     DashboardHistoryComponent,
