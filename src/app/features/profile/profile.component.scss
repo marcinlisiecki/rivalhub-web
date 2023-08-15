@@ -7,14 +7,18 @@
   max-width: $pageWidth;
   flex-wrap: wrap;
   position: relative;
-  padding:0 5px;
-  flex-grow:1;
-  
+  padding: 0 5px;
+  flex-grow: 1;
+
   &-compact {
     position: sticky;
     top: 0;
     z-index: 1;
     height: 70px;
+  }
+
+  .dashboard-nav-panel {
+    display: none;
   }
 
   &-header {
@@ -27,7 +31,7 @@
     display: flex;
     justify-content: space-between;
     flex: $flexRow;
-    gap:30px;
+    gap: 30px;
 
     &-history,
     &-activities {
@@ -44,6 +48,14 @@
       flex-basis: 30%;
 
     }
+
+    &-users {
+      display: flex;
+      align-self: flex-start;
+      flex-direction: column;
+      flex: 0 0 20%;
+
+    }
   }
 }
 
@@ -56,7 +68,7 @@
     margin: 20px 5px;
     max-width: $pageWidth;
     flex-wrap: wrap;
-      padding: 0 5px;
+    padding: 0 5px;
 
     &-header {
       display: flex;
@@ -83,6 +95,15 @@
         display: flex;
         flex-direction: column;
         flex: $flexRow;
+        flex: 0 0 100%;
+      }
+
+      &-users {
+        display: flex;
+        align-self: flex-start;
+        flex-direction: column;
+        flex: 0 0 100%;
+        
       }
     }
   }

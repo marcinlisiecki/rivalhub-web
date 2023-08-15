@@ -14,10 +14,13 @@ import { CategorySelectorComponent } from './new-event/category-selector/categor
 import { BasicInfoComponent } from './new-event/basic-info/basic-info.component';
 import { DateSelectorComponent } from './new-event/date-selector/date-selector.component';
 import { StationSelectorComponent } from './new-event/station-selector/station-selector.component';
-import {ProgressSpinnerModule} from "primeng/progressspinner";
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { AddUserPingPongComponent } from './new-event/add-user-ping-pong/add-user-ping-pong.component';
 import { AddUserDialogComponent } from './new-event/add-user-dialog/add-user-dialog.component';
-import {TranslateModule} from "@ngx-translate/core";
+import { TranslateModule } from '@ngx-translate/core';
+import { AddPingPongResultsComponent } from './ping-pong/add-ping-pong-results/add-ping-pong-results.component';
+import { AddPingPongSetComponent } from './ping-pong/add-ping-pong-set/add-ping-pong-set.component';
+import { DialogService } from 'primeng/dynamicdialog';
 
 @NgModule({
   declarations: [
@@ -28,6 +31,8 @@ import {TranslateModule} from "@ngx-translate/core";
     StationSelectorComponent,
     AddUserPingPongComponent,
     AddUserDialogComponent,
+    AddPingPongResultsComponent,
+    AddPingPongSetComponent,
   ],
   imports: [
     CommonModule,
@@ -44,5 +49,6 @@ import {TranslateModule} from "@ngx-translate/core";
     ProgressSpinnerModule,
     TranslateModule,
   ],
+  providers: [DialogService],
 })
 export class EventModule {}

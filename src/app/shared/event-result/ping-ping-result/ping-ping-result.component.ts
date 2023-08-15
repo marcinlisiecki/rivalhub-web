@@ -20,7 +20,6 @@ export class PingPingResultComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    console.log(this.result);
     this.calculateSets();
   }
 

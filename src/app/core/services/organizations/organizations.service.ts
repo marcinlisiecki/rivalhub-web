@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../../environments/enviroment';
-import { map, Observable } from 'rxjs';
-import { EventDto } from '@interfaces/event/event-dto';
+import { Observable } from 'rxjs';
 import { Organization } from '@interfaces/organization/organization';
 import { NewOrganization } from '@interfaces/organization/new-organization';
 import { PagedResponse } from '@interfaces/generic/paged-response';
@@ -12,6 +11,8 @@ import { UserDetailsDto } from '@interfaces/user/user-details-dto';
 import { Reservation } from '@interfaces/reservation/reservation';
 import * as moment from 'moment/moment';
 import { EventType } from '@interfaces/event/event-type';
+import { EventDto } from '@interfaces/event/event-dto';
+import { OrganizationSettings } from '@interfaces/organization/organization-settings';
 
 @Injectable({
   providedIn: 'root',
@@ -42,9 +43,27 @@ export class OrganizationsService {
     );
   }
 
+  getSettings(id: number): Observable<OrganizationSettings> {
+    return this.http.get<OrganizationSettings>(
+      environment.apiUrl + `/organizations/${id}/settings`,
+    );
+  }
+
+  getInvitationLink(id: number): Observable<string> {
+    return this.http.get(
+      environment.apiUrl + `/organizations/${id}/invitation`,
+      { responseType: 'text' },
+    );
+  }
+
   getEvents(id: number): Observable<EventDto[]> {
     return this.http.get<EventDto[]>(
       environment.apiUrl + `/organizations/${id}/events`,
+      {
+        params: {
+          type: 'PING_PONG',
+        },
+      },
     );
   }
 
@@ -100,9 +119,10 @@ export class OrganizationsService {
     id: number,
     onlyAdminCanSeeInvitationLink: boolean,
   ): Observable<{}> {
-    return this.http.get<{}>(
+    return this.http.post<{}>(
       environment.apiUrl +
         `/organizations/${id}/admin?onlyAdminCanSeeInvitationLink=${onlyAdminCanSeeInvitationLink}`,
+      {},
     );
   }
   getEventsCategories(id: number): Observable<EventType[]> {

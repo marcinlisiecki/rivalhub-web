@@ -1,45 +1,45 @@
-
-  <app-nav-item
-    class="nav-item"
-    title="Wydarzenia"
-    href="/organizations/{{ organizationId }}/events/new"
-  ></app-nav-item>
-  <app-nav-item
-    class="nav-item"
-    title="Rezerwacje"
-    href="/organizations/{{ organizationId }}/reservations/new"
-  ></app-nav-item>
-  <app-nav-item
-    class="nav-item"
-    title="Kalendarz"
-    href="#"
-    [disabled]="true"
-  ></app-nav-item>
-  <app-nav-item
-    class="nav-item"
-    title="Zaproś użytkownika"
-    href="/organizations/{{ organizationId }}/invite"
-  ></app-nav-item>
-  <app-nav-item
-    class="nav-item"
-    title="Stanowiska"
-    href="/organizations/{{ organizationId }}/stations"
-  ></app-nav-item>
-  <app-nav-item
-    class="nav-item"
-    title="Ranking"
-    [disabled]="true"
-    href="#"
-  ></app-nav-item>
-  <app-nav-item
-    class="nav-item"
-    href="#"
-    title="Ustawienia organizacji"
-    [disabled]="true"
-  ></app-nav-item>
-  <app-nav-item
-    href="#"
-    class="nav-item"
-    title="Członkowie"
-    [disabled]="true"
-  ></app-nav-item>
+<app-nav-item
+  class="nav-item"
+  title="Wydarzenia"
+  href="/organizations/{{ organizationId }}/events/new"
+></app-nav-item>
+<app-nav-item
+  class="nav-item"
+  title="Rezerwacje"
+  href="/organizations/{{ organizationId }}/reservations/new"
+></app-nav-item>
+<app-nav-item
+  class="nav-item"
+  title="Kalendarz"
+  href="#"
+  [disabled]="true"
+></app-nav-item>
+<app-nav-item
+  class="nav-item"
+  *ngIf="canUserInvite"
+  title="Zaproś użytkownika"
+  href="/organizations/{{ organizationId }}/invite"
+></app-nav-item>
+<app-nav-item
+  class="nav-item"
+  title="Stanowiska"
+  href="/organizations/{{ organizationId }}/stations"
+></app-nav-item>
+<app-nav-item
+  class="nav-item"
+  title="Ranking"
+  [disabled]="true"
+  href="#"
+></app-nav-item>
+<app-nav-item
+  class="nav-item"
+  href="#"
+  title="Ustawienia organizacji"
+  [disabled]="true"
+></app-nav-item>
+<app-nav-item
+  href="#"
+  class="nav-item"
+  title="Członkowie"
+  [disabled]="true"
+></app-nav-item>
