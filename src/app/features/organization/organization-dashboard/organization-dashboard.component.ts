@@ -11,6 +11,7 @@ import { UserDetailsDto } from '@interfaces/user/user-details-dto';
 import { Subscription } from 'rxjs';
 import { Reservation } from '@interfaces/reservation/reservation';
 import { MessageService } from 'primeng/api';
+import { OrganizationSettings } from '@interfaces/organization/organization-settings';
 
 @Component({
   selector: 'app-organization-dashboard',
@@ -22,35 +23,10 @@ export class OrganizationDashboardComponent implements OnInit, OnDestroy {
   navVisible: boolean = false;
   mobileView!: boolean;
   reservations: Reservation[] = [];
-  events: EventDto[] = [
-    {
-      id: 1,
-      name: 'Wędkowanie na jeziorze',
-      place: 'Jezioro',
-      startTime: new Date('2023-09-13T11:11'),
-      endTime: new Date('2023-09-14T11:11'),
-      participantIds: [5],
-    },
-    {
-      id: 2,
-      name: 'Wędkowanie na rzece',
-      place: 'Rzeka',
-      startTime: new Date('2023-09-13T11:11'),
-      endTime: new Date('2023-09-14T11:11'),
-      participantIds: [1, 2],
-    },
-    {
-      id: 3,
-      name: 'Wędkowanie na stawie',
-      place: 'Staw',
-      startTime: new Date('2023-09-13T11:11'),
-      endTime: new Date('2023-09-14T11:11'),
-      participantIds: [2, 3, 4],
-    },
-  ];
   organization!: Organization;
   users!: UserDetailsDto[];
   id!: number;
+  canUserInvite: boolean = false;
 
   resizeEventSub?: Subscription;
   paramsSub?: Subscription;
@@ -76,8 +52,13 @@ export class OrganizationDashboardComponent implements OnInit, OnDestroy {
       this.getOrganizationInfo();
       this.getOrganizationUsers();
       this.getOrganizationReservations();
-    });
 
+      this.organizationsService.getSettings(this.id).subscribe({
+        next: (settings: OrganizationSettings) => {
+          this.canUserInvite = !settings.onlyAdminCanSeeInvitationLink;
+        },
+      });
+    });
 
     const configured = this.route.snapshot.queryParams['configured'];
     if (configured) {
@@ -133,16 +114,16 @@ export class OrganizationDashboardComponent implements OnInit, OnDestroy {
     });
   }
 
-  private getOrgzationEvents() {
-    this.organizationsService.getEvents(this.id).subscribe({
-      next: (res: EventDto[]) => {
-        this.events = res;
-      },
-      error: (err: HttpErrorResponse) => {
-        console.error('An error occurred:', err);
-      },
-    });
-  }
+  // private getOrgzationEvents() {
+  //   this.organizationsService.getEvents(this.id).subscribe({
+  //     next: (res: EventDto[]) => {
+  //       this.events = res;
+  //     },
+  //     error: (err: HttpErrorResponse) => {
+  //       console.error('An error occurred:', err);
+  //     },
+  //   });
+  // }
 
   private getOrganizationUsers() {
     this.organizationsService.getUsers(this.id, 0, 5).subscribe({

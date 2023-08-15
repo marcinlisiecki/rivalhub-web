@@ -42,6 +42,7 @@ export const joinGuard: CanActivateFn = (route, state) => {
     return true;
   }
 
-  router.navigateByUrl('/login?invitation=true').then();
+  localStorage.setItem('loginInvitation', 'true');
+  router.navigateByUrl('/login').then();
   return false;
 };

@@ -94,3 +94,23 @@
     }
   }
 }
+
+.no-organizations {
+  margin: 4rem auto;
+  width: 20rem;
+  height: 10rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  p {
+    margin: 2rem auto;
+    text-align: center;
+    color: $textSecondaryColor;
+  }
+
+  img {
+    width: auto;
+    height: 100%;
+  }
+}
