@@ -1,3 +1,14 @@
+<article class="game-wrapper">
 
-<app-ping-ping-result [result]="game"></app-ping-ping-result>
+    <div class="game-common">
+        <p class="p-text-secondary">{{result.organization}}</p>
+        <p class="p-text-secondary">{{result.category}}</p>
+        <p *ngIf="result.isWinner && !tie">Wygrana</p>
+        <p *ngIf="!result.isWinner && !tie">Przegrana</p>
+        <p *ngIf="tie">Remis</p>
+    </div>
+    <app-ping-ping-result (winnerCalcutated)="setWinner($event)" class="game-ping-pong" [result]="result"></app-ping-ping-result>
+    
+</article>
+<div class="game-details">test</div>
 

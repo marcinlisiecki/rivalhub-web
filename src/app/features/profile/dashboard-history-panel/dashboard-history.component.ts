@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { EventResult } from '@app/core/interfaces/event/event-result';
 
 import { PingPongResult } from '@app/core/interfaces/event/games/ping-pong/ping-pong-result';
 
@@ -9,5 +10,5 @@ import { PingPongResult } from '@app/core/interfaces/event/games/ping-pong/ping-
 })
 export class DashboardHistoryComponent {
   @Input({ required: true })
-  games!: PingPongResult[];
+  games!: EventResult[];
 }

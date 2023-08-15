@@ -8,16 +8,15 @@ import {
 
 import { UserDetailsDto } from '@interfaces/user/user-details-dto';
 import { Reservation } from '@interfaces/reservation/reservation';
-import { EVENTS, RESERVATIONS } from '@app/mock/stations';
-import { EventDto } from '@interfaces/event/event-dto';
+import { RESERVATIONS } from '@app/mock/stations';
 import { UsersService } from '@app/core/services/users/users.service';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, debounceTime, fromEvent } from 'rxjs';
 import { headerCompactAnimation } from '@app/core/animations/header-animation';
 import { AuthService } from '@app/core/services/auth/auth.service';
 import { PingPongResult } from '@app/core/interfaces/event/games/ping-pong/ping-pong-result';
-import { BilliardsResult } from '@app/core/interfaces/event/games/billiards/billiards';
 import { GAMES } from '@app/mock/results';
+import { EventResult } from '@app/core/interfaces/event/event-result';
 
 @Component({
   selector: 'app-profile',
@@ -27,8 +26,8 @@ import { GAMES } from '@app/mock/results';
 })
 export class ProfileComponent implements OnInit, OnDestroy {
   user!: UserDetailsDto;
-  reservations!: Reservation[];
-  games: PingPongResult[] = GAMES;
+  reservations: Reservation[] = RESERVATIONS;
+  games: EventResult[] = GAMES;
   compact: boolean = false;
   private scrollSubject = new Subject<Event>();
   isMe!: boolean;
@@ -54,11 +53,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
     //     this.events = events;
     //   });
 
-    this.usersService
-      .getCommonReservations(userId)
-      .subscribe((reservations: Reservation[]) => {
-        this.reservations = reservations;
-      });
+    // this.usersService
+    //   .getCommonReservations(userId)
+    //   .subscribe((reservations: Reservation[]) => {
+    //     this.reservations = reservations;
+    //   });
 
     this.scrollSubject.pipe(debounceTime(10)).subscribe((event: Event) => {
       this.handleScroll(event);
@@ -74,7 +73,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.scrollSubject.next(event);
   }
 
-  handleScroll(event: Event) {
+  private handleScroll(event: Event) {
     const dashboardElement = this.el.nativeElement.querySelector(
       '.dashboard-container-header',
     );
