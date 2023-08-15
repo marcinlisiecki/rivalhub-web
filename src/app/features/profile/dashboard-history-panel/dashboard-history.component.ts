@@ -1,8 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { Reservation } from '@interfaces/reservation/reservation';
-import { EVENTS, RESERVATIONS } from '@app/mock/stations';
-import { EventDto } from '@interfaces/event/event-dto';
+import { PingPongResult } from '@app/core/interfaces/event/games/ping-pong/ping-pong-result';
 
 @Component({
   selector: 'app-dashboard-history',
@@ -11,5 +9,5 @@ import { EventDto } from '@interfaces/event/event-dto';
 })
 export class DashboardHistoryComponent {
   @Input({ required: true })
-  events!: EventDto[];
+  games!: PingPongResult[];
 }

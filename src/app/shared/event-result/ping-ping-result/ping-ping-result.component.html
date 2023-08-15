@@ -1,0 +1,5 @@
+<p class="p-text-secondary">{{result.organization}}</p>
+<p>{{result.category}}</p>
+<p *ngIf="result.isWinner">Wygrana</p>
+<p *ngIf="!result.isWinner">Przegrana</p>
+<p>{{formatDate(result.startTime) }} - {{ formatDate(result.endTime)}}</p>

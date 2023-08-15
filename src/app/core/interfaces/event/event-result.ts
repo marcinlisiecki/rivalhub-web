@@ -1,8 +1,9 @@
-import { UserDetailsDto } from '../../user/user-details-dto';
-import { EventType } from '../event-type';
+import { UserDetailsDto } from '../user/user-details-dto';
+import { EventType } from './event-type';
 
 export interface EventResult {
   id: number;
+  organization: string;
   category: EventType;
   isWinner: boolean;
   startTime: Date;

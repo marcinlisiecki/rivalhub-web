@@ -20,8 +20,9 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { LayoutModule } from '@angular/cdk/layout';
 import { VerifyAccountInfoComponent } from './verify-account-info/verify-account-info.component';
 import { NoResourceInfoComponent } from './no-resource-info/no-resource-info.component';
-import {AccordionModule} from "primeng/accordion";
-import { EventInfoComponent } from './event-info/event-info.component';
+import { AccordionModule } from 'primeng/accordion';
+import { EventResultComponent } from './event-result/event-result.component';
+import { PingPingResultComponent } from './event-result/ping-ping-result/ping-ping-result.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { EventInfoComponent } from './event-info/event-info.component';
     CenteredSpinnerComponent,
     VerifyAccountInfoComponent,
     NoResourceInfoComponent,
-    EventInfoComponent,
+    EventResultComponent,
+    PingPingResultComponent,
   ],
   exports: [
     ValidationErrorComponent,
@@ -51,6 +53,7 @@ import { EventInfoComponent } from './event-info/event-info.component';
     LayoutModule,
     VerifyAccountInfoComponent,
     NoResourceInfoComponent,
+    EventResultComponent,
   ],
   imports: [
     CommonModule,

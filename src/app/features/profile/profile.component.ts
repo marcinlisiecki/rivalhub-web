@@ -15,6 +15,9 @@ import { ActivatedRoute } from '@angular/router';
 import { Subject, debounceTime, fromEvent } from 'rxjs';
 import { headerCompactAnimation } from '@app/core/animations/header-animation';
 import { AuthService } from '@app/core/services/auth/auth.service';
+import { PingPongResult } from '@app/core/interfaces/event/games/ping-pong/ping-pong-result';
+import { BilliardsResult } from '@app/core/interfaces/event/games/billiards/billiards';
+import { GAMES } from '@app/mock/results';
 
 @Component({
   selector: 'app-profile',
@@ -25,7 +28,7 @@ import { AuthService } from '@app/core/services/auth/auth.service';
 export class ProfileComponent implements OnInit, OnDestroy {
   user!: UserDetailsDto;
   reservations!: Reservation[];
-  events!: EventDto[];
+  games: PingPongResult[] = GAMES;
   compact: boolean = false;
   private scrollSubject = new Subject<Event>();
   isMe!: boolean;
@@ -45,11 +48,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
       this.isMe = this.user.email === this.authService.getUserEmail();
     });
 
-    this.usersService
-      .getCommonEvents(userId)
-      .subscribe((events: EventDto[]) => {
-        this.events = events;
-      });
+    // this.usersService
+    //   .getCommonEvents(userId)
+    //   .subscribe((events: EventDto[]) => {
+    //     this.events = events;
+    //   });
 
     this.usersService
       .getCommonReservations(userId)

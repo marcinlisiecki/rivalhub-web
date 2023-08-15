@@ -27,6 +27,7 @@
     display: flex;
     justify-content: space-between;
     flex: $flexRow;
+    gap:5px;
 
     &-history,
     &-activities {
@@ -36,11 +37,11 @@
     }
 
     &-history {
-      flex: 0 0 65%;
+      flex: 0 0 70%;
     }
 
     &-activities {
-      flex: 0 0 33%;
+      flex: 0 0 30%;
 
     }
   }
