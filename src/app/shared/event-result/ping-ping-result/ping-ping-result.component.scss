@@ -1,0 +1,51 @@
+@import 'src/scss/variables';
+
+.ping-pong-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    flex-grow: 1;
+    align-items: center;
+
+    p {
+        margin: 0;
+    }
+
+    .score {
+        display: flex;
+        justify-content: space-evenly;
+        margin-top: auto;
+        align-items: center;
+
+        &-team {
+            display: flex;
+            background-color: white;
+            color: black;
+            height: 80px;
+            aspect-ratio: 1/1;
+            border-radius: 10%;
+            border: 2px black solid;
+            font-size: 60px;
+
+            justify-content: center;
+            align-items: center;
+        }
+
+        &-winning {
+            background-color: $winningBgColor;
+        }
+
+        &-losing {
+            background-color: $losingBgColor;
+        }
+
+        &-tie {
+            background-color: $tieBgColor;
+        }
+    }
+
+    p:nth-child(3) {
+        margin-top: auto;
+        text-wrap: balance;
+    }
+}

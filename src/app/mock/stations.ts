@@ -37,6 +37,24 @@ export const RESERVATIONS: Reservation[] = [
     startTime: new Date('2023-09-11T11:11'),
     endTime: new Date('2023-09-11T12:11'),
   },
+  {
+    id: 3,
+    stationList: STATIONS,
+    startTime: new Date('2023-09-11T11:11'),
+    endTime: new Date('2023-09-11T12:11'),
+  },
+  {
+    id: 4,
+    stationList: STATIONS,
+    startTime: new Date('2023-09-11T11:11'),
+    endTime: new Date('2023-09-11T12:11'),
+  },
+  {
+    id: 5,
+    stationList: STATIONS,
+    startTime: new Date('2023-09-11T11:11'),
+    endTime: new Date('2023-09-11T12:11'),
+  },
 ];
 
 export const EVENTS: any[] = [
@@ -55,5 +73,21 @@ export const EVENTS: any[] = [
     startTime: new Date('2023-09-13T11:11'),
     endTime: new Date('2023-09-14T11:11'),
     participantIds: [1, 2],
+  },
+  {
+    id: 3,
+    name: 'Wyzwanie',
+    place: 'Piwnica',
+    startTime: new Date('2023-09-11T11:11'),
+    endTime: new Date('2023-09-11T12:11'),
+    participantIds: [1, 2],
+  },
+  {
+    id: 4,
+    name: 'Hodowla jedwabników',
+    place: 'Piwnica',
+    startTime: new Date('2023-09-11T11:11'),
+    endTime: new Date('2023-09-11T12:11'),
+    participantIds: [1, 2, 3, 4],
   },
 ];

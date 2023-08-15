@@ -6,6 +6,16 @@
   margin: 20px auto 0 auto;
   max-width: $pageWidth;
   flex-wrap: wrap;
+  position: relative;
+  padding: 0 5px;
+  flex-grow: 1;
+
+  &-compact {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    height: 70px;
+  }
 
   .dashboard-nav-panel {
     display: none;
@@ -13,34 +23,30 @@
 
   &-header {
     display: flex;
-    align-items: center;
     height: 140px;
-    flex: 0 0 100%;
-    background-color: $panelContentBg;
-    padding: 10px;
-    border-radius: $dashboardRadius;
-    border: $dashboardBorder;
-  }
-
-  &-nav {
-    display: flex;
-    align-items: center;
-    flex: 0 0 100%;
-    flex-wrap: wrap;
-    margin-top: 15px;
+    flex: $flexRow;
   }
 
   .dashboard-panels {
     display: flex;
     justify-content: space-between;
-    flex: 0 0 100%;
-    margin-top: 25px;
+    flex: $flexRow;
+    gap: 30px;
+
+    &-history,
+    &-activities {
+      display: flex;
+      align-self: flex-start;
+      flex-direction: column;
+    }
+
+    &-history {
+      flex-basis: 70%;
+    }
 
     &-activities {
-      align-self: flex-start;
-      display: flex;
-      flex-direction: column;
-      flex: 0 0 70%;
+      flex-basis: 30%;
+
     }
 
     &-users {
@@ -48,48 +54,47 @@
       align-self: flex-start;
       flex-direction: column;
       flex: 0 0 20%;
+
     }
   }
 }
+
+
 
 @media only screen and (max-width: $mobileBreakpoint) {
   .dashboard-container {
     display: flex;
     align-items: center;
-    margin: 20px auto 0 auto;
+    margin: 20px 5px;
     max-width: $pageWidth;
-
-    .dashboard-nav-panel {
-      display: flex;
-      flex: 0 0 100%;
-      justify-content: center;
-    }
+    flex-wrap: wrap;
+    padding: 0 5px;
 
     &-header {
       display: flex;
-      align-items: center;
       height: 140px;
-      flex: 0 0 100%;
-    }
-
-    &-nav {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      flex: 0 0 100%;
+      flex: $flexRow;
     }
 
     .dashboard-panels {
       display: flex;
       justify-content: space-between;
-
+      flex: $flexRow;
       margin-top: 25px;
       flex-wrap: wrap;
+
+      &-history {
+        display: flex;
+        align-self: flex-start;
+        flex-direction: column;
+        flex: $flexRow;
+      }
 
       &-activities {
         align-self: flex-start;
         display: flex;
         flex-direction: column;
+        flex: $flexRow;
         flex: 0 0 100%;
       }
 
@@ -98,6 +103,7 @@
         align-self: flex-start;
         flex-direction: column;
         flex: 0 0 100%;
+        
       }
     }
   }

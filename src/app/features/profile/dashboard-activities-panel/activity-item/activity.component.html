@@ -6,10 +6,7 @@
     </p>
   </div>
   <div class="bottom">
-    <p class="date">
-      {{ moment(reservation.startTime).format('DD.MM.yyyy HH:mm') }} -
-      {{ moment(reservation.endTime).format('DD.MM.yyyy HH:mm') }}
-    </p>
-    <p-button styleClass="p-button-secondary">Zobacz wydarzenie</p-button>
+    <p class="date">{{ formattedStart }} - {{ formattedEnd }}</p>
+    <p-button styleClass="p-button-secondary">Zobacz</p-button>
   </div>
 </div>
