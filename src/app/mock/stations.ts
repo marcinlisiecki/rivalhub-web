@@ -39,7 +39,7 @@ export const RESERVATIONS: Reservation[] = [
   },
 ];
 
-export const EVENTS: EventDto[] = [
+export const EVENTS: any[] = [
   {
     id: 1,
     name: 'Wyzwanie',

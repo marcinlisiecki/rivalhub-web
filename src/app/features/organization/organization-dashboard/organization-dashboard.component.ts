@@ -23,6 +23,7 @@ export class OrganizationDashboardComponent implements OnInit, OnDestroy {
   navVisible: boolean = false;
   mobileView!: boolean;
   reservations: Reservation[] = [];
+  events: EventDto[] = [];
   organization!: Organization;
   users!: UserDetailsDto[];
   id!: number;
@@ -75,7 +76,7 @@ export class OrganizationDashboardComponent implements OnInit, OnDestroy {
         .then();
     }
 
-    // this.getOrgzationEvents();
+    this.getOrganizationEvents();
   }
 
   getOrganizationReservations() {
@@ -114,16 +115,16 @@ export class OrganizationDashboardComponent implements OnInit, OnDestroy {
     });
   }
 
-  // private getOrgzationEvents() {
-  //   this.organizationsService.getEvents(this.id).subscribe({
-  //     next: (res: EventDto[]) => {
-  //       this.events = res;
-  //     },
-  //     error: (err: HttpErrorResponse) => {
-  //       console.error('An error occurred:', err);
-  //     },
-  //   });
-  // }
+  private getOrganizationEvents() {
+    this.organizationsService.getEvents(this.id).subscribe({
+      next: (res: EventDto[]) => {
+        this.events = res;
+      },
+      error: (err: HttpErrorResponse) => {
+        console.error('An error occurred:', err);
+      },
+    });
+  }
 
   private getOrganizationUsers() {
     this.organizationsService.getUsers(this.id, 0, 5).subscribe({

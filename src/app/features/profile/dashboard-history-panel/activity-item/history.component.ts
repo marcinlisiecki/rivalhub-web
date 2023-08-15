@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 
 import { EventDto } from '@interfaces/event/event-dto';
-import { Reservation } from '@interfaces/reservation/reservation';
 import * as moment from 'moment';
 
 @Component({

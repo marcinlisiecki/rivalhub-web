@@ -1,0 +1,54 @@
+<section class="wrapper">
+  <section>
+    <h1>Wyniki meczu</h1>
+
+    <div *ngFor="let match of matches" class="match">
+      <section class="teams">
+        <div class="team">
+          <p>Drużyna 1</p>
+          <div *ngFor="let user of match.team1" class="team-member">
+            <div class="team-member-data">
+              <div class="team-member-avatar"></div>
+              <p>{{ user.name }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="team">
+          <p>Drużyna 2</p>
+          <div *ngFor="let user of match.team2" class="team-member">
+            <div class="team-member-data">
+              <div class="team-member-avatar"></div>
+              <p>{{ user.name }}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <h2>Sety</h2>
+
+      <app-no-resource-info *ngIf="match.sets.length === 0">
+        Brak setów
+      </app-no-resource-info>
+
+      <section class="sets">
+        <div *ngFor="let set of match.sets" class="set">
+          <p class="set-index">SET {{ set.setNr }}</p>
+
+          <div class="set-results">
+            <div class="set-result">
+              <p class="set-label">Drużyna 1</p>
+              <p class="set-score">{{ set.team1Score }}</p>
+            </div>
+
+            <div class="set-result">
+              <p class="set-score">{{ set.team2Score }}</p>
+              <p class="set-label">Drużyna 2</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <p-button (click)="openAddSetDialog()">Dodaj set</p-button>
+    </div>
+  </section>
+</section>
