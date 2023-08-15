@@ -30,9 +30,11 @@ export class HeaderLoggedInComponent implements OnInit {
       this.itemChange();
     }, 100);
 
-    this.usersService.getMe().subscribe((user: UserDetailsDto) => {
-      this.isAccountActivated = user.activationTime !== null;
-    });
+    if (this.authService.isAuth()) {
+      this.usersService.getMe().subscribe((user: UserDetailsDto) => {
+        this.isAccountActivated = user.activationTime !== null;
+      });
+    }
   }
 
   showSidebar() {

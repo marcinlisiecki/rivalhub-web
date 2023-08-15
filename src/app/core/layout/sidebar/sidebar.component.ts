@@ -44,12 +44,15 @@ export class SidebarComponent implements OnInit, OnDestroy {
     private router: Router,
     private organizationService: OrganizationsService,
     private usersService: UsersService,
-  ) {
-    this.fetchOrganizations();
-    this.setSelectedOrganization();
-  }
+  ) {}
 
   ngOnInit(): void {
+    if (this.authService.isAuth()) {
+      this.fetchOrganizations();
+    }
+
+    this.setSelectedOrganization();
+
     this.authSubscription = this.authService
       .isAuthObservable()
       .subscribe((val: boolean) => {
@@ -59,6 +62,11 @@ export class SidebarComponent implements OnInit, OnDestroy {
         }
 
         this.isLoggedIn = val;
+
+        if (!val) {
+          return;
+        }
+
         this.setSelectedOrganization();
         this.fetchOrganizations();
       });
@@ -76,9 +84,11 @@ export class SidebarComponent implements OnInit, OnDestroy {
       },
     );
 
-    this.usersService.getMe().subscribe((user: UserDetailsDto) => {
-      this.isAccountActivated = user.activationTime !== null;
-    });
+    if (this.authService.isAuth()) {
+      this.usersService.getMe().subscribe((user: UserDetailsDto) => {
+        this.isAccountActivated = user.activationTime !== null;
+      });
+    }
   }
 
   ngOnDestroy(): void {
