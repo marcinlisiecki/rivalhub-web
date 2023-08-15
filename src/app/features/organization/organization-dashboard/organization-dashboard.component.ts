@@ -22,32 +22,7 @@ export class OrganizationDashboardComponent implements OnInit, OnDestroy {
   navVisible: boolean = false;
   mobileView!: boolean;
   reservations: Reservation[] = [];
-  events: EventDto[] = [
-    {
-      id: 1,
-      name: 'Wędkowanie na jeziorze',
-      place: 'Jezioro',
-      startTime: new Date('2023-09-13T11:11'),
-      endTime: new Date('2023-09-14T11:11'),
-      participantIds: [5],
-    },
-    {
-      id: 2,
-      name: 'Wędkowanie na rzece',
-      place: 'Rzeka',
-      startTime: new Date('2023-09-13T11:11'),
-      endTime: new Date('2023-09-14T11:11'),
-      participantIds: [1, 2],
-    },
-    {
-      id: 3,
-      name: 'Wędkowanie na stawie',
-      place: 'Staw',
-      startTime: new Date('2023-09-13T11:11'),
-      endTime: new Date('2023-09-14T11:11'),
-      participantIds: [2, 3, 4],
-    },
-  ];
+  events: EventDto[] = [];
   organization!: Organization;
   users!: UserDetailsDto[];
   id!: number;
@@ -78,7 +53,6 @@ export class OrganizationDashboardComponent implements OnInit, OnDestroy {
       this.getOrganizationReservations();
     });
 
-
     const configured = this.route.snapshot.queryParams['configured'];
     if (configured) {
       this.messageService.add({
@@ -94,7 +68,7 @@ export class OrganizationDashboardComponent implements OnInit, OnDestroy {
         .then();
     }
 
-    // this.getOrgzationEvents();
+    this.getOrganizationEvents();
   }
 
   getOrganizationReservations() {
@@ -133,7 +107,7 @@ export class OrganizationDashboardComponent implements OnInit, OnDestroy {
     });
   }
 
-  private getOrgzationEvents() {
+  private getOrganizationEvents() {
     this.organizationsService.getEvents(this.id).subscribe({
       next: (res: EventDto[]) => {
         this.events = res;

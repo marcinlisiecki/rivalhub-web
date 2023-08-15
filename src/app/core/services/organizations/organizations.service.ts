@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../../environments/enviroment';
-import { map, Observable } from 'rxjs';
-import { EventDto } from '@interfaces/event/event-dto';
+import { Observable } from 'rxjs';
 import { Organization } from '@interfaces/organization/organization';
 import { NewOrganization } from '@interfaces/organization/new-organization';
 import { PagedResponse } from '@interfaces/generic/paged-response';
@@ -12,6 +11,7 @@ import { UserDetailsDto } from '@interfaces/user/user-details-dto';
 import { Reservation } from '@interfaces/reservation/reservation';
 import * as moment from 'moment/moment';
 import { EventType } from '@interfaces/event/event-type';
+import { EventDto } from '@interfaces/event/event-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -45,6 +45,11 @@ export class OrganizationsService {
   getEvents(id: number): Observable<EventDto[]> {
     return this.http.get<EventDto[]>(
       environment.apiUrl + `/organizations/${id}/events`,
+      {
+        params: {
+          type: 'PING_PONG',
+        },
+      },
     );
   }
 

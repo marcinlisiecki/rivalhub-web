@@ -1,8 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 
-import { Reservation } from '@interfaces/reservation/reservation';
-import {EVENTS, RESERVATIONS} from "@app/mock/stations";
-import {EventDto} from "@interfaces/event/event-dto";
+import { EVENTS } from '@app/mock/stations';
+import { EventDto } from '@interfaces/event/event-dto';
 
 @Component({
   selector: 'app-dashboard-history',

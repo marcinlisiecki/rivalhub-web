@@ -7,7 +7,6 @@
   max-width: $pageWidth;
   flex-wrap: wrap;
 
-
   .dashboard-nav-panel {
     display: none;
   }
@@ -49,12 +48,8 @@
       align-self: flex-start;
       flex-direction: column;
       flex: 0 0 20%;
-
-
     }
   }
-
-
 }
 
 @media only screen and (max-width: $mobileBreakpoint) {
@@ -103,8 +98,6 @@
         align-self: flex-start;
         flex-direction: column;
         flex: 0 0 100%;
-
-
       }
     }
   }
