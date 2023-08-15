@@ -35,8 +35,12 @@ export class LoginComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.queryParamsSub = this.route.queryParams.subscribe((params) => {
       this.registered = params['registered'];
-      this.invitation = params['invitation'];
     });
+
+    if (localStorage.getItem('loginInvitation')) {
+      this.invitation = true;
+      localStorage.removeItem('loginInvitation');
+    }
   }
 
   ngOnDestroy(): void {
