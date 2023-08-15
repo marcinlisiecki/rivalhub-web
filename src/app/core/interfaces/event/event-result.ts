@@ -5,9 +5,10 @@ export interface EventResult {
   id: number;
   organization: string;
   category: EventType;
-  isWinner: boolean;
+  isWinner?: boolean;
   startTime: Date;
-  endTime: Date;
+  endTime?: Date;
   team1: UserDetailsDto[];
   team2: UserDetailsDto[];
+  finished?: boolean;
 }

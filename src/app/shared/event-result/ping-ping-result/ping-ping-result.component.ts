@@ -24,7 +24,7 @@ export class PingPingResultComponent implements OnInit {
     this.calculateSets();
   }
 
-  formatDate(date: Date): string {
+  formatDate(date?: Date): string {
     return moment(date).format('DD-MM-yyyy HH:mm');
   }
 

@@ -5,6 +5,7 @@
     min-height: 200px;
     flex: 0 0 100%;
 
+
     .game-common {
         display: flex;
         flex-direction: column;
@@ -14,7 +15,7 @@
             margin: 0;
         }
 
-        p:last-child {
+        p:nth-child(3) {
             margin-top: auto;
         }
     }
@@ -24,10 +25,18 @@
     }
 
 
-    .game-details{
+    .game-details {
         flex: 0 0 100%;
     }
-    
+
+    .game-waiting {
+    color: $textSecondaryColor;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+
 }
 
 
@@ -35,7 +44,7 @@
 
 @media only screen and (max-width: $mobileBreakpoint) {
 
-.game-wrapper {
+    .game-wrapper {
         display: flex;
         min-height: 200px;
         flex: 0 0 100%;
@@ -48,11 +57,7 @@
 
             p {
                 margin: 0;
-            }
-
-            p:last-child {
-                margin-top: auto;
-            }
+            }            
         }
 
 
@@ -60,6 +65,17 @@
             flex-basis: 70%;
         }
 
+        .game-details {
+            flex: 0 0 100%;
+        }
+
+        .game-waiting {
+    color:$textSecondaryColor;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-basis: 70%;
+        }
 
     }
 

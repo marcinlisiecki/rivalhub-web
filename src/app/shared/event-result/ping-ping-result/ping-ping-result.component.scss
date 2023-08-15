@@ -44,8 +44,7 @@
         }
     }
 
-    //last p
-    p:last-child {
+    p:nth-child(3) {
         margin-top: auto;
         text-wrap: balance;
     }

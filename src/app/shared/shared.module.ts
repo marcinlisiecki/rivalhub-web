@@ -23,6 +23,7 @@ import { NoResourceInfoComponent } from './no-resource-info/no-resource-info.com
 import { AccordionModule } from 'primeng/accordion';
 import { EventResultComponent } from './event-result/event-result.component';
 import { PingPingResultComponent } from './event-result/ping-ping-result/ping-ping-result.component';
+import { EventWaitingComponent } from './event-result/event-waiting/event-waiting.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { PingPingResultComponent } from './event-result/ping-ping-result/ping-pi
     NoResourceInfoComponent,
     EventResultComponent,
     PingPingResultComponent,
+    EventWaitingComponent,
   ],
   exports: [
     ValidationErrorComponent,

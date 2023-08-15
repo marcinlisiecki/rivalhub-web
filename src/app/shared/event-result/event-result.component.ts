@@ -13,7 +13,6 @@ export class EventResultComponent {
   tie: boolean = false;
 
   setWinner($event: number) {
-    console.log($event);
     this.result.isWinner = $event === -1;
     this.tie = $event === 0;
   }

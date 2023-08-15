@@ -28,6 +28,7 @@ export const GAMES: EventResult[] = [
         activationTime: new Date(Date.now() + 5020),
       },
     ],
+    finished: true,
     sets: [
       {
         team1Score: 11,
@@ -69,6 +70,7 @@ export const GAMES: EventResult[] = [
         activationTime: new Date(Date.now() + 5020),
       },
     ],
+    finished: true,
     sets: [
       {
         team1Score: 11,
@@ -81,7 +83,7 @@ export const GAMES: EventResult[] = [
     ],
   } as PingPongResult,
   {
-    id: 2,
+    id: 3,
     category: EventType.PING_PONG,
     organization: 'NCDC',
 
@@ -106,6 +108,7 @@ export const GAMES: EventResult[] = [
         activationTime: new Date(Date.now() + 5020),
       },
     ],
+    finished: true,
     sets: [
       {
         team1Score: 11,
@@ -118,6 +121,31 @@ export const GAMES: EventResult[] = [
       {
         team1Score: 11,
         team2Score: 13,
+      },
+    ],
+  } as PingPongResult,
+  {
+    id: 4,
+    category: EventType.PING_PONG,
+    organization: 'NCDC',
+    startTime: new Date(Date.now()),
+    endTime: new Date(Date.now() + 1000 * 60 * 60 * 2),
+    team1: [
+      {
+        id: 1,
+        name: 'John Doe',
+        email: 'johndoe@gmail.com',
+        profilePictureUrl: 'https://www.w3schools.com/howto/img_avatar.png',
+        activationTime: new Date(Date.now() - 2323),
+      },
+    ],
+    team2: [
+      {
+        id: 1,
+        name: 'Jan Kowalski',
+        email: 'jankowalski@wp.pl',
+        profilePictureUrl: 'https://www.w3schools.com/howto/img_avatar.png',
+        activationTime: new Date(Date.now() + 5020),
       },
     ],
   } as PingPongResult,
