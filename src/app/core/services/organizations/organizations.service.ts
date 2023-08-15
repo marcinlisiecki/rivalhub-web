@@ -12,6 +12,7 @@ import { Reservation } from '@interfaces/reservation/reservation';
 import * as moment from 'moment/moment';
 import { EventType } from '@interfaces/event/event-type';
 import { EventDto } from '@interfaces/event/event-dto';
+import { OrganizationSettings } from '@interfaces/organization/organization-settings';
 
 @Injectable({
   providedIn: 'root',
@@ -39,6 +40,19 @@ export class OrganizationsService {
   choose(id: number): Observable<Organization> {
     return this.http.get<Organization>(
       environment.apiUrl + `/organizations/${id}`,
+    );
+  }
+
+  getSettings(id: number): Observable<OrganizationSettings> {
+    return this.http.get<OrganizationSettings>(
+      environment.apiUrl + `/organizations/${id}/settings`,
+    );
+  }
+
+  getInvitationLink(id: number): Observable<string> {
+    return this.http.get(
+      environment.apiUrl + `/organizations/${id}/invitation`,
+      { responseType: 'text' },
     );
   }
 

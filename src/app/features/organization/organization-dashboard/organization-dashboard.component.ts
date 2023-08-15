@@ -11,6 +11,7 @@ import { UserDetailsDto } from '@interfaces/user/user-details-dto';
 import { Subscription } from 'rxjs';
 import { Reservation } from '@interfaces/reservation/reservation';
 import { MessageService } from 'primeng/api';
+import { OrganizationSettings } from '@interfaces/organization/organization-settings';
 
 @Component({
   selector: 'app-organization-dashboard',
@@ -26,6 +27,7 @@ export class OrganizationDashboardComponent implements OnInit, OnDestroy {
   organization!: Organization;
   users!: UserDetailsDto[];
   id!: number;
+  canUserInvite: boolean = false;
 
   resizeEventSub?: Subscription;
   paramsSub?: Subscription;
@@ -51,6 +53,12 @@ export class OrganizationDashboardComponent implements OnInit, OnDestroy {
       this.getOrganizationInfo();
       this.getOrganizationUsers();
       this.getOrganizationReservations();
+
+      this.organizationsService.getSettings(this.id).subscribe({
+        next: (settings: OrganizationSettings) => {
+          this.canUserInvite = !settings.onlyAdminCanSeeInvitationLink;
+        },
+      });
     });
 
     const configured = this.route.snapshot.queryParams['configured'];

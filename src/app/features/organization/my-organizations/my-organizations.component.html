@@ -5,6 +5,21 @@
 
   <div class="content">
     <div class="organizations-container">
+      <div
+        *ngIf="organizations.length === 0 && !isLoading"
+        class="no-organizations"
+      >
+        <img src="assets/img/svg/void.svg" alt="" />
+        <p>Nie należysz do żadnej organizacji</p>
+        <p-button
+          *ngIf="isAccountVerified"
+          routerLink="/organizations/new"
+          icon="pi pi-plus"
+          iconPos="right"
+          label="Stwórz własną"
+        ></p-button>
+      </div>
+
       <div class="organization-card" *ngFor="let organization of organizations">
         <a
           class="organization-link"

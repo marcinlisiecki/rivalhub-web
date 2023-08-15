@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
 @Component({
@@ -7,6 +7,8 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
   styleUrls: ['./dashboard-nav.component.scss'],
 })
 export class DashboardNavComponent {
+  @Input() canUserInvite: boolean = false;
+
   organizationId!: number;
 
   constructor(private route: ActivatedRoute) {
