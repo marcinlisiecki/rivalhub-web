@@ -15,6 +15,11 @@ export class StationSelectorComponent {
   @Output() setFormStep: EventEmitter<AddEventFormStep> =
     new EventEmitter<AddEventFormStep>();
   @Output() toggleStation: EventEmitter<number> = new EventEmitter<number>();
+  @Output() addEvent: EventEmitter<Event> = new EventEmitter<Event>();
 
+  emitThat() {
+    console.log('emituje');
+    this.addEvent.emit();
+  }
   protected readonly AddEventFormStep = AddEventFormStep;
 }
