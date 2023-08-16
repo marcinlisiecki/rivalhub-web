@@ -16,7 +16,7 @@
 ></app-nav-item>
 <app-nav-item
   class="nav-item"
-  *ngIf="canUserInvite"
+  *ngIf="canUserInvite || amIAdmin"
   title="Zaproś użytkownika"
   href="/organizations/{{ organizationId }}/invite"
 ></app-nav-item>

@@ -107,4 +107,14 @@ export class AuthService {
   getActivationTime(): string | null {
     return this.jwtService.getActivationTime();
   }
+
+  amIAdmin(organizationId: number): boolean {
+    const adminOrganizationIds = this.jwtService.getAdminOrganizationIds();
+
+    if (adminOrganizationIds === null) {
+      return false;
+    }
+
+    return adminOrganizationIds.includes(Number(organizationId));
+  }
 }

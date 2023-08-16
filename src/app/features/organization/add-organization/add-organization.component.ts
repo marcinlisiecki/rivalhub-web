@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { extractMessage } from '@app/core/utils/apiErrors';
 import { NewOrganization } from '@interfaces/organization/new-organization';
 import { Organization } from '@interfaces/organization/organization';
+import { AuthService } from '@app/core/services/auth/auth.service';
 
 @Component({
   selector: 'app-add-organization',
@@ -31,6 +32,7 @@ export class AddOrganizationComponent {
   constructor(
     private organizationService: OrganizationsService,
     private router: Router,
+    private authService: AuthService,
   ) {}
 
   onFileSelectClicked(event: FileSelectEvent) {
@@ -60,6 +62,7 @@ export class AddOrganizationComponent {
 
     this.organizationService.add(newOrganization).subscribe({
       next: (organization: Organization) => {
+        this.authService.refreshAuth();
         this.router
           .navigateByUrl(`/organizations/${organization.id}/configurator`)
           .then();

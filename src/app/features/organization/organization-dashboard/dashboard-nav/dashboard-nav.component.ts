@@ -8,7 +8,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 })
 export class DashboardNavComponent {
   @Input() canUserInvite: boolean = false;
-
+  @Input() amIAdmin: boolean = false;
   organizationId!: number;
 
   constructor(private route: ActivatedRoute) {

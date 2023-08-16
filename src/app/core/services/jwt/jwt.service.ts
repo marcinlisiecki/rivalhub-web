@@ -40,6 +40,10 @@ export class JwtService {
     return decoded?.sub || null;
   }
 
+  getAdminOrganizationIdsFromToken(decoded: any): number[] | null {
+    return decoded?.adminOrganizationIds || null;
+  }
+
   getActivationTimeFromToken(decoded: any): string | null {
     return decoded?.activationTime || null;
   }
@@ -90,6 +94,15 @@ export class JwtService {
 
     const decoded = this.decodeToken(token) || '';
     return this.getUserNameFromToken(decoded);
+  }
+
+  getAdminOrganizationIds(): number[] | null {
+    const token: string | undefined = this.getToken();
+    if (token === undefined) {
+      return null;
+    }
+    const decoded = this.decodeToken(token) || '';
+    return this.getAdminOrganizationIdsFromToken(decoded);
   }
 
   getExpiration(decoded: any): number | null {
