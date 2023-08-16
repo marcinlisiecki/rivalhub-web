@@ -9,6 +9,8 @@ import { Organization } from '@interfaces/organization/organization';
 import { AddEvent } from '@interfaces/event/add-event';
 import * as moment from 'moment';
 import { formatDate } from '@angular/common';
+import { PingPongMatch } from '@app/core/interfaces/event/ping-pong/ping-pong-match';
+import { GameSet } from '@app/core/interfaces/event/games/game-set';
 
 @Injectable({
   providedIn: 'root',
