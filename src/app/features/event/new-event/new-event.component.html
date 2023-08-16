@@ -42,10 +42,11 @@
   <app-station-selector
     *ngIf="formStep === AddEventFormStep.RESERVATION && selectedEventType"
     (setFormStep)="setFormStep($event)"
-    [categoryLabel]="categoryTypeToLabel(selectedEventType)"
+    [categoryLabel]="categoryTypeToLabel(selectedEventType) | translate"
     [selectedStations]="selectedStations"
     [stations]="getOnlyCategoryStations()"
     (toggleStation)="toggleSelectedStation($event)"
+    (addEvent)="addEvent()"
   >
   </app-station-selector>
 </section>
