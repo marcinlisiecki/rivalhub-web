@@ -9,10 +9,11 @@
 .mid {
   display: flex;
   margin: auto;
-  max-width: $pageWidth;
-  justify-content: center;
+  max-width: 1280px;
   border: 2px solid #334155;
   width: auto;
+  flex-wrap: wrap;
+  align-content: center;
 }
 
 .content {
@@ -37,16 +38,11 @@
 }
 
 .button {
-  position: absolute;
+  margin-top: 1rem;
+  z-index: 1005;
   width: 25px;
   height: 15px;
   display: flex;
-  justify-content: flex-start;
-  top: 5px;
-  left: 35rem;
-  z-index: 1005;
-}
-
-p-toggleButton {
-  display: flex;
+  flex-wrap: nowrap;
+  align-items: baseline;
 }

@@ -5,7 +5,7 @@ import {
   WritableSignal,
 } from '@angular/core';
 import { CalendarService } from '@app/core/services/calendar/calendar.service';
-import { Calendar, EventApi } from '@fullcalendar/core';
+import { Calendar, EventApi, EventInput } from '@fullcalendar/core';
 
 @Component({
   selector: 'app-calendar-events',
@@ -13,15 +13,15 @@ import { Calendar, EventApi } from '@fullcalendar/core';
   styleUrls: ['./calendar-events.component.scss'],
 })
 export class CalendarEventsComponent implements OnInit, AfterViewInit {
-  currentDayEvents: WritableSignal<EventApi[]> = this.serv.currentDayEvents;
-  api!: Calendar;
+  currentDayEvents: WritableSignal<EventInput[]> = this.serv.currentDayEvents;
+  currentDate = this.serv.currentDate;
 
   constructor(private serv: CalendarService) {}
 
   ngOnInit() {}
-  ngAfterViewInit() {
-    setTimeout(() => {
-      this.api = this.serv.api;
-    }, 200);
+  ngAfterViewInit() {}
+
+  getDate(event: EventInput): Date {
+    return <Date>event['start'];
   }
 }

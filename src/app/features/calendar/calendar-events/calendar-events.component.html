@@ -1,20 +1,30 @@
 <div class="events">
+  <h1>
+    {{ currentDate() | date: 'dd.MM.yyyy' }}
+  </h1>
+
   <div
     *ngIf="currentDayEvents().length !== 0; then eventContent; else noEvents"
   ></div>
 </div>
 
 <ng-template #eventContent>
-  <li *ngFor="let event of currentDayEvents()">
-    <i>{{ event.extendedProps['organisation'] }}</i>
-    <br />
-    <i>{{ event.title }}</i>
-    <br />
-    <b>{{ event.startStr + ' - ' + event.endStr }} </b>
-  </li>
+  <div [class]="event['type']" *ngFor="let event of currentDayEvents()">
+    <section>
+      <i>{{ event['organisationName'] }}</i>
+      <br />
+      <i>{{ event.title }}</i>
+      <br />
+      <b *ngIf="!event.allDay">{{ getDate(event) | date: 'hh:mm' }}</b>
+      <b *ngIf="event.allDay"> Cały dzień </b>
+    </section>
+    <section>
+      <h3>{{ event['type'] }}</h3>
+    </section>
+  </div>
 </ng-template>
 <ng-template #noEvents>
   <div>
-    <p>brak LoL</p>
+    <p>Brak wydarzeń tego dnia</p>
   </div>
 </ng-template>
