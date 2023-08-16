@@ -41,6 +41,9 @@ export class UserItemComponent implements OnInit {
     const profileItem: MenuItem = {
       label: 'Zobacz profil',
       icon: 'pi pi-user',
+      command: (_: MenuItemCommandEvent) => {
+        this.router.navigate(['profiles', this.user.id]).then();
+      },
     };
 
     if (this.authService.getUserId() !== this.user.id) {

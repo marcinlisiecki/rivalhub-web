@@ -11,6 +11,8 @@ import { Observable, Subject, tap } from 'rxjs';
 import { environment } from '../../../../environments/enviroment';
 import { JwtService } from '../jwt/jwt.service';
 import { NavigationStart, Router } from '@angular/router';
+import { UserDetailsDto } from '@interfaces/user/user-details-dto';
+import { UsersService } from '@app/core/services/users/users.service';
 
 @Injectable({
   providedIn: 'root',

@@ -17,7 +17,7 @@ import {
 } from 'rxjs';
 import { JwtService } from '../../services/jwt/jwt.service';
 import { AuthService } from '@app/core/services/auth/auth.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthResponse } from '@interfaces/auth/login-response';
 
 @Injectable()
@@ -31,6 +31,7 @@ export class AuthenticateInterceptor implements HttpInterceptor {
     private jwtService: JwtService,
     private authService: AuthService,
     private router: Router,
+    private route: ActivatedRoute,
   ) {}
 
   intercept(
@@ -68,7 +69,8 @@ export class AuthenticateInterceptor implements HttpInterceptor {
           }),
           catchError((error) => {
             this.isRefreshing = false;
-            this.router.navigateByUrl('/login').then();
+            const queryParams = this.route.snapshot.queryParams;
+            this.router.navigate(['login'], { queryParams }).then();
             return throwError(() => error);
           }),
         );

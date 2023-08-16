@@ -7,8 +7,10 @@
 }
 
 .item-container {
+  display:flex;
   border: $dashboardBorder;
   border-radius: $dashboardRadius;
   padding: 1rem;
   background-color: $panelContentBg;
+  flex-wrap: wrap;
 }

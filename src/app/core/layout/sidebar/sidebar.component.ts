@@ -11,6 +11,8 @@ import { SidebarService } from '@app/core/services/sidebar/sidebar.service';
 import { Organization } from '@interfaces/organization/organization';
 import { OrganizationsService } from '@app/core/services/organizations/organizations.service';
 import { NavigationStart, Router } from '@angular/router';
+import { UsersService } from '@app/core/services/users/users.service';
+import { OrganizationSettings } from '@interfaces/organization/organization-settings';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -23,6 +25,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
   routerSubscription?: Subscription;
   authSubscription?: Subscription;
   mobileView!: boolean;
+  isAccountActivated: boolean = false;
+  canUserInvite: boolean = false;
 
   user: UserDetailsDto = {
     id: 0,
@@ -41,12 +45,17 @@ export class SidebarComponent implements OnInit, OnDestroy {
     private sidebarService: SidebarService,
     private router: Router,
     private organizationService: OrganizationsService,
-  ) {
-    this.fetchOrganizations();
-    this.setSelectedOrganization();
-  }
+    private usersService: UsersService,
+  ) {}
 
   ngOnInit(): void {
+    this.setSelectedOrganization();
+
+    if (this.authService.isAuth()) {
+      this.fetchOrganizations();
+      this.fetchSettings();
+    }
+
     this.authSubscription = this.authService
       .isAuthObservable()
       .subscribe((val: boolean) => {
@@ -56,6 +65,11 @@ export class SidebarComponent implements OnInit, OnDestroy {
         }
 
         this.isLoggedIn = val;
+
+        if (!val) {
+          return;
+        }
+
         this.setSelectedOrganization();
         this.fetchOrganizations();
       });
@@ -72,6 +86,12 @@ export class SidebarComponent implements OnInit, OnDestroy {
         this.mobileView = value;
       },
     );
+
+    if (this.authService.isAuth()) {
+      this.usersService.getMe().subscribe((user: UserDetailsDto) => {
+        this.isAccountActivated = user.activationTime !== null;
+      });
+    }
   }
 
   ngOnDestroy(): void {
@@ -91,6 +111,19 @@ export class SidebarComponent implements OnInit, OnDestroy {
   selectOrganization(organization: Organization) {
     localStorage.setItem('selectedOrganization', JSON.stringify(organization));
     this.selectedOrganization = organization;
+    this.fetchSettings();
+  }
+
+  fetchSettings() {
+    if (this.selectedOrganization) {
+      this.organizationService
+        .getSettings(this.selectedOrganization.id)
+        .subscribe({
+          next: (settings: OrganizationSettings) => {
+            this.canUserInvite = !settings.onlyAdminCanSeeInvitationLink;
+          },
+        });
+    }
   }
 
   fetchOrganizations() {

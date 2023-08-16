@@ -57,6 +57,7 @@
           </app-section-item>
 
           <app-section-item
+            *ngIf="canUserInvite"
             icon="pi pi-send"
             title="Zaproszenia"
             routerLink="/organizations/{{ selectedOrganization.id }}/invite"
@@ -91,7 +92,7 @@
       <nav class="nav">
         <ul>
           <app-section-item
-            *ngIf="mobileView"
+            *ngIf="mobileView && isAccountActivated"
             icon="pi pi-plus-circle"
             title="Dodaj organizację"
             routerLink="/organizations/new"

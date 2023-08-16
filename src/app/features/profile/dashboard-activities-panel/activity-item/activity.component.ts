@@ -1,8 +1,7 @@
 import { Component, Input } from '@angular/core';
+import { OrganizationsService } from '@app/core/services/organizations/organizations.service';
 
-import { EventDto } from '@interfaces/event/event-dto';
 import { Reservation } from '@interfaces/reservation/reservation';
-import * as moment from 'moment';
 
 @Component({
   selector: 'app-activity',
@@ -11,5 +10,18 @@ import * as moment from 'moment';
 })
 export class ActivityComponent {
   @Input({ required: true }) reservation!: Reservation;
-  protected readonly moment = moment;
+
+  formattedStart: string = '';
+  formattedEnd: string = '';
+
+  constructor(private organizationService: OrganizationsService) {}
+
+  ngOnInit(): void {
+    this.formattedStart = this.organizationService.formatDate(
+      this.reservation?.startTime,
+    );
+    this.formattedEnd = this.organizationService.formatDate(
+      this.reservation?.endTime,
+    );
+  }
 }

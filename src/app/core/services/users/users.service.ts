@@ -3,6 +3,8 @@ import { Observable } from 'rxjs';
 import { UserDetailsDto } from '@interfaces/user/user-details-dto';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/enviroment';
+import { Reservation } from '@app/core/interfaces/reservation/reservation';
+import { EventDto } from '@app/core/interfaces/event/event-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -16,5 +18,21 @@ export class UsersService {
 
   verifyAccount(hash: string): Observable<{}> {
     return this.http.get<{}>(environment.apiUrl + `/confirm/${hash}`);
+  }
+
+  getUser(id: number): Observable<UserDetailsDto> {
+    return this.http.get<UserDetailsDto>(environment.apiUrl + `/users/${id}`);
+  }
+
+  getCommonEvents(id: number): Observable<EventDto[]> {
+    return this.http.get<EventDto[]>(
+      environment.apiUrl + `/users/{id}/events/users/${id}/events`,
+    );
+  }
+
+  getCommonReservations(id: number): Observable<Reservation[]> {
+    return this.http.get<Reservation[]>(
+      environment.apiUrl + `/users/${id}/reservations`,
+    );
   }
 }

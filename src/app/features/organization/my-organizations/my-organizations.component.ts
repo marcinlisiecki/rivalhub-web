@@ -9,6 +9,7 @@ import { extractMessage } from '@app/core/utils/apiErrors';
 import { MessageService } from 'primeng/api';
 import { InvitationsService } from '@app/core/services/invitations/invitations.service';
 import { UsersService } from '@app/core/services/users/users.service';
+import { UserDetailsDto } from '@interfaces/user/user-details-dto';
 
 @Component({
   selector: 'app-my-organizations',
@@ -19,7 +20,8 @@ export class MyOrganizationsComponent implements OnInit {
   organizations: Organization[] = [];
   isDefaultAvatar!: boolean;
   invitations: Invitation[] = [];
-  isAccountVerified: boolean = true;
+  isAccountVerified: boolean = false;
+  isLoading: boolean = true;
 
   constructor(
     private organizationsService: OrganizationsService,
@@ -53,6 +55,9 @@ export class MyOrganizationsComponent implements OnInit {
       next: (res: Organization[]) => {
         this.organizations = res;
         this.setMyInvitations();
+      },
+      complete: () => {
+        this.isLoading = false;
       },
     });
   }

@@ -36,6 +36,29 @@ export class EventsService {
     );
   }
 
+  getEventMatches(
+    organizationId: number,
+    eventId: number,
+  ): Observable<PingPongMatch[]> {
+    return this.http.get<PingPongMatch[]>(
+      environment.apiUrl +
+        `/organizations/${organizationId}/events/${eventId}/match`,
+    );
+  }
+
+  addMatchSet(
+    organizationId: number,
+    eventId: number,
+    matchId: number,
+    setList: GameSet[],
+  ): Observable<{}> {
+    return this.http.post<{}>(
+      environment.apiUrl +
+        `/organizations/${organizationId}/events/${eventId}/match/${matchId}`,
+      setList,
+    );
+  }
+
   deleteOrganizationEventType(
     id: number,
     eventType: EventType,
