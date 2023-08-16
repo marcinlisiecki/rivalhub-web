@@ -15,6 +15,7 @@ import { JoinOrganizationComponent } from '@app/features/organization/join-organ
 import { joinGuard } from '@app/core/guards/join-organization/join.guard';
 import { ProfileComponent } from '@app/features/profile/profile.component';
 import { CalendarComponent } from '@app/features/calendar/calendar.component';
+import { ActivateAccountComponent } from '@app/features/user/activate-account/activate-account.component';
 
 const routes: Routes = [
   {
@@ -79,6 +80,10 @@ const routes: Routes = [
     path: 'calendar',
     component: CalendarComponent,
     canActivate: [authenticateGuard],
+  },
+  {
+    path: 'users/confirm/:hash',
+    component: ActivateAccountComponent,
   },
 ];
 

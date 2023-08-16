@@ -32,7 +32,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     private router: Router,
     private authService: AuthService,
     private invitationService: InvitationsService,
-    private organizationsService: OrganizationsService,
   ) {}
 
   ngOnInit(): void {
@@ -71,32 +70,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       next: (res) => {
         if (res?.token) {
           this.router.navigateByUrl('/organizations').then();
-
-          let invitations = this.invitationService.getInvitations();
-          const userId = this.authService.getUserId();
-
-          this.organizationsService.getMy().subscribe((organizations) => {
-            const newInvitations: Invitation[] = [];
-
-            invitations.forEach((item) => {
-              if (
-                this.invitationService.checkIfAlreadyInOrganization(
-                  item,
-                  organizations,
-                )
-              ) {
-                return;
-              }
-
-              if (item.userId === null) {
-                item.userId = userId;
-              }
-
-              newInvitations.push(item);
-            });
-
-            localStorage.setItem('invitations', JSON.stringify(newInvitations));
-          });
+          this.invitationService.setUserIds();
         }
 
         this.isLoading = false;
