@@ -7,6 +7,12 @@ import { ViewService } from '@app/core/services/view/view.service';
 import { AuthService } from '@app/core/services/auth/auth.service';
 import { UserDetailsDto } from '@app/core/interfaces/user/user-details-dto';
 import { Subscription } from 'rxjs';
+import { SidebarService } from '@app/core/services/sidebar/sidebar.service';
+import { Organization } from '@interfaces/organization/organization';
+import { OrganizationsService } from '@app/core/services/organizations/organizations.service';
+import { NavigationStart, Router } from '@angular/router';
+import { UsersService } from '@app/core/services/users/users.service';
+import { OrganizationSettings } from '@interfaces/organization/organization-settings';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -14,12 +20,14 @@ import { Subscription } from 'rxjs';
   animations: [navBtnAnimation, navBtnAnimationMobile],
 })
 export class SidebarComponent implements OnInit, OnDestroy {
-  sidebarVisible: boolean = false;
   isLoggedIn: boolean = true;
   mobileViewSubscription?: Subscription;
+  routerSubscription?: Subscription;
+  authSubscription?: Subscription;
   mobileView!: boolean;
+  isAccountActivated: boolean = false;
+  canUserInvite: boolean = false;
 
-  selectedOrganization: string = 'NCDC';
   user: UserDetailsDto = {
     id: 0,
     name: 'Dominik Matuszewski',
@@ -28,17 +36,48 @@ export class SidebarComponent implements OnInit, OnDestroy {
     activationTime: null,
   };
 
+  organizations: Organization[] = [];
+  selectedOrganization: Organization | null = null;
+
   constructor(
     private viewService: ViewService,
     private authService: AuthService,
+    private sidebarService: SidebarService,
+    private router: Router,
+    private organizationService: OrganizationsService,
+    private usersService: UsersService,
   ) {}
-  ngOnDestroy(): void {
-    this.mobileViewSubscription?.unsubscribe();
-  }
 
   ngOnInit(): void {
-    this.authService.isAuthObservable().subscribe((val: boolean) => {
-      this.isLoggedIn = val;
+    this.setSelectedOrganization();
+
+    if (this.authService.isAuth()) {
+      this.fetchOrganizations();
+      this.fetchSettings();
+    }
+
+    this.authSubscription = this.authService
+      .isAuthObservable()
+      .subscribe((val: boolean) => {
+        if (!val) {
+          localStorage.removeItem('selectedOrganization');
+          this.selectedOrganization = null;
+        }
+
+        this.isLoggedIn = val;
+
+        if (!val) {
+          return;
+        }
+
+        this.setSelectedOrganization();
+        this.fetchOrganizations();
+      });
+
+    this.routerSubscription = this.router.events.subscribe((e) => {
+      if (e instanceof NavigationStart) {
+        this.sidebarService.isVisible && this.sidebarService.toggleSidebar();
+      }
     });
 
     this.mobileView = this.viewService.mobileView;
@@ -47,13 +86,64 @@ export class SidebarComponent implements OnInit, OnDestroy {
         this.mobileView = value;
       },
     );
+
+    if (this.authService.isAuth()) {
+      this.usersService.getMe().subscribe((user: UserDetailsDto) => {
+        this.isAccountActivated = user.activationTime !== null;
+      });
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.mobileViewSubscription?.unsubscribe();
+    this.authSubscription?.unsubscribe();
+    this.routerSubscription?.unsubscribe();
+  }
+
+  setSelectedOrganization() {
+    if (localStorage.getItem('selectedOrganization')) {
+      this.selectedOrganization = JSON.parse(
+        localStorage.getItem('selectedOrganization') as string,
+      );
+    }
+  }
+
+  selectOrganization(organization: Organization) {
+    localStorage.setItem('selectedOrganization', JSON.stringify(organization));
+    this.selectedOrganization = organization;
+    this.fetchSettings();
+  }
+
+  fetchSettings() {
+    if (this.selectedOrganization) {
+      this.organizationService
+        .getSettings(this.selectedOrganization.id)
+        .subscribe({
+          next: (settings: OrganizationSettings) => {
+            this.canUserInvite = !settings.onlyAdminCanSeeInvitationLink;
+          },
+        });
+    }
+  }
+
+  fetchOrganizations() {
+    this.organizationService.getMy().subscribe({
+      next: (organizations) => {
+        this.organizations = organizations;
+      },
+    });
+  }
+
+  isVisible() {
+    return this.sidebarService.isVisible;
+  }
+
+  toggleSidebar() {
+    this.sidebarService.toggleSidebar();
   }
 
   logout() {
     this.authService.logout();
-  }
-
-  toggleSidebar() {
-    this.sidebarVisible = !this.sidebarVisible;
+    this.selectedOrganization = null;
   }
 }

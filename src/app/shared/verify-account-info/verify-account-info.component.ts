@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UsersService } from '@app/core/services/users/users.service';
 import { UserDetailsDto } from '@interfaces/user/user-details-dto';
 import { AuthService } from '@app/core/services/auth/auth.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-verify-account-info',

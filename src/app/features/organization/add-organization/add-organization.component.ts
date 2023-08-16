@@ -6,6 +6,7 @@ import { OrganizationsService } from '@app/core/services/organizations/organizat
 import { Router } from '@angular/router';
 import { extractMessage } from '@app/core/utils/apiErrors';
 import { NewOrganization } from '@interfaces/organization/new-organization';
+import { Organization } from '@interfaces/organization/organization';
 
 @Component({
   selector: 'app-add-organization',
@@ -58,8 +59,10 @@ export class AddOrganizationComponent {
     };
 
     this.organizationService.add(newOrganization).subscribe({
-      next: () => {
-        this.router.navigateByUrl('/organizations').then();
+      next: (organization: Organization) => {
+        this.router
+          .navigateByUrl(`/organizations/${organization.id}/configurator`)
+          .then();
       },
       error: (err: unknown) => {
         this.apiError = extractMessage(err);

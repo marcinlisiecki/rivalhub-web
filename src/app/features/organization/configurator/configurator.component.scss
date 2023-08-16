@@ -1,0 +1,18 @@
+@import 'src/scss/variables';
+
+.wrapper {
+  max-width: $pageWidth;
+  margin: 4rem auto;
+
+  > h1 {
+    margin-bottom: 0;
+    color: $primaryColor;
+    font-size: $textBase;
+    font-weight: $weightMedium;
+  }
+}
+
+.form-step-navigation {
+  display: flex;
+  justify-content: space-between;
+}

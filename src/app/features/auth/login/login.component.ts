@@ -5,9 +5,7 @@ import { LoginCredentials } from '@interfaces/auth/login-credentials';
 import { AuthService } from '@app/core/services/auth/auth.service';
 import { extractMessage } from '@app/core/utils/apiErrors';
 import { Subscription } from 'rxjs';
-import { Invitation } from '@interfaces/organization/invitation';
 import { InvitationsService } from '@app/core/services/invitations/invitations.service';
-import { OrganizationsService } from '@app/core/services/organizations/organizations.service';
 
 @Component({
   selector: 'app-login',
@@ -37,8 +35,12 @@ export class LoginComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.queryParamsSub = this.route.queryParams.subscribe((params) => {
       this.registered = params['registered'];
-      this.invitation = params['invitation'];
     });
+
+    if (localStorage.getItem('loginInvitation')) {
+      this.invitation = true;
+      localStorage.removeItem('loginInvitation');
+    }
   }
 
   ngOnDestroy(): void {

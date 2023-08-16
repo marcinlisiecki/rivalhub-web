@@ -12,6 +12,18 @@ export class JwtService {
     return this.cookieService.get('token');
   }
 
+  getRefreshToken() {
+    return this.cookieService.get('refreshToken');
+  }
+
+  setRefreshToken(token: string) {
+    this.cookieService.put('refreshToken', token);
+  }
+
+  removeRefreshToken() {
+    this.cookieService.remove('refreshToken');
+  }
+
   setToken(token: string) {
     this.cookieService.put('token', token);
   }
@@ -93,7 +105,8 @@ export class JwtService {
   }
 
   isTokenValid(): boolean {
-    const token: string | undefined = this.getToken();
+    const token: string | undefined = this.getRefreshToken();
+
     if (token === undefined) {
       return false;
     }

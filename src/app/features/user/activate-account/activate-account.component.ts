@@ -19,16 +19,35 @@ export class ActivateAccountComponent implements OnInit {
     private usersService: UsersService,
     private route: ActivatedRoute,
     private authService: AuthService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
     const hash = this.route.snapshot.params['hash'];
+    const verified = this.route.snapshot.queryParams['verified'];
+    if (verified) {
+      this.isSuccess = true;
+      this.isLoading = false;
+      this.errorMessage = null;
+
+      return;
+    }
 
     this.usersService.verifyAccount(hash).subscribe({
       next: () => {
         this.isLoading = false;
         this.isSuccess = true;
         this.authService.refreshAuth();
+        this.router
+          .navigate([], {
+            relativeTo: this.route,
+            queryParams: {
+              verified: true,
+            },
+          })
+          .then(() => {
+            window.location.reload();
+          });
       },
       error: (err: HttpErrorResponse) => {
         this.isLoading = false;

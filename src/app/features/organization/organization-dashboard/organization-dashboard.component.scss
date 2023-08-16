@@ -15,7 +15,7 @@
     display: flex;
     align-items: center;
     height: 140px;
-    flex: 0 0 100%;
+    flex: $flexRow;
     background-color: $panelContentBg;
     padding: 10px;
     border-radius: $dashboardRadius;
@@ -25,7 +25,7 @@
   &-nav {
     display: flex;
     align-items: center;
-    flex: 0 0 100%;
+    flex: $flexRow;
     flex-wrap: wrap;
     margin-top: 15px;
     column-gap: 2rem;
@@ -35,7 +35,7 @@
   .dashboard-panels {
     display: flex;
     justify-content: space-between;
-    flex: 0 0 100%;
+    flex: $flexRow;
     margin-top: 25px;
 
     &-activities {
@@ -63,7 +63,7 @@
 
     .dashboard-nav-panel {
       display: flex;
-      flex: 0 0 100%;
+      flex: $flexRow;
       justify-content: center;
     }
 
@@ -71,14 +71,14 @@
       display: flex;
       align-items: center;
       height: 140px;
-      flex: 0 0 100%;
+      flex: $flexRow;
     }
 
     &-nav {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      flex: 0 0 100%;
+      flex: $flexRow;
       padding: 0 1.5rem;
     }
 
@@ -93,14 +93,14 @@
         align-self: flex-start;
         display: flex;
         flex-direction: column;
-        flex: 0 0 100%;
+        flex: $flexRow;
       }
 
       &-users {
         display: flex;
         align-self: flex-start;
         flex-direction: column;
-        flex: 0 0 100%;
+        flex: $flexRow;
       }
     }
   }

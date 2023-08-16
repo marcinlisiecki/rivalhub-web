@@ -1,20 +1,46 @@
-<p>Dostępne stanowiska dla kategorii: {{ categoryLabel }}</p>
-
-<div class="stations">
-  <label
-    *ngFor="let station of stations"
-    class="card-checkbox"
-    [class.card-checkbox-selected]="
-      selectedStations.includes(String(station.id))
-    "
-  >
-    <p-checkbox
-      name="station"
-      value="{{ station.id }}"
-      [ngModel]="selectedStations"
-      (ngModelChange)="toggleStation.emit(station.id)"
-      inputId="station-{{ station.id }}"
-    ></p-checkbox>
-    <span>{{ station.name }}</span>
-  </label>
-</div>
+<p-accordion [activeIndex]="[]">
+  <p-accordionTab [disabled]="stations.length === 0">
+    <ng-template pTemplate="header">
+      <div>
+        <div></div>
+        <span class="vertical-align-middle">{{ categoryLabel }}</span
+        ><span
+          class="inactive-text"
+          *ngIf="
+            closestAvailable?.stations?.length === 0 &&
+            closestAvailable.firstAvailable === null
+          "
+        >
+          Stanowiska z tej kategorii nie zostały jeszcze dodane</span
+        ><span
+          class="inactive-text"
+          *ngIf="
+            closestAvailable?.stations?.length === 0 &&
+            closestAvailable.firstAvailable !== null
+          "
+        >
+          Najbliższa dostępna stacja o:
+          {{ closestAvailable.formatedFirstAvailable }}</span
+        >
+      </div>
+    </ng-template>
+    <div class="stations">
+      <label
+        *ngFor="let station of stations"
+        class="card-checkbox"
+        [class.card-checkbox-selected]="
+          selectedStations.includes(String(station.id))
+        "
+      >
+        <p-checkbox
+          name="station"
+          value="{{ station.id }}"
+          [ngModel]="selectedStations"
+          (ngModelChange)="toggleStation.emit(station.id)"
+          inputId="station-{{ station.id }}"
+        ></p-checkbox>
+        <span>{{ station.name }}</span>
+      </label>
+    </div>
+  </p-accordionTab>
+</p-accordion>

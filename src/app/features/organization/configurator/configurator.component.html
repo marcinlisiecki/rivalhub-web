@@ -1,0 +1,27 @@
+<section class="wrapper">
+  <h1>{{ 'organization.configurator.title' | translate }}</h1>
+
+  <app-available-events-configurator
+    *ngIf="configuratorStep === OrganizationConfiguratorStep.CATEGORIES"
+    (toggleAvailableEventType)="toggleAvailableEventType($event)"
+    [activeEventTypes]="activeEventTypes"
+    [possibleEventTypes]="possibleEventTypes"
+    (setStep)="setStep($event)"
+    [isLoading]="isCategoryStepLoading"
+  >
+  </app-available-events-configurator>
+
+  <app-stations-configurator
+    *ngIf="configuratorStep === OrganizationConfiguratorStep.STATIONS"
+    (setStep)="setStep($event)"
+  >
+  </app-stations-configurator>
+
+  <app-settings-configurator
+    [settingsForm]="settingsForm"
+    *ngIf="configuratorStep === OrganizationConfiguratorStep.SETTINGS"
+    (setStep)="setStep($event)"
+    (saveOrganizationSettings)="saveOrganizationSettings()"
+  >
+  </app-settings-configurator>
+</section>

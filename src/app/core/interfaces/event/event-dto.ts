@@ -1,8 +1,13 @@
+import { Organization } from '@interfaces/organization/organization';
+import { EventType } from '@interfaces/event/event-type';
+
 export interface EventDto {
-  id: number;
-  name: string;
-  place: string;
+  eventId: number;
+  stationList: number[];
   startTime: Date;
   endTime: Date;
-  participantIds: number[];
+  host: number;
+  participants: number[];
+  organization: Organization;
+  eventType: EventType;
 }
