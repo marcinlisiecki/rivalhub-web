@@ -17,6 +17,9 @@ import { UserDetailsDto } from '@interfaces/user/user-details-dto';
 import { PagedResponse } from '@interfaces/generic/paged-response';
 import { AuthService } from '@app/core/services/auth/auth.service';
 import { LanguageService } from '@app/core/services/language/language.service';
+import { EventsService } from '@app/core/services/events/events.service';
+import { AddEvent } from '@interfaces/event/add-event';
+import { extractMessage } from '@app/core/utils/apiErrors';
 
 @Component({
   selector: 'app-new-event',
@@ -45,6 +48,8 @@ export class NewEventComponent implements OnInit, OnDestroy {
 
   onLangChangeSub?: Subscription;
 
+  newEvent!: AddEvent;
+
   basicInfoForm: FormGroup = new FormGroup({
     name: new FormControl('', [
       Validators.required,
@@ -63,6 +68,7 @@ export class NewEventComponent implements OnInit, OnDestroy {
   });
 
   constructor(
+    private eventsService: EventsService,
     private stationsService: StationsService,
     private organizationsService: OrganizationsService,
     private route: ActivatedRoute,
@@ -263,6 +269,73 @@ export class NewEventComponent implements OnInit, OnDestroy {
   selectEvent(eventType: EventType): void {
     this.selectedStations = [];
     this.selectedEventType = eventType;
+  }
+
+  buildEvent() {
+    let startTime = this.dateForm.get('startDate')?.value;
+    let endTime = this.dateForm.get('endDate')?.value;
+    let name = this.basicInfoForm.get('name')?.value;
+    let description = this.basicInfoForm.get('description')?.value;
+
+    let hostId = 0;
+    //TODO Refactor tego potrzebny będzie
+    if (this.teams.at(0)) {
+      let itemList: AddEventUser[] = this.teams.at(0) as AddEventUser[];
+      if (itemList.at(0)) {
+        let item = itemList.at(0);
+        if (item) hostId = item.id;
+      }
+    }
+
+    let dane: number[] = [];
+    let teams: number[][] = Array.from({ length: this.teams.length }, () => []);
+    let actualNumberOfParticipants: number = 0;
+    let currentTeam = 0;
+    for (const team of this.teams) {
+      if (team) {
+        const itemList: AddEventUser[] = team as AddEventUser[];
+
+        itemList.forEach((item) => {
+          if (item) {
+            teams[currentTeam].push(item.id);
+            dane.push(item.id);
+            actualNumberOfParticipants++;
+          }
+        });
+      }
+      currentTeam++;
+    }
+
+    let newEventstationList = this.selectedStations.map((item) =>
+      parseFloat(item),
+    );
+    this.newEvent = {
+      endTime: endTime,
+      host: hostId,
+      participants: dane,
+      startTime: startTime,
+      stationList: newEventstationList,
+      name: name,
+      description: description,
+      team1: teams[0],
+      team2: teams[1],
+    };
+  }
+  addEvent() {
+    this.buildEvent();
+    const organizationId: number = this.route.snapshot.params['id'];
+    console.log(this.selectedEventType);
+    this.eventsService
+      .addEvent(this.newEvent, organizationId, this.selectedEventType!)
+      .subscribe({
+        next: () => {
+          this.router.navigateByUrl(`/organizations/${organizationId}`).then();
+        },
+        error: (err) => {
+          //TODO obsułga błedu
+        },
+      });
+    console.log('poserwisie');
   }
 
   protected readonly AddEventFormStep = AddEventFormStep;

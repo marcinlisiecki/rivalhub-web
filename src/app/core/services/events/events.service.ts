@@ -3,8 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { EventType } from '@interfaces/event/event-type';
 import { environment } from '../../../../environments/enviroment';
 import { Observable } from 'rxjs';
-import { PingPongMatch } from '@interfaces/event/ping-pong/ping-pong-match';
-import { GameSet } from '@interfaces/event/game-set';
+import { EventDto } from '@interfaces/event/event-dto';
+import { NewOrganization } from '@interfaces/organization/new-organization';
+import { Organization } from '@interfaces/organization/organization';
+import { AddEvent } from '@interfaces/event/add-event';
+import * as moment from 'moment';
+import { formatDate } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
@@ -63,6 +67,31 @@ export class EventsService {
       environment.apiUrl +
         `/organizations/${id}/admin/event-types?type=${eventType}`,
       {},
+    );
+  }
+
+  formatDate(date: Date): string {
+    return moment(date).format('DD-MM-yyyy HH:mm');
+  }
+  addEvent(
+    addEvent: AddEvent,
+    organizationId: number,
+    type: string,
+  ): Observable<AddEvent> {
+    return this.http.post<AddEvent>(
+      environment.apiUrl +
+        `/organizations/${organizationId}/events?type=${type}`,
+      {
+        stationList: addEvent.stationList,
+        startTime: this.formatDate(addEvent.startTime),
+        endTime: this.formatDate(addEvent.endTime),
+        host: addEvent.host,
+        participants: addEvent.participants,
+        description: addEvent.description,
+        name: addEvent.name,
+        team1: addEvent.team1,
+        team2: addEvent.team2,
+      },
     );
   }
 }
