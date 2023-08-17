@@ -25,6 +25,7 @@ import { AvailableEventsConfiguratorComponent } from './configurator/available-e
 import { StationsConfiguratorComponent } from './configurator/stations-configurator/stations-configurator.component';
 import { SettingsConfiguratorComponent } from './configurator/settings-configurator/settings-configurator.component';
 import { CheckboxModule } from 'primeng/checkbox';
+import { ColorPickerModule } from 'primeng/colorpicker';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { CheckboxModule } from 'primeng/checkbox';
     StationModule,
     CheckboxModule,
     FormsModule,
+    ColorPickerModule,
   ],
   exports: [
     MyOrganizationsComponent,
@@ -72,6 +74,7 @@ import { CheckboxModule } from 'primeng/checkbox';
     DashboardHeaderComponent,
     DashboardActivitiesPanelComponent,
     ActivityItemComponent,
+    ColorPickerModule,
   ],
 })
 export class OrganizationModule {}
