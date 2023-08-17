@@ -9,7 +9,6 @@ import { extractMessage } from '@app/core/utils/apiErrors';
 import { MessageService } from 'primeng/api';
 import { InvitationsService } from '@app/core/services/invitations/invitations.service';
 import { UsersService } from '@app/core/services/users/users.service';
-import { UserDetailsDto } from '@interfaces/user/user-details-dto';
 import { ImageService } from '@app/core/services/image/image.service';
 
 @Component({
