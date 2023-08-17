@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 import { Organization } from '@interfaces/organization/organization';
+import {environment} from "../../../../../environments/enviroment";
 @Component({
   selector: 'app-dashboard-header',
   templateUrl: './dashboard-header.component.html',
@@ -12,7 +13,7 @@ export class DashboardHeaderComponent {
 
   getImagePath(imageUrl: string | null): string {
     if (imageUrl !== null) {
-      return imageUrl;
+      return environment.apiUrl + "/" + imageUrl;
     }
 
     return 'assets/img/avatars/avatarplaceholder.png';
