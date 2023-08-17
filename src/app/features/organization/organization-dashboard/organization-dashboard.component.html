@@ -5,15 +5,6 @@
     *ngIf="organization"
   ></app-dashboard-header>
 
-  <div class="dashboard-nav-panel">
-    <p-toggleButton
-      styleClass="p-button-secondary p-button-overwrite"
-      (click)="toggleNav()"
-      onLabel="Pokaż"
-      offLabel="Schowaj"
-    ></p-toggleButton>
-  </div>
-
   <div class="dashboard-panels">
     <app-dashboard-activities-panel
       class="dashboard-panels-activities"
