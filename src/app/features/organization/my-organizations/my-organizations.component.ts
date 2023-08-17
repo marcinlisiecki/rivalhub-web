@@ -10,6 +10,7 @@ import { MessageService } from 'primeng/api';
 import { InvitationsService } from '@app/core/services/invitations/invitations.service';
 import { UsersService } from '@app/core/services/users/users.service';
 import { UserDetailsDto } from '@interfaces/user/user-details-dto';
+import {environment} from "../../../../environments/enviroment";
 
 @Component({
   selector: 'app-my-organizations',
@@ -116,7 +117,7 @@ export class MyOrganizationsComponent implements OnInit {
   getImagePath(imageUrl: string | null): string {
     this.checkDefaultAvatar(imageUrl);
     if (imageUrl !== null) {
-      return imageUrl;
+      return environment.apiUrl + "/" + imageUrl;
     }
     return 'assets/img/avatars/avatarplaceholder.png';
   }
