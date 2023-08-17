@@ -1,8 +1,13 @@
 <div class="form-container">
   <p-card header="Dodaj organizację">
+        
+
     <form [formGroup]="addForm" (ngSubmit)="onSubmit()">
       <div class="form-item form-avatar">
-        <p-image width="75" height="75" [src]="imageURL" alt="avatar"></p-image>
+        <img (click)="onImageClick()" class="avatar-img" [ngStyle]="customAvatar ? { 'background-color': color } : null"
+ width="75" height="75" [src]="imageURL" alt="avatar">
+<p-colorPicker [disabled]="!customAvatar" #colorPicker [(ngModel)]="color" [ngModelOptions]="{standalone: true}"></p-colorPicker>
+
         <p-divider layout="vertical"></p-divider>
         <p-fileUpload
           name="uploadAvatar"
