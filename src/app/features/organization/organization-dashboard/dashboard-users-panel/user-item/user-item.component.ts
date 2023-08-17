@@ -14,7 +14,7 @@ import { ImageService } from '@app/core/services/image/image.service';
 export class UserItemComponent implements OnInit {
   @Input({ required: true }) user!: UserDetailsDto;
   items?: MenuItem[];
-  profileImg = this.imageService.getImagePath(this.user.profilePictureUrl);
+  profileImg!: string;
 
   constructor(
     private router: Router,
@@ -54,5 +54,8 @@ export class UserItemComponent implements OnInit {
     } else {
       this.items = [profileItem];
     }
+    this.profileImg = this.imageService.getUserImagePath(
+      this.user.profilePictureUrl,
+    );
   }
 }

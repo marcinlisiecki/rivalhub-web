@@ -1,10 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  Input,
-  AfterViewInit,
-  ViewChild,
-} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ImageService } from '@app/core/services/image/image.service';
 
 import { Organization } from '@interfaces/organization/organization';
@@ -13,13 +7,16 @@ import { Organization } from '@interfaces/organization/organization';
   templateUrl: './dashboard-header.component.html',
   styleUrls: ['./dashboard-header.component.scss'],
 })
-export class DashboardHeaderComponent {
+export class DashboardHeaderComponent implements OnInit {
   @Input({ required: true })
   organization!: Organization;
-
-  organizationImg: string = this.imageService.getImagePath(
-    this.organization.imageUrl,
-  );
+  defaultAvatar!: boolean;
 
   constructor(private imageService: ImageService) {}
+
+  ngOnInit(): void {
+    this.defaultAvatar = this.imageService.checkDefaultAvatar(
+      this.organization.imageUrl,
+    );
+  }
 }

@@ -1,5 +1,6 @@
 <div class="avatar">
-    <img class="dashboard-header-image" [src]="organizationImg" alt="Image">
+    <img class="dashboard-header-image" [src]="organization.imageUrl"
+        [ngStyle]="{'background-color': defaultAvatar ? organization.colorForDefaultImage : 'none'}" alt="Image">
 </div>
 <div class="info">
     <p class="info-title">Organizacja</p>

@@ -58,11 +58,10 @@ export class MyOrganizationsComponent implements OnInit {
         this.organizations = res;
         this.setMyInvitations();
         this.organizations.forEach((organization) => {
-          organization.imageUrl = this.imageService.getImagePath(
+          organization.imageUrl = this.imageService.getOrganizationImagePath(
             organization.imageUrl,
           );
         });
-        console.log(this.organizations);
       },
       complete: () => {
         this.isLoading = false;

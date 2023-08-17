@@ -108,7 +108,7 @@ export class OrganizationDashboardComponent implements OnInit, OnDestroy {
     this.organizationsService.choose(this.id).subscribe({
       next: (res: Organization) => {
         this.organization = res;
-        this.organization.imageUrl = this.imageService.getImagePath(
+        this.organization.imageUrl = this.imageService.getOrganizationImagePath(
           res.imageUrl,
         );
       },
