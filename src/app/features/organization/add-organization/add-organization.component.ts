@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { FileSelectEvent } from 'primeng/fileupload';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { subscribeOn } from 'rxjs';
@@ -13,11 +13,12 @@ import { Organization } from '@interfaces/organization/organization';
   templateUrl: './add-organization.component.html',
   styleUrls: ['./add-organization.component.scss'],
 })
-export class AddOrganizationComponent {
+export class AddOrganizationComponent implements AfterViewInit {
+  color: string = '#4c4d87';
   uploadedFile: File | undefined;
-  imageURL: string = 'assets/img/avatars/avatarplaceholder.png';
+  imageURL: string = 'assets/img/svg/defaultOrganization.svg';
   error: string | undefined;
-
+  customAvatar: boolean = true;
   addForm = new FormGroup({
     name: new FormControl('', [
       Validators.required,
@@ -33,14 +34,27 @@ export class AddOrganizationComponent {
     private router: Router,
   ) {}
 
+  //Udawaj, że tego tutaj nie ma, i tak nie zrozumiesz.
+  @ViewChild('colorPicker') colorPicker!: any;
+  onImageClick() {
+    this.colorPicker.el.nativeElement.childNodes[0].childNodes[0].click();
+  }
+  ngAfterViewInit(): void {
+    this.hideInput();
+  }
+  //Od tego miejsca znowu jesteś w stanie zrozumieć kod.
+
   onFileSelectClicked(event: FileSelectEvent) {
     this.uploadedFile = event.files[0];
     this.imageURL = URL.createObjectURL(event.currentFiles[0]);
+    this.customAvatar = false;
   }
 
   onClearClicked(event: Event) {
+    this.customAvatar = true;
     this.imageURL = 'assets/img/avatars/avatarplaceholder.png';
     this.uploadedFile = undefined;
+    this.hideInput();
   }
 
   onSubmit() {
@@ -51,14 +65,18 @@ export class AddOrganizationComponent {
       return;
     }
 
+    const organizationData = new FormData();
+    organizationData.append('thumbnail', this.uploadedFile || '');
+    organizationData.append('color', this.color);
+    organizationData.append(
+      'organization',
+      JSON.stringify(this.name?.value || ''),
+    );
+
     this.isLoading = true;
     URL.revokeObjectURL(this.imageURL);
 
-    const newOrganization: NewOrganization = {
-      name: this.name?.value || '',
-    };
-
-    this.organizationService.add(newOrganization).subscribe({
+    this.organizationService.add(organizationData).subscribe({
       next: (organization: Organization) => {
         this.router
           .navigateByUrl(`/organizations/${organization.id}/configurator`)
@@ -74,6 +92,9 @@ export class AddOrganizationComponent {
 
   get name() {
     return this.addForm.get('name');
+  }
+  hideInput() {
+    this.colorPicker.el.nativeElement.childNodes[0].childNodes[0].style.opacity = 0;
   }
 
   protected readonly subscribeOn = subscribeOn;

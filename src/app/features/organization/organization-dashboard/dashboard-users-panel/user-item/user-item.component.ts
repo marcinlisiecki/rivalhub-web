@@ -4,6 +4,7 @@ import { UserDetailsDto } from '@interfaces/user/user-details-dto';
 import { MenuItem, MenuItemCommandEvent } from 'primeng/api';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '@app/core/services/auth/auth.service';
+import { ImageService } from '@app/core/services/image/image.service';
 
 @Component({
   selector: 'app-user-item',
@@ -13,11 +14,13 @@ import { AuthService } from '@app/core/services/auth/auth.service';
 export class UserItemComponent implements OnInit {
   @Input({ required: true }) user!: UserDetailsDto;
   items?: MenuItem[];
+  profileImg = this.imageService.getImagePath(this.user.profilePictureUrl);
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private authService: AuthService,
+    private imageService: ImageService,
   ) {}
 
   ngOnInit(): void {
@@ -51,13 +54,5 @@ export class UserItemComponent implements OnInit {
     } else {
       this.items = [profileItem];
     }
-  }
-
-  getImagePath(imageUrl: string | null): string {
-    if (imageUrl !== null) {
-      return imageUrl;
-    }
-
-    return '/assets/img/avatars/user.png';
   }
 }

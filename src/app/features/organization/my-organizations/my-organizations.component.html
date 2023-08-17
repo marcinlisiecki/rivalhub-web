@@ -5,30 +5,20 @@
 
   <div class="content">
     <div class="organizations-container">
-      <div
-        *ngIf="organizations.length === 0 && !isLoading"
-        class="no-organizations"
-      >
+      <div *ngIf="organizations.length === 0 && !isLoading" class="no-organizations">
         <img src="assets/img/svg/void.svg" alt="" />
         <p>Nie należysz do żadnej organizacji</p>
-        <p-button
-          *ngIf="isAccountVerified"
-          routerLink="/organizations/new"
-          icon="pi pi-plus"
-          iconPos="right"
-          label="Stwórz własną"
-        ></p-button>
+        <p-button *ngIf="isAccountVerified" routerLink="/organizations/new" icon="pi pi-plus" iconPos="right"
+          label="Stwórz własną"></p-button>
       </div>
 
       <div class="organization-card" *ngFor="let organization of organizations">
-        <a
-          class="organization-link"
-          [ngStyle]="{
+        <a class="organization-link" [ngStyle]="{
             'background-image':
-              'url(' + getImagePath(organization.imageUrl) + ')'
-          }"
-          [routerLink]="createURL(organization.id)"
-        >
+              'url(' + organization.imageUrl + ')',
+              'background-color': checkDefaultAvatar(organization.imageUrl) ? organization.colorForDefaultImage : 'none'
+              
+          }" [routerLink]="createURL(organization.id)">
         </a>
         <span class="organization-name">{{ organization.name }}</span>
       </div>
@@ -42,18 +32,10 @@
       <div *ngFor="let invitation of invitations" class="invitation">
         <p>{{ invitation.organization.name }}</p>
         <div>
-          <p-button
-            [disabled]="!isAccountVerified"
-            styleClass="p-button-text p-button-success"
-            icon="pi pi-check"
-            (onClick)="acceptInvitation(invitation)"
-          ></p-button>
-          <p-button
-            [disabled]="!isAccountVerified"
-            styleClass="p-button-text p-button-danger"
-            icon="pi pi-times"
-            (onClick)="rejectInvitation(invitation)"
-          ></p-button>
+          <p-button [disabled]="!isAccountVerified" styleClass="p-button-text p-button-success" icon="pi pi-check"
+            (onClick)="acceptInvitation(invitation)"></p-button>
+          <p-button [disabled]="!isAccountVerified" styleClass="p-button-text p-button-danger" icon="pi pi-times"
+            (onClick)="rejectInvitation(invitation)"></p-button>
         </div>
       </div>
 

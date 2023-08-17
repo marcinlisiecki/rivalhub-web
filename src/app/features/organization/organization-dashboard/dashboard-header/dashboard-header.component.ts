@@ -1,4 +1,11 @@
-import { Component, Input } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  Input,
+  AfterViewInit,
+  ViewChild,
+} from '@angular/core';
+import { ImageService } from '@app/core/services/image/image.service';
 
 import { Organization } from '@interfaces/organization/organization';
 @Component({
@@ -10,11 +17,9 @@ export class DashboardHeaderComponent {
   @Input({ required: true })
   organization!: Organization;
 
-  getImagePath(imageUrl: string | null): string {
-    if (imageUrl !== null) {
-      return imageUrl;
-    }
+  organizationImg: string = this.imageService.getImagePath(
+    this.organization.imageUrl,
+  );
 
-    return 'assets/img/avatars/avatarplaceholder.png';
-  }
+  constructor(private imageService: ImageService) {}
 }

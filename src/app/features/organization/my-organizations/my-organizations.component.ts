@@ -10,6 +10,7 @@ import { MessageService } from 'primeng/api';
 import { InvitationsService } from '@app/core/services/invitations/invitations.service';
 import { UsersService } from '@app/core/services/users/users.service';
 import { UserDetailsDto } from '@interfaces/user/user-details-dto';
+import { ImageService } from '@app/core/services/image/image.service';
 
 @Component({
   selector: 'app-my-organizations',
@@ -31,6 +32,7 @@ export class MyOrganizationsComponent implements OnInit {
     private messageService: MessageService,
     private usersService: UsersService,
     private route: ActivatedRoute,
+    private imageService: ImageService,
   ) {}
 
   ngOnInit(): void {
@@ -55,6 +57,12 @@ export class MyOrganizationsComponent implements OnInit {
       next: (res: Organization[]) => {
         this.organizations = res;
         this.setMyInvitations();
+        this.organizations.forEach((organization) => {
+          organization.imageUrl = this.imageService.getImagePath(
+            organization.imageUrl,
+          );
+        });
+        console.log(this.organizations);
       },
       complete: () => {
         this.isLoading = false;
@@ -113,19 +121,14 @@ export class MyOrganizationsComponent implements OnInit {
     });
   }
 
-  getImagePath(imageUrl: string | null): string {
-    this.checkDefaultAvatar(imageUrl);
-    if (imageUrl !== null) {
-      return imageUrl;
-    }
-    return 'assets/img/avatars/avatarplaceholder.png';
-  }
-
   createURL(id: number): string {
     return `/organizations/${id}`;
   }
 
-  checkDefaultAvatar(imageUrl: string | null) {
-    this.isDefaultAvatar = imageUrl === null;
+  checkDefaultAvatar(imageUrl: string | null): boolean {
+    if (!imageUrl) {
+      return true;
+    }
+    return imageUrl.includes('defaultOrganization.svg');
   }
 }
