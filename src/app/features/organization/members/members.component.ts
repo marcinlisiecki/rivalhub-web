@@ -3,6 +3,8 @@ import {OrganizationsService} from "@app/core/services/organizations/organizatio
 import {ActivatedRoute} from "@angular/router";
 import {UserDetailsDto} from "@interfaces/user/user-details-dto";
 import {HttpErrorResponse} from "@angular/common/http";
+import {AuthService} from "@app/core/services/auth/auth.service";
+import {JwtService} from "@app/core/services/jwt/jwt.service";
 // import {debounce, debounceTime, distinctUntilChanged, Subject} from "rxjs";
 
 
@@ -21,29 +23,24 @@ export class MembersComponent implements OnInit {
   public searchQuery: string = ''
   public filteredUsers: UserDetailsDto[] = []
   public noMore: boolean = false
-  // searchQueryUpdate = new Subject<string>()
+  public amIAdmin!: boolean
 
   toggleLoading = () => this.isLoading = !this.isLoading
 
   constructor(
     private organizationService: OrganizationsService,
     private router: ActivatedRoute,
-  ) {
-    // this.searchQueryUpdate.pipe(
-    //   debounceTime(2000),
-    //   distinctUntilChanged())
-    //   .subscribe(value => {
-    //     this.searchQuery = value
-    //   })
-  }
+    private authService: AuthService,
+  ) {}
 
   ngOnInit() {
     this.router.params.subscribe(params => {
       this.organizationId = params['id']
     })
-    this.loadData()
+    this.amIAdmin = this.authService.amIAdmin(this.organizationId)
 
-    // wywalic i w search barze do backendu od razu // debounce 500 ms
+    this.loadData()
+    // TODO debounce 500 ms
   }
 
 
@@ -103,5 +100,10 @@ export class MembersComponent implements OnInit {
         this.filteredUsers = response;
       }
     })
+  }
+
+  onKickUser(index: number) {
+    this.users.splice(index, 1)
+    this.filteredUsers.splice(index, 1)
   }
 }

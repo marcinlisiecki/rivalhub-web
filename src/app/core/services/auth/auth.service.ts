@@ -1,9 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  HttpClient,
-  HttpResponse,
-  HttpResponseBase,
-} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { LoginCredentials } from '@interfaces/auth/login-credentials';
 import { RegisterCredentials } from '@interfaces/auth/register-credentials';
 import { AuthResponse } from '@interfaces/auth/login-response';
@@ -11,9 +7,6 @@ import { Observable, Subject, tap } from 'rxjs';
 import { environment } from '../../../../environments/enviroment';
 import { JwtService } from '../jwt/jwt.service';
 import { NavigationStart, Router } from '@angular/router';
-import { UserDetailsDto } from '@interfaces/user/user-details-dto';
-import { UsersService } from '@app/core/services/users/users.service';
-
 @Injectable({
   providedIn: 'root',
 })
@@ -106,5 +99,15 @@ export class AuthService {
 
   getActivationTime(): string | null {
     return this.jwtService.getActivationTime();
+  }
+
+  amIAdmin(organizationId: number): boolean {
+    const adminOrganizationIds = this.jwtService.getAdminOrganizationIds();
+
+    if (adminOrganizationIds === null) {
+      return false;
+    }
+
+    return adminOrganizationIds.includes(Number(organizationId));
   }
 }

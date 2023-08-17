@@ -81,12 +81,6 @@ export class OrganizationsService {
     );
   }
 
-  getAllUsers(id: number) {
-    return this.http.get<UserDetailsDto[]>(
-      environment.apiUrl + `/organizations/${id}/users/all`
-    )
-  }
-
   getOrganizationReservations(
     organizationId: number,
   ): Observable<Reservation[]> {
@@ -159,4 +153,12 @@ export class OrganizationsService {
   //     { params },
   //   );
   // }
+
+  deleteUser(id: number, userId: number) {
+    return this.http.delete(
+      environment.apiUrl + `/organizations/${id}/users/${userId}`
+    )
+  }
+
+
 }
