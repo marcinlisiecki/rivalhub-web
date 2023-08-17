@@ -54,12 +54,11 @@ export class CalendarBodyComponent implements OnInit, AfterViewInit, OnDestroy {
   handleEventClick(clickInfo: EventClickArg) {
     let data = <Date>clickInfo.event.start;
     if (this.isMonthView())
-      this.calendarService.api.select(clickInfo.event.start);
+      this.calendarService.api.select(data);
     else {
       this.calendarService.currentDate.set(<Date>clickInfo.event.start);
       this.calendarService.updateCalendar();
     }
-    this.calendarService.api.select(data);
   }
   onDateClick(selectedDate: DateClickArg) {
     this.dateClick.emit();

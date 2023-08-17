@@ -13,7 +13,7 @@
     </div>
   </div>
 
-  <div>
+  <div class="types">
     <p>Typ wydarzenia</p>
     <div *ngFor="let type of types" class="field-checkbox">
       <p-checkbox
@@ -27,7 +27,7 @@
     </div>
   </div>
 
-  <div>
+  <div class="weekend">
     <p-checkbox
       [(ngModel)]="selectedWeeks"
       [binary]="weekend()"

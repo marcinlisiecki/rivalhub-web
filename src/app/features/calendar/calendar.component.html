@@ -24,7 +24,7 @@
           <app-calendar-events></app-calendar-events>
         </p-sidebar>
       </div>
-      <div class="right">
+      <div class="right" [ngStyle]="{marginLeft:calendarMargin}">
         <app-calendar-body
           (dateClick)="!sidebarVisible && toggleSidebar()"
         ></app-calendar-body>

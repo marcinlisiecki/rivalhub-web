@@ -98,8 +98,9 @@ export class CalendarService {
   }
 
   handleDateSelect(selectInfo: DateSelectArg) {
-    this.updateCalendar();
     this.currentDate.set(selectInfo.start);
+    console.log(selectInfo.start)
+    this.updateCalendar();
   }
 
   setCalendarApi(_api: Calendar) {
