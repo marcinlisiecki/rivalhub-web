@@ -5,7 +5,6 @@ import { subscribeOn } from 'rxjs';
 import { OrganizationsService } from '@app/core/services/organizations/organizations.service';
 import { Router } from '@angular/router';
 import { extractMessage } from '@app/core/utils/apiErrors';
-import { NewOrganization } from '@interfaces/organization/new-organization';
 import { Organization } from '@interfaces/organization/organization';
 
 @Component({
@@ -14,9 +13,10 @@ import { Organization } from '@interfaces/organization/organization';
   styleUrls: ['./add-organization.component.scss'],
 })
 export class AddOrganizationComponent implements AfterViewInit {
+  private DEFAULTAVATAR = '/assets/img/svg/defaultOrganization.svg';
   color: string = '#4c4d87';
   uploadedFile: File | undefined;
-  imageURL: string = 'assets/img/svg/defaultOrganization.svg';
+  imageURL: string = this.DEFAULTAVATAR;
   error: string | undefined;
   customAvatar: boolean = true;
   addForm = new FormGroup({
@@ -52,7 +52,7 @@ export class AddOrganizationComponent implements AfterViewInit {
 
   onClearClicked(event: Event) {
     this.customAvatar = true;
-    this.imageURL = 'assets/img/avatars/avatarplaceholder.png';
+    this.imageURL = this.DEFAULTAVATAR;
     this.uploadedFile = undefined;
     this.hideInput();
   }
