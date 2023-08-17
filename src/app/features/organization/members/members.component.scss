@@ -4,15 +4,8 @@
   display: flex;
   align-items: center;
   margin: 20px auto 0 auto;
-  max-width: $pageWidth;
+  width: $pageWidth;
   flex-wrap: wrap;
-}
-
-.data-card{
-  padding: 5px;
-  margin: 8px 0;
-  font-size: 30px;
-  text-align: center;
 }
 
 .dashboard-container {

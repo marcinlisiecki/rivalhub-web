@@ -100,4 +100,27 @@ export class OrganizationsService {
       environment.apiUrl + `/organizations/${id}/invitation/${hash}`
     )
   }
+
+  getUsersByNamePhrase(id: number, namePhrase: string) {
+    let params = new HttpParams();
+    params = params.append('namePhrase', namePhrase)
+    return this.http.get<UserDetailsDto[]>(
+      environment.apiUrl + `/organizations/${id}/users/search`,
+      { params }
+    )
+  }
+
+  // getUsers(
+  //   id: number,
+  //   page: number,
+  //   size: number,
+  // ): Observable<PagedResponse<UserDetailsDto>> {
+  //   let params = new HttpParams();
+  //   params = params.append('page', page.toString());
+  //   params = params.append('size', size.toString());
+  //   return this.http.get<any>(
+  //     environment.apiUrl + `/organizations/${id}/users`,
+  //     { params },
+  //   );
+  // }
 }

@@ -3,6 +3,8 @@ import {OrganizationsService} from "@app/core/services/organizations/organizatio
 import {ActivatedRoute} from "@angular/router";
 import {UserDetailsDto} from "@interfaces/user/user-details-dto";
 import {HttpErrorResponse} from "@angular/common/http";
+// import {debounce, debounceTime, distinctUntilChanged, Subject} from "rxjs";
+
 
 @Component({
   selector: 'app-members',
@@ -16,46 +18,44 @@ export class MembersComponent implements OnInit {
   private itemsPerPage = 15
   public users!: UserDetailsDto[]
 
-  public allUsers: UserDetailsDto[] = []
   public searchQuery: string = ''
   public filteredUsers: UserDetailsDto[] = []
   public noMore: boolean = false
+  // searchQueryUpdate = new Subject<string>()
 
   toggleLoading = () => this.isLoading = !this.isLoading
 
   constructor(
     private organizationService: OrganizationsService,
     private router: ActivatedRoute,
-  ) {}
+  ) {
+    // this.searchQueryUpdate.pipe(
+    //   debounceTime(2000),
+    //   distinctUntilChanged())
+    //   .subscribe(value => {
+    //     this.searchQuery = value
+    //   })
+  }
 
   ngOnInit() {
     this.router.params.subscribe(params => {
       this.organizationId = params['id']
     })
     this.loadData()
-    this.loadAllUsers()
+
+    // wywalic i w search barze do backendu od razu // debounce 500 ms
   }
 
-  loadAllUsers = () => {
-    this.organizationService.getAllUsers(this.organizationId).subscribe({
-        next: (response: UserDetailsDto[]) => {
-          this.allUsers = response
-        },
-        error: (error: HttpErrorResponse) => {
-          console.log(error.error)
-        }
-    })
-  }
 
-  filterUsers() {
-    if (this.searchQuery) {
-      this.filteredUsers = this.allUsers.filter(user =>
-        user.name.toLowerCase().includes(this.searchQuery.toLowerCase())
-      );
-    } else {
-      this.filteredUsers = this.allUsers;
-    }
-  }
+  // filterUsers() {
+  //   if (this.searchQuery) {
+  //     this.filteredUsers = this.allUsers.filter(user =>
+  //       user.name.toLowerCase().includes(this.searchQuery.toLowerCase())
+  //     );
+  //   } else {
+  //     this.filteredUsers = this.allUsers;
+  //   }
+  // }
 
   loadData = () => {
     this.toggleLoading()
@@ -93,5 +93,15 @@ export class MembersComponent implements OnInit {
   onSearchInputChange = () => {
     this.currentPage = 0;
     this.filterUsers()
+    this.loadData()
+  }
+
+  filterUsers() {
+    const namePhrase = this.searchQuery.toLowerCase()
+    this.organizationService.getUsersByNamePhrase(this.organizationId, namePhrase).subscribe({
+      next: response => {
+        this.filteredUsers = response;
+      }
+    })
   }
 }

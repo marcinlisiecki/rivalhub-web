@@ -11,7 +11,7 @@
   flex-grow: 1;
 
   &-title {
-    text-wrap: balance;
+    text-wrap: normal;
     margin: 10px 0 10px 15px;
     font-weight: $weightMedium;
     color: $textSecondaryColor;
@@ -45,4 +45,8 @@
   max-width: 100%; /* Ensure the image doesn't exceed its container's width */
   max-height: 100%; /* Ensure the image doesn't exceed its container's height */
   object-fit: cover; /* Maintain aspect ratio and cover the container */
+}
+
+.card-btn {
+  margin: 0 10px;
 }
