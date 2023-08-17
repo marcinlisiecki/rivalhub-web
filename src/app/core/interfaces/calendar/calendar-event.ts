@@ -11,10 +11,13 @@ export interface CalendarEvent extends EventInput {
   endStr?: string;
   end?: Date;
   allDay: boolean;
-  color: string;
+  color?: string;
+  borderColor?: string;
+  textColor?: string;
   extendedProps?: {
     organisationName: string;
     organisationId: string;
     type: string;
+    backgroundColor?: string;
   };
 }

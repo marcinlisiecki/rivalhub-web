@@ -1,8 +1,4 @@
 <div class="events">
-  <h1>
-    {{ currentDate() | date: 'dd.MM.yyyy' }}
-  </h1>
-
   <div
     *ngIf="currentDayEvents().length !== 0; then eventContent; else noEvents"
   ></div>
@@ -18,8 +14,8 @@
       <b *ngIf="!event.allDay">{{ getDate(event) | date: 'hh:mm' }}</b>
       <b *ngIf="event.allDay"> Cały dzień </b>
     </section>
-    <section>
-      <h3>{{ event['type'] }}</h3>
+    <section style="margin-left: 1rem">
+      <h5>{{ event['type'] }}</h5>
     </section>
   </div>
 </ng-template>

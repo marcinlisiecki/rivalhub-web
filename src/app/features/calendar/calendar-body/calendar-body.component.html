@@ -1,12 +1,14 @@
 <div class="calendar-body">
-  <full-calendar #calendar [options]="calendarOptions()">
+  <full-calendar class="calendar-main" #calendar [options]="calendarOptions()">
     <ng-template #eventContent let-arg>
-      <li>
-        <b>{{ arg.event!['extendedProps']['organisationName'] + '\n' }}</b>
-      </li>
-      <p>
-        <b>{{ '\n' + arg.event!['extendedProps']['type'] + '\n' }}</b>
-      </p>
+      <div class="calendar-event">
+        <p *ngIf="!isTitleIsToLong(arg.event.title); else toLongTitle">
+          {{ arg.event.title }}
+        </p>
+      </div>
+      <ng-template #toLongTitle>
+        <b>{{ arg.event.title.slice(0, 12) + '...' }}</b>
+      </ng-template>
     </ng-template></full-calendar
   >
 </div>

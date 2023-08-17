@@ -9,10 +9,11 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
-import { CalendarOptions } from '@fullcalendar/core';
+import { CalendarOptions, EventClickArg } from '@fullcalendar/core';
 import { CalendarService } from '@app/core/services/calendar/calendar.service';
 import { FullCalendarComponent } from '@fullcalendar/angular';
 import { DateClickArg } from '@fullcalendar/interaction';
+import { cl } from '@fullcalendar/core/internal-common';
 
 @Component({
   selector: 'app-calendar-body',
@@ -23,9 +24,9 @@ export class CalendarBodyComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('calendar') calendarComponent!: FullCalendarComponent;
   @Output() dateClick = new EventEmitter();
 
+  selectedDate!: any;
   currentDate = new Date('2023-08-08');
   calendarOptions!: WritableSignal<CalendarOptions>;
-  calendarVisible = signal(true);
   events = this.calendarService.visibleEvents;
   constructor(private calendarService: CalendarService) {}
 
@@ -34,6 +35,7 @@ export class CalendarBodyComponent implements OnInit, AfterViewInit, OnDestroy {
     this.calendarOptions.mutate((options) => {
       options.dateClick = this.onDateClick.bind(this);
       options.initialDate = this.currentDate;
+      options.eventClick = this.handleEventClick.bind(this);
       this.calendarService.getOrganisation();
     });
     this.calendarService.currentDate.set(this.currentDate);
@@ -46,12 +48,30 @@ export class CalendarBodyComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     this.calendarService.setCalendarApi(this.calendarComponent.getApi());
+    console.log(this.isMonthView());
   }
 
+  handleEventClick(clickInfo: EventClickArg) {
+    let data = <Date>clickInfo.event.start;
+    this.calendarService.api.select(data);
+  }
   onDateClick(selectedDate: DateClickArg) {
     this.dateClick.emit();
-    this.calendarService.currentSelectedDate = signal(selectedDate);
-    this.calendarService.currentDayFilter(selectedDate.dateStr);
-    this.calendarService.currentDate.set(selectedDate.date);
+    if (this.isMonthView()) this.calendarService.api.select(selectedDate.date);
+    else {
+      this.calendarService.currentDate.set(selectedDate.date);
+      this.calendarService.updateCalendar();
+    }
+  }
+
+  isTitleIsToLong(title: string): boolean {
+    return title.length > 12;
+  }
+
+  isMonthView() {
+    return (
+      this.calendarComponent.getApi().getCurrentData().currentViewType ===
+      'dayGridMonth'
+    );
   }
 }

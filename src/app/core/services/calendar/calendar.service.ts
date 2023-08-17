@@ -12,6 +12,7 @@ import {
   CalendarOptions,
   DateSelectArg,
   EventClickArg,
+  EventInput,
 } from '@fullcalendar/core';
 import interactionPlugin, { DateClickArg } from '@fullcalendar/interaction';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -31,9 +32,8 @@ import { CalendarEvent } from '@interfaces/calendar/calendar-event';
 })
 export class CalendarService {
   api!: Calendar;
+  selectedDate!: WritableSignal<DateClickArg>;
   currentDate = signal(new Date());
-  currentSelectedDate: any;
-  lastSelectedDate!: WritableSignal<DateClickArg>;
   allEvents = signal<CalendarEvent[]>(INITIAL_EVENTS);
   visibleEvents = signal(this.allEvents());
   currentDayEvents = signal(this.allEvents());
@@ -44,7 +44,6 @@ export class CalendarService {
   sidebar = signal(false);
   language = this.lang.getCurrentLanguage();
   events = signal<CalendarEvent[]>([]);
-
   options = signal<CalendarOptions>({
     plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin],
     headerToolbar: {
@@ -52,15 +51,17 @@ export class CalendarService {
       center: 'title',
       right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek',
     },
+    eventDisplay: 'block',
+    showNonCurrentDates: true,
     initialView: 'dayGridMonth',
     events: this.visibleEvents(),
     eventSources: this.visibleEvents(),
     weekends: true,
     editable: false,
-    selectMirror: true,
+    selectMirror: false,
     dayMaxEvents: true,
     select: this.handleDateSelect.bind(this),
-    eventClick: this.handleEventClick.bind(this),
+    displayEventTime: true,
     firstDay: 1,
     locales: allLocales,
     locale: 'pl',
@@ -70,7 +71,6 @@ export class CalendarService {
       eventRemove:
       */
   });
-
   public filter: { selectedOrganisations: Array<string> } = {
     selectedOrganisations: [],
   };
@@ -98,30 +98,8 @@ export class CalendarService {
   }
 
   handleDateSelect(selectInfo: DateSelectArg) {
-    // const title = selectInfo.startStr.slice(0, 4);
-    // const calendarApi = selectInfo.view.calendar;
-    // calendarApi.unselect(); // clear date selection
-    // if (!title) {
-    //   calendarApi.addEvent({
-    //     id: createEventId(),
-    //     title,
-    //     start: selectInfo.startStr + 'T18:54:14',
-    //     end: selectInfo.startStr + 'T19:54:14',
-    //     extendedProps: {
-    //       organisation: 'NCDC',
-    //     },
-    //   });
-    // }
-  }
-
-  handleEventClick(clickInfo: EventClickArg) {
-    alert(clickInfo.event.title);
-  }
-
-  handleEvents(events: CalendarEvent[]) {
-    setTimeout(() => {
-      this.events.set(events);
-    }, 0); // workaround for pressionChangedAfterItHasBeenCheckedError
+    this.updateCalendar();
+    this.currentDate.set(selectInfo.start);
   }
 
   setCalendarApi(_api: Calendar) {
@@ -199,11 +177,5 @@ export class CalendarService {
     this.api.removeAllEventSources();
     this.api.addEventSource(this.visibleEvents());
     this.currentDayFilter(this.currentDate());
-  }
-
-  dateSelected() {
-    this.lastSelectedDate = this.currentSelectedDate;
-    this.currentSelectedDate().dayEl.style.backgroundColor = 'red';
-    this.lastSelectedDate().dayEl.style.backgroundColor = '#263238';
   }
 }

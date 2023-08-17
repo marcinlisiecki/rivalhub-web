@@ -1,3 +1,25 @@
-full-calendar {
-  height: 65dvh;
+@import 'src/scss/variables';
+
+.event {
+  //background-color: red;
+}
+.calendar-main {
+  font-size: 0.75rem;
+  width: 800px;
+  height: 600px;
+  display: flex;
+  text-align: center !important;
+}
+
+.event {
+  width: 100%;
+  background-color: #4a0713;
+}
+
+.reservation {
+  width: 100%;
+  background-color: #367790;
+}
+
+.calendar-body {
 }
