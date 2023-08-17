@@ -7,6 +7,7 @@ import { CalendarService } from '@app/core/services/calendar/calendar.service';
   styleUrls: ['./calendar.component.scss'],
 })
 export class CalendarComponent implements OnInit {
+  sidebarHeader = this.serv.currentDate;
   sidebarVisible: boolean = false;
   sidebarWidth = '0';
   sidebarIcon? = 'pi pi-arrow-right';

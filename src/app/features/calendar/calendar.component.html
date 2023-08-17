@@ -12,12 +12,15 @@
     <div class="content">
       <div class="left" #left [ngStyle]="{ width: sidebarWidth }">
         <p-sidebar
-          styleClass="calendar"
+          styleClass="calendarSidebar"
           [(visible)]="sidebarVisible"
           [appendTo]="left"
           [modal]="false"
           (onHide)="toggleSidebar()"
         >
+          <ng-template pTemplate="header"
+            ><h1>{{ sidebarHeader() | date: 'dd.MM.yyyy' }}</h1></ng-template
+          >
           <app-calendar-events></app-calendar-events>
         </p-sidebar>
       </div>
