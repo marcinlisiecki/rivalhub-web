@@ -5,4 +5,23 @@
     *ngFor="let reservation of reservations"
     [reservation]="reservation"
   ></app-activity-item>
+
+  <div class="item-container" *ngFor="let event of events">
+    <p class="name">Wydarzenie</p>
+    <div class="content">
+      <div class="stations">
+        {{ categoryTypeToLabel(event.eventType) | translate }}
+      </div>
+      <div class="bottom">
+        <p class="date">{{ event.startTime }} - {{ event.endTime }}</p>
+        <p-button
+          styleClass="p-button-secondary"
+          routerLink="/organizations/{{ organizationId }}/events/{{
+            event.eventId
+          }}/results"
+          >Wprowadź wyniki</p-button
+        >
+      </div>
+    </div>
+  </div>
 </div>

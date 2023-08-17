@@ -1,111 +1,107 @@
 @import 'src/scss/variables';
 
 .dashboard-container {
+  display: flex;
+  align-items: center;
+  margin: 20px auto 0 auto;
+  max-width: $pageWidth;
+  flex-wrap: wrap;
+
+  .dashboard-nav-panel {
+    display: none;
+  }
+
+  &-header {
+    display: flex;
+    align-items: center;
+    height: 140px;
+    flex: $flexRow;
+    background-color: $panelContentBg;
+    padding: 10px;
+    border-radius: $dashboardRadius;
+    border: $dashboardBorder;
+  }
+
+  &-nav {
+    display: flex;
+    align-items: center;
+    flex: $flexRow;
+    flex-wrap: wrap;
+    margin-top: 15px;
+    column-gap: 2rem;
+    row-gap: 1rem;
+  }
+
+  .dashboard-panels {
+    display: flex;
+    justify-content: space-between;
+    flex: $flexRow;
+    margin-top: 25px;
+
+    &-activities {
+      align-self: flex-start;
+      display: flex;
+      flex-direction: column;
+      flex: 0 0 70%;
+    }
+
+    &-users {
+      display: flex;
+      align-self: flex-start;
+      flex-direction: column;
+      flex: 0 0 20%;
+    }
+  }
+}
+
+@media only screen and (max-width: $mobileBreakpoint) {
+  .dashboard-container {
     display: flex;
     align-items: center;
     margin: 20px auto 0 auto;
     max-width: $pageWidth;
-    flex-wrap: wrap;
-
 
     .dashboard-nav-panel {
-        display: none;
+      display: flex;
+      flex: $flexRow;
+      justify-content: center;
     }
 
     &-header {
-        display: flex;
-        align-items: center;
-        height: 140px;
-        flex: 0 0 100%;
-        background-color: $panelContentBg;
-        padding: 10px;
-        border-radius: $dashboardRadius;
-        border: $dashboardBorder;
+      display: flex;
+      align-items: center;
+      height: 140px;
+      flex: $flexRow;
     }
 
     &-nav {
-        display: flex;
-        align-items: center;
-        flex: 0 0 100%;
-        flex-wrap: wrap;
-        margin-top: 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      flex: $flexRow;
+      padding: 0 1.5rem;
     }
 
     .dashboard-panels {
+      display: flex;
+      justify-content: space-between;
+
+      margin-top: 25px;
+      flex-wrap: wrap;
+
+      &-activities {
+        align-self: flex-start;
         display: flex;
-        justify-content: space-between;
-        flex: 0 0 100%;
-        margin-top: 25px;
+        flex-direction: column;
+        flex: $flexRow;
+      }
 
-        &-activities {
-            align-self: flex-start;
-            display: flex;
-            flex-direction: column;
-            flex: 0 0 70%;
-        }
-
-        &-users {
-            display: flex;
-            align-self: flex-start;
-            flex-direction: column;
-            flex: 0 0 20%;
-
-
-        }
-    }
-
-
-}
-
-@media only screen and (max-width: $mobileBreakpoint) {
-    .dashboard-container {
+      &-users {
         display: flex;
-        align-items: center;
-        margin: 20px auto 0 auto;
-        max-width: $pageWidth;
-
-        .dashboard-nav-panel {
-            display: flex;
-            flex: 0 0 100%;
-            justify-content: center;
-        }
-
-        &-header {
-            display: flex;
-            align-items: center;
-            height: 140px;
-            flex: 0 0 100%;
-        }
-
-        &-nav {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            flex: 0 0 100%;
-        }
-
-        .dashboard-panels {
-            display: flex;
-            justify-content: space-between;
-
-            margin-top: 25px;
-            flex-wrap: wrap;
-
-            &-activities {
-                align-self: flex-start;
-                display: flex;
-                flex-direction: column;
-                flex: 0 0 100%;
-            }
-
-            &-users {
-                display: flex;
-                align-self: flex-start;
-                flex-direction: column;
-                flex: 0 0 100%;
-
-
-            }
-        }
+        align-self: flex-start;
+        flex-direction: column;
+        flex: $flexRow;
+      }
     }
+  }
 }

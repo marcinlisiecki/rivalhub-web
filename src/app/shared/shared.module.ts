@@ -18,6 +18,12 @@ import { NoAvailableStationsComponent } from './no-available-stations/no-availab
 import { CenteredSpinnerComponent } from './centered-spinner/centered-spinner.component';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { LayoutModule } from '@angular/cdk/layout';
+import { VerifyAccountInfoComponent } from './verify-account-info/verify-account-info.component';
+import { NoResourceInfoComponent } from './no-resource-info/no-resource-info.component';
+import { AccordionModule } from 'primeng/accordion';
+import { EventResultComponent } from './event-result/event-result.component';
+import { PingPingResultComponent } from './event-result/ping-ping-result/ping-ping-result.component';
+import { EventWaitingComponent } from './event-result/event-waiting/event-waiting.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +31,11 @@ import { LayoutModule } from '@angular/cdk/layout';
     CategoryStationsSelectorComponent,
     NoAvailableStationsComponent,
     CenteredSpinnerComponent,
+    VerifyAccountInfoComponent,
+    NoResourceInfoComponent,
+    EventResultComponent,
+    PingPingResultComponent,
+    EventWaitingComponent,
   ],
   exports: [
     ValidationErrorComponent,
@@ -42,6 +53,9 @@ import { LayoutModule } from '@angular/cdk/layout';
     CenteredSpinnerComponent,
     NoAvailableStationsComponent,
     LayoutModule,
+    VerifyAccountInfoComponent,
+    NoResourceInfoComponent,
+    EventResultComponent,
   ],
   imports: [
     CommonModule,
@@ -59,6 +73,7 @@ import { LayoutModule } from '@angular/cdk/layout';
     FormsModule,
     ProgressSpinnerModule,
     LayoutModule,
+    AccordionModule,
   ],
 })
 export class SharedModule {}

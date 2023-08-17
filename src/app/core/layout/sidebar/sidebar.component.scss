@@ -1,1 +1,44 @@
+@import 'src/scss/variables';
 
+.organizations {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  width: 100%;
+  gap: 0.5rem;
+}
+
+.organization {
+  border-radius: $borderRadius;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.1s;
+  border: 2px solid transparent;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+
+  &:hover {
+    transform: scale(0.97);
+  }
+
+  &-selected {
+    border: 2px solid $primaryColor;
+  }
+}
+
+h1 {
+  font-size: $textBase;
+  font-weight: $weightRegular;
+}
+
+.nav {
+  ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    row-gap: 1.2rem;
+    padding: 0;
+  }
+}

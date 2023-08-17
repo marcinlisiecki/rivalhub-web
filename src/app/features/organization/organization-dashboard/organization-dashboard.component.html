@@ -15,12 +15,14 @@
   </div>
   <app-dashboard-nav
     [@openNav]="navVisible && mobileView"
+    [canUserInvite]="canUserInvite"
     class="dashboard-container-nav"
   ></app-dashboard-nav>
   <div class="dashboard-panels">
     <app-dashboard-activities-panel
       class="dashboard-panels-activities"
       [reservations]="reservations"
+      [events]="events"
     ></app-dashboard-activities-panel>
     <app-dashboard-users-panel
       class="dashboard-panels-users"

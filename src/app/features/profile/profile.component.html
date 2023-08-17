@@ -1,20 +1,18 @@
+<!-- Widok profilu: -->
+<!-- Odnośnie eventów dodać nazwe organizacji (pill??????) -->
+<!-- Gdy niezalogowany zwracać jakiś brak danych -->
+<!-- Wspólne organizacje w których jesteśmy -->
+
+
 <div class="dashboard-container">
+  <div *ngIf="compact" style="height:140px"></div>
+  <app-dashboard-profile [isMe]="isMe"  [user]="user" *ngIf="user" [compact]="compact" [ngClass]='{"dashboard-container-compact":compact}' class="dashboard-container-header"></app-dashboard-profile>
 
-  <app-dashboard
-    class="dashboard-container-header">
-  </app-dashboard>
-
-  <div class="dashboard-panels">
-    <app-dashboard-activities
-      class="dashboard-panels-activities"
-    ></app-dashboard-activities>
-  </div>
 
   <div class="dashboard-panels">
-    <app-dashboard-history
-    class="dashboard-panels-activities">
-    </app-dashboard-history>
+    <app-dashboard-history [games]="games" class="dashboard-panels-history"></app-dashboard-history>
+    <app-dashboard-activities [reservations]="reservations" class="dashboard-panels-activities"></app-dashboard-activities>
   </div>
+
 
 </div>
-

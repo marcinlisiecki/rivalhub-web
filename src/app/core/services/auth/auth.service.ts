@@ -1,12 +1,18 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpResponse,
+  HttpResponseBase,
+} from '@angular/common/http';
 import { LoginCredentials } from '@interfaces/auth/login-credentials';
 import { RegisterCredentials } from '@interfaces/auth/register-credentials';
-import { LoginResponse } from '@interfaces/auth/login-response';
+import { AuthResponse } from '@interfaces/auth/login-response';
 import { Observable, Subject, tap } from 'rxjs';
 import { environment } from '../../../../environments/enviroment';
 import { JwtService } from '../jwt/jwt.service';
 import { NavigationStart, Router } from '@angular/router';
+import { UserDetailsDto } from '@interfaces/user/user-details-dto';
+import { UsersService } from '@app/core/services/users/users.service';
 
 @Injectable({
   providedIn: 'root',
@@ -29,28 +35,52 @@ export class AuthService {
     });
   }
 
-  register(credentials: RegisterCredentials): Observable<{}> {
-    return this.http.post(environment.apiUrl + '/register', credentials);
+  register(credentials: RegisterCredentials): Observable<AuthResponse> {
+    return this.http
+      .post<AuthResponse>(environment.apiUrl + '/register', credentials)
+      .pipe(tap((res) => this.handleSetJwt(res)));
   }
 
-  login(credentials: LoginCredentials): Observable<LoginResponse> {
+  login(credentials: LoginCredentials): Observable<AuthResponse> {
     return this.http
-      .post<LoginResponse>(environment.apiUrl + '/login', credentials)
-      .pipe(
-        tap((result: any) => {
-          if (result?.token) {
-            this.jwtService.setToken(result.token);
-          }
+      .post<AuthResponse>(environment.apiUrl + '/login', credentials)
+      .pipe(tap((res) => this.handleSetJwt(res)));
+  }
 
-          this.authSubject.next(this.isAuth());
-          return result;
-        }),
-      );
+  refreshToken(): Observable<AuthResponse> {
+    const refreshToken = this.jwtService.getRefreshToken();
+
+    return this.http
+      .post<AuthResponse>(
+        environment.apiUrl + '/refresh-token',
+        {},
+        { headers: { Authorization: `Bearer ${refreshToken}` } },
+      )
+      .pipe(tap((res) => this.handleSetJwt(res)));
+  }
+
+  handleSetJwt(response: AuthResponse) {
+    if (response?.token) {
+      this.jwtService.setToken(response.token);
+      this.jwtService.setRefreshToken(response.refreshToken);
+    }
+
+    this.authSubject.next(this.isAuth());
+    return response;
+  }
+
+  refreshAuth() {
+    let isAuth = this.isAuth();
+
+    this.authSubject.next(!isAuth);
+    this.authSubject.next(isAuth);
   }
 
   logout() {
     this.jwtService.removeToken();
+    this.jwtService.removeRefreshToken();
     this.authSubject.next(false);
+    localStorage.setItem('selectedOrganization', '');
     this.router.navigateByUrl('/login').then();
   }
 
@@ -72,5 +102,9 @@ export class AuthService {
 
   getUserName(): string | null {
     return this.jwtService.getUserName();
+  }
+
+  getActivationTime(): string | null {
+    return this.jwtService.getActivationTime();
   }
 }

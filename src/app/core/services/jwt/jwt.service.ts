@@ -12,6 +12,18 @@ export class JwtService {
     return this.cookieService.get('token');
   }
 
+  getRefreshToken() {
+    return this.cookieService.get('refreshToken');
+  }
+
+  setRefreshToken(token: string) {
+    this.cookieService.put('refreshToken', token);
+  }
+
+  removeRefreshToken() {
+    this.cookieService.remove('refreshToken');
+  }
+
   setToken(token: string) {
     this.cookieService.put('token', token);
   }
@@ -26,6 +38,20 @@ export class JwtService {
 
   getUserEmailFromToken(decoded: any): string | null {
     return decoded?.sub || null;
+  }
+
+  getActivationTimeFromToken(decoded: any): string | null {
+    return decoded?.activationTime || null;
+  }
+
+  getActivationTime(): string | null {
+    const token: string | undefined = this.getToken();
+    if (token === undefined) {
+      return null;
+    }
+
+    const decoded = this.decodeToken(token) || '';
+    return this.getActivationTimeFromToken(decoded);
   }
 
   getUserIdFromToken(decoded: any): number | null {
@@ -79,7 +105,8 @@ export class JwtService {
   }
 
   isTokenValid(): boolean {
-    const token: string | undefined = this.getToken();
+    const token: string | undefined = this.getRefreshToken();
+
     if (token === undefined) {
       return false;
     }

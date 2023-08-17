@@ -18,9 +18,15 @@
         </ul>
       </nav>
     </div>
-    <nav *ngIf="!mobileView">
-      <app-header-logged-in *ngIf="isLoggedIn"></app-header-logged-in>
-      <app-header-not-logged-in *ngIf="!isLoggedIn"></app-header-not-logged-in>
+    <nav>
+      <app-header-logged-in
+        *ngIf="isLoggedIn"
+        [mobileView]="mobileView"
+      ></app-header-logged-in>
+      <app-header-not-logged-in
+        *ngIf="!isLoggedIn"
+        [mobileView]="mobileView"
+      ></app-header-not-logged-in>
     </nav>
   </div>
 </header>

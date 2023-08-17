@@ -1,7 +1,7 @@
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { navAnimation } from '@app/core/animations/nav-animation';
 import { OrganizationsService } from '@app/core/services/organizations/organizations.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { ViewService } from '@app/core/services/view/view.service';
 import { EventDto } from '@interfaces/event/event-dto';
@@ -10,6 +10,8 @@ import { PagedResponse } from '@interfaces/generic/paged-response';
 import { UserDetailsDto } from '@interfaces/user/user-details-dto';
 import { Subscription } from 'rxjs';
 import { Reservation } from '@interfaces/reservation/reservation';
+import { MessageService } from 'primeng/api';
+import { OrganizationSettings } from '@interfaces/organization/organization-settings';
 
 @Component({
   selector: 'app-organization-dashboard',
@@ -21,35 +23,11 @@ export class OrganizationDashboardComponent implements OnInit, OnDestroy {
   navVisible: boolean = false;
   mobileView!: boolean;
   reservations: Reservation[] = [];
-  events: EventDto[] = [
-    {
-      id: 1,
-      name: 'Wędkowanie na jeziorze',
-      place: 'Jezioro',
-      startTime: new Date('2023-09-13T11:11'),
-      endTime: new Date('2023-09-14T11:11'),
-      participantIds: [5],
-    },
-    {
-      id: 2,
-      name: 'Wędkowanie na rzece',
-      place: 'Rzeka',
-      startTime: new Date('2023-09-13T11:11'),
-      endTime: new Date('2023-09-14T11:11'),
-      participantIds: [1, 2],
-    },
-    {
-      id: 3,
-      name: 'Wędkowanie na stawie',
-      place: 'Staw',
-      startTime: new Date('2023-09-13T11:11'),
-      endTime: new Date('2023-09-14T11:11'),
-      participantIds: [2, 3, 4],
-    },
-  ];
+  events: EventDto[] = [];
   organization!: Organization;
   users!: UserDetailsDto[];
   id!: number;
+  canUserInvite: boolean = false;
 
   resizeEventSub?: Subscription;
   paramsSub?: Subscription;
@@ -57,7 +35,9 @@ export class OrganizationDashboardComponent implements OnInit, OnDestroy {
   constructor(
     private organizationsService: OrganizationsService,
     private route: ActivatedRoute,
+    private router: Router,
     private viewService: ViewService,
+    private messageService: MessageService,
   ) {}
 
   ngOnInit(): void {
@@ -70,12 +50,33 @@ export class OrganizationDashboardComponent implements OnInit, OnDestroy {
 
     this.paramsSub = this.route.params.subscribe((params) => {
       this.id = params['id'];
+      this.getOrganizationInfo();
+      this.getOrganizationUsers();
+      this.getOrganizationReservations();
+
+      this.organizationsService.getSettings(this.id).subscribe({
+        next: (settings: OrganizationSettings) => {
+          this.canUserInvite = !settings.onlyAdminCanSeeInvitationLink;
+        },
+      });
     });
 
-    this.getOrganizationInfo();
-    this.getOrganizationUsers();
-    this.getOrganizationReservations();
-    // this.getOrgzationEvents();
+    const configured = this.route.snapshot.queryParams['configured'];
+    if (configured) {
+      this.messageService.add({
+        severity: 'success',
+        life: 1000 * 10,
+        summary: 'Pomyślnie skonfigurowao organizację',
+      });
+      this.router
+        .navigate([], {
+          relativeTo: this.route,
+          queryParams: {},
+        })
+        .then();
+    }
+
+    this.getOrganizationEvents();
   }
 
   getOrganizationReservations() {
@@ -114,7 +115,7 @@ export class OrganizationDashboardComponent implements OnInit, OnDestroy {
     });
   }
 
-  private getOrgzationEvents() {
+  private getOrganizationEvents() {
     this.organizationsService.getEvents(this.id).subscribe({
       next: (res: EventDto[]) => {
         this.events = res;

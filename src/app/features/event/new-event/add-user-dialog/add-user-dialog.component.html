@@ -24,7 +24,7 @@
     </div>
   </div>
 
-  <div class="no-users" *ngIf="filteredUserList.length === 0">
+  <app-no-resource-info *ngIf="filteredUserList.length === 0">
     Nie znaleziono żadnych użytkowników
-  </div>
+  </app-no-resource-info>
 </section>

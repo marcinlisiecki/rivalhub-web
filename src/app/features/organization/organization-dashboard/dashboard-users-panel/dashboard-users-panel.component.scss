@@ -1,6 +1,5 @@
-.user-item{
-    display: flex;
-        justify-items: center;
-        align-items: center;
-        height: 40px;
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.5rem;
 }
