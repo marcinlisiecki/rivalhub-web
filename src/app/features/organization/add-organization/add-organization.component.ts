@@ -46,6 +46,13 @@ export class AddOrganizationComponent {
   }
 
   onSubmit() {
+    const organizationData = new FormData();
+    organizationData.append('thumbnail', this.uploadedFile || '');
+    organizationData.append(
+      'organization',
+      JSON.stringify(this.name?.value || ''),
+    );
+
     this.apiError = null;
 
     if (!this.addForm.valid) {
@@ -56,11 +63,7 @@ export class AddOrganizationComponent {
     this.isLoading = true;
     URL.revokeObjectURL(this.imageURL);
 
-    const newOrganization: NewOrganization = {
-      name: this.name?.value || '',
-    };
-
-    this.organizationService.add(newOrganization).subscribe({
+    this.organizationService.add(organizationData).subscribe({
       next: (organization: Organization) => {
         this.router
           .navigateByUrl(`/organizations/${organization.id}/configurator`)
