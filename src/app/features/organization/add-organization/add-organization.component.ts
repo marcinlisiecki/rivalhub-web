@@ -62,7 +62,6 @@ export class AddOrganizationComponent {
 
     this.organizationService.add(newOrganization).subscribe({
       next: (organization: Organization) => {
-        this.authService.refreshAuth();
         this.router
           .navigateByUrl(`/organizations/${organization.id}/configurator`)
           .then();

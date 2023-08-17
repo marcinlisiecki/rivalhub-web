@@ -13,12 +13,7 @@
       offLabel="Schowaj"
     ></p-toggleButton>
   </div>
-  <app-dashboard-nav
-    [@openNav]="navVisible && mobileView"
-    [canUserInvite]="canUserInvite"
-    [amIAdmin]="amIAdmin"
-    class="dashboard-container-nav"
-  ></app-dashboard-nav>
+
   <div class="dashboard-panels">
     <app-dashboard-activities-panel
       class="dashboard-panels-activities"

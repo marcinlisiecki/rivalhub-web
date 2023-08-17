@@ -85,6 +85,10 @@ export class SidebarComponent implements OnInit, OnDestroy {
         this.isAccountActivated = user.activationTime !== null;
       });
     }
+
+    if (this.selectedOrganization) {
+      this.amIAdmin = this.authService.amIAdmin(this.selectedOrganization.id);
+    }
   }
 
   ngOnDestroy(): void {
