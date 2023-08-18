@@ -4,22 +4,21 @@ import { AddEventUser } from '@interfaces/event/add-event-user';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AddUserDialogComponent } from '@app/features/event/new-event/add-user-dialog/add-user-dialog.component';
 import { UserDetailsDto } from '@interfaces/user/user-details-dto';
-import { AddTeamUser } from '@interfaces/event/add-team-user';
 import { AuthService } from '@app/core/services/auth/auth.service';
 
 @Component({
-  selector: 'app-add-user-ping-pong',
-  templateUrl: './add-user-ping-pong.component.html',
-  styleUrls: ['./add-user-ping-pong.component.scss'],
+  selector: 'app-add-event-users',
+  templateUrl: './add-event-users.component.html',
+  styleUrls: ['./add-event-users.component.scss'],
 })
-export class AddUserPingPongComponent {
-  @Input() teams: AddEventUser[][] = [];
+export class AddEventUsersComponent {
+  @Input() addedUsers: AddEventUser[] = [];
   @Input() userList: UserDetailsDto[] = [];
 
-  @Output() handleAddUser: EventEmitter<AddTeamUser> =
-    new EventEmitter<AddTeamUser>();
-  @Output() handleRemoveUser: EventEmitter<AddTeamUser> =
-    new EventEmitter<AddTeamUser>();
+  @Output() handleAddUser: EventEmitter<AddEventUser> =
+    new EventEmitter<AddEventUser>();
+  @Output() handleRemoveUser: EventEmitter<AddEventUser> =
+    new EventEmitter<AddEventUser>();
   @Output() setFormStep: EventEmitter<AddEventFormStep> =
     new EventEmitter<AddEventFormStep>();
 
@@ -34,22 +33,24 @@ export class AddUserPingPongComponent {
     this.loggedInUserId = authService.getUserId();
   }
 
-  removeUser(teamIndex: number, user: AddEventUser) {
-    this.handleRemoveUser.emit({ teamIndex, user });
+  removeUser(user: AddEventUser) {
+    this.handleRemoveUser.emit(user);
   }
 
-  openAddUserDialog(teamIndex: number) {
+  openAddUserDialog() {
     this.addUserDialogRef = this.dialogService.open(AddUserDialogComponent, {
       data: {
-        userList: this.userList,
-        teamIndex,
+        userList: this.userList.filter(
+          (user) =>
+            this.addedUsers.findIndex((item) => user.id === item.id) === -1,
+        ),
       },
       header: 'Dodaj użytkownika',
       width: '25rem',
     });
 
-    this.addUserDialogRef.onClose.subscribe((res) => {
-      this.handleAddUser.emit({ teamIndex: res?.teamIndex, user: res?.user });
+    this.addUserDialogRef.onClose.subscribe((user) => {
+      this.handleAddUser.emit(user);
     });
   }
 

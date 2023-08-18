@@ -91,8 +91,6 @@ export class EventsService {
         participants: addEvent.participants,
         description: addEvent.description,
         name: addEvent.name,
-        team1: addEvent.team1,
-        team2: addEvent.team2,
       },
     );
   }
