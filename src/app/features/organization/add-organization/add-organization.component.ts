@@ -36,7 +36,7 @@ export class AddOrganizationComponent implements AfterViewInit {
 
   //Udawaj, że tego tutaj nie ma, i tak nie zrozumiesz.
   //Ale dla jasności - to jest potrzebne do tego,
-  //żeby po kliknięciu na awatar pokazywał się colorpicker i chował się oryginalny.
+  //żeby po kliknięciu na awatar pokazywał się colorpicker i chował się oryginalny guziczek.
   @ViewChild('colorPicker') colorPicker!: any;
   onImageClick() {
     this.colorPicker.el.nativeElement.childNodes[0].childNodes[0].click();
