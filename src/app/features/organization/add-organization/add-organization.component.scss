@@ -1,3 +1,5 @@
+@import 'src/scss/variables';
+
 .form-container {
   display: flex;
   justify-content: center;
@@ -29,4 +31,17 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.avatar-img{
+  border-radius: $dashboardRadius;
+
+  &:hover{
+    cursor: pointer;
+  }
+}
+//Ukrywam colorpicker żeby nie przeszkadzał, bo był brzydki i nie pasował
+p-colorpicker{
+  height:0;
+  width:0;
 }
