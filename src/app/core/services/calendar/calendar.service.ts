@@ -7,18 +7,11 @@ import {
   signal,
   WritableSignal,
 } from '@angular/core';
-import {
-  Calendar,
-  CalendarOptions,
-  DateSelectArg,
-  EventClickArg,
-  EventInput,
-} from '@fullcalendar/core';
-import interactionPlugin, { DateClickArg } from '@fullcalendar/interaction';
+import { Calendar, CalendarOptions, DateSelectArg } from '@fullcalendar/core';
+import interactionPlugin from '@fullcalendar/interaction';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
-import { INITIAL_EVENTS } from '@app/mock/calendar';
 import allLocales from '@fullcalendar/core/locales-all';
 import { LanguageService } from '@app/core/services/language/language.service';
 import { OrganizationsService } from '@app/core/services/organizations/organizations.service';
@@ -28,7 +21,6 @@ import { formatDate } from '@angular/common';
 import { CalendarEvent } from '@interfaces/calendar/calendar-event';
 import { EventDto } from '@interfaces/event/event-dto';
 import { Reservation } from '@interfaces/reservation/reservation';
-import { async } from 'rxjs';
 import { Filters } from '@app/features/calendar/calendar-filter/calendar-filter.component';
 
 @Injectable({

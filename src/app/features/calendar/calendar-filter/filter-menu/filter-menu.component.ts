@@ -2,11 +2,9 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnChanges,
   OnDestroy,
   OnInit,
   Output,
-  SimpleChanges,
   WritableSignal,
 } from '@angular/core';
 import { CalendarOptions } from '@fullcalendar/core';

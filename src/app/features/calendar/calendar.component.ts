@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, signal } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { CalendarService } from '@app/core/services/calendar/calendar.service';
 
 @Component({

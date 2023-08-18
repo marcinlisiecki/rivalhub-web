@@ -1,6 +1,5 @@
 import {
   Component,
-  signal,
   WritableSignal,
   OnInit,
   OnDestroy,
@@ -13,7 +12,6 @@ import { CalendarOptions, EventClickArg } from '@fullcalendar/core';
 import { CalendarService } from '@app/core/services/calendar/calendar.service';
 import { FullCalendarComponent } from '@fullcalendar/angular';
 import { DateClickArg } from '@fullcalendar/interaction';
-import { cl } from '@fullcalendar/core/internal-common';
 
 @Component({
   selector: 'app-calendar-body',
