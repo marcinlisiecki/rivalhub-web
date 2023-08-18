@@ -21,14 +21,14 @@
 
       .left {
         display: flex;
-        margin-left: 6dvw;
+        margin-left: 0dvw;
         z-index: 1001;
         align-items: center;
         flex-direction: row;
       }
       .right {
-        display:flex;
-        justify-content:space-around;
+        display: flex;
+        justify-content: space-around;
         width: 100%;
         overflow: hidden;
       }

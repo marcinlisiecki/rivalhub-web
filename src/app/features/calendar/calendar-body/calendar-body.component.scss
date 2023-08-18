@@ -1,8 +1,5 @@
 @import 'src/scss/variables';
 
-.event {
-  //background-color: red;
-}
 .calendar-main {
   font-size: 0.75rem;
   width: 800px;
@@ -18,6 +15,7 @@
 
 .reservation {
   width: 100%;
+  height: 2px;
   background-color: #367790;
 }
 

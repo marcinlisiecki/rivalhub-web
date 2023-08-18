@@ -48,13 +48,12 @@ export class CalendarBodyComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     this.calendarService.setCalendarApi(this.calendarComponent.getApi());
-    console.log(this.isMonthView());
+    this.calendarService.getOrganisation();
   }
 
   handleEventClick(clickInfo: EventClickArg) {
     let data = <Date>clickInfo.event.start;
-    if (this.isMonthView())
-      this.calendarService.api.select(data);
+    if (this.isMonthView()) this.calendarService.api.select(data);
     else {
       this.calendarService.currentDate.set(<Date>clickInfo.event.start);
       this.calendarService.updateCalendar();

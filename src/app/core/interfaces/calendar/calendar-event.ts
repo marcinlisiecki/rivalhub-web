@@ -19,5 +19,6 @@ export interface CalendarEvent extends EventInput {
     organisationId: string;
     type: string;
     backgroundColor?: string;
+    description?: string;
   };
 }
