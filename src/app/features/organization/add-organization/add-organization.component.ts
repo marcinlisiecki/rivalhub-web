@@ -68,10 +68,7 @@ export class AddOrganizationComponent implements AfterViewInit {
     const organizationData = new FormData();
     organizationData.append('thumbnail', this.uploadedFile || '');
     organizationData.append('color', this.color);
-    organizationData.append(
-      'organization',
-      JSON.stringify(this.name?.value || ''),
-    );
+    organizationData.append('organization', this.name?.value || '');
 
     this.isLoading = true;
     URL.revokeObjectURL(this.imageURL);
