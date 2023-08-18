@@ -14,10 +14,12 @@ import { Organization } from '@interfaces/organization/organization';
 })
 export class AddOrganizationComponent implements AfterViewInit {
   private DEFAULTAVATAR = '/assets/img/svg/defaultOrganization.svg';
+  ACCEPTEDFILETYPES = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'];
+  MAXFILESIZE = 5242880;
   color: string = '#4c4d87';
   uploadedFile: File | undefined;
   imageURL: string = this.DEFAULTAVATAR;
-  error: string | undefined;
+  clientError: string | undefined;
   customAvatar: boolean = true;
   addForm = new FormGroup({
     name: new FormControl('', [
@@ -35,6 +37,8 @@ export class AddOrganizationComponent implements AfterViewInit {
   ) {}
 
   //Udawaj, że tego tutaj nie ma, i tak nie zrozumiesz.
+  //Ale dla jasności - to jest potrzebne do tego,
+  //żeby po kliknięciu na awatar pokazywał się colorpicker i chował się oryginalny guziczek.
   @ViewChild('colorPicker') colorPicker!: any;
   onImageClick() {
     this.colorPicker.el.nativeElement.childNodes[0].childNodes[0].click();
@@ -45,6 +49,19 @@ export class AddOrganizationComponent implements AfterViewInit {
   //Od tego miejsca znowu jesteś w stanie zrozumieć kod.
 
   onFileSelectClicked(event: FileSelectEvent) {
+    this.clientError = undefined;
+    //check if file is type of ACCEPTEDFILETYPES
+    if (!this.ACCEPTEDFILETYPES.includes(event.files[0].type)) {
+      this.clientError = 'Obsługujemy tylko pliki .png, .jpg, .jpeg i .gif.';
+      return;
+    }
+    console.log(event.files[0].size);
+    //check if file is not too big
+    if (event.files[0].size > this.MAXFILESIZE) {
+      this.clientError = 'Plik jest za duży.';
+      return;
+    }
+
     this.uploadedFile = event.files[0];
     this.imageURL = URL.createObjectURL(event.currentFiles[0]);
     this.customAvatar = false;
@@ -68,10 +85,7 @@ export class AddOrganizationComponent implements AfterViewInit {
     const organizationData = new FormData();
     organizationData.append('thumbnail', this.uploadedFile || '');
     organizationData.append('color', this.color);
-    organizationData.append(
-      'organization',
-      JSON.stringify(this.name?.value || ''),
-    );
+    organizationData.append('organization', this.name?.value || '');
 
     this.isLoading = true;
     URL.revokeObjectURL(this.imageURL);
@@ -88,6 +102,10 @@ export class AddOrganizationComponent implements AfterViewInit {
     });
 
     this.isLoading = false;
+  }
+
+  joinAcceptableImageTypes() {
+    return this.ACCEPTEDFILETYPES.join(',');
   }
 
   get name() {
