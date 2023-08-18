@@ -4,9 +4,6 @@ import {ActivatedRoute} from "@angular/router";
 import {UserDetailsDto} from "@interfaces/user/user-details-dto";
 import {HttpErrorResponse} from "@angular/common/http";
 import {AuthService} from "@app/core/services/auth/auth.service";
-import {JwtService} from "@app/core/services/jwt/jwt.service";
-// import {debounce, debounceTime, distinctUntilChanged, Subject} from "rxjs";
-
 
 @Component({
   selector: 'app-members',
@@ -15,15 +12,19 @@ import {JwtService} from "@app/core/services/jwt/jwt.service";
 })
 export class MembersComponent implements OnInit {
   private organizationId!: number
-  public isLoading = false
+  private isLoading = false
   private currentPage = 0
   private itemsPerPage = 15
   public users!: UserDetailsDto[]
+  public adminUsers!: UserDetailsDto[]
+  public filteredUsers: UserDetailsDto[] = []
+  private adminIds!: number[]
 
   public searchQuery: string = ''
-  public filteredUsers: UserDetailsDto[] = []
   public noMore: boolean = false
   public amIAdmin!: boolean
+
+  // public isMyself: boolean = false
 
   toggleLoading = () => this.isLoading = !this.isLoading
 
@@ -31,35 +32,25 @@ export class MembersComponent implements OnInit {
     private organizationService: OrganizationsService,
     private router: ActivatedRoute,
     private authService: AuthService,
-  ) {}
+    ) {}
 
   ngOnInit() {
     this.router.params.subscribe(params => {
       this.organizationId = params['id']
     })
-    this.amIAdmin = this.authService.amIAdmin(this.organizationId)
 
+    this.amIAdmin = this.authService.amIAdmin(this.organizationId)
+    this.loadAdmins()
     this.loadData()
     // TODO debounce 500 ms
   }
-
-
-  // filterUsers() {
-  //   if (this.searchQuery) {
-  //     this.filteredUsers = this.allUsers.filter(user =>
-  //       user.name.toLowerCase().includes(this.searchQuery.toLowerCase())
-  //     );
-  //   } else {
-  //     this.filteredUsers = this.allUsers;
-  //   }
-  // }
 
   loadData = () => {
     this.toggleLoading()
     this.organizationService.getUsers(this.organizationId, this.currentPage, this.itemsPerPage).subscribe({
       next: response => {
         this.users = response.content
-        // console.log(this.users)
+        this.users = this.users.filter(user => !this.adminIds.includes(user.id))
       },
       error: (error: HttpErrorResponse) => {
         console.log(error.error)
@@ -73,6 +64,7 @@ export class MembersComponent implements OnInit {
     this.organizationService.getUsers(this.organizationId, this.currentPage, this.itemsPerPage).subscribe({
       next: response => {
         this.users = [...this.users,...response.content]
+        this.users = this.users.filter(user => !this.adminIds.includes(user.id))
       },
       error: (error: HttpErrorResponse) => {
         console.log(error.error.message)
@@ -98,6 +90,7 @@ export class MembersComponent implements OnInit {
     this.organizationService.getUsersByNamePhrase(this.organizationId, namePhrase).subscribe({
       next: response => {
         this.filteredUsers = response;
+        this.filteredUsers = this.filteredUsers.filter(user => !this.adminIds.includes(user.id))
       }
     })
   }
@@ -106,4 +99,33 @@ export class MembersComponent implements OnInit {
     this.users.splice(index, 1)
     this.filteredUsers.splice(index, 1)
   }
+
+  onKickAdmin(index: number) {
+    this.adminUsers.splice(index, 1)
+  }
+
+  loadAdmins() {
+    this.organizationService.getAdminUsersIds(this.organizationId).subscribe({
+      next: response => {
+        this.adminUsers = response
+        this.adminIds = this.adminUsers.map(user => user.id)
+      },
+      error: HttpErrorResponse => {
+        console.log("cos poszlo nie tak")
+      }
+    })
+  }
+
+  onUnAdmin(index: number){
+    this.adminUsers.splice(index, 1)
+    this.currentPage = 0
+    this.loadData()
+  }
+
+  onAdmin(index: number){
+    this.users.splice(index, 1)
+    this.currentPage = 0
+    this.loadAdmins()
+  }
+
 }

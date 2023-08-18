@@ -154,11 +154,28 @@ export class OrganizationsService {
   //   );
   // }
 
-  deleteUser(id: number, userId: number) {
+  getAdminUsersIds(id: number): Observable<UserDetailsDto[]> {
+    return this.http.get<UserDetailsDto[]>(
+      environment.apiUrl + `/organizations/${id}/users/admins`
+    )
+  }
+
+  kickUser(id: number, userId: number) {
     return this.http.delete(
       environment.apiUrl + `/organizations/${id}/users/${userId}`
     )
   }
 
+  unAdmin(id: number, userId: number) {
+    return this.http.delete(
+      environment.apiUrl + `/organizations/${id}/admin/${userId}`
+    )
+  }
 
+  grantAdmin(id: number, userId: number) {
+    return this.http.post<{}>(
+      environment.apiUrl + `/organizations/${id}/admin/${userId}`,
+      {}
+    )
+  }
 }

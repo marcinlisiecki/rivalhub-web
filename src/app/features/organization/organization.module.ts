@@ -30,6 +30,7 @@ import { SettingsConfiguratorComponent } from './configurator/settings-configura
 import { CheckboxModule } from 'primeng/checkbox';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { Location} from "@angular/common";
+import { AdminCardComponent } from './members/admin-card/admin-card.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { Location} from "@angular/common";
     SettingsConfiguratorComponent,
     MembersComponent,
     MemberCardComponent,
+    AdminCardComponent,
   ],
   imports: [
     RouterModule,

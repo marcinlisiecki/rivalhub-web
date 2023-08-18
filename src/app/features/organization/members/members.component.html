@@ -1,4 +1,17 @@
 <div class="wrapper">
+  <div class="dashboard-container">
+    <h2>Administratorzy</h2>
+    <app-admin-card
+      [amIAdmin]="amIAdmin"
+      *ngFor="let adminUser of adminUsers; let i = index"
+      [user]="adminUser"
+      (kicked)="onKickAdmin(i)"
+      (unAdmined)="onUnAdmin(i)"
+      class="dashboard-container-header"
+    >
+    </app-admin-card>
+  </div>
+
   <div>
     <input type="text" [(ngModel)]="searchQuery" (input)="onSearchInputChange()">
     <div *ngIf="searchQuery; else infiniteScrollContent" class="dashboard-container">
@@ -7,31 +20,33 @@
         *ngFor="let filteredUser of filteredUsers; let i = index"
         [user]="filteredUser"
         (kicked)="onKickUser(i)"
+        (admined)="onAdmin(i)"
         class="dashboard-container-header"
       >
       </app-member-card>
     </div>
   </div>
-    <ng-template #infiniteScrollContent>
-      <div
-        class="dashboard-container"
-        infiniteScroll
-        [infiniteScrollDistance]="2"
-        [infiniteScrollThrottle]="500"
-        (scrolled)="onScroll()"
-        [scrollWindow]="true"
+  <ng-template #infiniteScrollContent>
+    <div
+      class="dashboard-container"
+      infiniteScroll
+      [infiniteScrollDistance]="2"
+      [infiniteScrollThrottle]="500"
+      (scrolled)="onScroll()"
+      [scrollWindow]="true"
+    >
+      <app-member-card
+        [amIAdmin]="amIAdmin"
+        *ngFor="let user of users; let i = index"
+        [user]="user"
+        (kicked)="onKickUser(i)"
+        (admined)="onAdmin(i)"
+        class="dashboard-container-header"
       >
-        <app-member-card
-          [amIAdmin]="amIAdmin"
-          *ngFor="let user of users; let i = index"
-          [user]="user"
-          (kicked)="onKickUser(i)"
-          class="dashboard-container-header"
-        >
-        </app-member-card>
-      </div>
-      <div *ngIf="noMore">
-        Koniec
-      </div>
-    </ng-template>
+      </app-member-card>
+    </div>
+    <div *ngIf="noMore">
+      Koniec
+    </div>
+  </ng-template>
 </div>
