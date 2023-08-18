@@ -29,6 +29,7 @@ import { CalendarEvent } from '@interfaces/calendar/calendar-event';
 import { EventDto } from '@interfaces/event/event-dto';
 import { Reservation } from '@interfaces/reservation/reservation';
 import { async } from 'rxjs';
+import { Filters } from '@app/features/calendar/calendar-filter/calendar-filter.component';
 
 @Injectable({
   providedIn: 'root',
@@ -104,36 +105,26 @@ export class CalendarService {
     this.api = _api;
   }
 
+  currentFilter(filers: Filters) {
+    let currentTypes = filers.selectedTypes;
+    let currentOrganisations = filers.selectedOrganisations;
+
+    let tempEventArray: CalendarEvent[] = [];
+    for (let event of this.allEvents()) {
+      if (currentTypes.includes(event['typeId'])) {
+        if (currentOrganisations.includes(event['organisationId']))
+          tempEventArray.push(event);
+      }
+    }
+    this.visibleEvents.set(tempEventArray);
+    this.updateCalendar();
+  }
+
   currentDayFilter(currentDay: string | Date) {
     currentDay = formatDate(currentDay, 'yyyy-MM-dd', this.locale);
     this.currentDayEvents.set(
       this.searchEvents([currentDay], 'startStr', this.visibleEvents()),
     );
-  }
-
-  currentOrganisationsFilter(currentOrganisations: string[]) {
-    if (!this.organisations()[0]) {
-      this.getOrganisation();
-      if (!this.organisations()[0]) {
-        console.error('brak organizaci');
-        return;
-      }
-    }
-    this.visibleEvents.set(
-      this.searchEvents(
-        currentOrganisations,
-        'organisationId',
-        this.allEvents(),
-      ),
-    );
-    this.updateCalendar();
-  }
-
-  currentTypeFilter(currentTypes: string[]) {
-    this.visibleEvents.set(
-      this.searchEvents(currentTypes, 'typeId', this.allEvents()),
-    );
-    this.updateCalendar();
   }
 
   getOrganisation() {

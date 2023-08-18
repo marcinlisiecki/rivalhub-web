@@ -43,12 +43,10 @@ export class FilterMenuComponent implements OnInit, OnDestroy {
   }
 
   selectedOrganisation() {
-    this.calendarService.currentOrganisationsFilter(
-      this.selectedFilters.selectedOrganisations,
-    );
+    this.calendarService.currentFilter(this.selectedFilters);
   }
 
   selectedType() {
-    this.calendarService.currentTypeFilter(this.selectedFilters.selectedTypes);
+    this.calendarService.currentFilter(this.selectedFilters);
   }
 }
