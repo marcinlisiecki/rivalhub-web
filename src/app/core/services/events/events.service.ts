@@ -11,6 +11,7 @@ import * as moment from 'moment';
 import { formatDate } from '@angular/common';
 import { PingPongMatch } from '@app/core/interfaces/event/ping-pong/ping-pong-match';
 import { GameSet } from '@app/core/interfaces/event/games/game-set';
+import { NewPingPongMatch } from '@interfaces/event/ping-pong/new-ping-pong-match';
 
 @Injectable({
   providedIn: 'root',
@@ -75,6 +76,20 @@ export class EventsService {
   formatDate(date: Date): string {
     return moment(date).format('DD-MM-yyyy HH:mm');
   }
+
+  addEventMatch(
+    organizationId: number,
+    eventId: number,
+    type: EventType,
+    newMatch: NewPingPongMatch,
+  ): Observable<PingPongMatch> {
+    return this.http.post<PingPongMatch>(
+      environment.apiUrl +
+        `/organizations/${organizationId}/events/${eventId}/match?type=${type}`,
+      newMatch,
+    );
+  }
+
   addEvent(
     addEvent: AddEvent,
     organizationId: number,

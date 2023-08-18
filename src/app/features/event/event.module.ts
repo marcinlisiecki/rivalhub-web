@@ -21,6 +21,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { AddPingPongResultsComponent } from './ping-pong/add-ping-pong-results/add-ping-pong-results.component';
 import { AddPingPongSetComponent } from './ping-pong/add-ping-pong-set/add-ping-pong-set.component';
 import { DialogService } from 'primeng/dynamicdialog';
+import { NewEventMatchComponent } from './new-event-match/new-event-match.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { DialogService } from 'primeng/dynamicdialog';
     AddUserDialogComponent,
     AddPingPongResultsComponent,
     AddPingPongSetComponent,
+    NewEventMatchComponent,
   ],
   imports: [
     CommonModule,

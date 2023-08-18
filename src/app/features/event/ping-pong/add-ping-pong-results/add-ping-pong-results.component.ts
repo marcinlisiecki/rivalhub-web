@@ -4,7 +4,9 @@ import { ActivatedRoute } from '@angular/router';
 import { PingPongMatch } from '@interfaces/event/ping-pong/ping-pong-match';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AddPingPongSetComponent } from '@app/features/event/ping-pong/add-ping-pong-set/add-ping-pong-set.component';
-import { GameSet } from '@interfaces/event/game-set';
+import { NewGameSet } from '@interfaces/event/ping-pong/new-game-set';
+import { EventType } from '@interfaces/event/event-type';
+import { AddPingPongMatch } from '@interfaces/event/ping-pong/add-ping-pong-match';
 
 @Component({
   selector: 'app-add-ping-pong-results',
@@ -17,6 +19,7 @@ export class AddPingPongResultsComponent implements OnInit {
 
   organizationId!: number;
   eventId!: number;
+  showAddNewMatch: boolean = false;
 
   constructor(
     private eventsService: EventsService,
@@ -37,31 +40,45 @@ export class AddPingPongResultsComponent implements OnInit {
       });
   }
 
-  openAddSetDialog() {
-    console.log(
-      this.matches[0].sets.sort((a, b) => a.setNr - b.setNr)[
-        this.matches[0].sets.length - 1
-      ],
-    );
+  handleAddMatch(data: AddPingPongMatch) {
+    this.eventsService
+      .addEventMatch(
+        data.organizationId,
+        data.eventId,
+        EventType.PING_PONG,
+        data.match,
+      )
+      .subscribe({
+        next: (res) => {
+          this.matches.push(res);
+          this.showAddNewMatch = false;
+        },
+      });
+  }
+
+  openAddSetDialog(matchId: number) {
+    const matchIndex = this.matches.findIndex((item) => item.id === matchId);
 
     this.addSetDialogRef = this.dialogService.open(AddPingPongSetComponent, {
       header: 'Dodaj set',
       width: '25rem',
       data: {
+        matchId,
         setNr:
-          this.matches[0].sets.sort((a, b) => a.setNr - b.setNr)[
-            this.matches[0].sets.length - 1
+          this.matches[matchIndex].sets.sort((a, b) => a.setNr - b.setNr)[
+            this.matches[matchIndex].sets.length - 1
           ]?.setNr + 1 || 1,
       },
     });
 
-    this.addSetDialogRef.onClose.subscribe((set: GameSet) => {
+    this.addSetDialogRef.onClose.subscribe((set: NewGameSet) => {
       if (set) {
-        this.matches[0].sets.push(set);
+        this.matches[
+          this.matches.findIndex((item) => item.id === set.matchId)
+        ].sets.push(set);
+
         this.eventsService
-          .addMatchSet(this.organizationId, this.eventId, this.matches[0].id, [
-            set,
-          ])
+          .addMatchSet(this.organizationId, this.eventId, set.matchId, [set])
           .subscribe();
       }
     });
