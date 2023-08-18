@@ -3,20 +3,20 @@ import { HttpClient } from '@angular/common/http';
 import { EventType } from '@interfaces/event/event-type';
 import { environment } from '../../../../environments/enviroment';
 import { Observable } from 'rxjs';
-import { EventDto } from '@interfaces/event/event-dto';
-import { NewOrganization } from '@interfaces/organization/new-organization';
-import { Organization } from '@interfaces/organization/organization';
 import { AddEvent } from '@interfaces/event/add-event';
-import * as moment from 'moment';
-import { formatDate } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { PingPongMatch } from '@app/core/interfaces/event/ping-pong/ping-pong-match';
 import { GameSet } from '@app/core/interfaces/event/games/game-set';
+import { API_DATE_FORMAT } from '@app/core/constants/date';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EventsService {
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private datePipe: DatePipe,
+  ) {}
 
   getAllEventTypesInApp(): Observable<EventType[]> {
     return this.http.get<EventType[]>(
@@ -72,9 +72,6 @@ export class EventsService {
     );
   }
 
-  formatDate(date: Date): string {
-    return moment(date).format('DD-MM-yyyy HH:mm');
-  }
   addEvent(
     addEvent: AddEvent,
     organizationId: number,
@@ -85,8 +82,8 @@ export class EventsService {
         `/organizations/${organizationId}/events?type=${type}`,
       {
         stationList: addEvent.stationList,
-        startTime: this.formatDate(addEvent.startTime),
-        endTime: this.formatDate(addEvent.endTime),
+        startTime: this.datePipe.transform(addEvent.startTime, API_DATE_FORMAT),
+        endTime: this.datePipe.transform(addEvent.endTime, API_DATE_FORMAT),
         host: addEvent.host,
         participants: addEvent.participants,
         description: addEvent.description,
