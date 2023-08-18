@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { EventResult } from '@app/core/interfaces/event/event-result';
 import { PingPongResult } from '@app/core/interfaces/event/games/ping-pong/ping-pong-result';
 import * as moment from 'moment';
+import { DISPLAY_DATE_FORMAT } from '@app/core/constants/date';
 
 @Component({
   selector: 'app-ping-ping-result',
@@ -21,10 +22,6 @@ export class PingPingResultComponent implements OnInit {
 
   ngOnInit(): void {
     this.calculateSets();
-  }
-
-  formatDate(date?: Date): string {
-    return moment(date).format('DD-MM-yyyy HH:mm');
   }
 
   private calculateSets(): void {
@@ -59,4 +56,6 @@ export class PingPingResultComponent implements OnInit {
       this.winnerCalcutated.emit(0);
     }
   }
+
+  protected readonly DISPLAY_DATE_FORMAT = DISPLAY_DATE_FORMAT;
 }

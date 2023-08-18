@@ -3,9 +3,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Station } from '@interfaces/station/station';
 import { StationsService } from '@app/core/services/stations/stations.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { OrganizationsService } from '@app/core/services/organizations/organizations.service';
 import { ClosestStationAvailable } from '@interfaces/station/closest-station-available';
-import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-category-stations-selector',
@@ -29,5 +27,4 @@ export class CategoryStationsSelectorComponent {
   ) {}
 
   protected readonly Date = Date;
-  protected readonly formatDate = formatDate;
 }
