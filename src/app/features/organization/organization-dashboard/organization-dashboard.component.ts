@@ -13,6 +13,7 @@ import { Reservation } from '@interfaces/reservation/reservation';
 import { MessageService } from 'primeng/api';
 import { OrganizationSettings } from '@interfaces/organization/organization-settings';
 import { AuthService } from '@app/core/services/auth/auth.service';
+import { ImageService } from '@app/core/services/image/image.service';
 
 @Component({
   selector: 'app-organization-dashboard',
@@ -42,6 +43,7 @@ export class OrganizationDashboardComponent implements OnInit, OnDestroy {
     private viewService: ViewService,
     private messageService: MessageService,
     private authService: AuthService,
+    private imageService: ImageService,
   ) {}
 
   ngOnInit(): void {
@@ -110,7 +112,9 @@ export class OrganizationDashboardComponent implements OnInit, OnDestroy {
     this.organizationsService.choose(this.id).subscribe({
       next: (res: Organization) => {
         this.organization = res;
-        this.organization.imageUrl = this.getImagePath(res.imageUrl);
+        this.organization.imageUrl = this.imageService.getOrganizationImagePath(
+          res.imageUrl,
+        );
       },
       //Dodaj kiedyś obsługę błędów jak wpadniesz na fajny pomysł jak to zrobić
       error: (err: HttpErrorResponse) => {
@@ -140,14 +144,6 @@ export class OrganizationDashboardComponent implements OnInit, OnDestroy {
         console.error('An error occurred:', err);
       },
     });
-  }
-
-  getImagePath(imageUrl: string | null): string {
-    if (imageUrl !== null) {
-      return imageUrl;
-    }
-
-    return 'assets/img/avatars/avatarplaceholder.png';
   }
 
   toggleNav() {

@@ -3,6 +3,7 @@
 
 .avatar {
     height: 100px;
+    border-radius: $dashboardRadius;
 }
 
 .info {
@@ -11,7 +12,7 @@
     height: 100px;
 
     &-title {
-        text-wrap:balance;
+        text-wrap: balance;
         margin: 10px 0 10px 15px;
         font-weight: $weightMedium;
         color: $textSecondaryColor;
