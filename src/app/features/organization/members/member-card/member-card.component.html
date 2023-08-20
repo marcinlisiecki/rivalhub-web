@@ -1,31 +1,21 @@
-<div class="avatar">
-  <div class="avatar-image">
-    <p-image styleClass="dashboard-header-image" [src]="getImagePath(user.profilePictureUrl)" alt="Image"></p-image>
-  </div>
-</div>
-<div class="info">
-  <div>
-    <p class="info-name">{{user.name}}</p>
-    <h4 class="info-title">{{user.email}}</h4>
+<!--<div class="user-card" (click)="takeToUserProfile(this.user.id)">-->
+  <div class="avatar">
+    <div class="avatar-image">
+      <p-image styleClass="dashboard-header-image" [src]="getImagePath(user.profilePictureUrl)" alt="Image"></p-image>
+    </div>
   </div>
 
-  <div>
-    <p-confirmPopup></p-confirmPopup>
-    <p-button *ngIf="amIAdmin"
-      styleClass="p-button-sm"
-      class="card-btn"
-      (onClick)="onKickUser($event)"
-    >
-      {{ kickButtonText }}
-    </p-button>
-    <p-button *ngIf="myself"
-              styleClass="p-button-sm"
-              class="card-btn"
-              (onClick)="onKickUser($event)"
-    >
-      {{ kickButtonText }}
-    </p-button>
-    <p-button *ngIf="amIAdmin && !myself" styleClass="p-button-sm" class="card-btn" (onClick)="grantAdmin($event)"> {{ adminButtonText }}</p-button>
-    <p-button *ngIf="!myself" styleClass="p-button-sm" class="card-btn" (onClick)="onChallenge()">Zwyzywaj</p-button>
+  <div class="info">
+    <div>
+      <p class="info-name">{{user.name}}</p>
+      <h4 class="info-title">{{user.email}}</h4>
+    </div>
+
+    <div>
+      <p-confirmPopup></p-confirmPopup>
+      <p-button *ngIf="amIAdmin && !myself" styleClass="p-button-sm" class="card-btn" (onClick)="onKickUser($event)">{{ kickButtonText }}</p-button>
+      <p-button *ngIf="amIAdmin && !myself" styleClass="p-button-sm" class="card-btn" (onClick)="grantAdmin($event)"> {{ adminButtonText }}</p-button>
+      <p-button *ngIf="!myself" styleClass="p-button-sm" class="card-btn" (onClick)="onChallenge()">Rzuć wyzwanie</p-button>
+    </div>
   </div>
-</div>
+<!--</div>-->

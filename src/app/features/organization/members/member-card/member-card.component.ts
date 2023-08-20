@@ -13,8 +13,8 @@ import {AuthService} from "@app/core/services/auth/auth.service";
 export class MemberCardComponent implements OnInit {
   @Input() user!: UserDetailsDto
   @Input() amIAdmin: boolean = false
-  @Output() kicked = new EventEmitter<void>()
-  @Output() admined = new EventEmitter<void>()
+  @Output() changedStatus = new EventEmitter<void>()
+  // @Output() admined = new EventEmitter<void>()
 
   private organizationId!: number
   private confirmKickMessage: string = "Na pewno chcesz usunąć tego członka?"
@@ -38,20 +38,18 @@ export class MemberCardComponent implements OnInit {
     this.loadMyself()
   }
 
-  loadMyself() {
-    if (this.authService.getUserId() == this.user.id) {
-      this.myself = true
-      this.kickButtonText = "Wyjdź"
-      this.confirmKickMessage = "Czy napewno chcesz wyjść z organizacji?"
-    }
-  }
-
   getImagePath(imageUrl: string | null): string {
     if (imageUrl !== null) {
       return imageUrl;
     }
 
     return 'assets/img/avatars/avatarplaceholder.png';
+  }
+
+  loadMyself() {
+    if (this.authService.getUserId() == this.user.id) {
+      this.myself = true
+    }
   }
 
   onKickUser(event: Event) {
@@ -64,7 +62,7 @@ export class MemberCardComponent implements OnInit {
       accept: () => {
         this.organizationService.kickUser(this.organizationId, this.user.id).subscribe({
           next: response => {
-            this.kicked.emit()
+            this.changedStatus.emit()
           }
         })
       },
@@ -93,11 +91,15 @@ export class MemberCardComponent implements OnInit {
       accept: () => {
         this.organizationService.grantAdmin(this.organizationId, this.user.id).subscribe({
           next: response => {
-            this.admined.emit()
+            this.changedStatus.emit()
           }
         })
       },
       reject: () => {}
     })
+  }
+
+  takeToUserProfile(id: number) {
+    this.router.navigateByUrl(`profiles/${id}`).then()
   }
 }

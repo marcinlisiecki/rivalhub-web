@@ -1,17 +1,14 @@
 @import 'src/scss/variables';
 
 .wrapper {
-  display: flex;
-  align-items: center;
-  margin: 20px auto 0 auto;
+  margin: 20px auto 20px auto;
   width: $pageWidth;
-  flex-wrap: wrap;
 }
 
 .dashboard-container {
   display: flex;
   align-items: center;
-  margin: 20px auto 0 auto;
+  margin: 20px auto 20px auto;
   max-width: $pageWidth;
   flex-wrap: wrap;
 

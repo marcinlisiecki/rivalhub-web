@@ -30,22 +30,35 @@ export class MembersComponent implements OnInit {
 
   constructor(
     private organizationService: OrganizationsService,
-    private router: ActivatedRoute,
+    private route: ActivatedRoute,
     private authService: AuthService,
     ) {}
 
   ngOnInit() {
-    this.router.params.subscribe(params => {
+    this.route.params.subscribe(params => {
       this.organizationId = params['id']
     })
 
     this.amIAdmin = this.authService.amIAdmin(this.organizationId)
-    this.loadAdmins()
+    // this.loadAdmins()
     this.loadData()
     // TODO debounce 500 ms
   }
 
-  loadData = () => {
+  loadData() {
+    this.organizationService.getAdminUsersIds(this.organizationId).subscribe({
+      next: response => {
+        this.adminUsers = response
+        this.adminIds = this.adminUsers.map(user => user.id)
+        this.loadUsers()
+      },
+      error: (error: HttpErrorResponse) => {
+        console.log(error.error)
+      }
+    })
+  }
+
+  loadUsers = () => {
     this.toggleLoading()
     this.organizationService.getUsers(this.organizationId, this.currentPage, this.itemsPerPage).subscribe({
       next: response => {
@@ -59,7 +72,7 @@ export class MembersComponent implements OnInit {
     })
   }
 
-  appendData = () => {
+  appendUsers = () => {
     this.toggleLoading()
     this.organizationService.getUsers(this.organizationId, this.currentPage, this.itemsPerPage).subscribe({
       next: response => {
@@ -76,7 +89,7 @@ export class MembersComponent implements OnInit {
 
   onScroll = () => {
     this.currentPage++
-    this.appendData()
+    this.appendUsers()
   }
 
   onSearchInputChange = () => {
@@ -95,37 +108,8 @@ export class MembersComponent implements OnInit {
     })
   }
 
-  onKickUser(index: number) {
-    this.users.splice(index, 1)
-    this.filteredUsers.splice(index, 1)
-  }
-
-  onKickAdmin(index: number) {
-    this.adminUsers.splice(index, 1)
-  }
-
-  loadAdmins() {
-    this.organizationService.getAdminUsersIds(this.organizationId).subscribe({
-      next: response => {
-        this.adminUsers = response
-        this.adminIds = this.adminUsers.map(user => user.id)
-      },
-      error: HttpErrorResponse => {
-        console.log("cos poszlo nie tak")
-      }
-    })
-  }
-
-  onUnAdmin(index: number){
-    this.adminUsers.splice(index, 1)
-    this.currentPage = 0
-    this.loadData()
-  }
-
-  onAdmin(index: number){
-    this.users.splice(index, 1)
-    this.currentPage = 0
-    this.loadAdmins()
+  onChangeStatus() {
+    this.ngOnInit()
   }
 
 }

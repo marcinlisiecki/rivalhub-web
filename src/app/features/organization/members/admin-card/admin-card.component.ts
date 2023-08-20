@@ -15,8 +15,7 @@ export class AdminCardComponent implements OnInit {
 
   @Input() user!: UserDetailsDto
   @Input() amIAdmin: boolean = false
-  @Output() kicked = new EventEmitter<void>()
-  @Output() unAdmined = new EventEmitter<void>()
+  @Output() changedStatus = new EventEmitter<void>()
 
   private organizationId!: number
   private confirmKickMessage: string = "Na pewno chcesz usunąć tego członka?"
@@ -48,6 +47,12 @@ export class AdminCardComponent implements OnInit {
     return 'assets/img/avatars/avatarplaceholder.png';
   }
 
+  loadMyself() {
+    if (this.authService.getUserId() == this.user.id) {
+      this.myself = true
+    }
+  }
+
   onKickAdmin(event: Event) {
     this.confirmationService.confirm({
       target: event.target as EventTarget,
@@ -58,7 +63,7 @@ export class AdminCardComponent implements OnInit {
       accept: () => {
         this.organizationService.kickUser(this.organizationId, this.user.id).subscribe({
           next: response => {
-            this.kicked.emit()
+            this.changedStatus.emit()
           }
         })
         this.organizationService.unAdmin(this.organizationId, this.user.id).subscribe({
@@ -82,15 +87,6 @@ export class AdminCardComponent implements OnInit {
       .then();
   }
 
-  loadMyself() {
-    if (this.authService.getUserId() == this.user.id) {
-      this.myself = true
-      this.kickButtonText = "Wyjdź"
-      this.confirmKickMessage = "Czy napewno chcesz wyjść z organizacji?"
-
-    }
-  }
-
   unAdmin(event: Event) {
     this.confirmationService.confirm({
       target: event.target as EventTarget,
@@ -101,7 +97,7 @@ export class AdminCardComponent implements OnInit {
       accept: () => {
         this.organizationService.unAdmin(this.organizationId, this.user.id).subscribe({
           next: response => {
-            this.unAdmined.emit()
+            this.changedStatus.emit()
           },
           error: HttpErrorResponse => {
             console.log('nie git')
@@ -111,5 +107,4 @@ export class AdminCardComponent implements OnInit {
       reject: () => {}
     })
   }
-
 }

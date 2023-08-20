@@ -5,8 +5,7 @@
       [amIAdmin]="amIAdmin"
       *ngFor="let adminUser of adminUsers; let i = index"
       [user]="adminUser"
-      (kicked)="onKickAdmin(i)"
-      (unAdmined)="onUnAdmin(i)"
+      (changedStatus)="onChangeStatus()"
       class="dashboard-container-header"
     >
     </app-admin-card>
@@ -19,8 +18,7 @@
         [amIAdmin]="amIAdmin"
         *ngFor="let filteredUser of filteredUsers; let i = index"
         [user]="filteredUser"
-        (kicked)="onKickUser(i)"
-        (admined)="onAdmin(i)"
+        (changedStatus)="onChangeStatus()"
         class="dashboard-container-header"
       >
       </app-member-card>
@@ -39,14 +37,10 @@
         [amIAdmin]="amIAdmin"
         *ngFor="let user of users; let i = index"
         [user]="user"
-        (kicked)="onKickUser(i)"
-        (admined)="onAdmin(i)"
+        (changedStatus)="onChangeStatus()"
         class="dashboard-container-header"
       >
       </app-member-card>
-    </div>
-    <div *ngIf="noMore">
-      Koniec
     </div>
   </ng-template>
 </div>

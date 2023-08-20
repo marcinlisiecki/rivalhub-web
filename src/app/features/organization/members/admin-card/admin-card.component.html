@@ -12,8 +12,8 @@
 
   <div>
     <p-confirmPopup></p-confirmPopup>
-    <p-button *ngIf="amIAdmin" styleClass="p-button-sm" class="card-btn" (onClick)="onKickAdmin($event)" >{{ kickButtonText }}</p-button>
+    <p-button *ngIf="amIAdmin && !myself" styleClass="p-button-sm" class="card-btn" (onClick)="onKickAdmin($event)" >{{ kickButtonText }}</p-button>
     <p-button *ngIf="amIAdmin && !myself" styleClass="p-button-sm" class="card-btn" (onClick)="unAdmin($event)"> {{ adminButtonText }}</p-button>
-    <p-button *ngIf="!myself" styleClass="p-button-sm" class="card-btn" (onClick)="onChallenge()">Zwyzywaj</p-button>
+    <p-button *ngIf="!myself" styleClass="p-button-sm" class="card-btn" (onClick)="onChallenge()">Rzuć wyzwanie</p-button>
   </div>
 </div>
