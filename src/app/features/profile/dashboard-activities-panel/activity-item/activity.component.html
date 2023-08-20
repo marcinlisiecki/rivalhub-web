@@ -6,7 +6,10 @@
     </p>
   </div>
   <div class="bottom">
-    <p class="date">{{ formattedStart }} - {{ formattedEnd }}</p>
+    <p class="date">
+      {{ reservation.startTime | date: DISPLAY_DATE_FORMAT }} -
+      {{ reservation.endTime | date: DISPLAY_DATE_FORMAT }}
+    </p>
     <p-button styleClass="p-button-secondary">Zobacz</p-button>
   </div>
 </div>

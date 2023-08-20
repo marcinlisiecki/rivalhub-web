@@ -13,18 +13,19 @@ import * as moment from 'moment/moment';
 import { EventType } from '@interfaces/event/event-type';
 import { EventDto } from '@interfaces/event/event-dto';
 import { OrganizationSettings } from '@interfaces/organization/organization-settings';
+import { DatePipe } from '@angular/common';
+import { API_DATE_FORMAT } from '@app/core/constants/date';
 
 @Injectable({
   providedIn: 'root',
 })
 export class OrganizationsService {
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private datePipe: DatePipe,
+  ) {}
 
-  formatDate(date: Date): string {
-    return moment(date).format('DD-MM-yyyy HH:mm');
-  }
-
-  add(newOrganization: NewOrganization): Observable<Organization> {
+  add(newOrganization: FormData): Observable<Organization> {
     return this.http.post<Organization>(
       environment.apiUrl + '/organizations',
       newOrganization,
@@ -97,8 +98,11 @@ export class OrganizationsService {
       environment.apiUrl + `/organizations/${organizationId}/reservations`,
       {
         stationsIdList: reservation.stationsIdList,
-        startTime: this.formatDate(reservation.startTime),
-        endTime: this.formatDate(reservation.endTime),
+        startTime: this.datePipe.transform(
+          reservation.startTime,
+          API_DATE_FORMAT,
+        ),
+        endTime: this.datePipe.transform(reservation.endTime, API_DATE_FORMAT),
       },
     );
   }

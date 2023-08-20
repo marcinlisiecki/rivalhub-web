@@ -13,7 +13,10 @@
         {{ categoryTypeToLabel(event.eventType) | translate }}
       </div>
       <div class="bottom">
-        <p class="date">{{ event.startTime }} - {{ event.endTime }}</p>
+        <p class="date">
+          {{ event.startTime | date: DISPLAY_DATE_FORMAT }} -
+          {{ event.endTime | date: DISPLAY_DATE_FORMAT }}
+        </p>
         <p-button
           styleClass="p-button-secondary"
           routerLink="/organizations/{{ organizationId }}/events/{{

@@ -10,7 +10,8 @@ import { NewReservation } from '@interfaces/reservation/new-reservation';
 import { Station } from '@interfaces/station/station';
 import { StationsService } from '@app/core/services/stations/stations.service';
 import { ClosestStationAvailable } from '@interfaces/station/closest-station-available';
-import { formatDate } from '@angular/common';
+import { DatePipe } from '@angular/common';
+import { DISPLAY_DATE_FORMAT } from '@app/core/constants/date';
 
 @Component({
   selector: 'app-add-reservation',
@@ -39,11 +40,8 @@ export class AddReservationComponent {
     private router: Router,
     private organizationService: OrganizationsService,
     private stationsService: StationsService,
+    private datePipe: DatePipe,
   ) {}
-
-  formatDate(date: Date): string {
-    return moment(date).format('DD-MM-yyyy HH:mm');
-  }
 
   findRightCategory(type: string): ClosestStationAvailable {
     const cat = this.closestAvailable.find(
@@ -64,7 +62,10 @@ export class AddReservationComponent {
         next: (availableStations: ClosestStationAvailable[]) => {
           this.closestAvailable = availableStations;
           this.closestAvailable.forEach((item) => {
-            item.formatedFirstAvailable = this.formatDate(item.firstAvailable);
+            item.formatedFirstAvailable = this.datePipe.transform(
+              item.firstAvailable,
+              DISPLAY_DATE_FORMAT,
+            ) as string;
           });
         },
       });

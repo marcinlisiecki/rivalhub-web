@@ -1,32 +1,23 @@
 <div class="form-container">
   <p-card header="Dodaj organizację">
+
+
     <form [formGroup]="addForm" (ngSubmit)="onSubmit()">
       <div class="form-item form-avatar">
-        <p-image width="75" height="75" [src]="imageURL" alt="avatar"></p-image>
+        <img (click)="onImageClick()" class="avatar-img" [ngStyle]="customAvatar ? { 'background-color': color } : null"
+          width="75" height="75" [src]="imageURL" alt="avatar">
+        <p-colorPicker [disabled]="!customAvatar" #colorPicker [(ngModel)]="color"
+          [ngModelOptions]="{standalone: true}"></p-colorPicker>
+
         <p-divider layout="vertical"></p-divider>
-        <p-fileUpload
-          name="uploadAvatar"
-          [customUpload]="true"
-          (onSelect)="onFileSelectClicked($event)"
-          (onClear)="onClearClicked($event)"
-          [showUploadButton]="false"
-          cancelLabel="Anuluj"
-          chooseLabel="Dodaj zdjęcie"
-          accept="image/*"
-          [fileLimit]="1"
-          [maxFileSize]="5242880"
-        >
+        <p-fileUpload name="uploadAvatar" [customUpload]="true" (onSelect)="onFileSelectClicked($event)"
+          (onClear)="onClearClicked($event)" [showUploadButton]="false" cancelLabel="Anuluj" chooseLabel="Dodaj zdjęcie"
+          [accept]="joinAcceptableImageTypes()" [fileLimit]="1" [maxFileSize]="MAXFILESIZE">
         </p-fileUpload>
       </div>
       <div class="input-box">
         <label for="organization-name">Nazwa organizacji</label>
-        <input
-          #organization
-          id="organization-name"
-          type="text"
-          pInputText
-          formControlName="name"
-        />
+        <input #organization id="organization-name" type="text" pInputText formControlName="name" />
         <small id="organization-name-help" class="input-helper-text">
           Podaj nazwę dla swojej organizacji.
         </small>
@@ -46,6 +37,11 @@
         <div class="button-wrapper">
           <p-button type="submit">Utwórz organizację</p-button>
         </div>
+        <p class="api-error-wrapper">
+          <app-validation-error *ngIf="clientError">
+            {{ clientError }}
+          </app-validation-error>
+        </p>
         <p class="api-error-wrapper">
           <app-validation-error *ngIf="apiError">
             {{ apiError }}
