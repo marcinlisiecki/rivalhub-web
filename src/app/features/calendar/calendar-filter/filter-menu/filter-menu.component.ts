@@ -24,8 +24,7 @@ export class FilterMenuComponent implements OnInit, OnDestroy {
   @Output() selectedFiltersChanged = new EventEmitter<Filters>();
 
   calendarOptions!: WritableSignal<CalendarOptions>;
-  weekend = this.calendarService.currentWeekends;
-  selectedWeeks: any = this.weekend();
+  selectedWeeks: boolean = Boolean(parseInt(<string>localStorage.getItem('showWeekends')));
 
   constructor(private calendarService: CalendarService) {}
   ngOnInit() {
@@ -37,6 +36,7 @@ export class FilterMenuComponent implements OnInit, OnDestroy {
   }
 
   toggleWeekends() {
+    console.log(this.selectedWeeks)
     this.calendarService.handleWeekendsToggle();
   }
 

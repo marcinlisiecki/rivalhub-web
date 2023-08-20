@@ -26,7 +26,6 @@ export interface Filters {
 export class CalendarFilterComponent implements OnInit, OnDestroy {
   calendarOptions!: WritableSignal<CalendarOptions>;
   displayMenu: boolean = false;
-  sub!: Subscription;
   organisations!: Organization[];
   selectedOrganisations: string[] = [];
 
@@ -42,29 +41,24 @@ export class CalendarFilterComponent implements OnInit, OnDestroy {
 
   constructor(
     private calendarService: CalendarService,
-    private orgServ: OrganizationsService,
   ) {}
-  ngOnInit() {
+  async ngOnInit() {
     this.calendarOptions = this.calendarService.options;
-    this.sub = this.orgServ.getMy().subscribe({
-      next: (res: Organization[]) => {
-        for (let i of res) {
-          this.selectedFilters.selectedOrganisations.push(i.id.toString());
-        }
-        this.organisations = res;
-        this.calendarService.organisations.set(res);
-      },
-      error: (err: HttpErrorResponse) => {
-        console.error('An error occurred:', err);
-      },
-    });
+    await this.calendarService.getOrganisation();
+    this.organisations = this.calendarService.organisations();
+    this.organisations.forEach( organisation =>{this.selectedFilters.selectedOrganisations.push(organisation.id.toString());} )
+
   }
 
   ngOnDestroy() {
-    this.sub.unsubscribe();
   }
 
   handleFilterChange(newFilters: Filters) {
     this.selectedFilters = newFilters;
   }
+
+
+
+
+
 }
