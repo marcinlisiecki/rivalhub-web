@@ -55,7 +55,6 @@ export class CalendarService {
     initialView: 'dayGridMonth',
     events: this.visibleEvents(),
     eventSources: this.visibleEvents(),
-    weekends: true,
     editable: false,
     selectMirror: false,
     dayMaxEvents: true,
@@ -85,7 +84,7 @@ export class CalendarService {
   handleWeekendsToggle() {
     this.options.mutate((options) => {
       options.weekends = !options.weekends;
-      localStorage.setItem('showWeekends', String(options.weekends));
+      localStorage.setItem('showWeekends', String(Number(options.weekends)));
     });
   }
 
@@ -121,15 +120,20 @@ export class CalendarService {
   }
 
   async getOrganisation() {
-    const organisations:any[] = await Promise.all(await lastValueFrom(this.orgServ.getMy()))
-    this.organisations.set(organisations);
+    try {
+      const organisations: any[] = await Promise.all(await lastValueFrom(this.orgServ.getMy()))
+      this.organisations.set(organisations);
+    }catch (err){
+      console.error(err,'wystąpił błąd')
+    }
+
   }
 
   setLocalStorage() {
     let local: string | null = localStorage.getItem('showWeekends');
     if (local === null) {
-      localStorage.setItem('showWeekends', String(true));
-      local = 'true';
+      localStorage.setItem('showWeekends', String(1));
+      local = '1';
     }
     this.currentWeekends.set(Boolean(local));
     this.options.mutate((options) => {

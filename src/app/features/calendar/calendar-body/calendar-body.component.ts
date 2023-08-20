@@ -30,11 +30,12 @@ export class CalendarBodyComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit() {
     this.calendarOptions = this.calendarService.options;
+    console.log(Boolean(parseInt( <string>localStorage.getItem('showWeekends'))),localStorage.getItem('showWeekends'))
     this.calendarOptions.mutate((options) => {
       options.dateClick = this.onDateClick.bind(this);
       options.initialDate = this.currentDate;
       options.eventClick = this.handleEventClick.bind(this);
-      this.calendarService.getOrganisation();
+      options.weekends = Boolean(parseInt(<string>localStorage.getItem('showWeekends')));
     });
     this.calendarService.currentDate.set(this.currentDate);
     this.calendarService.currentDayFilter(this.currentDate.toDateString());
