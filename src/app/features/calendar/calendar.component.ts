@@ -17,14 +17,10 @@ export class CalendarComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {}
 
-  ngOnInit() {
-    setTimeout(() => {
-      this.calendarService.getEvents();
-    }, 300);
+  async ngOnInit() {
 
-    setTimeout(() => {
-      this.calendarService.createEvents();
-    }, 1600);
+    await this.calendarService.createEvents();
+
   }
 
   toggleSidebar() {

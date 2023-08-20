@@ -22,6 +22,7 @@ import { CalendarEvent } from '@interfaces/calendar/calendar-event';
 import { EventDto } from '@interfaces/event/event-dto';
 import { Reservation } from '@interfaces/reservation/reservation';
 import { Filters } from '@app/features/calendar/calendar-filter/calendar-filter.component';
+import {lastValueFrom} from "rxjs";
 
 @Injectable({
   providedIn: 'root',
@@ -119,23 +120,16 @@ export class CalendarService {
     );
   }
 
-  getOrganisation() {
-    let sub = this.orgServ.getMy().subscribe({
-      next: (res: Organization[]) => {
-        this.organisations.set(res);
-      },
-      //Dodaj kiedyś obsługę błędów jak wpadniesz na fajny pomysł jak to zrobić
-      error: (err: HttpErrorResponse) => {
-        console.error('An error occurred:', err);
-      },
-    });
-    sub.unsubscribe();
+  async getOrganisation() {
+    const organisations:any[] = await Promise.all(await lastValueFrom(this.orgServ.getMy()))
+    this.organisations.set(organisations);
   }
 
   setLocalStorage() {
     let local: string | null = localStorage.getItem('showWeekends');
     if (local === null) {
       localStorage.setItem('showWeekends', String(true));
+      local = 'true';
     }
     this.currentWeekends.set(Boolean(local));
     this.options.mutate((options) => {
@@ -160,47 +154,47 @@ export class CalendarService {
     this.currentDayFilter(this.currentDate());
   }
 
-  getEvents() {
+
+  async getEvents() {
     let events: EventDto[] = [];
     let reservations: any[] = [];
+    await this.getOrganisation();
     for (let organisation of this.organisations()) {
-      this.orgServ.getEvents(organisation.id).subscribe({
-        next: (res: EventDto[]) => {
-          for (let res2 of res) {
-            console.log(res2);
-            events.push(res2);
-          }
-          this.organisationEvents.set(events);
-        },
-        error: (err: HttpErrorResponse) => {
-          console.error('An error occurred:', err);
-        },
-      });
-      this.orgServ.getOrganizationReservations(organisation.id).subscribe({
-        next: (res: Reservation[]) => {
-          for (let res2 of res) {
-            console.log(res2);
-            reservations.push({ organisation, reservation: res2 });
-          }
-          this.organisationReservation.set(reservations);
-        },
-      });
+      try {
+        const [eventsResult, reservationsResult] = await Promise.all([
+          await lastValueFrom(this.orgServ.getEvents(organisation.id)),
+          await lastValueFrom(this.orgServ.getOrganizationReservations(organisation.id))
+        ]);
+
+        events.push(...eventsResult);
+        reservations.push(...reservationsResult.map(reservation => ({ organisation, reservation })));
+      } catch (err) {
+        console.error('An error occurred:', err);
+      }
     }
+
+    this.organisationEvents.set(events);
+    this.organisationReservation.set(reservations);
   }
 
-  createEvents() {
+  async createEvents() {
+    await this.getEvents();
+
     let temp: any[] = [];
-    console.log(this.organisationEvents(), this.organisationReservation());
+
     for (let event of this.organisationEvents()) {
       temp.push(this.createEvent(event));
     }
     for (let res of this.organisationReservation()) {
       temp.push(this.createReservation(res));
     }
+
     this.allEvents.set(temp);
     this.visibleEvents.set(temp);
     this.updateCalendar();
   }
+
+
 
   private createEvent(eventData: EventDto) {
     let color = eventData.organization.colorForDefaultImage;
