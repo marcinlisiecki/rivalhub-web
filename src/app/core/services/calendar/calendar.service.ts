@@ -16,7 +16,6 @@ import allLocales from '@fullcalendar/core/locales-all';
 import { LanguageService } from '@app/core/services/language/language.service';
 import { OrganizationsService } from '@app/core/services/organizations/organizations.service';
 import { Organization } from '@interfaces/organization/organization';
-import { HttpErrorResponse } from '@angular/common/http';
 import { formatDate } from '@angular/common';
 import { CalendarEvent } from '@interfaces/calendar/calendar-event';
 import { EventDto } from '@interfaces/event/event-dto';

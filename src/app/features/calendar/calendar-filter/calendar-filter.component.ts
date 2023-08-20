@@ -3,15 +3,10 @@ import {
   WritableSignal,
   OnInit,
   OnDestroy,
-  OnChanges,
-  SimpleChanges,
 } from '@angular/core';
 import { CalendarOptions } from '@fullcalendar/core';
 import { CalendarService } from '@app/core/services/calendar/calendar.service';
 import { Organization } from '@interfaces/organization/organization';
-import { HttpErrorResponse } from '@angular/common/http';
-import { OrganizationsService } from '@app/core/services/organizations/organizations.service';
-import { Subscription } from 'rxjs';
 
 export interface Filters {
   selectedOrganisations: string[];
