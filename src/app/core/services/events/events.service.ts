@@ -5,9 +5,9 @@ import { environment } from '../../../../environments/enviroment';
 import { Observable } from 'rxjs';
 import { AddEvent } from '@interfaces/event/add-event';
 import { DatePipe } from '@angular/common';
-import { PingPongMatch } from '@app/core/interfaces/event/ping-pong/ping-pong-match';
+import { PingPongMatch } from '@interfaces/event/games/ping-pong/ping-pong-match';
 import { GameSet } from '@app/core/interfaces/event/games/game-set';
-import { NewPingPongMatch } from '@interfaces/event/ping-pong/new-ping-pong-match';
+import { NewPingPongMatch } from '@interfaces/event/games/ping-pong/new-ping-pong-match';
 import { API_DATE_FORMAT } from '@app/core/constants/date';
 
 @Injectable({

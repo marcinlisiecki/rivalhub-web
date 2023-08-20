@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-add-ping-pong-set',

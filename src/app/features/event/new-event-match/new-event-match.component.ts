@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AddEventFormStep } from '@interfaces/event/add-event-form-step';
 import { AddEventUser } from '@interfaces/event/add-event-user';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -10,8 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 import { PagedResponse } from '@interfaces/generic/paged-response';
 import { EventsService } from '@app/core/services/events/events.service';
 import { EventType } from '@interfaces/event/event-type';
-import { NewPingPongMatch } from '@interfaces/event/ping-pong/new-ping-pong-match';
-import { AddPingPongMatch } from '@interfaces/event/ping-pong/add-ping-pong-match';
+import { AddPingPongMatch } from '@interfaces/event/games/ping-pong/add-ping-pong-match';
 
 @Component({
   selector: 'app-new-event-match',
@@ -22,6 +21,7 @@ export class NewEventMatchComponent implements OnInit {
   teams: AddEventUser[][] = [[], []];
   userList: UserDetailsDto[] = [];
   notAddedUserList: UserDetailsDto[] = [];
+  @Input() teamCount: number = 2;
 
   loggedInUserId!: number | null;
 

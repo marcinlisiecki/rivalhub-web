@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { EventsService } from '@app/core/services/events/events.service';
 import { ActivatedRoute } from '@angular/router';
-import { PingPongMatch } from '@interfaces/event/ping-pong/ping-pong-match';
+import { PingPongMatch } from '@interfaces/event/games/ping-pong/ping-pong-match';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AddPingPongSetComponent } from '@app/features/event/ping-pong/add-ping-pong-set/add-ping-pong-set.component';
-import { NewGameSet } from '@interfaces/event/ping-pong/new-game-set';
+import { NewGameSet } from '@interfaces/event/games/new-game-set';
 import { EventType } from '@interfaces/event/event-type';
-import { AddPingPongMatch } from '@interfaces/event/ping-pong/add-ping-pong-match';
+import { AddPingPongMatch } from '@interfaces/event/games/ping-pong/add-ping-pong-match';
 
 @Component({
   selector: 'app-add-ping-pong-results',
