@@ -13,6 +13,8 @@
 @import 'src/scss/components/image';
 @import 'src/scss/components/fileupload';
 @import 'src/scss/components/card-checkbox';
+@import 'src/scss/components/p-sidebar';
+@import 'src/scss/components/calendar';
 
 @import 'src/scss/layout/page';
 
@@ -29,4 +31,9 @@ html {
 body {
   margin: 0;
   padding: 0;
+}
+
+.fc-day-today {
+  background-color: rgba(35, 78, 95, 0.3) !important;
+
 }
