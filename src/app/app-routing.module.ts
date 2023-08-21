@@ -17,6 +17,7 @@ import { ProfileComponent } from '@app/features/profile/profile.component';
 import { ActivateAccountComponent } from '@app/features/user/activate-account/activate-account.component';
 import { ConfiguratorComponent } from '@app/features/organization/configurator/configurator.component';
 import { AddPingPongResultsComponent } from '@app/features/event/ping-pong/add-ping-pong-results/add-ping-pong-results.component';
+import { OrganizationSettingsComponent } from '@app/features/organization/organization-settings/organization-settings.component';
 
 const routes: Routes = [
   {
@@ -46,6 +47,11 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+  },
+  {
+    path: 'organizations/:id/settings',
+    component: OrganizationSettingsComponent,
+    canActivate: [authenticateGuard],
   },
   {
     path: 'organizations/:id/reservations/new',

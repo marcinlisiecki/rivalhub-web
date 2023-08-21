@@ -26,6 +26,7 @@ import { StationsConfiguratorComponent } from './configurator/stations-configura
 import { SettingsConfiguratorComponent } from './configurator/settings-configurator/settings-configurator.component';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ColorPickerModule } from 'primeng/colorpicker';
+import { OrganizationSettingsComponent } from '@app/features/organization/organization-settings/organization-settings.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { ColorPickerModule } from 'primeng/colorpicker';
     AvailableEventsConfiguratorComponent,
     StationsConfiguratorComponent,
     SettingsConfiguratorComponent,
+    OrganizationSettingsComponent,
   ],
   imports: [
     RouterModule,

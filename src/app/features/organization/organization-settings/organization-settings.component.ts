@@ -1,37 +1,30 @@
-import { Component, OnInit } from '@angular/core';
-import { EventsService } from '@app/core/services/events/events.service';
+import { Component } from '@angular/core';
 import { EventType } from '@interfaces/event/event-type';
-import { categoryTypeToLabel } from '@app/core/utils/event';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AddEventFormStep } from '@interfaces/event/add-event-form-step';
-import { OrganizationConfiguratorStep } from '@interfaces/organization/organization-configurator-step';
-import { firstValueFrom } from 'rxjs';
-import { extractMessage } from '@app/core/utils/apiErrors';
-import { OrganizationsService } from '@app/core/services/organizations/organizations.service';
-import { HttpErrorResponse } from '@angular/common/http';
 import { FormControl, FormGroup } from '@angular/forms';
-import { MessageService } from 'primeng/api';
+import { EventsService } from '@app/core/services/events/events.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { OrganizationsService } from '@app/core/services/organizations/organizations.service';
 import { ErrorsService } from '@app/core/services/errors/errors.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { extractMessage } from '@app/core/utils/apiErrors';
+import { categoryTypeToLabel } from '@app/core/utils/event';
 import { OrganizationSettings } from '@interfaces/organization/organization-settings';
+import { MessageService } from 'primeng/api';
 
 @Component({
-  selector: 'app-configurator',
-  templateUrl: './configurator.component.html',
-  styleUrls: ['./configurator.component.scss'],
+  selector: 'app-organization-settings',
+  templateUrl: './organization-settings.component.html',
+  styleUrls: ['./organization-settings.component.scss'],
 })
-export class ConfiguratorComponent implements OnInit {
-  configuratorStep: OrganizationConfiguratorStep =
-    OrganizationConfiguratorStep.CATEGORIES;
-
+export class OrganizationSettingsComponent {
   possibleEventTypes: EventType[] = [];
   activeEventTypes: EventType[] = [];
   organizationId: number;
+  isLoading: boolean = false;
 
   settingsForm: FormGroup = new FormGroup({
     onlyAdminCanSeeInvitationLink: new FormControl(true, []),
   });
-
-  isCategoryStepLoading: boolean = false;
 
   constructor(
     private eventsService: EventsService,
@@ -39,6 +32,7 @@ export class ConfiguratorComponent implements OnInit {
     private organizationsService: OrganizationsService,
     private router: Router,
     private errorsService: ErrorsService,
+    private messageService: MessageService,
   ) {
     this.organizationId = parseInt(this.route.snapshot.params['id']);
   }
@@ -49,20 +43,10 @@ export class ConfiguratorComponent implements OnInit {
     this.fetchOrganizationsSettings();
   }
 
-  async setStep(newStep: OrganizationConfiguratorStep) {
-    if (newStep === OrganizationConfiguratorStep.STATIONS) {
-      this.isCategoryStepLoading = true;
-
-      try {
-        await this.setOrganizationEventTypes();
-      } catch (err) {
-        this.errorsService.createErrorMessage(extractMessage(err));
-      }
-
-      this.isCategoryStepLoading = false;
-    }
-
-    this.configuratorStep = newStep;
+  onSave() {
+    this.isLoading = true;
+    this.setOrganizationEventTypes();
+    this.saveOrganizationSettings();
   }
 
   fetchOrganizationsSettings() {
@@ -99,11 +83,12 @@ export class ConfiguratorComponent implements OnInit {
       )
       .subscribe({
         next: () => {
-          this.router
-            .navigateByUrl(
-              `/organizations/${this.organizationId}?configured=true`,
-            )
-            .then();
+          this.isLoading = false;
+          this.messageService.add({
+            severity: 'success',
+            life: 10 * 1000,
+            summary: 'Ustawienia zostały pomyślnie zapisane',
+          });
         },
         error: (err: HttpErrorResponse) => {
           this.errorsService.createErrorMessage(extractMessage(err));
@@ -140,7 +125,4 @@ export class ConfiguratorComponent implements OnInit {
   }
 
   protected readonly categoryTypeToLabel = categoryTypeToLabel;
-  protected readonly AddEventFormStep = AddEventFormStep;
-  protected readonly OrganizationConfiguratorStep =
-    OrganizationConfiguratorStep;
 }
