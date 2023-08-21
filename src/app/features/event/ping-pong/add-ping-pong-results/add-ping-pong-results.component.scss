@@ -9,14 +9,24 @@
   }
 }
 
+.matches {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+}
+
+.match {
+  border: 2px dotted $shade600;
+  padding: 1rem;
+  border-radius: $borderRadius;
+}
+
 .teams {
   display: flex;
   column-gap: 0.5rem;
 
   .team {
     flex: 1;
-    border: 2px dotted $shade600;
-    padding: 1rem;
     border-radius: $borderRadius;
 
     > p:first-of-type {

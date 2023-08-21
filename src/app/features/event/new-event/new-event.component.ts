@@ -41,9 +41,8 @@ export class NewEventComponent implements OnInit, OnDestroy {
 
   dateError: string | null = null;
 
-  teams: AddEventUser[][] = [[], []];
-
   userList: UserDetailsDto[] = [];
+  addedUsers: AddEventUser[] = [];
   notAddedUserList: UserDetailsDto[] = [];
 
   onLangChangeSub?: Subscription;
@@ -87,7 +86,7 @@ export class NewEventComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.teams[0].push({
+    this.addedUsers.push({
       id: this.authService.getUserId() || 0,
       name: this.authService.getUserName() || '',
     });
@@ -100,7 +99,7 @@ export class NewEventComponent implements OnInit, OnDestroy {
       challengeId !== this.authService.getUserId()
     ) {
       this.isChallenge = true;
-      this.teams[1].push({
+      this.addedUsers.push({
         id: parseInt(challengeId),
         name: challengeName,
       });
@@ -114,23 +113,21 @@ export class NewEventComponent implements OnInit, OnDestroy {
     this.fetchUserList();
   }
 
-  handleAddUser(data?: { user?: AddEventUser; teamIndex?: number }) {
-    if (!data || !data.user || data.teamIndex === undefined) {
+  handleAddUser(data?: AddEventUser) {
+    if (!data) {
       return;
     }
 
-    this.teams[data.teamIndex].push(data.user);
+    this.addedUsers.push(data);
     this.notAddedUserList = this.getOnlyNotAddedUserList();
   }
 
-  handleRemoveUser(data?: { user?: AddEventUser; teamIndex?: number }) {
-    if (!data || !data.user || data.teamIndex === undefined) {
+  handleRemoveUser(data?: AddEventUser) {
+    if (!data) {
       return;
     }
 
-    this.teams[data.teamIndex] = this.teams[data.teamIndex].filter(
-      (item) => item.id !== data?.user?.id,
-    );
+    this.addedUsers = this.addedUsers.filter((user) => user.id !== data.id);
     this.notAddedUserList = this.getOnlyNotAddedUserList();
   }
 
@@ -149,15 +146,7 @@ export class NewEventComponent implements OnInit, OnDestroy {
     let notAddedList: UserDetailsDto[] = [];
 
     this.userList.forEach((user) => {
-      let found: boolean = false;
-
-      this.teams.forEach((team) => {
-        if (team.findIndex((item) => item.id === user.id) !== -1) {
-          found = true;
-        }
-      });
-
-      if (!found) {
+      if (this.userList.findIndex((item) => item.id === user.id) !== -1) {
         notAddedList.push(user);
       }
     });
@@ -277,54 +266,26 @@ export class NewEventComponent implements OnInit, OnDestroy {
     let name = this.basicInfoForm.get('name')?.value;
     let description = this.basicInfoForm.get('description')?.value;
 
-    let hostId = 0;
-    //TODO Refactor tego potrzebny będzie
-    if (this.teams.at(0)) {
-      let itemList: AddEventUser[] = this.teams.at(0) as AddEventUser[];
-      if (itemList.at(0)) {
-        let item = itemList.at(0);
-        if (item) hostId = item.id;
-      }
-    }
+    let hostId = this.authService.getUserId();
 
-    let dane: number[] = [];
-    let teams: number[][] = Array.from({ length: this.teams.length }, () => []);
-    let actualNumberOfParticipants: number = 0;
-    let currentTeam = 0;
-    for (const team of this.teams) {
-      if (team) {
-        const itemList: AddEventUser[] = team as AddEventUser[];
-
-        itemList.forEach((item) => {
-          if (item) {
-            teams[currentTeam].push(item.id);
-            dane.push(item.id);
-            actualNumberOfParticipants++;
-          }
-        });
-      }
-      currentTeam++;
-    }
-
-    let newEventstationList = this.selectedStations.map((item) =>
-      parseFloat(item),
+    let newEventStationList = this.selectedStations.map((item) =>
+      parseInt(item),
     );
+
     this.newEvent = {
       endTime: endTime,
-      host: hostId,
-      participants: dane,
+      host: hostId || -1,
+      participants: this.addedUsers.map((user) => user.id),
       startTime: startTime,
-      stationList: newEventstationList,
+      stationList: newEventStationList,
       name: name,
       description: description,
-      team1: teams[0],
-      team2: teams[1],
     };
   }
   addEvent() {
     this.buildEvent();
     const organizationId: number = this.route.snapshot.params['id'];
-    console.log(this.selectedEventType);
+
     this.eventsService
       .addEvent(this.newEvent, organizationId, this.selectedEventType!)
       .subscribe({

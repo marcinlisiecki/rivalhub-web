@@ -5,8 +5,9 @@ import { environment } from '../../../../environments/enviroment';
 import { Observable } from 'rxjs';
 import { AddEvent } from '@interfaces/event/add-event';
 import { DatePipe } from '@angular/common';
-import { PingPongMatch } from '@app/core/interfaces/event/ping-pong/ping-pong-match';
+import { PingPongMatch } from '@interfaces/event/games/ping-pong/ping-pong-match';
 import { GameSet } from '@app/core/interfaces/event/games/game-set';
+import { NewPingPongMatch } from '@interfaces/event/games/ping-pong/new-ping-pong-match';
 import { API_DATE_FORMAT } from '@app/core/constants/date';
 
 @Injectable({
@@ -72,6 +73,19 @@ export class EventsService {
     );
   }
 
+  addEventMatch(
+    organizationId: number,
+    eventId: number,
+    type: EventType,
+    newMatch: NewPingPongMatch,
+  ): Observable<PingPongMatch> {
+    return this.http.post<PingPongMatch>(
+      environment.apiUrl +
+        `/organizations/${organizationId}/events/${eventId}/match?type=${type}`,
+      newMatch,
+    );
+  }
+
   addEvent(
     addEvent: AddEvent,
     organizationId: number,
@@ -88,8 +102,6 @@ export class EventsService {
         participants: addEvent.participants,
         description: addEvent.description,
         name: addEvent.name,
-        team1: addEvent.team1,
-        team2: addEvent.team2,
       },
     );
   }
