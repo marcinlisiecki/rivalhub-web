@@ -32,9 +32,13 @@ export class AddUserDialogComponent {
   }
 
   handleAddUser(user: UserDetailsDto) {
-    this.dialogRef.close({
-      teamIndex: this.dialogConfig.data['teamIndex'],
-      user,
-    });
+    if (this.dialogConfig.data['teamIndex'] !== undefined) {
+      this.dialogRef.close({
+        teamIndex: this.dialogConfig.data['teamIndex'],
+        user,
+      });
+    } else {
+      this.dialogRef.close(user);
+    }
   }
 }

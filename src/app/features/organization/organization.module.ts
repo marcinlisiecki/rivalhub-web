@@ -10,7 +10,7 @@ import { DashboardActivitiesPanelComponent } from '@app/features/organization/or
 import { ActivityItemComponent } from '@app/features/organization/organization-dashboard/dashboard-activities-panel/activity-item/activity-item.component';
 import { AddOrganizationComponent } from '@app/features/organization/add-organization/add-organization.component';
 import { MyOrganizationsComponent } from '@app/features/organization/my-organizations/my-organizations.component';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink, RouterModule } from '@angular/router';
 import { SharedModule } from '@app/shared/shared.module';
 import { InviteUserComponent } from '@app/features/organization/invite-user/invite-user.component';
@@ -28,6 +28,7 @@ import { AvailableEventsConfiguratorComponent } from './configurator/available-e
 import { StationsConfiguratorComponent } from './configurator/stations-configurator/stations-configurator.component';
 import { SettingsConfiguratorComponent } from './configurator/settings-configurator/settings-configurator.component';
 import { CheckboxModule } from 'primeng/checkbox';
+import { ColorPickerModule } from 'primeng/colorpicker';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { Location} from "@angular/common";
 import { AdminCardComponent } from './members/admin-card/admin-card.component';
@@ -73,6 +74,7 @@ import { AdminCardComponent } from './members/admin-card/admin-card.component';
     CheckboxModule,
     FormsModule,
     ConfirmPopupModule,
+    ColorPickerModule,
   ],
   exports: [
     MyOrganizationsComponent,
@@ -85,6 +87,7 @@ import { AdminCardComponent } from './members/admin-card/admin-card.component';
     DashboardHeaderComponent,
     DashboardActivitiesPanelComponent,
     ActivityItemComponent,
+    ColorPickerModule,
   ],
 })
 export class OrganizationModule {}

@@ -6,17 +6,18 @@ import { EventType } from '@interfaces/event/event-type';
 import { Station } from '@interfaces/station/station';
 import * as moment from 'moment';
 import { NewStation } from '@app/core/interfaces/station/new-station';
-import {ClosestStationAvailable} from "@interfaces/station/closest-station-available";
+import { ClosestStationAvailable } from '@interfaces/station/closest-station-available';
+import { DatePipe } from '@angular/common';
+import { API_DATE_FORMAT } from '@app/core/constants/date';
 
 @Injectable({
   providedIn: 'root',
 })
 export class StationsService {
-  constructor(private http: HttpClient) {}
-
-  formatDate(date: Date): string {
-    return moment(date).format('DD-MM-yyyy HH:mm');
-  }
+  constructor(
+    private http: HttpClient,
+    private datePipe: DatePipe,
+  ) {}
 
   getOrganizationStations(organizationId: number): Observable<Station[]> {
     return this.http.get<Station[]>(
@@ -37,8 +38,14 @@ export class StationsService {
     end: Date,
     type?: EventType,
   ): Observable<ClosestStationAvailable[]> {
-    const formattedStart = this.formatDate(start);
-    const formattedEnd = this.formatDate(end);
+    const formattedStart = this.datePipe.transform(
+      start,
+      API_DATE_FORMAT,
+    ) as string;
+    const formattedEnd = this.datePipe.transform(
+      end,
+      API_DATE_FORMAT,
+    ) as string;
 
     const params: HttpParams = new HttpParams({
       fromObject: {
@@ -65,8 +72,14 @@ export class StationsService {
     end: Date,
     type?: EventType,
   ): Observable<Station[]> {
-    const formattedStart = this.formatDate(start);
-    const formattedEnd = this.formatDate(end);
+    const formattedStart = this.datePipe.transform(
+      start,
+      API_DATE_FORMAT,
+    ) as string;
+    const formattedEnd = this.datePipe.transform(
+      end,
+      API_DATE_FORMAT,
+    ) as string;
 
     const params: HttpParams = new HttpParams({
       fromObject: {

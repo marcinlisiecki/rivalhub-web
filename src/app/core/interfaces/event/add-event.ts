@@ -6,6 +6,4 @@ export interface AddEvent {
   participants: number[];
   description: string;
   name: string;
-  team1: number[];
-  team2: number[];
 }

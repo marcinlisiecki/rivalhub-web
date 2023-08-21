@@ -1,11 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { FileSelectEvent } from 'primeng/fileupload';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { subscribeOn } from 'rxjs';
 import { OrganizationsService } from '@app/core/services/organizations/organizations.service';
 import { Router } from '@angular/router';
 import { extractMessage } from '@app/core/utils/apiErrors';
-import { NewOrganization } from '@interfaces/organization/new-organization';
 import { Organization } from '@interfaces/organization/organization';
 
 @Component({
@@ -13,11 +12,15 @@ import { Organization } from '@interfaces/organization/organization';
   templateUrl: './add-organization.component.html',
   styleUrls: ['./add-organization.component.scss'],
 })
-export class AddOrganizationComponent {
+export class AddOrganizationComponent implements AfterViewInit {
+  private DEFAULTAVATAR = '/assets/img/svg/defaultOrganization.svg';
+  ACCEPTEDFILETYPES = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'];
+  MAXFILESIZE = 5242880;
+  color: string = '#4c4d87';
   uploadedFile: File | undefined;
-  imageURL: string = 'assets/img/avatars/avatarplaceholder.png';
-  error: string | undefined;
-
+  imageURL: string = this.DEFAULTAVATAR;
+  clientError: string | undefined;
+  customAvatar: boolean = true;
   addForm = new FormGroup({
     name: new FormControl('', [
       Validators.required,
@@ -33,14 +36,42 @@ export class AddOrganizationComponent {
     private router: Router,
   ) {}
 
+  //Udawaj, że tego tutaj nie ma, i tak nie zrozumiesz.
+  //Ale dla jasności - to jest potrzebne do tego,
+  //żeby po kliknięciu na awatar pokazywał się colorpicker i chował się oryginalny guziczek.
+  @ViewChild('colorPicker') colorPicker!: any;
+  onImageClick() {
+    this.colorPicker.el.nativeElement.childNodes[0].childNodes[0].click();
+  }
+  ngAfterViewInit(): void {
+    this.hideInput();
+  }
+  //Od tego miejsca znowu jesteś w stanie zrozumieć kod.
+
   onFileSelectClicked(event: FileSelectEvent) {
+    this.clientError = undefined;
+    //check if file is type of ACCEPTEDFILETYPES
+    if (!this.ACCEPTEDFILETYPES.includes(event.files[0].type)) {
+      this.clientError = 'Obsługujemy tylko pliki .png, .jpg, .jpeg i .gif.';
+      return;
+    }
+    console.log(event.files[0].size);
+    //check if file is not too big
+    if (event.files[0].size > this.MAXFILESIZE) {
+      this.clientError = 'Plik jest za duży.';
+      return;
+    }
+
     this.uploadedFile = event.files[0];
     this.imageURL = URL.createObjectURL(event.currentFiles[0]);
+    this.customAvatar = false;
   }
 
   onClearClicked(event: Event) {
-    this.imageURL = 'assets/img/avatars/avatarplaceholder.png';
+    this.customAvatar = true;
+    this.imageURL = this.DEFAULTAVATAR;
     this.uploadedFile = undefined;
+    this.hideInput();
   }
 
   onSubmit() {
@@ -51,14 +82,15 @@ export class AddOrganizationComponent {
       return;
     }
 
+    const organizationData = new FormData();
+    organizationData.append('thumbnail', this.uploadedFile || '');
+    organizationData.append('color', this.color);
+    organizationData.append('organization', this.name?.value || '');
+
     this.isLoading = true;
     URL.revokeObjectURL(this.imageURL);
 
-    const newOrganization: NewOrganization = {
-      name: this.name?.value || '',
-    };
-
-    this.organizationService.add(newOrganization).subscribe({
+    this.organizationService.add(organizationData).subscribe({
       next: (organization: Organization) => {
         this.router
           .navigateByUrl(`/organizations/${organization.id}/configurator`)
@@ -72,8 +104,15 @@ export class AddOrganizationComponent {
     this.isLoading = false;
   }
 
+  joinAcceptableImageTypes() {
+    return this.ACCEPTEDFILETYPES.join(',');
+  }
+
   get name() {
     return this.addForm.get('name');
+  }
+  hideInput() {
+    this.colorPicker.el.nativeElement.childNodes[0].childNodes[0].style.opacity = 0;
   }
 
   protected readonly subscribeOn = subscribeOn;

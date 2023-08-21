@@ -5,6 +5,7 @@ import { EventDto } from '@interfaces/event/event-dto';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Params } from '@angular/router';
 import { categoryTypeToLabel } from '@app/core/utils/event';
+import { DISPLAY_DATE_FORMAT } from '@app/core/constants/date';
 
 @Component({
   selector: 'app-dashboard-activities-panel',
@@ -29,4 +30,5 @@ export class DashboardActivitiesPanelComponent implements OnInit {
   }
 
   protected readonly categoryTypeToLabel = categoryTypeToLabel;
+  protected readonly DISPLAY_DATE_FORMAT = DISPLAY_DATE_FORMAT;
 }
