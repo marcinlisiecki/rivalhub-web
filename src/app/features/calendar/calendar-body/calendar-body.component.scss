@@ -1,0 +1,23 @@
+@import 'src/scss/variables';
+
+.calendar-main {
+  font-size: 0.75rem;
+  width: 800px;
+  height: 600px;
+  display: flex;
+  text-align: center !important;
+}
+
+//.event {
+//  width: 100%;
+//  background-color: #4a0713;
+//}
+//
+//.reservation {
+//  width: 100%;
+//  height: 2px;
+//  background-color: #367790;
+//}
+
+.calendar-body {
+}

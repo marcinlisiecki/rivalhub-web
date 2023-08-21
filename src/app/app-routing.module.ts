@@ -11,6 +11,7 @@ import { InviteUserComponent } from './features/organization/invite-user/invite-
 import { AddReservationComponent } from './features/reservation/add-reservation/add-reservation.component';
 import { HeroComponent } from '@app/features/landing/hero/hero.component';
 import { ViewStationsComponent } from '@app/features/station/view-stations/view-stations.component';
+import { CalendarComponent } from '@app/features/calendar/calendar.component';
 import { ActivateAccountComponent } from '@app/features/user/activate-account/activate-account.component';
 import { ConfiguratorComponent } from '@app/features/organization/configurator/configurator.component';
 import { AddPingPongResultsComponent } from '@app/features/event/ping-pong/add-ping-pong-results/add-ping-pong-results.component';
@@ -76,6 +77,11 @@ const routes: Routes = [
   {
     path: 'profiles/:id',
     component: ProfileComponent,
+    canActivate: [authenticateGuard],
+  },
+  {
+    path: 'calendar',
+    component: CalendarComponent,
     canActivate: [authenticateGuard],
   },
   {
