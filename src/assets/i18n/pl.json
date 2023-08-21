@@ -2,6 +2,7 @@
 	"api.error": "Wystąpił nieoczekiwany błąd",
 	"button.signIn": "Zaloguj się",
 	"button.signUp": "Zarejestruj się",
+  "calendar.listWeek": "Plan tygodnia",
 	"error.summary": "Wystąpił błąd",
 	"event.new.steps.addUsers": "Dodaj użytkowników",
 	"event.new.steps.category": "Kategorie",

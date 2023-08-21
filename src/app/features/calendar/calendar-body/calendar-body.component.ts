@@ -12,6 +12,7 @@ import { CalendarOptions, EventClickArg } from '@fullcalendar/core';
 import { CalendarService } from '@app/core/services/calendar/calendar.service';
 import { FullCalendarComponent } from '@fullcalendar/angular';
 import { DateClickArg } from '@fullcalendar/interaction';
+import {LanguageService} from "@app/core/services/language/language.service";
 
 @Component({
   selector: 'app-calendar-body',
@@ -22,15 +23,16 @@ export class CalendarBodyComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('calendar') calendarComponent!: FullCalendarComponent;
   @Output() dateClick = new EventEmitter();
 
-  selectedDate!: any;
-  currentDate = new Date('2023-08-08');
+  currentDate = new Date();
   calendarOptions!: WritableSignal<CalendarOptions>;
   events = this.calendarService.visibleEvents;
-  constructor(private calendarService: CalendarService) {}
+
+
+
+  constructor(private calendarService: CalendarService,private languageService:LanguageService) {}
 
   ngOnInit() {
     this.calendarOptions = this.calendarService.options;
-    console.log(Boolean(parseInt( <string>localStorage.getItem('showWeekends'))),localStorage.getItem('showWeekends'))
     this.calendarOptions.mutate((options) => {
       options.dateClick = this.onDateClick.bind(this);
       options.initialDate = this.currentDate;
@@ -39,7 +41,9 @@ export class CalendarBodyComponent implements OnInit, AfterViewInit, OnDestroy {
     });
     this.calendarService.currentDate.set(this.currentDate);
     this.calendarService.currentDayFilter(this.currentDate.toDateString());
-  }
+
+    }
+
 
   ngOnDestroy() {
     this.calendarService.langChangeEffect.destroy();
@@ -47,10 +51,10 @@ export class CalendarBodyComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     this.calendarService.setCalendarApi(this.calendarComponent.getApi());
-    this.calendarService.getOrganisation();
   }
 
   handleEventClick(clickInfo: EventClickArg) {
+    this.dateClick.emit();
     let data = <Date>clickInfo.event.start;
     if (this.isMonthView()) this.calendarService.api.select(data);
     else {

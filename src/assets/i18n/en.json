@@ -2,6 +2,7 @@
 	"api.error": "An unexpected error has occurred",
 	"button.signIn": "Sign in",
 	"button.signUp": "Sign up",
+  "calendar.listWeek": "Weekly schedule",
 	"error.summary": "An error occured",
 	"event.new.steps.addUsers": "Add users",
 	"event.new.steps.category": "Category",

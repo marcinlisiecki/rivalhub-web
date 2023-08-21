@@ -2,6 +2,7 @@
 	"api.error": "Der opstod en uventet fejl",
 	"button.signIn": "Log på",
 	"button.signUp": "Tilmeld",
+  "calendar.listWeek":"Ugeplan",
 	"error.summary": "En fejl opstod",
 	"event.new.steps.addUsers": "Tilføj brugere",
 	"event.new.steps.category": "Kategorier",

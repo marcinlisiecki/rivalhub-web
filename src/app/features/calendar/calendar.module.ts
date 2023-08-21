@@ -12,6 +12,7 @@ import { ToastModule } from 'primeng/toast';
 import { FilterMenuComponent } from './calendar-filter/filter-menu/filter-menu.component';
 import { CheckboxModule } from 'primeng/checkbox';
 import { RouterModule } from '@angular/router';
+import {LanguageService} from "@app/core/services/language/language.service";
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { RouterModule } from '@angular/router';
     CheckboxModule,
     RouterModule,
   ],
+  providers:[LanguageService],
   exports: [
     CalendarEventsComponent,
     CalendarComponent,

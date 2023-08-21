@@ -276,7 +276,6 @@ export class NewEventComponent implements OnInit, OnDestroy {
     let endTime = this.dateForm.get('endDate')?.value;
     let name = this.basicInfoForm.get('name')?.value;
     let description = this.basicInfoForm.get('description')?.value;
-
     let hostId = 0;
     //TODO Refactor tego potrzebny będzie
     if (this.teams.at(0)) {

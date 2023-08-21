@@ -2,6 +2,7 @@
 	"api.error": "Vyskytla se neočekávaná chyba",
 	"button.signIn": "Přihlaste se",
 	"button.signUp": "Registrovat",
+  "calendar.listWeek":"Týdenní plán",
 	"error.summary": "Nastala chyba",
 	"event.new.steps.addUsers": "Přidat uživatele",
 	"event.new.steps.category": "Kategorie",

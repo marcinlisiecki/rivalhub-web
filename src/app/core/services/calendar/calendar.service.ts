@@ -40,7 +40,7 @@ export class CalendarService {
   organisations: WritableSignal<Organization[]> = signal([]);
   currentWeekends = signal(true);
   sidebar = signal(false);
-  private language = this.lang.getCurrentLanguage();
+  private language = this.languageService.getCurrentLanguage();
 
   options = signal<CalendarOptions>({
     plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin],
@@ -48,6 +48,7 @@ export class CalendarService {
       left: 'prev,next today',
       center: 'title',
       right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek',
+
     },
     eventDisplay: 'block',
     showNonCurrentDates: true,
@@ -65,18 +66,19 @@ export class CalendarService {
   });
   langChangeEffect: EffectRef;
 
-  constructor(
+ constructor(
     @Inject(LOCALE_ID) private locale: string,
-    private lang: LanguageService,
-    private orgServ: OrganizationsService,
+    private languageService: LanguageService,
+    private organizationsService: OrganizationsService,
   ) {
+
     this.langChangeEffect = effect(
       () => {
         this.options.mutate((options) => {
           options.locale = this.language();
         });
       },
-      { allowSignalWrites: true },
+      {allowSignalWrites: true},
     );
   }
 
@@ -120,7 +122,7 @@ export class CalendarService {
 
   async getOrganisation() {
     try {
-      const organisations: any[] = await Promise.all(await lastValueFrom(this.orgServ.getMy()))
+      const organisations: any[] = await Promise.all(await lastValueFrom(this.organizationsService.getMy()))
       this.organisations.set(organisations);
     }catch (err){
       console.error(err,'wystąpił błąd')
@@ -165,8 +167,8 @@ export class CalendarService {
     for (let organisation of this.organisations()) {
       try {
         const [eventsResult, reservationsResult] = await Promise.all([
-          await lastValueFrom(this.orgServ.getEvents(organisation.id)),
-          await lastValueFrom(this.orgServ.getOrganizationReservations(organisation.id))
+          await lastValueFrom(this.organizationsService.getEvents(organisation.id)),
+          await lastValueFrom(this.organizationsService.getOrganizationReservations(organisation.id))
         ]);
 
         events.push(...eventsResult);
@@ -209,7 +211,7 @@ export class CalendarService {
       organisationName: orgName,
       type: type,
       typeId: '1',
-      title: eventData.eventType, //eventData.name,
+      title: eventData.name,
       startStr: eventData.startTime.toString(),
       start: eventData.startTime,
       endStr: eventData.endTime.toString(),
@@ -222,7 +224,7 @@ export class CalendarService {
         organisationId: eventData.organization.id.toString(),
         type: 'event',
         backgroundColor: eventData.organization.colorForDefaultImage,
-        //description:eventData.description
+        description:eventData.description
       },
     };
 
