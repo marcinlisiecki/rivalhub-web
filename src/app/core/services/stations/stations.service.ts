@@ -47,8 +47,6 @@ export class StationsService {
       API_DATE_FORMAT,
     ) as string;
 
-    console.log(formattedStart);
-    console.log(formattedEnd);
     const params: HttpParams = new HttpParams({
       fromObject: {
         start: formattedStart,

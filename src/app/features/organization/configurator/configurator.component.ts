@@ -70,36 +70,8 @@ export class ConfiguratorComponent implements OnInit {
         .subscribe({
           next: (types: EventType[]) => {
             this.activeEventTypes = types;
-            console.log(types);
           },
         });
-
-      //TODO:
-      // for (let type of activeEventTypes) {
-      //   try {
-      //     await firstValueFrom(
-      //       this.eventsService.addOrganizationEventType(
-      //         this.organizationId,
-      //         type,
-      //       ),
-      //     );
-      //   } catch (err) {
-      //     reject(err);
-      //   }
-      // }
-
-      // for (let type of inactiveEventTypes) {
-      //   try {
-      //     await firstValueFrom(
-      //       this.eventsService.deleteOrganizationEventType(
-      //         this.organizationId,
-      //         type,
-      //       ),
-      //     );
-      //   } catch (err) {
-      //     reject(err);
-      //   }
-      // }
 
       resolve();
     });

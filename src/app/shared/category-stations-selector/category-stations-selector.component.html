@@ -1,12 +1,12 @@
 <p-accordion [activeIndex]="[]">
   <p-accordionTab [disabled]="stations.length === 0">
     <ng-template pTemplate="header">
-      <div>
-        <div></div>
+      <div>        
         <span class="vertical-align-middle">{{ categoryLabel }}</span
         ><span
           class="inactive-text"
           *ngIf="
+          stations.length === 0 &&
             closestAvailable?.stations?.length === 0 &&
             closestAvailable.firstAvailable === null
           "

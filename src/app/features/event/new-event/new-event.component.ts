@@ -301,7 +301,6 @@ export class NewEventComponent implements OnInit, OnDestroy {
           //TODO obsułga błedu
         },
       });
-    console.log('poserwisie');
   }
 
   protected readonly AddEventFormStep = AddEventFormStep;

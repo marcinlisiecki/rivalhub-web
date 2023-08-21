@@ -43,15 +43,15 @@ export class EventsService {
     id: number,
     eventTypes: EventType[],
   ): Observable<EventType[]> {
-    let eventTypesString = '';
-    eventTypes.forEach((type) => {
-      eventTypesString += `eventTypes=${type}&`;
-    });
+    const params = new HttpParams().set(
+      'eventTypes',
+      eventTypes.map((type) => type.toString()).join(','),
+    );
 
     return this.http.post<EventType[]>(
-      environment.apiUrl +
-        `/organizations/${id}/admin/event-types?${eventTypesString}`,
+      environment.apiUrl + `/organizations/${id}/admin/event-types`,
       {},
+      { params },
     );
   }
 
