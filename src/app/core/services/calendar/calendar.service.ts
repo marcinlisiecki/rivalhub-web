@@ -222,7 +222,7 @@ export class CalendarService {
       extendedProps: {
         organisationName: eventData.organization.name,
         organisationId: eventData.organization.id.toString(),
-        type: 'event',
+        type: eventData.eventType,
         backgroundColor: eventData.organization.colorForDefaultImage,
         description:eventData.description
       },
@@ -254,7 +254,7 @@ export class CalendarService {
       extendedProps: {
         organisationName: orgName,
         organisationId: orgId,
-        type: 'event',
+        type: 'reservation',
         backgroundColor: '#367790',
         //description:eventData.description
       },

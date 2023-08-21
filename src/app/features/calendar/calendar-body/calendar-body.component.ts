@@ -12,7 +12,6 @@ import { CalendarOptions, EventClickArg } from '@fullcalendar/core';
 import { CalendarService } from '@app/core/services/calendar/calendar.service';
 import { FullCalendarComponent } from '@fullcalendar/angular';
 import { DateClickArg } from '@fullcalendar/interaction';
-import {LanguageService} from "@app/core/services/language/language.service";
 
 @Component({
   selector: 'app-calendar-body',
@@ -27,9 +26,7 @@ export class CalendarBodyComponent implements OnInit, AfterViewInit, OnDestroy {
   calendarOptions!: WritableSignal<CalendarOptions>;
   events = this.calendarService.visibleEvents;
 
-
-
-  constructor(private calendarService: CalendarService,private languageService:LanguageService) {}
+  constructor(private calendarService: CalendarService) {}
 
   ngOnInit() {
     this.calendarOptions = this.calendarService.options;

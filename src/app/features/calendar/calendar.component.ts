@@ -17,9 +17,9 @@ export class CalendarComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {}
 
-  async ngOnInit() {
+  ngOnInit() {
 
-    await this.calendarService.createEvents();
+    this.calendarService.createEvents();
 
   }
 

@@ -18,7 +18,7 @@ export interface Filters {
   templateUrl: './calendar-filter.component.html',
   styleUrls: ['./calendar-filter.component.scss'],
 })
-export class CalendarFilterComponent implements OnInit, OnDestroy {
+export class CalendarFilterComponent implements OnInit {
   calendarOptions!: WritableSignal<CalendarOptions>;
   displayMenu: boolean = false;
   organisations!: Organization[];
@@ -45,15 +45,8 @@ export class CalendarFilterComponent implements OnInit, OnDestroy {
 
   }
 
-  ngOnDestroy() {
-  }
-
   handleFilterChange(newFilters: Filters) {
     this.selectedFilters = newFilters;
   }
-
-
-
-
 
 }

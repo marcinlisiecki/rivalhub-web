@@ -9,18 +9,20 @@
     <section>
       <i>{{ event['organisationName'] }}</i>
       <br />
+      <i>{{ categoryTypeToLabel(event!['extendedProps']!['type'])|translate }}</i>
+      <br>
       <i>{{ event.title }}</i>
       <br />
       <b *ngIf="!event.allDay">{{ getDate(event) | date: 'hh:mm' }}</b>
-      <b *ngIf="event.allDay"> Cały dzień </b>
+      <b *ngIf="event.allDay"> {{'calendar.allDay' | translate}}' </b>
     </section>
     <section style="margin-left: 1rem">
-      <h5>{{ event['type'] }}</h5>
+      <h5>{{ 'calendar.type.'+event['type']|translate }}</h5>
     </section>
   </div>
 </ng-template>
 <ng-template #noEvents>
   <div>
-    <p>Brak wydarzeń tego dnia</p>
+    <p>{{'calendar.noEvents'|translate}}</p>
   </div>
 </ng-template>

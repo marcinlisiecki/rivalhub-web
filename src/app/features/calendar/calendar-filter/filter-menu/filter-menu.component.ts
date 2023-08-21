@@ -36,7 +36,6 @@ export class FilterMenuComponent implements OnInit, OnDestroy {
   }
 
   toggleWeekends() {
-    console.log(this.selectedWeeks)
     this.calendarService.handleWeekendsToggle();
   }
 

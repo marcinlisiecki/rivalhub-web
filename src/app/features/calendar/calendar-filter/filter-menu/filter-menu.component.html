@@ -1,6 +1,6 @@
 <div class="menu-comp">
   <div class="Organisation">
-    <h4>Organizacja</h4>
+    <h4>{{'calendar.filter.organisations'|translate}}</h4>
     <div *ngFor="let organisation of organisations" class="field-checkbox">
       <p-checkbox
         name="organisations"
@@ -14,7 +14,7 @@
   </div>
 
   <div class="types">
-    <h4>Typ wydarzenia</h4>
+    <h4>{{'calendar.filter.eventType'|translate}}</h4>
     <div *ngFor="let type of types" class="field-checkbox">
       <p-checkbox
         name="types"
@@ -34,6 +34,6 @@
       inputId="weekend"
       (onChange)="toggleWeekends()"
     ></p-checkbox>
-    <label for="weekend">Pokaż dwudzionek</label>
+    <label for="weekend">{{'calendar.filter.toggleWeekend'|translate}}</label>
   </div>
 </div>
