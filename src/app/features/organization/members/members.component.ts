@@ -56,6 +56,7 @@ export class MembersComponent implements OnInit {
   }
 
   loadUsers = () => {
+    this.currentPage = 0
     this.toggleLoading()
     this.organizationService.getUsers(this.organizationId, this.currentPage, this.itemsPerPage).subscribe({
       next: response => {
@@ -73,6 +74,7 @@ export class MembersComponent implements OnInit {
     if (this.users.length == 0) {
       this.loadUsers()
     }
+    console.log(this.users)
     this.toggleLoading()
     this.organizationService.getUsers(this.organizationId, this.currentPage, this.itemsPerPage).subscribe({
       next: response => {
@@ -111,5 +113,4 @@ export class MembersComponent implements OnInit {
   onChangeStatus() {
     this.ngOnInit()
   }
-
 }
