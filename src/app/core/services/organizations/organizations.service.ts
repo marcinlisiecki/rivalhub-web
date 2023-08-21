@@ -134,4 +134,52 @@ export class OrganizationsService {
       environment.apiUrl + `/organizations/${id}/event-types`,
     );
   }
+
+  getUsersByNamePhrase(id: number, namePhrase: string) {
+    let params = new HttpParams();
+    params = params.append('namePhrase', namePhrase)
+    return this.http.get<UserDetailsDto[]>(
+      environment.apiUrl + `/organizations/${id}/users/search`,
+      { params }
+    )
+  }
+
+  // getUsers(
+  //   id: number,
+  //   page: number,
+  //   size: number,
+  // ): Observable<PagedResponse<UserDetailsDto>> {
+  //   let params = new HttpParams();
+  //   params = params.append('page', page.toString());
+  //   params = params.append('size', size.toString());
+  //   return this.http.get<any>(
+  //     environment.apiUrl + `/organizations/${id}/users`,
+  //     { params },
+  //   );
+  // }
+
+  getAdminUsersIds(id: number): Observable<UserDetailsDto[]> {
+    return this.http.get<UserDetailsDto[]>(
+      environment.apiUrl + `/organizations/${id}/users/admins`
+    )
+  }
+
+  kickUser(id: number, userId: number) {
+    return this.http.delete(
+      environment.apiUrl + `/organizations/${id}/users/${userId}`
+    )
+  }
+
+  unAdmin(id: number, userId: number) {
+    return this.http.delete(
+      environment.apiUrl + `/organizations/${id}/admin/${userId}`
+    )
+  }
+
+  grantAdmin(id: number, userId: number) {
+    return this.http.post<{}>(
+      environment.apiUrl + `/organizations/${id}/admin/${userId}`,
+      {}
+    )
+  }
 }

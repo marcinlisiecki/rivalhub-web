@@ -20,6 +20,7 @@ import {
   TranslateService,
 } from '@ngx-translate/core';
 import { MessageService } from 'primeng/api';
+import {InfiniteScrollModule} from "ngx-infinite-scroll";
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ProfileModule } from './features/profile/profile.module';
 import { UserModule } from './features/user/user.module';
@@ -53,6 +54,7 @@ import { DatePipe } from '@angular/common';
     StationModule,
     ProfileModule,
     UserModule,
+    InfiniteScrollModule,
   ],
 
   providers: [
