@@ -15,6 +15,9 @@ import { RouterLink, RouterModule } from '@angular/router';
 import { SharedModule } from '@app/shared/shared.module';
 import { InviteUserComponent } from '@app/features/organization/invite-user/invite-user.component';
 import { JoinOrganizationComponent } from './join-organization/join-organization.component';
+import { MembersComponent } from './members/members.component';
+import {InfiniteScrollModule} from "ngx-infinite-scroll";
+import { MemberCardComponent } from './members/member-card/member-card.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { MessageModule } from 'primeng/message';
 import { SpinnerModule } from 'primeng/spinner';
@@ -26,6 +29,9 @@ import { StationsConfiguratorComponent } from './configurator/stations-configura
 import { SettingsConfiguratorComponent } from './configurator/settings-configurator/settings-configurator.component';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ColorPickerModule } from 'primeng/colorpicker';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { Location} from "@angular/common";
+import { AdminCardComponent } from './members/admin-card/admin-card.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +51,9 @@ import { ColorPickerModule } from 'primeng/colorpicker';
     AvailableEventsConfiguratorComponent,
     StationsConfiguratorComponent,
     SettingsConfiguratorComponent,
+    MembersComponent,
+    MemberCardComponent,
+    AdminCardComponent,
   ],
   imports: [
     RouterModule,
@@ -53,6 +62,9 @@ import { ColorPickerModule } from 'primeng/colorpicker';
     ReactiveFormsModule,
     RouterLink,
     SharedModule,
+    InfiniteScrollModule,
+    NgOptimizedImage,
+    FormsModule,
     TranslateModule,
     MessageModule,
     SpinnerModule,
@@ -61,6 +73,7 @@ import { ColorPickerModule } from 'primeng/colorpicker';
     StationModule,
     CheckboxModule,
     FormsModule,
+    ConfirmPopupModule,
     ColorPickerModule,
   ],
   exports: [
