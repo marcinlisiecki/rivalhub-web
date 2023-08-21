@@ -12,7 +12,10 @@
   </div>
 
   <div>
-    <input type="text" [(ngModel)]="searchQuery" (input)="onSearchInputChange()">
+    <span class="p-input-icon-right">
+    <i class="pi pi-search"></i>
+    <input type="text" [(ngModel)]="searchQuery" (input)="onSearchInputChange()" pInputText placeholder="Szukaj...">
+</span>
     <div *ngIf="searchQuery; else infiniteScrollContent" class="dashboard-container">
       <app-member-card
         [amIAdmin]="amIAdmin"
