@@ -15,12 +15,13 @@ import { BasicInfoComponent } from './new-event/basic-info/basic-info.component'
 import { DateSelectorComponent } from './new-event/date-selector/date-selector.component';
 import { StationSelectorComponent } from './new-event/station-selector/station-selector.component';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
-import { AddUserPingPongComponent } from './new-event/add-user-ping-pong/add-user-ping-pong.component';
+import { AddEventUsersComponent } from '@app/features/event/new-event/add-event-users/add-event-users.component';
 import { AddUserDialogComponent } from './new-event/add-user-dialog/add-user-dialog.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { AddPingPongResultsComponent } from './ping-pong/add-ping-pong-results/add-ping-pong-results.component';
 import { AddPingPongSetComponent } from './ping-pong/add-ping-pong-set/add-ping-pong-set.component';
 import { DialogService } from 'primeng/dynamicdialog';
+import { NewEventMatchComponent } from './new-event-match/new-event-match.component';
 
 @NgModule({
   declarations: [
@@ -29,10 +30,11 @@ import { DialogService } from 'primeng/dynamicdialog';
     BasicInfoComponent,
     DateSelectorComponent,
     StationSelectorComponent,
-    AddUserPingPongComponent,
+    AddEventUsersComponent,
     AddUserDialogComponent,
     AddPingPongResultsComponent,
     AddPingPongSetComponent,
+    NewEventMatchComponent,
   ],
   imports: [
     CommonModule,
