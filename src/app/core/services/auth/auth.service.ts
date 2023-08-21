@@ -4,7 +4,7 @@ import { LoginCredentials } from '@interfaces/auth/login-credentials';
 import { RegisterCredentials } from '@interfaces/auth/register-credentials';
 import { AuthResponse } from '@interfaces/auth/login-response';
 import { Observable, Subject, tap } from 'rxjs';
-import { environment } from '../../../../environments/enviroment';
+import { environment } from '../../../../environments/environment';
 import { JwtService } from '../jwt/jwt.service';
 import { NavigationStart, Router } from '@angular/router';
 @Injectable({

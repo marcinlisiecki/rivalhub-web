@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { EventType } from '@interfaces/event/event-type';
-import { environment } from '../../../../environments/enviroment';
+import { environment } from '../../../../environments/environment';
 import { Observable } from 'rxjs';
 import { AddEvent } from '@interfaces/event/add-event';
 import { DatePipe } from '@angular/common';

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { UserDetailsDto } from '@interfaces/user/user-details-dto';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../../environments/enviroment';
+import { environment } from '../../../../environments/environment';
 import { Reservation } from '@app/core/interfaces/reservation/reservation';
 import { EventDto } from '@app/core/interfaces/event/event-dto';
 
