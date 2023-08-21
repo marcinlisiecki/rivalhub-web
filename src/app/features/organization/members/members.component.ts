@@ -24,8 +24,6 @@ export class MembersComponent implements OnInit {
   public noMore: boolean = false
   public amIAdmin!: boolean
 
-  // public isMyself: boolean = false
-
   toggleLoading = () => this.isLoading = !this.isLoading
 
   constructor(
@@ -40,7 +38,6 @@ export class MembersComponent implements OnInit {
     })
 
     this.amIAdmin = this.authService.amIAdmin(this.organizationId)
-    // this.loadAdmins()
     this.loadData()
     // TODO debounce 500 ms
   }

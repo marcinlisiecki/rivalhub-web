@@ -99,7 +99,7 @@ export class MemberCardComponent implements OnInit {
     })
   }
 
-  takeToUserProfile(id: number) {
-    this.router.navigateByUrl(`profiles/${id}`).then()
+  takeToUserProfile() {
+    this.router.navigateByUrl(`profiles/${this.user.id}`).then()
   }
 }

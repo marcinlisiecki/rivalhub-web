@@ -5,6 +5,7 @@ import {OrganizationsService} from "@app/core/services/organizations/organizatio
 import {ActivatedRoute, Router} from "@angular/router";
 import {AuthService} from "@app/core/services/auth/auth.service";
 import {HttpErrorResponse} from "@angular/common/http";
+import {take} from "rxjs";
 
 @Component({
   selector: 'app-admin-card',
@@ -107,4 +108,10 @@ export class AdminCardComponent implements OnInit {
       reject: () => {}
     })
   }
+
+  takeToUserProfile() {
+    this.router.navigateByUrl(`profiles/${this.user.id}`).then()
+  }
+
+  protected readonly take = take;
 }
