@@ -1,0 +1,41 @@
+<section class="form-step-wrapper">
+  <header>
+    <h1>Dodaj użytkowników</h1>
+  </header>
+
+  <section class="teams">
+    <div class="team">
+      <div class="team-member" *ngFor="let user of addedUsers">
+        <div class="team-member-data">
+          <div class="team-member-avatar"></div>
+          <p>{{ user.name }}</p>
+        </div>
+        <div class="team-member-remove-button" (click)="removeUser(user)">
+          <i class="pi pi-times-circle"></i>
+        </div>
+      </div>
+
+      <div class="team-add-button" (click)="openAddUserDialog()">
+        <i class="pi pi-plus"></i>
+        <p>Dodaj użytkownika</p>
+      </div>
+    </div>
+  </section>
+
+  <p-divider></p-divider>
+
+  <div class="form-step-navigation">
+    <p-button
+      styleClass="p-button-outlined"
+      (onClick)="setFormStep.emit(AddEventFormStep.BASIC_INFO)"
+    >
+      Powrót
+    </p-button>
+    <p-button
+      (onClick)="setFormStep.emit(AddEventFormStep.DATE)"
+      [disabled]="addedUsers.length === 0"
+    >
+      Dalej
+    </p-button>
+  </div>
+</section>

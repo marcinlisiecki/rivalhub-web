@@ -5,6 +5,9 @@ import { MenuItem, MenuItemCommandEvent } from 'primeng/api';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '@app/core/services/auth/auth.service';
 import { ImageService } from '@app/core/services/image/image.service';
+import { EventType } from '@interfaces/event/event-type';
+import { categoryTypeToLabel } from '@app/core/utils/event';
+import { LanguageService } from '@app/core/services/language/language.service';
 
 @Component({
   selector: 'app-user-item',
@@ -15,30 +18,30 @@ export class UserItemComponent implements OnInit {
   @Input({ required: true }) user!: UserDetailsDto;
   items?: MenuItem[];
   profileImg!: string;
+  organizationId!: number;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private authService: AuthService,
     private imageService: ImageService,
+    private languageService: LanguageService,
   ) {}
 
   ngOnInit(): void {
-    const organizationId = this.route.snapshot.params['id'];
+    this.organizationId = this.route.snapshot.params['id'];
 
     const challengeItem: MenuItem = {
       label: 'Rzuć wyzwanie',
       icon: 'pi pi-bolt',
-      command: (_: MenuItemCommandEvent) => {
-        this.router
-          .navigate(['organizations', organizationId, 'events', 'new'], {
-            queryParams: {
-              challengeId: this.user.id,
-              challengeName: this.user.name,
-            },
-          })
-          .then();
-      },
+
+      items: [
+        ...Object.keys(EventType).map((key) => ({
+          label: this.languageService.instant(categoryTypeToLabel(key)),
+          command: (_: MenuItemCommandEvent) =>
+            this.navigateToNewEvent(key as EventType),
+        })),
+      ],
     };
 
     const profileItem: MenuItem = {
@@ -54,8 +57,21 @@ export class UserItemComponent implements OnInit {
     } else {
       this.items = [profileItem];
     }
+
     this.profileImg = this.imageService.getUserImagePath(
       this.user.profilePictureUrl,
     );
+  }
+
+  navigateToNewEvent(type: EventType) {
+    this.router
+      .navigate(['organizations', this.organizationId, 'events', 'new'], {
+        queryParams: {
+          challengeId: this.user.id,
+          challengeName: this.user.name,
+          challengeType: type,
+        },
+      })
+      .then();
   }
 }

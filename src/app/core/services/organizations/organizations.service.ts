@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { environment } from '../../../../environments/enviroment';
+import { environment } from '../../../../environments/environment';
 import { Observable } from 'rxjs';
 import { Organization } from '@interfaces/organization/organization';
 import { NewOrganization } from '@interfaces/organization/new-organization';
@@ -13,16 +13,17 @@ import * as moment from 'moment/moment';
 import { EventType } from '@interfaces/event/event-type';
 import { EventDto } from '@interfaces/event/event-dto';
 import { OrganizationSettings } from '@interfaces/organization/organization-settings';
+import { DatePipe } from '@angular/common';
+import { API_DATE_FORMAT } from '@app/core/constants/date';
 
 @Injectable({
   providedIn: 'root',
 })
 export class OrganizationsService {
-  constructor(private http: HttpClient) {}
-
-  formatDate(date: Date): string {
-    return moment(date).format('DD-MM-yyyy HH:mm');
-  }
+  constructor(
+    private http: HttpClient,
+    private datePipe: DatePipe,
+  ) {}
 
   add(newOrganization: FormData): Observable<Organization> {
     return this.http.post<Organization>(
@@ -97,8 +98,11 @@ export class OrganizationsService {
       environment.apiUrl + `/organizations/${organizationId}/reservations`,
       {
         stationsIdList: reservation.stationsIdList,
-        startTime: this.formatDate(reservation.startTime),
-        endTime: this.formatDate(reservation.endTime),
+        startTime: this.datePipe.transform(
+          reservation.startTime,
+          API_DATE_FORMAT,
+        ),
+        endTime: this.datePipe.transform(reservation.endTime, API_DATE_FORMAT),
       },
     );
   }
@@ -129,5 +133,53 @@ export class OrganizationsService {
     return this.http.get<EventType[]>(
       environment.apiUrl + `/organizations/${id}/event-types`,
     );
+  }
+
+  getUsersByNamePhrase(id: number, namePhrase: string) {
+    let params = new HttpParams();
+    params = params.append('namePhrase', namePhrase)
+    return this.http.get<UserDetailsDto[]>(
+      environment.apiUrl + `/organizations/${id}/users/search`,
+      { params }
+    )
+  }
+
+  // getUsers(
+  //   id: number,
+  //   page: number,
+  //   size: number,
+  // ): Observable<PagedResponse<UserDetailsDto>> {
+  //   let params = new HttpParams();
+  //   params = params.append('page', page.toString());
+  //   params = params.append('size', size.toString());
+  //   return this.http.get<any>(
+  //     environment.apiUrl + `/organizations/${id}/users`,
+  //     { params },
+  //   );
+  // }
+
+  getAdminUsersIds(id: number): Observable<UserDetailsDto[]> {
+    return this.http.get<UserDetailsDto[]>(
+      environment.apiUrl + `/organizations/${id}/users/admins`
+    )
+  }
+
+  kickUser(id: number, userId: number) {
+    return this.http.delete(
+      environment.apiUrl + `/organizations/${id}/users/${userId}`
+    )
+  }
+
+  unAdmin(id: number, userId: number) {
+    return this.http.delete(
+      environment.apiUrl + `/organizations/${id}/admin/${userId}`
+    )
+  }
+
+  grantAdmin(id: number, userId: number) {
+    return this.http.post<{}>(
+      environment.apiUrl + `/organizations/${id}/admin/${userId}`,
+      {}
+    )
   }
 }

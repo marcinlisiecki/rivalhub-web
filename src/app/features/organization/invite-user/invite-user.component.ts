@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OrganizationsService } from '@app/core/services/organizations/organizations.service';
-import { environment } from '../../../../environments/enviroment';
+import { environment } from '../../../../environments/environment';
 import { Organization } from '@interfaces/organization/organization';
 import { HttpErrorResponse } from '@angular/common/http';
 
