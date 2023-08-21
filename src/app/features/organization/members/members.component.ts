@@ -70,6 +70,9 @@ export class MembersComponent implements OnInit {
   }
 
   appendUsers = () => {
+    if (this.users.length == 0) {
+      this.loadUsers()
+    }
     this.toggleLoading()
     this.organizationService.getUsers(this.organizationId, this.currentPage, this.itemsPerPage).subscribe({
       next: response => {
