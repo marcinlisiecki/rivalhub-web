@@ -4,7 +4,6 @@ import {
 } from '@angular/core';
 import { CalendarService } from '@app/core/services/calendar/calendar.service';
 import { EventInput } from '@fullcalendar/core';
-import {LanguageService} from "@app/core/services/language/language.service";
 import {categoryTypeToLabel} from "@app/core/utils/event";
 
 @Component({
