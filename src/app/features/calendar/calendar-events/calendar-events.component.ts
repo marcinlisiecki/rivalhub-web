@@ -15,7 +15,7 @@ import {categoryTypeToLabel} from "@app/core/utils/event";
 export class CalendarEventsComponent {
   currentDayEvents: WritableSignal<EventInput[]> = this.calendarService.currentDayEvents;
 
-  constructor(private calendarService: CalendarService,private languageService:LanguageService) {}
+  constructor(private calendarService: CalendarService) {}
 
   getDate(event: EventInput): Date {
     return <Date>event['start'];

@@ -2,7 +2,6 @@ import {
   Component,
   WritableSignal,
   OnInit,
-  OnDestroy,
 } from '@angular/core';
 import { CalendarOptions } from '@fullcalendar/core';
 import { CalendarService } from '@app/core/services/calendar/calendar.service';
