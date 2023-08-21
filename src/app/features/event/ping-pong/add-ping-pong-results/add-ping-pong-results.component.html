@@ -31,9 +31,9 @@
 
         <h2>Sety</h2>
 
-        <app-no-resource-info *ngIf="match.sets.length === 0">
+        <!-- <app-no-resource-info *ngIf="match.sets.length === 0">
           Brak setów
-        </app-no-resource-info>
+        </app-no-resource-info> -->
 
         <section class="sets">
           <div *ngFor="let set of match.sets" class="set">
@@ -53,21 +53,12 @@
           </div>
         </section>
 
-        <p-button
-          (click)="openAddSetDialog(match.id)"
-          styleClass="p-button-outlined"
-          >Dodaj set</p-button
-        >
+        <p-button (click)="openAddSetDialog(match.id)" styleClass="p-button-outlined">Dodaj set</p-button>
       </div>
 
-      <p-button *ngIf="!showAddNewMatch" (onClick)="showAddNewMatch = true"
-        >Dodaj nowy mecz</p-button
-      >
+      <p-button *ngIf="!showAddNewMatch" (onClick)="showAddNewMatch = true">Dodaj nowy mecz</p-button>
     </div>
 
-    <app-new-event-match
-      *ngIf="showAddNewMatch"
-      (addMatch)="handleAddMatch($event)"
-    ></app-new-event-match>
+    <app-new-event-match *ngIf="showAddNewMatch" (addMatch)="handleAddMatch($event)"></app-new-event-match>
   </section>
 </section>

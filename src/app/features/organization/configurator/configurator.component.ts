@@ -65,31 +65,41 @@ export class ConfiguratorComponent implements OnInit {
         (type) => !this.activeEventTypes.includes(type),
       );
 
-      for (let type of activeEventTypes) {
-        try {
-          await firstValueFrom(
-            this.eventsService.addOrganizationEventType(
-              this.organizationId,
-              type,
-            ),
-          );
-        } catch (err) {
-          reject(err);
-        }
-      }
+      this.eventsService
+        .setOrganizationEventTypes(this.organizationId, activeEventTypes)
+        .subscribe({
+          next: (types: EventType[]) => {
+            this.activeEventTypes = types;
+            console.log(types);
+          },
+        });
 
-      for (let type of inactiveEventTypes) {
-        try {
-          await firstValueFrom(
-            this.eventsService.deleteOrganizationEventType(
-              this.organizationId,
-              type,
-            ),
-          );
-        } catch (err) {
-          reject(err);
-        }
-      }
+      //TODO:
+      // for (let type of activeEventTypes) {
+      //   try {
+      //     await firstValueFrom(
+      //       this.eventsService.addOrganizationEventType(
+      //         this.organizationId,
+      //         type,
+      //       ),
+      //     );
+      //   } catch (err) {
+      //     reject(err);
+      //   }
+      // }
+
+      // for (let type of inactiveEventTypes) {
+      //   try {
+      //     await firstValueFrom(
+      //       this.eventsService.deleteOrganizationEventType(
+      //         this.organizationId,
+      //         type,
+      //       ),
+      //     );
+      //   } catch (err) {
+      //     reject(err);
+      //   }
+      // }
 
       resolve();
     });

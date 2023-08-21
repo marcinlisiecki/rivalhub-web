@@ -95,8 +95,9 @@ export class OrganizationsService {
     reservation: NewReservation,
   ): Observable<{}> {
     return this.http.post<Station[]>(
-      environment.apiUrl + `/organizations/${organizationId}/reservations`,
+      environment.apiUrl + `/organizations/reservations`,
       {
+        organizationId: organizationId,
         stationsIdList: reservation.stationsIdList,
         startTime: this.datePipe.transform(
           reservation.startTime,
@@ -137,11 +138,11 @@ export class OrganizationsService {
 
   getUsersByNamePhrase(id: number, namePhrase: string) {
     let params = new HttpParams();
-    params = params.append('namePhrase', namePhrase)
+    params = params.append('namePhrase', namePhrase);
     return this.http.get<UserDetailsDto[]>(
       environment.apiUrl + `/organizations/${id}/users/search`,
-      { params }
-    )
+      { params },
+    );
   }
 
   // getUsers(
@@ -160,26 +161,26 @@ export class OrganizationsService {
 
   getAdminUsersIds(id: number): Observable<UserDetailsDto[]> {
     return this.http.get<UserDetailsDto[]>(
-      environment.apiUrl + `/organizations/${id}/users/admins`
-    )
+      environment.apiUrl + `/organizations/${id}/users/admins`,
+    );
   }
 
   kickUser(id: number, userId: number) {
     return this.http.delete(
-      environment.apiUrl + `/organizations/${id}/users/${userId}`
-    )
+      environment.apiUrl + `/organizations/${id}/users/${userId}`,
+    );
   }
 
   unAdmin(id: number, userId: number) {
     return this.http.delete(
-      environment.apiUrl + `/organizations/${id}/admin/${userId}`
-    )
+      environment.apiUrl + `/organizations/${id}/admin/${userId}`,
+    );
   }
 
   grantAdmin(id: number, userId: number) {
     return this.http.post<{}>(
       environment.apiUrl + `/organizations/${id}/admin/${userId}`,
-      {}
-    )
+      {},
+    );
   }
 }

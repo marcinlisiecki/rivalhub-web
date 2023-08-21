@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { EventType } from '@interfaces/event/event-type';
 import { environment } from '../../../../environments/environment';
 import { Observable } from 'rxjs';
@@ -39,13 +39,29 @@ export class EventsService {
     );
   }
 
+  setOrganizationEventTypes(
+    id: number,
+    eventTypes: EventType[],
+  ): Observable<EventType[]> {
+    let eventTypesString = '';
+    eventTypes.forEach((type) => {
+      eventTypesString += `eventTypes=${type}&`;
+    });
+
+    return this.http.post<EventType[]>(
+      environment.apiUrl +
+        `/organizations/${id}/admin/event-types?${eventTypesString}`,
+      {},
+    );
+  }
+
   getEventMatches(
     organizationId: number,
     eventId: number,
   ): Observable<PingPongMatch[]> {
     return this.http.get<PingPongMatch[]>(
       environment.apiUrl +
-        `/organizations/${organizationId}/events/${eventId}/match`,
+        `/organizations/${organizationId}/events/${eventId}/match?type=PING_PONG`,
     );
   }
 
@@ -57,7 +73,7 @@ export class EventsService {
   ): Observable<{}> {
     return this.http.post<{}>(
       environment.apiUrl +
-        `/organizations/${organizationId}/events/${eventId}/match/${matchId}`,
+        `/organizations/${organizationId}/events/${eventId}/match/${matchId}/pingpong?type=PING_PONG`,
       setList,
     );
   }
