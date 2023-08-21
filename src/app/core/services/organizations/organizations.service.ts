@@ -82,11 +82,9 @@ export class OrganizationsService {
     );
   }
 
-  getOrganizationReservations(
-    organizationId: number,
-  ): Observable<Reservation[]> {
+  getOrganizationReservations(userId: number): Observable<Reservation[]> {
     return this.http.get<Reservation[]>(
-      environment.apiUrl + `/organizations/${organizationId}/reservations`,
+      environment.apiUrl + `/users/${userId}/reservations`,
     );
   }
 

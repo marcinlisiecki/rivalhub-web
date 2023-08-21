@@ -21,7 +21,8 @@ import { CalendarEvent } from '@interfaces/calendar/calendar-event';
 import { EventDto } from '@interfaces/event/event-dto';
 import { Reservation } from '@interfaces/reservation/reservation';
 import { Filters } from '@app/features/calendar/calendar-filter/calendar-filter.component';
-import {lastValueFrom} from "rxjs";
+import { lastValueFrom } from 'rxjs';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -48,7 +49,6 @@ export class CalendarService {
       left: 'prev,next today',
       center: 'title',
       right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek',
-
     },
     eventDisplay: 'block',
     showNonCurrentDates: true,
@@ -66,19 +66,19 @@ export class CalendarService {
   });
   langChangeEffect: EffectRef;
 
- constructor(
+  constructor(
     @Inject(LOCALE_ID) private locale: string,
     private languageService: LanguageService,
     private organizationsService: OrganizationsService,
+    private authService: AuthService,
   ) {
-
     this.langChangeEffect = effect(
       () => {
         this.options.mutate((options) => {
           options.locale = this.language();
         });
       },
-      {allowSignalWrites: true},
+      { allowSignalWrites: true },
     );
   }
 
@@ -122,12 +122,13 @@ export class CalendarService {
 
   async getOrganisation() {
     try {
-      const organisations: any[] = await Promise.all(await lastValueFrom(this.organizationsService.getMy()))
+      const organisations: any[] = await Promise.all(
+        await lastValueFrom(this.organizationsService.getMy()),
+      );
       this.organisations.set(organisations);
-    }catch (err){
-      console.error(err,'wystąpił błąd')
+    } catch (err) {
+      console.error(err, 'wystąpił błąd');
     }
-
   }
 
   setLocalStorage() {
@@ -159,7 +160,6 @@ export class CalendarService {
     this.currentDayFilter(this.currentDate());
   }
 
-
   async getEvents() {
     let events: EventDto[] = [];
     let reservations: any[] = [];
@@ -167,12 +167,23 @@ export class CalendarService {
     for (let organisation of this.organisations()) {
       try {
         const [eventsResult, reservationsResult] = await Promise.all([
-          await lastValueFrom(this.organizationsService.getEvents(organisation.id)),
-          await lastValueFrom(this.organizationsService.getOrganizationReservations(organisation.id))
+          await lastValueFrom(
+            this.organizationsService.getEvents(organisation.id),
+          ),
+          await lastValueFrom(
+            this.organizationsService.getOrganizationReservations(
+              this.authService.getUserId() as number,
+            ),
+          ),
         ]);
 
         events.push(...eventsResult);
-        reservations.push(...reservationsResult.map(reservation => ({ organisation, reservation })));
+        reservations.push(
+          ...reservationsResult.map((reservation) => ({
+            organisation,
+            reservation,
+          })),
+        );
       } catch (err) {
         console.error('An error occurred:', err);
       }
@@ -199,8 +210,6 @@ export class CalendarService {
     this.updateCalendar();
   }
 
-
-
   private createEvent(eventData: EventDto) {
     let color = eventData.organization.colorForDefaultImage;
     let orgName = eventData.organization.name;
@@ -224,7 +233,7 @@ export class CalendarService {
         organisationId: eventData.organization.id.toString(),
         type: eventData.eventType,
         backgroundColor: eventData.organization.colorForDefaultImage,
-        description:eventData.description
+        description: eventData.description,
       },
     };
 
