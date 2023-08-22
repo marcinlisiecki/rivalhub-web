@@ -78,17 +78,19 @@ export class ConfiguratorComponent implements OnInit {
   }
 
   setOrganizationEventTypes() {
-    const activeEventTypes = this.activeEventTypes;
-    const inactiveEventTypes = this.possibleEventTypes.filter(
-      (type) => !this.activeEventTypes.includes(type),
-    );
-    this.organizationsService
-      .setOrganizationEventTypes(
-        this.organizationId,
-        activeEventTypes,
-        inactiveEventTypes,
-      )
-      .then();
+    return new Promise<void>(async (resolve, reject) => {
+      const activeEventTypes = this.activeEventTypes;
+
+      this.eventsService
+        .setOrganizationEventTypes(this.organizationId, activeEventTypes)
+        .subscribe({
+          next: (types: EventType[]) => {
+            this.activeEventTypes = types;
+          },
+        });
+
+      resolve();
+    });
   }
 
   saveOrganizationSettings() {

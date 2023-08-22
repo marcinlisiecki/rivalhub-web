@@ -19,7 +19,6 @@ import { AuthService } from '@app/core/services/auth/auth.service';
 import { LanguageService } from '@app/core/services/language/language.service';
 import { EventsService } from '@app/core/services/events/events.service';
 import { AddEvent } from '@interfaces/event/add-event';
-import { extractMessage } from '@app/core/utils/apiErrors';
 
 @Component({
   selector: 'app-new-event',
@@ -103,6 +102,12 @@ export class NewEventComponent implements OnInit, OnDestroy {
         id: parseInt(challengeId),
         name: challengeName,
       });
+    }
+
+    const challengeType = this.route.snapshot.queryParams['challengeType'];
+    if (challengeType) {
+      this.selectedEventType = challengeType as EventType;
+      this.setFormStep(AddEventFormStep.BASIC_INFO);
     }
 
     setTimeout(() => this.setStepsMenu(), 100);
@@ -296,7 +301,6 @@ export class NewEventComponent implements OnInit, OnDestroy {
           //TODO obsułga błedu
         },
       });
-    console.log('poserwisie');
   }
 
   protected readonly AddEventFormStep = AddEventFormStep;

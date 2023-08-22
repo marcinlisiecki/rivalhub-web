@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { environment } from '../../../../environments/enviroment';
-import { firstValueFrom, Observable } from 'rxjs';
+import {  Observable } from 'rxjs';
+import { environment } from '../../../../environments/environment';
 import { Organization } from '@interfaces/organization/organization';
 import { PagedResponse } from '@interfaces/generic/paged-response';
 import { NewReservation } from '@interfaces/reservation/new-reservation';
@@ -82,11 +82,9 @@ export class OrganizationsService {
     );
   }
 
-  getOrganizationReservations(
-    organizationId: number,
-  ): Observable<Reservation[]> {
+  getOrganizationReservations(userId: number): Observable<Reservation[]> {
     return this.http.get<Reservation[]>(
-      environment.apiUrl + `/organizations/${organizationId}/reservations`,
+      environment.apiUrl + `/users/${userId}/reservations`,
     );
   }
 
@@ -95,8 +93,9 @@ export class OrganizationsService {
     reservation: NewReservation,
   ): Observable<{}> {
     return this.http.post<Station[]>(
-      environment.apiUrl + `/organizations/${organizationId}/reservations`,
+      environment.apiUrl + `/organizations/reservations`,
       {
+        organizationId: organizationId,
         stationsIdList: reservation.stationsIdList,
         startTime: this.datePipe.transform(
           reservation.startTime,
@@ -139,6 +138,54 @@ export class OrganizationsService {
   getEventsCategories(id: number): Observable<EventType[]> {
     return this.http.get<EventType[]>(
       environment.apiUrl + `/organizations/${id}/event-types`,
+    );
+  }
+
+  getUsersByNamePhrase(id: number, namePhrase: string) {
+    let params = new HttpParams();
+    params = params.append('namePhrase', namePhrase);
+    return this.http.get<UserDetailsDto[]>(
+      environment.apiUrl + `/organizations/${id}/users/search`,
+      { params },
+    );
+  }
+
+  // getUsers(
+  //   id: number,
+  //   page: number,
+  //   size: number,
+  // ): Observable<PagedResponse<UserDetailsDto>> {
+  //   let params = new HttpParams();
+  //   params = params.append('page', page.toString());
+  //   params = params.append('size', size.toString());
+  //   return this.http.get<any>(
+  //     environment.apiUrl + `/organizations/${id}/users`,
+  //     { params },
+  //   );
+  // }
+
+  getAdminUsersIds(id: number): Observable<UserDetailsDto[]> {
+    return this.http.get<UserDetailsDto[]>(
+      environment.apiUrl + `/organizations/${id}/users/admins`,
+    );
+  }
+
+  kickUser(id: number, userId: number) {
+    return this.http.delete(
+      environment.apiUrl + `/organizations/${id}/users/${userId}`,
+    );
+  }
+
+  unAdmin(id: number, userId: number) {
+    return this.http.delete(
+      environment.apiUrl + `/organizations/${id}/admin/${userId}`,
+    );
+  }
+
+  grantAdmin(id: number, userId: number) {
+    return this.http.post<{}>(
+      environment.apiUrl + `/organizations/${id}/admin/${userId}`,
+      {},
     );
   }
 

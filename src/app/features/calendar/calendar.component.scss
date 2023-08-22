@@ -1,0 +1,45 @@
+@import 'src/scss/variables';
+
+.calendar {
+  margin: 1rem auto auto;
+  position: relative;
+  display: flex;
+
+  .mid {
+    display: flex;
+    margin: auto;
+    border: 2px solid #334155;
+    width: auto;
+    flex-wrap: wrap;
+    align-content: center;
+
+    .content {
+      display: flex;
+      width: 75dvw;
+      margin-left: -4vw;
+      padding: 4rem 1rem 1rem 3rem;
+
+      .left {
+        display: flex;
+        margin-left: 5rem;
+        z-index: 1001;
+        align-items: center;
+        flex-direction: row;
+      }
+      .right {
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+        overflow: hidden;
+      }
+    }
+  }
+
+  .button {
+    margin-top: 1rem;
+    z-index: 1005;
+    width: 25px;
+    display: flex;
+    align-items: baseline;
+  }
+}

@@ -22,6 +22,8 @@ export class ViewStationsComponent implements OnInit {
   apiError: string | null = null;
   inputError: string | null = null;
 
+  stationsOptions: string[] = [];
+
   newStation: NewStation = {
     name: '',
     type: EventType.PING_PONG,
@@ -30,7 +32,7 @@ export class ViewStationsComponent implements OnInit {
 
   clonedStations: { [s: string]: Station } = {};
 
-  stationTypes: any = Object.keys(EventType);
+  stationTypes!: string[];
 
   constructor(
     private route: ActivatedRoute,
@@ -56,6 +58,10 @@ export class ViewStationsComponent implements OnInit {
       });
 
     this.fetchStationTypes();
+  }
+
+  ngOnAfterViewInit(): void {
+    //use caterogyTypeToLabel on this.stationTypes
   }
 
   fetchStationTypes() {
@@ -115,7 +121,6 @@ export class ViewStationsComponent implements OnInit {
       .deleteStation(this.organizationId, station.id)
       .subscribe({
         next: () => {
-          console.log('ok');
           this.stations = this.stations.filter(
             (item) => item.id !== station.id,
           );

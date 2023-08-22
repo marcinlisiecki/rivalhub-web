@@ -10,4 +10,6 @@ export interface EventDto {
   participants: number[];
   organization: Organization;
   eventType: EventType;
+  name: string;
+  description:string;
 }

@@ -1,8 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { Station } from '@interfaces/station/station';
-import { StationsService } from '@app/core/services/stations/stations.service';
-import { ActivatedRoute, Router } from '@angular/router';
 import { ClosestStationAvailable } from '@interfaces/station/closest-station-available';
 
 @Component({
@@ -20,11 +18,7 @@ export class CategoryStationsSelectorComponent {
 
   protected readonly String = String;
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private stationsService: StationsService,
-  ) {}
+  constructor() {}
 
   protected readonly Date = Date;
 }
