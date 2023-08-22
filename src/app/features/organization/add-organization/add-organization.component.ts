@@ -94,6 +94,7 @@ export class AddOrganizationComponent implements AfterViewInit {
 
     this.organizationService.add(organizationData).subscribe({
       next: (organization: Organization) => {
+        this.authService.refreshToken().subscribe();
         this.router
           .navigateByUrl(`/organizations/${organization.id}/configurator`)
           .then();
