@@ -16,6 +16,8 @@ import { LanguageService } from '@app/core/services/language/language.service';
 })
 export class UserItemComponent implements OnInit {
   @Input({ required: true }) user!: UserDetailsDto;
+  @Input({ required: true }) eventTypes: EventType[] = [];
+
   items?: MenuItem[];
   profileImg!: string;
   organizationId!: number;
@@ -36,10 +38,10 @@ export class UserItemComponent implements OnInit {
       icon: 'pi pi-bolt',
 
       items: [
-        ...Object.keys(EventType).map((key) => ({
-          label: this.languageService.instant(categoryTypeToLabel(key)),
+        ...this.eventTypes.map((item) => ({
+          label: this.languageService.instant(categoryTypeToLabel(item)),
           command: (_: MenuItemCommandEvent) =>
-            this.navigateToNewEvent(key as EventType),
+            this.navigateToNewEvent(item as EventType),
         })),
       ],
     };
