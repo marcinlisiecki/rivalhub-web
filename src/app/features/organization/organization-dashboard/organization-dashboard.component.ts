@@ -58,7 +58,6 @@ export class OrganizationDashboardComponent implements OnInit, OnDestroy {
       this.id = params['id'];
       this.getOrganizationInfo();
       this.getOrganizationUsers();
-      this.getOrganizationReservations();
 
       this.organizationsService.getSettings(this.id).subscribe({
         next: (settings: OrganizationSettings) => {
@@ -83,24 +82,6 @@ export class OrganizationDashboardComponent implements OnInit, OnDestroy {
     }
     this.amIAdmin = this.authService.amIAdmin(this.id);
     this.getOrganizationEvents();
-  }
-
-  getOrganizationReservations() {
-    this.organizationsService.getOrganizationReservations(this.id).subscribe({
-      next: (res: Reservation[]) => {
-        // Only temporarily TODO
-        const alreadyAdded: number[] = [];
-
-        for (const reservation of res) {
-          if (alreadyAdded.includes(reservation.id)) {
-            continue;
-          }
-
-          alreadyAdded.push(reservation.id);
-          this.reservations.push(reservation);
-        }
-      },
-    });
   }
 
   ngOnDestroy(): void {

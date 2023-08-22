@@ -18,7 +18,6 @@ export class StationSelectorComponent {
   @Output() addEvent: EventEmitter<Event> = new EventEmitter<Event>();
 
   emitThat() {
-    console.log('emituje');
     this.addEvent.emit();
   }
   protected readonly AddEventFormStep = AddEventFormStep;

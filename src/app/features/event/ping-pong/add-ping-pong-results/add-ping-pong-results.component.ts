@@ -50,7 +50,14 @@ export class AddPingPongResultsComponent implements OnInit {
       )
       .subscribe({
         next: (res) => {
-          this.matches.push(res);
+          this.eventsService
+            .getEventMatches(this.organizationId, this.eventId)
+            .subscribe({
+              next: (matches: PingPongMatch[]) => {
+                this.matches = matches;
+              },
+            });
+
           this.showAddNewMatch = false;
         },
       });
@@ -58,7 +65,7 @@ export class AddPingPongResultsComponent implements OnInit {
 
   openAddSetDialog(matchId: number) {
     const matchIndex = this.matches.findIndex((item) => item.id === matchId);
-
+    this.matches[matchIndex].sets = this.matches[matchIndex].sets || [];
     this.addSetDialogRef = this.dialogService.open(AddPingPongSetComponent, {
       header: 'Dodaj set',
       width: '25rem',

@@ -31,7 +31,6 @@ export class InviteUserComponent implements OnInit {
 
       this.organizationsService.getInvitationLink(this.orgId).subscribe({
         next: (link: string) => {
-          console.log(link);
           this.invitationLink = link;
         },
       });

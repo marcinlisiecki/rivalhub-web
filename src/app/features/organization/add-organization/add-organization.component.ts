@@ -57,8 +57,6 @@ export class AddOrganizationComponent implements AfterViewInit {
       this.clientError = 'Obsługujemy tylko pliki .png, .jpg, .jpeg i .gif.';
       return;
     }
-    console.log(event.files[0].size);
-    //check if file is not too big
     if (event.files[0].size > this.MAXFILESIZE) {
       this.clientError = 'Plik jest za duży.';
       return;
