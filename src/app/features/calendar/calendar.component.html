@@ -1,0 +1,34 @@
+<div class="calendar">
+  <div class="mid">
+    <div class="button">
+      <p-toggleButton
+        styleClass="calendar-sidebar-btn"
+        (click)="toggleSidebar()"
+        onIcon="{{ sidebarIcon }}"
+        offIcon="{{ sidebarIcon }}"
+      ></p-toggleButton>
+      <app-calendar-filter></app-calendar-filter>
+    </div>
+    <div class="content">
+      <div class="left" #left [ngStyle]="{ width: sidebarWidth }">
+        <p-sidebar
+          styleClass="calendarSidebar"
+          [(visible)]="sidebarVisible"
+          [appendTo]="left"
+          [modal]="false"
+          (onHide)="toggleSidebar()"
+        >
+          <ng-template pTemplate="header"
+            ><h1>{{ sidebarHeader() | date: 'dd.MM.yyyy' }}</h1></ng-template
+          >
+          <app-calendar-events></app-calendar-events>
+        </p-sidebar>
+      </div>
+      <div class="right" [ngStyle]="{marginLeft:calendarMargin}">
+        <app-calendar-body
+          (dateClick)="!sidebarVisible && toggleSidebar()"
+        ></app-calendar-body>
+      </div>
+    </div>
+  </div>
+</div>

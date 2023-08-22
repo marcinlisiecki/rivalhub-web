@@ -1,0 +1,15 @@
+<p-button
+  #btn
+  (click)="displayMenu = !displayMenu"
+  label="Filtry"
+  styleClass="button-filter"
+  icon="pi pi-angle-down"
+></p-button>
+<div class="menu" *ngIf="displayMenu">
+  <app-calendar-filter-menu
+    (selectedFiltersChanged)="handleFilterChange($event)"
+    [organisations]="organisations"
+    [types]="types"
+    [selectedFilters]="selectedFilters"
+  ></app-calendar-filter-menu>
+</div>

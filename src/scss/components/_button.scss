@@ -9,7 +9,7 @@
 
 .button-absolute {
   position: absolute;
-  right:0;
+  right: 0;
 }
 
 .p-button-overwrite {
@@ -44,11 +44,25 @@
   box-shadow: none !important;
 }
 
-.button-show-more{
+.button-show-more {
   background-color: transparent !important;
   color: white !important;
   border: 1px dashed white !important;
 }
-.p-button-edit{
-  color:$textSecondaryColor !important;
+.p-button-edit {
+  color: $textSecondaryColor !important;
+}
+
+.button-filter {
+  width: auto !important;
+  margin-left: 3rem;
+  height: 2rem !important;
+}
+
+.calendar-sidebar-btn {
+  z-index:0;
+  margin-left: 17dvw !important;
+  height: 2rem;
+  width: 2rem;
+  display: block;
 }

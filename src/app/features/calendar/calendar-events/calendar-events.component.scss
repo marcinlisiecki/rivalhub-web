@@ -1,0 +1,27 @@
+.events {
+  height: 100%;
+}
+
+.event {
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  border-radius: 16px;
+  max-height: 20dvh;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: row;
+  background-color: #4a0713;
+}
+
+.reservation {
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  border-radius: 16px;
+  max-height: 20dvh;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: row;
+  background-color: #367790;
+}

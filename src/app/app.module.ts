@@ -23,6 +23,7 @@ import { MessageService } from 'primeng/api';
 import {InfiniteScrollModule} from "ngx-infinite-scroll";
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ProfileModule } from './features/profile/profile.module';
+import { CalendarModule } from '@app/features/calendar/calendar.module';
 import { UserModule } from './features/user/user.module';
 import { DatePipe } from '@angular/common';
 
@@ -53,6 +54,7 @@ import { DatePipe } from '@angular/common';
     ReservationModule,
     StationModule,
     ProfileModule,
+    CalendarModule,
     UserModule,
     InfiniteScrollModule,
   ],
