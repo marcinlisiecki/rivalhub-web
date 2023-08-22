@@ -102,6 +102,7 @@ export class NewEventMatchComponent implements OnInit {
   openAddUserDialog(teamIndex: number) {
     this.addUserDialogRef = this.dialogService.open(AddUserDialogComponent, {
       data: {
+        require3Characters: false,
         userList: this.notAddedUserList,
         teamIndex,
       },

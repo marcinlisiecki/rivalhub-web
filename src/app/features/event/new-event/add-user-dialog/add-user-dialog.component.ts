@@ -9,6 +9,8 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 })
 export class AddUserDialogComponent {
   @Input() userList: UserDetailsDto[] = [];
+  @Input() require3Characters: boolean = false;
+
   filteredUserList: UserDetailsDto[] = [];
   userSearchQuery: string = '';
 
@@ -17,6 +19,7 @@ export class AddUserDialogComponent {
     private dialogRef: DynamicDialogRef,
   ) {
     this.userList = dialogConfig.data['userList'];
+    this.require3Characters = dialogConfig.data['require3Characters'] || false;
     this.filteredUserList = this.userList;
   }
 
