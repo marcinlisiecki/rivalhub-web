@@ -1,0 +1,37 @@
+<section class="wrapper">
+  <h1>Ustawienia organizacji</h1>
+
+  <h2>Dostępne kategorie</h2>
+
+  <section class="categories">
+    <div
+      *ngFor="let type of possibleEventTypes"
+      class="card-checkbox categories-item"
+      [class.card-checkbox-selected]="activeEventTypes.includes(type)"
+      (click)="toggleAvailableEventType(type)"
+    >
+      <i class="pi pi-calendar"></i>
+      <p>{{ categoryTypeToLabel(type) | translate }}</p>
+    </div>
+  </section>
+
+  <form [formGroup]="settingsForm">
+    <h2>
+      {{ 'organization.configurator.settings.invitations.title' | translate }}
+    </h2>
+    <p-checkbox
+      formControlName="onlyAdminCanSeeInvitationLink"
+      [binary]="true"
+      label="{{
+        'organization.configurator.settings.invitations.linkVisibility'
+          | translate
+      }}"
+    ></p-checkbox>
+  </form>
+
+  <div class="button-wrapper">
+    <p-button [loading]="isLoading" [disabled]="isLoading" (onClick)="onSave()">
+      Zapisz ustawienia
+    </p-button>
+  </div>
+</section>

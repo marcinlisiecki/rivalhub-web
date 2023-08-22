@@ -121,8 +121,7 @@ export class NewEventMatchComponent implements OnInit {
     this.addMatch.emit({
       match: {
         team1Ids: this.teams[0].map((i) => i.id),
-
-        team2Ids: this.teams[0].map((i) => i.id),
+        team2Ids: this.teams[1].map((i) => i.id),
       },
       eventId,
       type: EventType.PING_PONG,

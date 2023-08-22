@@ -1,20 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { environment } from '../../../../environments/environment';
 import { Observable } from 'rxjs';
+import { environment } from '../../../../environments/environment';
 import { Organization } from '@interfaces/organization/organization';
-import { NewOrganization } from '@interfaces/organization/new-organization';
 import { PagedResponse } from '@interfaces/generic/paged-response';
 import { NewReservation } from '@interfaces/reservation/new-reservation';
 import { Station } from '@interfaces/station/station';
 import { UserDetailsDto } from '@interfaces/user/user-details-dto';
 import { Reservation } from '@interfaces/reservation/reservation';
-import * as moment from 'moment/moment';
 import { EventType } from '@interfaces/event/event-type';
 import { EventDto } from '@interfaces/event/event-dto';
 import { OrganizationSettings } from '@interfaces/organization/organization-settings';
 import { DatePipe } from '@angular/common';
 import { API_DATE_FORMAT } from '@app/core/constants/date';
+import { EventsService } from '@app/core/services/events/events.service';
 
 @Injectable({
   providedIn: 'root',
@@ -23,6 +22,7 @@ export class OrganizationsService {
   constructor(
     private http: HttpClient,
     private datePipe: DatePipe,
+    private eventsService: EventsService,
   ) {}
 
   add(newOrganization: FormData): Observable<Organization> {
@@ -128,6 +128,13 @@ export class OrganizationsService {
       {},
     );
   }
+
+  getOrganizationSettings(id: number): Observable<OrganizationSettings> {
+    return this.http.get<OrganizationSettings>(
+      environment.apiUrl + `/organizations/${id}/settings`,
+    );
+  }
+
   getEventsCategories(id: number): Observable<EventType[]> {
     return this.http.get<EventType[]>(
       environment.apiUrl + `/organizations/${id}/event-types`,
