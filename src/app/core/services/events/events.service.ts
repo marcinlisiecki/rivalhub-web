@@ -55,6 +55,21 @@ export class EventsService {
     );
   }
 
+  deleteOrganizationEventTypes(
+    id: number,
+    eventTypes: EventType[],
+  ): Observable<EventType[]> {
+    const params = new HttpParams().set(
+      'eventTypes',
+      eventTypes.map((type) => type.toString()).join(','),
+    );
+
+    return this.http.delete<EventType[]>(
+      environment.apiUrl + `/organizations/${id}/admin/event-types`,
+      { params },
+    );
+  }
+
   getEventMatches(
     organizationId: number,
     eventId: number,

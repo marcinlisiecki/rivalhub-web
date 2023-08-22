@@ -66,13 +66,13 @@ export class OrganizationSettingsComponent {
     const inactiveEventTypes = this.possibleEventTypes.filter(
       (type) => !this.activeEventTypes.includes(type),
     );
-    this.organizationsService
-      .setOrganizationEventTypes(
-        this.organizationId,
-        activeEventTypes,
-        inactiveEventTypes,
-      )
-      .then();
+
+    this.eventsService
+      .setOrganizationEventTypes(this.organizationId, activeEventTypes)
+      .subscribe();
+    this.eventsService
+      .deleteOrganizationEventTypes(this.organizationId, inactiveEventTypes)
+      .subscribe();
   }
 
   saveOrganizationSettings() {

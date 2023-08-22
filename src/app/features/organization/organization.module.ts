@@ -14,7 +14,7 @@ import { SharedModule } from '@app/shared/shared.module';
 import { InviteUserComponent } from '@app/features/organization/invite-user/invite-user.component';
 import { JoinOrganizationComponent } from './join-organization/join-organization.component';
 import { MembersComponent } from './members/members.component';
-import {InfiniteScrollModule} from "ngx-infinite-scroll";
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { MemberCardComponent } from './members/member-card/member-card.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { MessageModule } from 'primeng/message';
@@ -28,7 +28,6 @@ import { SettingsConfiguratorComponent } from './configurator/settings-configura
 import { CheckboxModule } from 'primeng/checkbox';
 import { ColorPickerModule } from 'primeng/colorpicker';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
-import { Location} from "@angular/common";
 import { AdminCardComponent } from './members/admin-card/admin-card.component';
 import { OrganizationSettingsComponent } from '@app/features/organization/organization-settings/organization-settings.component';
 
