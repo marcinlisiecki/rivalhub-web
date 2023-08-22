@@ -28,16 +28,9 @@ export class SidebarComponent implements OnInit, OnDestroy {
   isAccountActivated: boolean = false;
   canUserInvite: boolean = false;
 
-  user: UserDetailsDto = {
-    id: 0,
-    name: 'Dominik Matuszewski',
-    email: 'zippek@edu.pl',
-    profilePictureUrl: 'https://i.imgur.com/1qB7B9F.png',
-    activationTime: null,
-  };
-
   organizations: Organization[] = [];
   selectedOrganization: Organization | null = null;
+  amIAdmin!: boolean;
 
   constructor(
     private viewService: ViewService,
@@ -92,6 +85,10 @@ export class SidebarComponent implements OnInit, OnDestroy {
         this.isAccountActivated = user.activationTime !== null;
       });
     }
+
+    if (this.selectedOrganization) {
+      this.amIAdmin = this.authService.amIAdmin(this.selectedOrganization.id);
+    }
   }
 
   ngOnDestroy(): void {
@@ -111,6 +108,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   selectOrganization(organization: Organization) {
     localStorage.setItem('selectedOrganization', JSON.stringify(organization));
     this.selectedOrganization = organization;
+    this.amIAdmin = this.authService.amIAdmin(this.selectedOrganization.id);
     this.fetchSettings();
   }
 

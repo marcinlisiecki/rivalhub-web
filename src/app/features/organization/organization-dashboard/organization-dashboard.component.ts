@@ -12,6 +12,7 @@ import { Subscription } from 'rxjs';
 import { Reservation } from '@interfaces/reservation/reservation';
 import { MessageService } from 'primeng/api';
 import { OrganizationSettings } from '@interfaces/organization/organization-settings';
+import { AuthService } from '@app/core/services/auth/auth.service';
 import { ImageService } from '@app/core/services/image/image.service';
 
 @Component({
@@ -30,6 +31,8 @@ export class OrganizationDashboardComponent implements OnInit, OnDestroy {
   id!: number;
   canUserInvite: boolean = false;
 
+  amIAdmin!: boolean;
+
   resizeEventSub?: Subscription;
   paramsSub?: Subscription;
 
@@ -39,6 +42,7 @@ export class OrganizationDashboardComponent implements OnInit, OnDestroy {
     private router: Router,
     private viewService: ViewService,
     private messageService: MessageService,
+    private authService: AuthService,
     private imageService: ImageService,
   ) {}
 
@@ -77,7 +81,7 @@ export class OrganizationDashboardComponent implements OnInit, OnDestroy {
         })
         .then();
     }
-
+    this.amIAdmin = this.authService.amIAdmin(this.id);
     this.getOrganizationEvents();
   }
 

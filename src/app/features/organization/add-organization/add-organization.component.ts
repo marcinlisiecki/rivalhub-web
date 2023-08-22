@@ -6,6 +6,7 @@ import { OrganizationsService } from '@app/core/services/organizations/organizat
 import { Router } from '@angular/router';
 import { extractMessage } from '@app/core/utils/apiErrors';
 import { Organization } from '@interfaces/organization/organization';
+import { AuthService } from '@app/core/services/auth/auth.service';
 
 @Component({
   selector: 'app-add-organization',
@@ -34,6 +35,7 @@ export class AddOrganizationComponent implements AfterViewInit {
   constructor(
     private organizationService: OrganizationsService,
     private router: Router,
+    private authService: AuthService,
   ) {}
 
   //Udawaj, że tego tutaj nie ma, i tak nie zrozumiesz.
@@ -92,6 +94,7 @@ export class AddOrganizationComponent implements AfterViewInit {
 
     this.organizationService.add(organizationData).subscribe({
       next: (organization: Organization) => {
+        this.authService.refreshToken().subscribe();
         this.router
           .navigateByUrl(`/organizations/${organization.id}/configurator`)
           .then();
