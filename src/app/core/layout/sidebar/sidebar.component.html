@@ -57,7 +57,7 @@
           </app-section-item>
 
           <app-section-item
-            *ngIf="canUserInvite"
+            *ngIf="canUserInvite || amIAdmin"
             icon="pi pi-send"
             title="Zaproszenia"
             routerLink="/organizations/{{ selectedOrganization.id }}/invite"
