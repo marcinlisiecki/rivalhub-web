@@ -7,6 +7,7 @@
 	"calendar.filter.organisations": "Organizacje",
   "calendar.filter.settings": "Ustawienia",
 	"calendar.filter.toggleWeekend": "Pokaż weekend",
+  "calendar.event.eventButton": "Pokaż więcej",
 	"calendar.listWeek": "Plan tygodnia",
 	"calendar.noEvents": "Brak wydarzeń",
 	"calendar.type.event": "Wydarzenie",

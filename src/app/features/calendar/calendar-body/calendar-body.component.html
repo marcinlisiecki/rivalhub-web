@@ -5,7 +5,10 @@
   [deepChangeDetection]="true"
 >
   <ng-template #eventContent let-arg>
-    <div class="calendar-event">
+    <div
+      class="calendar-event cal-{{ arg.event.title }}"
+      [ngStyle]="{ borderColor: arg.event!['borderColor'] }"
+    >
       <span *ngIf="!isTitleIsToLong(arg.event.title); else toLongTitle">
         {{ arg.event.title }}
       </span>

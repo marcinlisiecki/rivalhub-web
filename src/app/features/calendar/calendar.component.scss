@@ -30,6 +30,12 @@
       display: flex;
       max-width: 75em;
 
+      .left {
+        height: 31.6rem;
+        overflow-y: scroll;
+        overflow-x: hidden;
+      }
+
       .right {
         margin-left: 0.5dvw;
 
