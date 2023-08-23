@@ -1,5 +1,9 @@
 <h4>Członkowie</h4>
 
-<div class="wrapper">
-  <app-user-item *ngFor="let user of users" [user]="user"></app-user-item>
+<div class="wrapper" *ngIf="eventTypes">
+  <app-user-item
+    *ngFor="let user of users"
+    [user]="user"
+    [eventTypes]="eventTypes"
+  ></app-user-item>
 </div>

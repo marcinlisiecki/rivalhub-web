@@ -5,12 +5,12 @@
   <section class="categories">
     <div
       class="card-checkbox categories-item"
-      [class.selected-category]="selectedEventType === event.type"
+      [class.selected-category]="selectedEventType === event"
       *ngFor="let event of events"
-      (click)="selectEvent.emit(event.type)"
+      (click)="selectEvent.emit(event)"
     >
-      <i class="pi {{ event.icon }}"></i>
-      <p>{{ categoryTypeToLabel(event.type) | translate }}</p>
+      <i class="pi pi-calendar"></i>
+      <p>{{ categoryTypeToLabel(event) | translate }}</p>
     </div>
   </section>
 
