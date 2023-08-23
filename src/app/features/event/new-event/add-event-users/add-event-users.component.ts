@@ -40,6 +40,7 @@ export class AddEventUsersComponent {
   openAddUserDialog() {
     this.addUserDialogRef = this.dialogService.open(AddUserDialogComponent, {
       data: {
+        require3Characters: true,
         userList: this.userList.filter(
           (user) =>
             this.addedUsers.findIndex((item) => user.id === item.id) === -1,
