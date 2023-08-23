@@ -15,6 +15,7 @@ import { DatePipe } from '@angular/common';
 import { API_DATE_FORMAT } from '@app/core/constants/date';
 import { EventsService } from '@app/core/services/events/events.service';
 import { NewOrganization } from '@app/core/interfaces/organization/new-organization';
+import { EditOrganization } from '@app/core/interfaces/organization/edit-organization';
 
 @Injectable({
   providedIn: 'root',
@@ -132,6 +133,25 @@ export class OrganizationsService {
       environment.apiUrl +
         `/organizations/${id}/admin?onlyAdminCanSeeInvitationLink=${onlyAdminCanSeeInvitationLink}`,
       {},
+    );
+  }
+
+  setOrganizationAvatar(id: number, avatar?: File): Observable<{}> {
+    const avatarData = new FormData();
+    avatarData.append('thumbnail', avatar!);
+    return this.http.post<{}>(
+      environment.apiUrl + `/organizations/${id}/image`,
+      avatarData,
+    );
+  }
+
+  setOrganizationNameAndColor(
+    id: number,
+    editOrganization: EditOrganization,
+  ): Observable<{}> {
+    return this.http.patch<{}>(
+      environment.apiUrl + `/organizations/${id}`,
+      editOrganization,
     );
   }
 

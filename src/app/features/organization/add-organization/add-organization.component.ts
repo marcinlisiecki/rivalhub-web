@@ -39,7 +39,6 @@ export class AddOrganizationComponent implements AfterViewInit {
     private authService: AuthService,
   ) {}
 
-  //Udawaj, że tego tutaj nie ma, i tak nie zrozumiesz.
   //Ale dla jasności - to jest potrzebne do tego,
   //żeby po kliknięciu na awatar pokazywał się colorpicker i chował się oryginalny guziczek.
   @ViewChild('colorPicker') colorPicker!: any;
@@ -49,11 +48,9 @@ export class AddOrganizationComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     this.hideInput();
   }
-  //Od tego miejsca znowu jesteś w stanie zrozumieć kod.
 
   onFileSelectClicked(event: FileSelectEvent) {
     this.clientError = undefined;
-    //check if file is type of ACCEPTEDFILETYPES
     if (!this.ACCEPTEDFILETYPES.includes(event.files[0].type)) {
       this.clientError = 'Obsługujemy tylko pliki .png, .jpg, .jpeg i .gif.';
       return;

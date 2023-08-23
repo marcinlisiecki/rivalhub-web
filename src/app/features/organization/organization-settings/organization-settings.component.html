@@ -1,15 +1,51 @@
 <section class="wrapper">
   <h1>Ustawienia organizacji</h1>
 
+  <section class="organization-info">
+    <p-card>
+      <form [formGroup]="editForm">
+        <div class="form-item form-avatar">
+          <img (click)="onImageClick()" class="avatar-img"
+            [ngStyle]="customAvatar ? { 'background-color': color } : null"
+            [ngClass]="{'avatar-img-hoverable': customAvatar}" width="75" height="75" [src]="imageURL" alt="avatar">
+          <p-colorPicker [disabled]="!customAvatar" #colorPicker [(ngModel)]="color"
+            [ngModelOptions]="{standalone: true}"></p-colorPicker>
+
+          <p-divider layout="vertical"></p-divider>
+          <p-fileUpload #fileupload name="uploadAvatar" [customUpload]="true" (onSelect)="onFileSelectClicked($event)"
+            (onClear)="onClearClicked()" [showUploadButton]="false" cancelLabel="Usuń" chooseLabel="Dodaj zdjęcie"
+            [accept]="joinAcceptableImageTypes()" [fileLimit]="1" [maxFileSize]="MAXFILESIZE">
+          </p-fileUpload>
+        </div>
+
+        <div class="input-box">
+          <label for="organization-name">Nazwa organizacji</label>
+          <input #organization id="organization-name" type="text" pInputText formControlName="organizationName" />
+          <small id="organization-name-help" class="input-helper-text">
+            Podaj nazwę dla swojej organizacji.
+          </small>
+        </div>
+        <div *ngIf="organizationName?.invalid && organizationName?.touched">
+          <app-validation-error *ngIf="organizationName?.errors?.['required']">
+            Nazwa jest wymagana
+          </app-validation-error>
+          <app-validation-error *ngIf="organizationName?.errors?.['minlength']">
+            Nazwa organizacji musi mieć co najmniej 3 znaki
+          </app-validation-error>
+          <app-validation-error *ngIf="organizationName?.errors?.['maxlength']">
+            Nazwa organizacji nie może mieć więcej niż 256 znaków
+          </app-validation-error>
+        </div>
+      </form>
+    </p-card>
+  </section>
+
   <h2>Dostępne kategorie</h2>
 
+
   <section class="categories">
-    <div
-      *ngFor="let type of possibleEventTypes"
-      class="card-checkbox categories-item"
-      [class.card-checkbox-selected]="activeEventTypes.includes(type)"
-      (click)="toggleAvailableEventType(type)"
-    >
+    <div *ngFor="let type of possibleEventTypes" class="card-checkbox categories-item"
+      [class.card-checkbox-selected]="activeEventTypes.includes(type)" (click)="toggleAvailableEventType(type)">
       <i class="pi pi-calendar"></i>
       <p>{{ categoryTypeToLabel(type) | translate }}</p>
     </div>
@@ -19,14 +55,10 @@
     <h2>
       {{ 'organization.configurator.settings.invitations.title' | translate }}
     </h2>
-    <p-checkbox
-      formControlName="onlyAdminCanSeeInvitationLink"
-      [binary]="true"
-      label="{{
+    <p-checkbox formControlName="onlyAdminCanSeeInvitationLink" [binary]="true" label="{{
         'organization.configurator.settings.invitations.linkVisibility'
           | translate
-      }}"
-    ></p-checkbox>
+      }}"></p-checkbox>
   </form>
 
   <div class="button-wrapper">
