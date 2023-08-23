@@ -1,10 +1,11 @@
-<section class="user"  [ngClass]='{"info-compact":compact}'>
+<section class="user" [ngClass]='{"info-compact":compact}'>
 
   <div class="avatar">
     <img class="dashboard-header-image" [src]="checkAvatar(user.profilePictureUrl)" alt="Image">
+    <button *ngIf="isMe" class="btn btn-primary btn-sm">Edytuj profil</button>
   </div>
-<div class="info" >
+  <div class="info">
     <h4 class="info-name">{{user.name}}</h4>
-    <p *ngIf="!compact" class="info-email">{{user.email}}</p>  
-</div>
+    <p *ngIf="!compact" class="info-email">{{user.email}}</p>
+  </div>
 </section>

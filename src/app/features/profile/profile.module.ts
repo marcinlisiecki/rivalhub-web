@@ -7,6 +7,7 @@ import { ActivityComponent } from '@app/features/profile/dashboard-activities-pa
 import { DashboardHistoryComponent } from '@app/features/profile/dashboard-history-panel/dashboard-history.component';
 import { ButtonModule } from 'primeng/button';
 import { SharedModule } from '@app/shared/shared.module';
+import { EditProfileComponent } from './edit-profile/edit-profile.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { SharedModule } from '@app/shared/shared.module';
     DashboardActivitiesComponent,
     ActivityComponent,
     DashboardHistoryComponent,
+    EditProfileComponent,
   ],
   imports: [CommonModule, ButtonModule, SharedModule],
 })

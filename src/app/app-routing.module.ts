@@ -15,11 +15,12 @@ import { CalendarComponent } from '@app/features/calendar/calendar.component';
 import { ActivateAccountComponent } from '@app/features/user/activate-account/activate-account.component';
 import { ConfiguratorComponent } from '@app/features/organization/configurator/configurator.component';
 import { AddPingPongResultsComponent } from '@app/features/event/ping-pong/add-ping-pong-results/add-ping-pong-results.component';
-import {JoinOrganizationComponent} from "@app/features/organization/join-organization/join-organization.component";
-import {joinGuard} from "@app/core/guards/join-organization/join.guard";
-import {ProfileComponent} from "@app/features/profile/profile.component";
-import {MembersComponent} from "@app/features/organization/members/members.component";
+import { JoinOrganizationComponent } from '@app/features/organization/join-organization/join-organization.component';
+import { joinGuard } from '@app/core/guards/join-organization/join.guard';
+import { ProfileComponent } from '@app/features/profile/profile.component';
+import { MembersComponent } from '@app/features/organization/members/members.component';
 import { OrganizationSettingsComponent } from '@app/features/organization/organization-settings/organization-settings.component';
+import { EditProfileComponent } from './features/profile/edit-profile/edit-profile.component';
 
 const routes: Routes = [
   {
@@ -86,6 +87,11 @@ const routes: Routes = [
     canActivate: [authenticateGuard],
   },
   {
+    path: 'profiles/:id/edit',
+    component: EditProfileComponent,
+    canActivate: [authenticateGuard],
+  },
+  {
     path: 'calendar',
     component: CalendarComponent,
     canActivate: [authenticateGuard],
@@ -112,7 +118,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {onSameUrlNavigation: 'reload' })],
+  imports: [RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload' })],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
