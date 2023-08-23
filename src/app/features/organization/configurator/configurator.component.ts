@@ -51,15 +51,7 @@ export class ConfiguratorComponent implements OnInit {
 
   async setStep(newStep: OrganizationConfiguratorStep) {
     if (newStep === OrganizationConfiguratorStep.STATIONS) {
-      this.isCategoryStepLoading = true;
-
-      try {
-        await this.setOrganizationEventTypes();
-      } catch (err) {
-        this.errorsService.createErrorMessage(extractMessage(err));
-      }
-
-      this.isCategoryStepLoading = false;
+      await this.setOrganizationEventTypes();
     }
 
     this.configuratorStep = newStep;
@@ -77,12 +69,52 @@ export class ConfiguratorComponent implements OnInit {
       });
   }
 
-  setOrganizationEventTypes() {
+  async setOrganizationEventTypes() {
+    this.isCategoryStepLoading = true;
+
+    try {
+      await this.setActiveEventTypes();
+      await this.setInactiveEventTypes();
+    } catch (err: unknown) {
+    } finally {
+      this.isCategoryStepLoading = false;
+    }
+  }
+
+  setActiveEventTypes() {
     const activeEventTypes = this.activeEventTypes;
 
-    this.eventsService
-      .setOrganizationEventTypes(this.organizationId, activeEventTypes)
-      .subscribe();
+    return new Promise<void>((resolve, reject) => {
+      this.eventsService
+        .setOrganizationEventTypes(this.organizationId, activeEventTypes)
+        .subscribe({
+          next: () => {
+            resolve();
+          },
+          error: (err: HttpErrorResponse) => {
+            reject(err);
+          },
+        });
+    });
+  }
+
+  setInactiveEventTypes() {
+    const inactiveEventTypes = this.possibleEventTypes.filter(
+      (item) => !this.activeEventTypes.includes(item),
+    );
+
+    return new Promise<void>((resolve, reject) => {
+      this.eventsService
+        .deleteOrganizationEventTypes(this.organizationId, inactiveEventTypes)
+        .subscribe({
+          next: () => {
+            resolve();
+          },
+          error: (err: HttpErrorResponse) => {
+            reject(err);
+          },
+        });
+    });
   }
 
   saveOrganizationSettings() {
