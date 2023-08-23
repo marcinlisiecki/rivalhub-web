@@ -6,13 +6,19 @@ import {
 import { ViewService } from '@app/core/services/view/view.service';
 import { AuthService } from '@app/core/services/auth/auth.service';
 import { UserDetailsDto } from '@app/core/interfaces/user/user-details-dto';
-import { Subscription } from 'rxjs';
+import { Subscription, filter } from 'rxjs';
 import { SidebarService } from '@app/core/services/sidebar/sidebar.service';
 import { Organization } from '@interfaces/organization/organization';
 import { OrganizationsService } from '@app/core/services/organizations/organizations.service';
-import { NavigationStart, Router } from '@angular/router';
+import {
+  ActivatedRoute,
+  NavigationEnd,
+  NavigationStart,
+  Router,
+} from '@angular/router';
 import { UsersService } from '@app/core/services/users/users.service';
 import { OrganizationSettings } from '@interfaces/organization/organization-settings';
+import { ImageService } from '@app/core/services/image/image.service';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -27,7 +33,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   mobileView!: boolean;
   isAccountActivated: boolean = false;
   canUserInvite: boolean = false;
-
+  organizationViewId: number = -1;
   organizations: Organization[] = [];
   selectedOrganization: Organization | null = null;
   amIAdmin!: boolean;
@@ -39,6 +45,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
     private router: Router,
     private organizationService: OrganizationsService,
     private usersService: UsersService,
+    private imageService: ImageService,
+    private route: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
@@ -70,6 +78,17 @@ export class SidebarComponent implements OnInit, OnDestroy {
     this.routerSubscription = this.router.events.subscribe((e) => {
       if (e instanceof NavigationStart) {
         this.sidebarService.isVisible && this.sidebarService.toggleSidebar();
+        this.organizationViewId = this.isOrganizationView(e.url);
+        if (
+          this.organizationViewId !== -1 &&
+          this.selectedOrganization?.id !== this.organizationViewId
+        ) {
+          this.organizationService.choose(this.organizationViewId).subscribe({
+            next: (organization: Organization) => {
+              this.selectOrganization(organization);
+            },
+          });
+        }
       }
     });
 
@@ -127,9 +146,29 @@ export class SidebarComponent implements OnInit, OnDestroy {
   fetchOrganizations() {
     this.organizationService.getMy().subscribe({
       next: (organizations) => {
+        organizations.forEach((organization) => {
+          organization.imageUrl = this.imageService.getOrganizationImagePath(
+            organization.imageUrl,
+          );
+        });
+
         this.organizations = organizations;
+        //call method on each organization
       },
     });
+  }
+
+  isOrganizationView(url: string): number {
+    const segments = url.split('/');
+    if (
+      segments.length === 3 &&
+      segments[1] === 'organizations' &&
+      !isNaN(+segments[2])
+    ) {
+      return Number(segments[2]);
+    }
+
+    return -1;
   }
 
   isVisible() {

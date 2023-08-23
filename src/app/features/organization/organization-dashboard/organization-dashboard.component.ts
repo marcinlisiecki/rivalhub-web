@@ -80,6 +80,7 @@ export class OrganizationDashboardComponent implements OnInit, OnDestroy {
         })
         .then();
     }
+
     this.amIAdmin = this.authService.amIAdmin(this.id);
     this.getOrganizationEvents();
   }
