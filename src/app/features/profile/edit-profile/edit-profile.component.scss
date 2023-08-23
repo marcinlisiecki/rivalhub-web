@@ -1,0 +1,50 @@
+@import 'src/scss/variables';
+
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 4rem;
+
+    .form-item {
+        margin: 10px 15px;
+        padding: 10px;
+    }
+
+    .form-avatar {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    margin: 15px;
+
+    .form-item {
+        margin: 10px 15px;
+        padding: 10px;
+    }
+
+    .button-wrapper {
+        margin-top: 20px;
+    }
+}
+
+.form-avatar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.avatar-img {
+    border-radius: $dashboardRadius;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+//Ukrywam colorpicker żeby nie przeszkadzał, bo był brzydki i nie pasował
+p-colorpicker {
+    height: 0;
+    width: 0;
+}

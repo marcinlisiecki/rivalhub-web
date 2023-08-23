@@ -8,6 +8,8 @@ import { DashboardHistoryComponent } from '@app/features/profile/dashboard-histo
 import { ButtonModule } from 'primeng/button';
 import { SharedModule } from '@app/shared/shared.module';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import { ColorPickerModule } from 'primeng/colorpicker';
+import { NgModel } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,6 +20,6 @@ import { EditProfileComponent } from './edit-profile/edit-profile.component';
     DashboardHistoryComponent,
     EditProfileComponent,
   ],
-  imports: [CommonModule, ButtonModule, SharedModule],
+  imports: [CommonModule, ButtonModule, ColorPickerModule, SharedModule],
 })
 export class ProfileModule {}

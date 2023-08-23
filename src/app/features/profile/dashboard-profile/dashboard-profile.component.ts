@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { headerCompactAnimation } from '@app/core/animations/header-animation';
 import { Organization } from '@interfaces/organization/organization';
 import { UserDetailsDto } from '@interfaces/user/user-details-dto';
@@ -13,6 +14,12 @@ export class DashboardProfileComponent {
   @Input() compact: boolean = false;
   @Input() isMe!: boolean;
 
+  constructor(private router: Router) {}
+
+  goToEdit(): void {
+    this.router.navigateByUrl(`/profiles/${this.user.id}/edit`).then();
+  }
+
   checkAvatar(url: string): string {
     if (url === null) {
       return 'https://www.gravatar.com/avatar/0';
@@ -20,5 +27,4 @@ export class DashboardProfileComponent {
       return url;
     }
   }
-  showModal(user: UserDetailsDto) {}
 }
