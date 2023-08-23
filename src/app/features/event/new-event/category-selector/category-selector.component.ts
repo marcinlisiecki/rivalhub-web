@@ -10,7 +10,7 @@ import { AddEventFormStep } from '@interfaces/event/add-event-form-step';
   styleUrls: ['./category-selector.component.scss'],
 })
 export class CategorySelectorComponent {
-  @Input() events!: AvailableEvent[];
+  @Input() events!: EventType[];
   @Input() selectedEventType!: EventType | null;
 
   @Output() selectEvent: EventEmitter<EventType> =

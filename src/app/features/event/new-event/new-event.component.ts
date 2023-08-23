@@ -32,7 +32,7 @@ export class NewEventComponent implements OnInit, OnDestroy {
   formStepIndex: number = 0;
   isChallenge: boolean = false;
 
-  events: AvailableEvent[] = AVAILABLE_EVENTS;
+  events: EventType[] = [];
   selectedEventType: EventType | null = null;
 
   stations: Station[] | null = null;
@@ -70,7 +70,6 @@ export class NewEventComponent implements OnInit, OnDestroy {
     private stationsService: StationsService,
     private organizationsService: OrganizationsService,
     private route: ActivatedRoute,
-    // private translateService: TranslateService,
     private authService: AuthService,
     private router: Router,
     private languageService: LanguageService,
@@ -116,6 +115,16 @@ export class NewEventComponent implements OnInit, OnDestroy {
     );
 
     this.fetchUserList();
+    this.fetchEventTypes();
+  }
+
+  fetchEventTypes() {
+    const organizationId = this.route.snapshot.params['id'];
+    this.eventsService.getEventTypesInOrganization(organizationId).subscribe({
+      next: (eventTypes: EventType[]) => {
+        this.events = eventTypes;
+      },
+    });
   }
 
   handleAddUser(data?: AddEventUser) {
