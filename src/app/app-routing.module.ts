@@ -19,6 +19,7 @@ import {JoinOrganizationComponent} from "@app/features/organization/join-organiz
 import {joinGuard} from "@app/core/guards/join-organization/join.guard";
 import {ProfileComponent} from "@app/features/profile/profile.component";
 import {MembersComponent} from "@app/features/organization/members/members.component";
+import { OrganizationSettingsComponent } from '@app/features/organization/organization-settings/organization-settings.component';
 
 const routes: Routes = [
   {
@@ -48,6 +49,11 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+  },
+  {
+    path: 'organizations/:id/settings',
+    component: OrganizationSettingsComponent,
+    canActivate: [authenticateGuard],
   },
   {
     path: 'organizations/:id/reservations/new',

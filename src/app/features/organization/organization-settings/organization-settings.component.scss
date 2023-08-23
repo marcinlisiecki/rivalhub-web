@@ -1,0 +1,34 @@
+@import 'src/scss/variables';
+
+.wrapper {
+  max-width: $pageWidth;
+  margin: 4rem auto;
+}
+
+h2 {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-weight: $weightMedium;
+  font-size: $textLg;
+}
+
+.categories {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+
+  &-item {
+    aspect-ratio: 1 / 1;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    i {
+      font-size: 2rem;
+    }
+  }
+}
+
+.button-wrapper {
+  margin-top: 2rem;
+}
