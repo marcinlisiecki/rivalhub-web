@@ -24,7 +24,9 @@ export class FilterMenuComponent implements OnInit, OnDestroy {
   @Output() selectedFiltersChanged = new EventEmitter<Filters>();
 
   calendarOptions!: WritableSignal<CalendarOptions>;
-  selectedWeeks: boolean = Boolean(parseInt(<string>localStorage.getItem('showWeekends')));
+  selectedWeeks: boolean = Boolean(
+    parseInt(<string>localStorage.getItem('showWeekends')),
+  );
 
   constructor(private calendarService: CalendarService) {}
   ngOnInit() {

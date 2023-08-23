@@ -1,9 +1,9 @@
 <p-button
   #btn
-  (click)="displayMenu = !displayMenu"
+  (click)="changeDisplayMenu()"
   label="Filtry"
   styleClass="button-filter"
-  icon="pi pi-angle-down"
+  [icon]="icon"
 ></p-button>
 <div class="menu" *ngIf="displayMenu">
   <app-calendar-filter-menu

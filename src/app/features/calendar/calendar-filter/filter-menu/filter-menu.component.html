@@ -1,6 +1,6 @@
 <div class="menu-comp">
   <div class="Organisation">
-    <h4>{{'calendar.filter.organisations'|translate}}</h4>
+    <h4>{{ 'calendar.filter.organisations' | translate }}</h4>
     <div *ngFor="let organisation of organisations" class="field-checkbox">
       <p-checkbox
         name="organisations"
@@ -14,7 +14,7 @@
   </div>
 
   <div class="types">
-    <h4>{{'calendar.filter.eventType'|translate}}</h4>
+    <h4>{{ 'calendar.filter.eventType' | translate }}</h4>
     <div *ngFor="let type of types" class="field-checkbox">
       <p-checkbox
         name="types"
@@ -27,13 +27,17 @@
     </div>
   </div>
 
-  <div class="weekend">
+  <div class="settings">
+    <h4>{{ 'calendar.filter.settings' | translate }}</h4>
     <p-checkbox
+      class="field-checkbox"
       [(ngModel)]="selectedWeeks"
       [binary]="true"
       inputId="weekend"
       (onChange)="toggleWeekends()"
     ></p-checkbox>
-    <label for="weekend">{{'calendar.filter.toggleWeekend'|translate}}</label>
+    <label for="weekend">{{
+      'calendar.filter.toggleWeekend' | translate
+    }}</label>
   </div>
 </div>
