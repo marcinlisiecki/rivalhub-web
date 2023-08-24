@@ -9,7 +9,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { extractMessage } from '@app/core/utils/apiErrors';
 import { categoryTypeToLabel } from '@app/core/utils/event';
 import { OrganizationSettings } from '@interfaces/organization/organization-settings';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { FileSelectEvent } from 'primeng/fileupload';
 import { ImageService } from '@app/core/services/image/image.service';
 import { EditOrganization } from '@app/core/interfaces/organization/edit-organization';
@@ -50,9 +50,11 @@ export class OrganizationSettingsComponent {
   constructor(
     private eventsService: EventsService,
     private route: ActivatedRoute,
+    private router: Router,
     private organizationsService: OrganizationsService,
     private imageService: ImageService,
     private errorsService: ErrorsService,
+    private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private renderer: Renderer2,
   ) {
@@ -76,6 +78,30 @@ export class OrganizationSettingsComponent {
     this.saveOrganizationSettings();
     this.saveOrganizationDetails();
     this.saveOrganizationAvatar();
+  }
+
+  onDelete(event: Event) {
+    this.confirmationService.confirm({
+      target: event.target as EventTarget,
+      acceptLabel: 'Tak',
+      rejectLabel: 'Nie',
+      icon: 'pi pi-exclamation-triangle',
+      message: 'Czy na pewno chcesz usunąć organizację?',
+      accept: () => {
+        this.organizationsService.delete(this.organizationId).subscribe({
+          next: () => {
+            this.messageService.add({
+              severity: 'success',
+              life: 10 * 1000,
+              summary: 'Organizacja została pomyślnie usunięta',
+            });
+            this.router.navigate(['organizations']);
+          },
+          error: () => {},
+        });
+      },
+      reject: () => {},
+    });
   }
 
   fetchOrganizationsSettings() {

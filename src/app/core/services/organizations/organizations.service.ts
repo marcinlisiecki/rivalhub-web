@@ -45,6 +45,10 @@ export class OrganizationsService {
     );
   }
 
+  delete(id: number): Observable<{}> {
+    return this.http.delete<{}>(environment.apiUrl + `/organizations/${id}`);
+  }
+
   choose(id: number): Observable<Organization> {
     return this.http.get<Organization>(
       environment.apiUrl + `/organizations/${id}`,

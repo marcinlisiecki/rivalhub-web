@@ -65,5 +65,11 @@
     <p-button [loading]="isLoading" [disabled]="isLoading" (onClick)="onSave()">
       Zapisz ustawienia
     </p-button>
+    <p-confirmPopup></p-confirmPopup>
+
+    <p-button [loading]="isLoading" [disabled]="isLoading" (onClick)="onDelete($event)">
+      Usuń organizację
+    </p-button>
+
   </div>
 </section>

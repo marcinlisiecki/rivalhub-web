@@ -78,7 +78,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
     this.routerSubscription = this.router.events.subscribe((e) => {
       if (e instanceof NavigationStart) {
         this.sidebarService.isVisible && this.sidebarService.toggleSidebar();
-        this.organizationViewId = this.isOrganizationView(e.url);
+        this.organizationViewId = this.sidebarService.isOrganizationView(e.url);
         if (
           this.organizationViewId !== -1 &&
           this.selectedOrganization?.id !== this.organizationViewId
@@ -156,19 +156,6 @@ export class SidebarComponent implements OnInit, OnDestroy {
         //call method on each organization
       },
     });
-  }
-
-  isOrganizationView(url: string): number {
-    const segments = url.split('/');
-    if (
-      segments.length === 3 &&
-      segments[1] === 'organizations' &&
-      !isNaN(+segments[2])
-    ) {
-      return Number(segments[2]);
-    }
-
-    return -1;
   }
 
   isVisible() {
