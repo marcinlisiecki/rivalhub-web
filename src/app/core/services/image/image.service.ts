@@ -5,6 +5,9 @@ import { environment } from '../../../../environments/environment';
   providedIn: 'root',
 })
 export class ImageService {
+  public DEFAULTORGANIZATIONAVATAR: string =
+    '/assets/img/svg/defaultOrganization.svg';
+  public DEFAULTUSERAVATAR: string = '/assets/img/avatars/user.png';
   constructor() {}
 
   getOrganizationImagePath(imageUrl: string | null): string {
