@@ -19,7 +19,8 @@ export class EditProfileComponent {
   imageURL: string = this.DEFAULTAVATAR;
   clientError: string | undefined;
   customAvatar: boolean = true;
-  addForm = new FormGroup({
+
+  editUserForm = new FormGroup({
     name: new FormControl('', [
       Validators.required,
       Validators.minLength(3),
@@ -74,8 +75,8 @@ export class EditProfileComponent {
   onSubmit() {
     this.apiError = null;
 
-    if (!this.addForm.valid) {
-      this.addForm.markAllAsTouched();
+    if (!this.editUserForm.valid) {
+      this.editUserForm.markAllAsTouched();
       return;
     }
 
@@ -98,7 +99,7 @@ export class EditProfileComponent {
   }
 
   get name() {
-    return this.addForm.get('name');
+    return this.editUserForm.get('name');
   }
   hideInput() {
     this.colorPicker.el.nativeElement.childNodes[0].childNodes[0].style.opacity = 0;

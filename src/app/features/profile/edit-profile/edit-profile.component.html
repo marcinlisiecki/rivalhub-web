@@ -2,7 +2,7 @@
     <p-card header="Dodaj organizację">
 
 
-        <form [formGroup]="addForm" (ngSubmit)="onSubmit()">
+        <form [formGroup]="editUserForm" (ngSubmit)="onSubmit()">
             <div class="form-item form-avatar">
                 <img (click)="onImageClick()" class="avatar-img"
                     [ngStyle]="customAvatar ? { 'background-color': color } : null" width="75" height="75"

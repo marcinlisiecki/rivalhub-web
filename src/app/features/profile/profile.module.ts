@@ -9,7 +9,8 @@ import { ButtonModule } from 'primeng/button';
 import { SharedModule } from '@app/shared/shared.module';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { ColorPickerModule } from 'primeng/colorpicker';
-import { NgModel } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,13 @@ import { NgModel } from '@angular/forms';
     DashboardHistoryComponent,
     EditProfileComponent,
   ],
-  imports: [CommonModule, ButtonModule, ColorPickerModule, SharedModule],
+  imports: [
+    CommonModule,
+    ButtonModule,
+    ColorPickerModule,
+    SharedModule,
+    ReactiveFormsModule,
+    FormsModule,
+  ],
 })
 export class ProfileModule {}
