@@ -29,6 +29,35 @@ h2 {
   }
 }
 
+.form-avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 15px;
+  padding: 10px;
+}
+
+.organization-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .button-wrapper {
+  display: flex;
+  justify-content: space-between;
   margin-top: 2rem;
+}
+
+.avatar-img {
+  border-radius: $dashboardRadius;
+
+  &-hoverable:hover {
+    cursor: pointer;
+  }
+}
+
+p-colorpicker {
+  height: 0;
+  width: 0;
 }

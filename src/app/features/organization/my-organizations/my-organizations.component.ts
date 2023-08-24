@@ -123,10 +123,5 @@ export class MyOrganizationsComponent implements OnInit {
     return `/organizations/${id}`;
   }
 
-  checkDefaultAvatar(imageUrl: string | null): boolean {
-    if (!imageUrl) {
-      return true;
-    }
-    return imageUrl.includes('defaultOrganization.svg');
-  }
+  protected readonly checkDefaultAvatar = this.imageService.checkDefaultAvatar;
 }

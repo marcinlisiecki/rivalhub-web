@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { extractMessage } from '@app/core/utils/apiErrors';
 import { Organization } from '@interfaces/organization/organization';
 import { AuthService } from '@app/core/services/auth/auth.service';
+import { NewOrganization } from '@app/core/interfaces/organization/new-organization';
 
 @Component({
   selector: 'app-add-organization',
@@ -38,7 +39,6 @@ export class AddOrganizationComponent implements AfterViewInit {
     private authService: AuthService,
   ) {}
 
-  //Udawaj, że tego tutaj nie ma, i tak nie zrozumiesz.
   //Ale dla jasności - to jest potrzebne do tego,
   //żeby po kliknięciu na awatar pokazywał się colorpicker i chował się oryginalny guziczek.
   @ViewChild('colorPicker') colorPicker!: any;
@@ -48,11 +48,9 @@ export class AddOrganizationComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     this.hideInput();
   }
-  //Od tego miejsca znowu jesteś w stanie zrozumieć kod.
 
   onFileSelectClicked(event: FileSelectEvent) {
     this.clientError = undefined;
-    //check if file is type of ACCEPTEDFILETYPES
     if (!this.ACCEPTEDFILETYPES.includes(event.files[0].type)) {
       this.clientError = 'Obsługujemy tylko pliki .png, .jpg, .jpeg i .gif.';
       return;
@@ -82,15 +80,16 @@ export class AddOrganizationComponent implements AfterViewInit {
       return;
     }
 
-    const organizationData = new FormData();
-    organizationData.append('thumbnail', this.uploadedFile || '');
-    organizationData.append('color', this.color);
-    organizationData.append('organization', this.name?.value || '');
+    const newOrganization: NewOrganization = {
+      name: this.name?.value!,
+      color: this.color,
+      uploadedFile: this.uploadedFile,
+    };
 
     this.isLoading = true;
     URL.revokeObjectURL(this.imageURL);
 
-    this.organizationService.add(organizationData).subscribe({
+    this.organizationService.add(newOrganization).subscribe({
       next: (organization: Organization) => {
         this.authService.refreshToken().subscribe();
         this.router

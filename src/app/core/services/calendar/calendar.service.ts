@@ -228,7 +228,7 @@ export class CalendarService {
   }
 
   private createEvent(eventData: EventDto) {
-    let color = eventData.organization.colorForDefaultImage;
+    let color = eventData.organization.color;
     let orgName = eventData.organization.name;
     let type = 'event';
     let orgId = eventData.organization.id.toString();
@@ -244,12 +244,12 @@ export class CalendarService {
       end: eventData.endTime,
       allDay: false,
       borderColor: color,
-      color: eventData.organization.colorForDefaultImage,
+      color: eventData.organization.color,
       extendedProps: {
         organizationName: eventData.organization.name,
         organizationId: eventData.organization.id.toString(),
         type: eventData.eventType,
-        backgroundColor: eventData.organization.colorForDefaultImage,
+        backgroundColor: eventData.organization.color,
         description: eventData.description,
       },
     };
@@ -273,7 +273,7 @@ export class CalendarService {
       end: res.endTime,
       color: '#367790',
       allDay: false,
-      borderColor: res.organization.colorForDefaultImage,
+      borderColor: res.organization.color,
       extendedProps: {
         organizationName: orgName,
         organizationId: orgId,
