@@ -5,6 +5,7 @@ import { OrganizationsService } from '@app/core/services/organizations/organizat
 import { environment } from '../../../../environments/environment';
 import { Organization } from '@interfaces/organization/organization';
 import { HttpErrorResponse } from '@angular/common/http';
+import {MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-invite-user',
@@ -19,10 +20,12 @@ export class InviteUserComponent implements OnInit {
     email: new FormControl('', [Validators.required, Validators.email]),
   });
 
+
   constructor(
     private route: ActivatedRoute,
     private organizationsService: OrganizationsService,
     private router: Router,
+    private messageService: MessageService,
   ) {}
 
   ngOnInit() {
@@ -43,7 +46,7 @@ export class InviteUserComponent implements OnInit {
         this.organization = resource;
       },
       error: (error: HttpErrorResponse) => {
-        console.error('An error occurred:', error);
+        console.error(error.error);
       },
     });
   }
@@ -55,15 +58,18 @@ export class InviteUserComponent implements OnInit {
     }
 
     this.organizationsService
-      .sendInvitation(this.orgId, emailAddress)
-      .subscribe(
-        (invitationSent) => {
-          this.router.navigateByUrl(`/organizations/${this.orgId}`).then();
-        },
-        (error) => {
-          console.log('Error has ocurred.');
-        },
-      );
+      .sendInvitation(this.orgId, emailAddress).subscribe({
+    next: (response) => {
+      this.router.navigateByUrl(`/organizations/${this.orgId}?invited=true`).then();
+    },
+      error: (error: HttpErrorResponse) => {
+        this.messageService.add({
+          severity: 'error',
+          life: 1000 * 10,
+          summary: error.error.message,
+        });
+      }
+    })
   }
 
   get email() {

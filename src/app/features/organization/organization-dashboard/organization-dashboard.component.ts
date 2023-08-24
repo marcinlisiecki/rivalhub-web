@@ -71,7 +71,22 @@ export class OrganizationDashboardComponent implements OnInit, OnDestroy {
       this.messageService.add({
         severity: 'success',
         life: 1000 * 10,
-        summary: 'Pomyślnie skonfigurowao organizację',
+        summary: 'Pomyślnie skonfigurowano organizację',
+      });
+      this.router
+        .navigate([], {
+          relativeTo: this.route,
+          queryParams: {},
+        })
+        .then();
+    }
+
+    const inviteSuccess = this.route.snapshot.queryParams['invited'];
+    if (inviteSuccess) {
+      this.messageService.add({
+        severity: 'success',
+        life: 1000 * 10,
+        summary: 'Pomyślnie wysłano zaproszenie',
       });
       this.router
         .navigate([], {

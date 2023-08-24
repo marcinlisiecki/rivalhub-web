@@ -42,14 +42,8 @@ export class CalendarService {
   currentWeekends = signal(true);
   sidebar = signal(false);
   private language = this.languageService.getCurrentLanguage();
-
   options = signal<CalendarOptions>({
     plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin],
-    headerToolbar: {
-      left: 'prev,next today',
-      center: 'title',
-      right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek',
-    },
     eventDisplay: 'block',
     showNonCurrentDates: true,
     initialView: 'dayGridMonth',

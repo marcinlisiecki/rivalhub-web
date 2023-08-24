@@ -221,6 +221,7 @@ export class OrganizationSettingsComponent {
   fetchOrganizationNameAndAvatar() {
     this.organizationsService.choose(this.organizationId).subscribe({
       next: (organization) => {
+        this.color = organization.color;
         this.editForm.get('organizationName')?.setValue(organization.name);
         this.imageURL = this.imageService.getOrganizationImagePath(
           organization.imageUrl,
@@ -229,7 +230,6 @@ export class OrganizationSettingsComponent {
           this.customAvatar = false;
           this.onAvatarLoaded();
         }
-        this.color = organization.color;
       },
     });
   }
