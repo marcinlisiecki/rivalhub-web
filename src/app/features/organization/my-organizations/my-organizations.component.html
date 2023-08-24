@@ -16,7 +16,7 @@
         <a class="organization-link" [ngStyle]="{
             'background-image':
               'url(' + organization.imageUrl + ')',
-              'background-color': checkDefaultAvatar(organization.imageUrl) ? organization.colorForDefaultImage : 'none'
+              'background-color': checkDefaultAvatar(organization.imageUrl) ? organization.color : 'none'
               
           }" [routerLink]="createURL(organization.id)">
         </a>

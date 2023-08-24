@@ -14,6 +14,8 @@ import { OrganizationSettings } from '@interfaces/organization/organization-sett
 import { DatePipe } from '@angular/common';
 import { API_DATE_FORMAT } from '@app/core/constants/date';
 import { EventsService } from '@app/core/services/events/events.service';
+import { NewOrganization } from '@app/core/interfaces/organization/new-organization';
+import { EditOrganization } from '@app/core/interfaces/organization/edit-organization';
 
 @Injectable({
   providedIn: 'root',
@@ -25,10 +27,15 @@ export class OrganizationsService {
     private eventsService: EventsService,
   ) {}
 
-  add(newOrganization: FormData): Observable<Organization> {
+  add(newOrganization: NewOrganization): Observable<Organization> {
+    const organizationData = new FormData();
+    organizationData.append('thumbnail', newOrganization.uploadedFile || '');
+    organizationData.append('color', newOrganization.color);
+    organizationData.append('organization', newOrganization.name);
+
     return this.http.post<Organization>(
       environment.apiUrl + '/organizations',
-      newOrganization,
+      organizationData,
     );
   }
 
@@ -36,6 +43,10 @@ export class OrganizationsService {
     return this.http.get<Organization[]>(
       environment.apiUrl + '/users/organizations',
     );
+  }
+
+  delete(id: number): Observable<{}> {
+    return this.http.delete<{}>(environment.apiUrl + `/organizations/${id}`);
   }
 
   choose(id: number): Observable<Organization> {
@@ -126,6 +137,30 @@ export class OrganizationsService {
       environment.apiUrl +
         `/organizations/${id}/admin?onlyAdminCanSeeInvitationLink=${onlyAdminCanSeeInvitationLink}`,
       {},
+    );
+  }
+
+  setOrganizationAvatar(
+    id: number,
+    keepAvatar: boolean,
+    avatar?: File,
+  ): Observable<{}> {
+    const avatarData = new FormData();
+    avatarData.append('thumbnail', avatar!);
+    avatarData.append('keepAvatar', keepAvatar.toString());
+    return this.http.post<{}>(
+      environment.apiUrl + `/organizations/${id}/image`,
+      avatarData,
+    );
+  }
+
+  setOrganizationNameAndColor(
+    id: number,
+    editOrganization: EditOrganization,
+  ): Observable<{}> {
+    return this.http.patch<{}>(
+      environment.apiUrl + `/organizations/${id}`,
+      editOrganization,
     );
   }
 
