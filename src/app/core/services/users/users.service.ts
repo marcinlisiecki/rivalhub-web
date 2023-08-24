@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { Reservation } from '@app/core/interfaces/reservation/reservation';
 import { EventDto } from '@app/core/interfaces/event/event-dto';
+import { EditUser } from '@app/core/interfaces/user/edit-user';
 
 @Injectable({
   providedIn: 'root',
@@ -22,6 +23,17 @@ export class UsersService {
 
   getUser(id: number): Observable<UserDetailsDto> {
     return this.http.get<UserDetailsDto>(environment.apiUrl + `/users/${id}`);
+  }
+
+  editUser(id: number, user: EditUser): Observable<UserDetailsDto> {
+    const userData = new FormData();
+    userData.append('thumbnail', user.uploadedFile || '');
+    userData.append('organization', user.name);
+
+    return this.http.patch<UserDetailsDto>(
+      environment.apiUrl + `/users/${id}`,
+      userData,
+    );
   }
 
   getCommonEvents(id: number): Observable<EventDto[]> {

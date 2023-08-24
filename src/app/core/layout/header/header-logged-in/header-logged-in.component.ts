@@ -32,6 +32,7 @@ export class HeaderLoggedInComponent implements OnInit {
 
     if (this.authService.isAuth()) {
       this.usersService.getMe().subscribe((user: UserDetailsDto) => {
+        console.log(user);
         this.isAccountActivated = user.activationTime !== null;
       });
     }

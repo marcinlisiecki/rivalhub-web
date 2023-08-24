@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { UserDetailsDto } from '@app/core/interfaces/user/user-details-dto';
 import { AuthService } from '@app/core/services/auth/auth.service';
 import { UsersService } from '@app/core/services/users/users.service';
 import { FileSelectEvent } from 'primeng/fileupload';
@@ -19,6 +20,7 @@ export class EditProfileComponent {
   imageURL: string = this.DEFAULTAVATAR;
   clientError: string | undefined;
   customAvatar: boolean = true;
+  user!: UserDetailsDto;
 
   editForm = new FormGroup({
     userName: new FormControl('', [
@@ -29,6 +31,7 @@ export class EditProfileComponent {
   });
   apiError: null | string = null;
   isLoading: boolean = false;
+  @ViewChild('colorPicker') colorPicker!: any;
 
   constructor(
     private userService: UsersService,
@@ -36,21 +39,20 @@ export class EditProfileComponent {
     private authService: AuthService,
   ) {}
 
-  //Udawaj, że tego tutaj nie ma, i tak nie zrozumiesz.
-  //Ale dla jasności - to jest potrzebne do tego,
-  //żeby po kliknięciu na awatar pokazywał się colorpicker i chował się oryginalny guziczek.
-  @ViewChild('colorPicker') colorPicker!: any;
-  onImageClick() {
-    this.colorPicker.el.nativeElement.childNodes[0].childNodes[0].click();
+  ngOnInit(): void {
+    this.userService.getMe().subscribe((user: UserDetailsDto) => {
+      console.log(user);
+      this.user = user;
+      // this.editForm.userName.setValue(user.name);
+    });
   }
+
   ngAfterViewInit(): void {
     this.hideInput();
   }
-  //Od tego miejsca znowu jesteś w stanie zrozumieć kod.
 
   onFileSelectClicked(event: FileSelectEvent) {
     this.clientError = undefined;
-    //check if file is type of ACCEPTEDFILETYPES
     if (!this.ACCEPTEDFILETYPES.includes(event.files[0].type)) {
       this.clientError = 'Obsługujemy tylko pliki .png, .jpg, .jpeg i .gif.';
       return;
@@ -80,20 +82,21 @@ export class EditProfileComponent {
       return;
     }
 
-    //wywalić do serwisu użytkownika
-    const organizationData = new FormData();
-    organizationData.append('thumbnail', this.uploadedFile || '');
-    organizationData.append('color', this.color);
-    organizationData.append('organization', this.userName?.value || '');
-
     this.isLoading = true;
     URL.revokeObjectURL(this.imageURL);
 
-    //edycja profilu użytkownika
+    const editUser = {
+      name: this.editForm.value.userName,
+      color: this.color,
+      uploadedFile: this.uploadedFile,
+    };
 
     this.isLoading = false;
   }
 
+  onImageClick() {
+    this.colorPicker.el.nativeElement.childNodes[0].childNodes[0].click();
+  }
   joinAcceptableImageTypes() {
     return this.ACCEPTEDFILETYPES.join(',');
   }

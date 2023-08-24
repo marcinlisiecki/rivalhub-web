@@ -5,12 +5,8 @@
         <p-card>
             <form [formGroup]="editForm">
                 <div class="form-item form-avatar">
-                    <img (click)="onImageClick()" class="avatar-img"
-                        [ngStyle]="customAvatar ? { 'background-color': color } : null"
-                        [ngClass]="{'avatar-img-hoverable': customAvatar}" width="75" height="75" [src]="imageURL"
+                    <img (click)="onImageClick()" class="avatar-img" width="75" height="75" [src]="imageURL"
                         alt="avatar">
-                    <p-colorPicker [disabled]="!customAvatar" #colorPicker [(ngModel)]="color"
-                        [ngModelOptions]="{standalone: true}"></p-colorPicker>
 
                     <p-divider layout="vertical"></p-divider>
                     <p-fileUpload #fileupload name="uploadAvatar" [customUpload]="true"
@@ -24,7 +20,7 @@
                     <label for="organization-name">Nazwa użytkownika</label>
                     <input #organization id="organization-name" type="text" pInputText formControlName="userName" />
                     <small id="organization-name-help" class="input-helper-text">
-                        Podaj nazwę dla swojej organizacji.
+                        Podaj nazwę użytkonika.
                     </small>
                 </div>
                 <div *ngIf="userName?.invalid && userName?.touched">
@@ -32,10 +28,10 @@
                         Nazwa jest wymagana
                     </app-validation-error>
                     <app-validation-error *ngIf="userName?.errors?.['minlength']">
-                        Nazwa organizacji musi mieć co najmniej 3 znaki
+                        Nazwa użytkownika musi mieć co najmniej 3 znaki
                     </app-validation-error>
                     <app-validation-error *ngIf="userName?.errors?.['maxlength']">
-                        Nazwa organizacji nie może mieć więcej niż 256 znaków
+                        Nazwa użytkownika nie może mieć więcej niż 256 znaków
                     </app-validation-error>
                 </div>
             </form>
