@@ -8,7 +8,7 @@
 <div class="menu" *ngIf="displayMenu">
   <app-calendar-filter-menu
     (selectedFiltersChanged)="handleFilterChange($event)"
-    [organisations]="organisations"
+    [organizations]="organizations"
     [types]="types"
     [selectedFilters]="selectedFilters"
   ></app-calendar-filter-menu>

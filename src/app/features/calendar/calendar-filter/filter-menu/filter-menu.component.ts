@@ -18,7 +18,7 @@ import { Filters } from '@app/features/calendar/calendar-filter/calendar-filter.
   styleUrls: ['./filter-menu.component.scss'],
 })
 export class FilterMenuComponent implements OnInit, OnDestroy {
-  @Input() organisations!: Organization[];
+  @Input() organizations!: Organization[];
   @Input() types!: any;
   @Input() selectedFilters!: Filters;
   @Output() selectedFiltersChanged = new EventEmitter<Filters>();
@@ -41,7 +41,7 @@ export class FilterMenuComponent implements OnInit, OnDestroy {
     this.calendarService.handleWeekendsToggle();
   }
 
-  selectedOrganisation() {
+  selectedorganization() {
     this.calendarService.currentFilter(this.selectedFilters);
   }
 

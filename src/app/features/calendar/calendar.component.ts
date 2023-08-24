@@ -18,7 +18,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {}
 
   ngOnInit() {
-    this.calendarService.createEvents();
+    this.calendarService.getMonthEvents('01-12-2023 00:00');
   }
 
   toggleSidebar() {

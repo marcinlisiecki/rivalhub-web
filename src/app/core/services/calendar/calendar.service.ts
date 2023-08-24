@@ -21,24 +21,26 @@ import { CalendarEvent } from '@interfaces/calendar/calendar-event';
 import { EventDto } from '@interfaces/event/event-dto';
 import { Reservation } from '@interfaces/reservation/reservation';
 import { Filters } from '@app/features/calendar/calendar-filter/calendar-filter.component';
-import { lastValueFrom } from 'rxjs';
+import { forkJoin, lastValueFrom, Observable, Subscription } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CalendarService {
-  organisationReservation: WritableSignal<
-    { organisation: Organization; reservation: Reservation }[]
+  organizationReservation: WritableSignal<
+    { organization: Organization; reservation: Reservation }[]
   > = signal([]);
-  organisationEvents: WritableSignal<EventDto[]> = signal([]);
+  organizationEvents: WritableSignal<EventDto[]> = signal([]);
   api!: Calendar;
 
   currentDate = signal(new Date());
   allEvents = signal<CalendarEvent[]>([]);
   visibleEvents = signal(this.allEvents());
   currentDayEvents = signal(this.allEvents());
-  organisations: WritableSignal<Organization[]> = signal([]);
+  organizations: WritableSignal<Organization[]> = signal([]);
   currentWeekends = signal(true);
   sidebar = signal(false);
   private language = this.languageService.getCurrentLanguage();
@@ -59,12 +61,14 @@ export class CalendarService {
     locale: 'pl',
   });
   langChangeEffect: EffectRef;
+  calendarEventsSub!: Subscription;
 
   constructor(
     @Inject(LOCALE_ID) private locale: string,
     private languageService: LanguageService,
     private organizationsService: OrganizationsService,
     private authService: AuthService,
+    private http: HttpClient,
   ) {
     this.langChangeEffect = effect(
       () => {
@@ -94,12 +98,12 @@ export class CalendarService {
 
   currentFilter(filers: Filters) {
     let currentTypes = filers.selectedTypes;
-    let currentOrganisations = filers.selectedOrganisations;
+    let currentorganizations = filers.selectedorganizations;
 
     let tempEventArray: CalendarEvent[] = [];
     for (let event of this.allEvents()) {
       if (currentTypes.includes(event['typeId'])) {
-        if (currentOrganisations.includes(event['organisationId']))
+        if (currentorganizations.includes(event['organizationId']))
           tempEventArray.push(event);
       }
     }
@@ -114,12 +118,12 @@ export class CalendarService {
     );
   }
 
-  async getOrganisation() {
+  async getorganization() {
     try {
-      const organisations: any[] = await Promise.all(
+      const organizations: any[] = await Promise.all(
         await lastValueFrom(this.organizationsService.getMy()),
       );
-      this.organisations.set(organisations);
+      this.organizations.set(organizations);
     } catch (err) {
       console.error(err, 'wystąpił błąd');
     }
@@ -154,54 +158,73 @@ export class CalendarService {
     this.currentDayFilter(this.currentDate());
   }
 
-  async getEvents() {
-    let events: EventDto[] = [];
-    let reservations: any[] = [];
-    await this.getOrganisation();
-    for (let organisation of this.organisations()) {
-      try {
-        const [eventsResult, reservationsResult] = await Promise.all([
-          await lastValueFrom(
-            this.organizationsService.getEvents(organisation.id),
-          ),
-          await lastValueFrom(
-            this.organizationsService.getOrganizationReservations(
-              this.authService.getUserId() as number,
-            ),
-          ),
-        ]);
+  // async getEvents() {
+  //   let events: EventDto[] = [];
+  //   let reservations: any[] = [];
+  //   await this.getorganization();
+  //
+  //   for (let organization of this.organizations()) {
+  //     try {
+  //       const [eventsResult, reservationsResult] = await Promise.all([
+  //         await lastValueFrom(
+  //           this.organizationsService.getEvents(organization.id),
+  //         ),
+  //         await lastValueFrom(
+  //           this.organizationsService.getOrganizationReservations(
+  //             this.authService.getUserId() as number,
+  //           ),
+  //         ),
+  //       ]);
+  //
+  //       events.push(...eventsResult);
+  //       reservations.push(
+  //         ...reservationsResult.map((reservation) => ({
+  //           organization,
+  //           reservation,
+  //         })),
+  //       );
+  //     } catch (err) {
+  //       console.error('An error occurred:', err);
+  //     }
+  //   }
+  //
+  //   this.organizationEvents.set(events);
+  //   this.organizationReservation.set(reservations);
+  // }
 
-        events.push(...eventsResult);
-        reservations.push(
-          ...reservationsResult.map((reservation) => ({
-            organisation,
-            reservation,
-          })),
-        );
-      } catch (err) {
-        console.error('An error occurred:', err);
-      }
-    }
-
-    this.organisationEvents.set(events);
-    this.organisationReservation.set(reservations);
-  }
-
-  async createEvents() {
-    await this.getEvents();
-
+  getMonthEvents(month: string) {
     let temp: any[] = [];
+    let sources = [
+      this.http.get<EventDto[]>(
+        environment.apiUrl + `/users/events?date=${month}`,
+      ),
+      this.http.get<Reservation[]>(
+        environment.apiUrl + `/users/reservations?date=${month}`,
+      ),
+    ];
 
-    for (let event of this.organisationEvents()) {
-      temp.push(this.createEvent(event));
-    }
-    for (let res of this.organisationReservation()) {
-      temp.push(this.createReservation(res));
-    }
+    this.calendarEventsSub = forkJoin(sources).subscribe(
+      ([events, reservations]) => {
+        let tempID: number[] = [];
 
-    this.allEvents.set(temp);
-    this.visibleEvents.set(temp);
-    this.updateCalendar();
+        events = <EventDto[]>events;
+        events.forEach((event) => {
+          //tymczasowy fikołek dopóki endpoint nie zostanie naprawiony
+          if (!tempID.includes(event.eventId)) {
+            temp.push(this.createEvent(event));
+            tempID.push(event.eventId);
+          }
+        });
+
+        reservations = <Reservation[]>reservations;
+        reservations.forEach((reservation) => {
+          temp.push(this.createReservation(reservation));
+        });
+        this.allEvents.set(temp);
+        this.visibleEvents.set(temp);
+        this.updateCalendar();
+      },
+    );
   }
 
   private createEvent(eventData: EventDto) {
@@ -210,8 +233,8 @@ export class CalendarService {
     let type = 'event';
     let orgId = eventData.organization.id.toString();
     let newEvent: CalendarEvent = {
-      organisationId: orgId,
-      organisationName: orgName,
+      organizationId: orgId,
+      organizationName: orgName,
       type: type,
       typeId: '1',
       title: eventData.name,
@@ -223,8 +246,8 @@ export class CalendarService {
       borderColor: color,
       color: eventData.organization.colorForDefaultImage,
       extendedProps: {
-        organisationName: eventData.organization.name,
-        organisationId: eventData.organization.id.toString(),
+        organizationName: eventData.organization.name,
+        organizationId: eventData.organization.id.toString(),
         type: eventData.eventType,
         backgroundColor: eventData.organization.colorForDefaultImage,
         description: eventData.description,
@@ -234,29 +257,26 @@ export class CalendarService {
     return newEvent;
   }
 
-  private createReservation(res: {
-    organisation: Organization;
-    reservation: Reservation;
-  }) {
-    let orgId = res.organisation.id.toString();
-    let orgName = res.organisation.name;
+  private createReservation(res: Reservation) {
+    let orgId = res.organization.id.toString();
+    let orgName = res.organization.name;
     let type = 'reservation';
     let newReservation: CalendarEvent = {
-      organisationId: orgId,
-      organisationName: orgName,
+      organizationId: orgId,
+      organizationName: orgName,
       type: type,
       typeId: '2',
       title: 'rezerwacja', //eventData.name,
-      startStr: res.reservation.startTime.toString(),
-      start: res.reservation.startTime,
-      endStr: res.reservation.endTime.toString(),
-      end: res.reservation.endTime,
+      startStr: res.startTime.toString(),
+      start: res.startTime,
+      endStr: res.endTime.toString(),
+      end: res.endTime,
       color: '#367790',
       allDay: false,
-      borderColor: res.organisation.colorForDefaultImage,
+      borderColor: res.organization.colorForDefaultImage,
       extendedProps: {
-        organisationName: orgName,
-        organisationId: orgId,
+        organizationName: orgName,
+        organizationId: orgId,
         type: 'reservation',
         backgroundColor: '#367790',
         //description:eventData.description
