@@ -1,55 +1,46 @@
-<div class="form-container">
-    <p-card header="Dodaj organizację">
+<section class="wrapper">
+    <h1>Edycja profilu</h1>
 
+    <section class="organization-info">
+        <p-card>
+            <form [formGroup]="editForm">
+                <div class="form-item form-avatar">
+                    <img (click)="onImageClick()" class="avatar-img"
+                        [ngStyle]="customAvatar ? { 'background-color': color } : null"
+                        [ngClass]="{'avatar-img-hoverable': customAvatar}" width="75" height="75" [src]="imageURL"
+                        alt="avatar">
+                    <p-colorPicker [disabled]="!customAvatar" #colorPicker [(ngModel)]="color"
+                        [ngModelOptions]="{standalone: true}"></p-colorPicker>
 
-        <form [formGroup]="editUserForm" (ngSubmit)="onSubmit()">
-            <div class="form-item form-avatar">
-                <img (click)="onImageClick()" class="avatar-img"
-                    [ngStyle]="customAvatar ? { 'background-color': color } : null" width="75" height="75"
-                    [src]="imageURL" alt="avatar">
-                <p-colorPicker [disabled]="!customAvatar" #colorPicker [(ngModel)]="color"
-                    [ngModelOptions]="{standalone: true}"></p-colorPicker>
-
-                <p-divider layout="vertical"></p-divider>
-                <p-fileUpload name="uploadAvatar" [customUpload]="true" (onSelect)="onFileSelectClicked($event)"
-                    (onClear)="onClearClicked($event)" [showUploadButton]="false" cancelLabel="Anuluj"
-                    chooseLabel="Dodaj zdjęcie" [accept]="joinAcceptableImageTypes()" [fileLimit]="1"
-                    [maxFileSize]="MAXFILESIZE">
-                </p-fileUpload>
-            </div>
-            <div class="input-box">
-                <label for="organization-name">Nazwa organizacji</label>
-                <input #organization id="organization-name" type="text" pInputText formControlName="name" />
-                <small id="organization-name-help" class="input-helper-text">
-                    Podaj nazwę dla swojej organizacji.
-                </small>
-            </div>
-            <div *ngIf="name?.invalid && name?.touched">
-                <app-validation-error *ngIf="name?.errors?.['required']">
-                    Nazwa jest wymagana
-                </app-validation-error>
-                <app-validation-error *ngIf="name?.errors?.['minlength']">
-                    Nazwa organizacji musi mieć co najmniej 3 znaki
-                </app-validation-error>
-                <app-validation-error *ngIf="name?.errors?.['maxlength']">
-                    Nazwa organizacji nie może mieć więcej niż 256 znaków
-                </app-validation-error>
-            </div>
-            <div>
-                <div class="button-wrapper">
-                    <p-button type="submit">Utwórz organizację</p-button>
+                    <p-divider layout="vertical"></p-divider>
+                    <p-fileUpload #fileupload name="uploadAvatar" [customUpload]="true"
+                        (onSelect)="onFileSelectClicked($event)" (onClear)="onClearClicked()" [showUploadButton]="false"
+                        cancelLabel="Usuń" chooseLabel="Dodaj zdjęcie" [accept]="joinAcceptableImageTypes()"
+                        [fileLimit]="1" [maxFileSize]="MAXFILESIZE">
+                    </p-fileUpload>
                 </div>
-                <p class="api-error-wrapper">
-                    <app-validation-error *ngIf="clientError">
-                        {{ clientError }}
+
+                <div class="input-box">
+                    <label for="organization-name">Nazwa użytkownika</label>
+                    <input #organization id="organization-name" type="text" pInputText formControlName="userName" />
+                    <small id="organization-name-help" class="input-helper-text">
+                        Podaj nazwę dla swojej organizacji.
+                    </small>
+                </div>
+                <div *ngIf="userName?.invalid && userName?.touched">
+                    <app-validation-error *ngIf="userName?.errors?.['required']">
+                        Nazwa jest wymagana
                     </app-validation-error>
-                </p>
-                <p class="api-error-wrapper">
-                    <app-validation-error *ngIf="apiError">
-                        {{ apiError }}
+                    <app-validation-error *ngIf="userName?.errors?.['minlength']">
+                        Nazwa organizacji musi mieć co najmniej 3 znaki
                     </app-validation-error>
-                </p>
-            </div>
-        </form>
-    </p-card>
-</div>
+                    <app-validation-error *ngIf="userName?.errors?.['maxlength']">
+                        Nazwa organizacji nie może mieć więcej niż 256 znaków
+                    </app-validation-error>
+                </div>
+            </form>
+        </p-card>
+    </section>
+
+
+</section>

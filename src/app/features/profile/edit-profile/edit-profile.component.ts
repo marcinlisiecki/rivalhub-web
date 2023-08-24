@@ -20,8 +20,8 @@ export class EditProfileComponent {
   clientError: string | undefined;
   customAvatar: boolean = true;
 
-  editUserForm = new FormGroup({
-    name: new FormControl('', [
+  editForm = new FormGroup({
+    userName: new FormControl('', [
       Validators.required,
       Validators.minLength(3),
       Validators.maxLength(256),
@@ -65,7 +65,7 @@ export class EditProfileComponent {
     this.customAvatar = false;
   }
 
-  onClearClicked(event: Event) {
+  onClearClicked() {
     this.customAvatar = true;
     this.imageURL = this.DEFAULTAVATAR;
     this.uploadedFile = undefined;
@@ -75,8 +75,8 @@ export class EditProfileComponent {
   onSubmit() {
     this.apiError = null;
 
-    if (!this.editUserForm.valid) {
-      this.editUserForm.markAllAsTouched();
+    if (!this.editForm.valid) {
+      this.editForm.markAllAsTouched();
       return;
     }
 
@@ -84,7 +84,7 @@ export class EditProfileComponent {
     const organizationData = new FormData();
     organizationData.append('thumbnail', this.uploadedFile || '');
     organizationData.append('color', this.color);
-    organizationData.append('organization', this.name?.value || '');
+    organizationData.append('organization', this.userName?.value || '');
 
     this.isLoading = true;
     URL.revokeObjectURL(this.imageURL);
@@ -98,8 +98,8 @@ export class EditProfileComponent {
     return this.ACCEPTEDFILETYPES.join(',');
   }
 
-  get name() {
-    return this.editUserForm.get('name');
+  get userName() {
+    return this.editForm.get('userName');
   }
   hideInput() {
     this.colorPicker.el.nativeElement.childNodes[0].childNodes[0].style.opacity = 0;

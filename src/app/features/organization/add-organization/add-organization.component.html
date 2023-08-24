@@ -11,7 +11,7 @@
 
         <p-divider layout="vertical"></p-divider>
         <p-fileUpload name="uploadAvatar" [customUpload]="true" (onSelect)="onFileSelectClicked($event)"
-          (onClear)="onClearClicked($event)" [showUploadButton]="false" cancelLabel="Anuluj" chooseLabel="Dodaj zdjęcie"
+          (onClear)="onClearClicked()" [showUploadButton]="false" cancelLabel="Anuluj" chooseLabel="Dodaj zdjęcie"
           [accept]="joinAcceptableImageTypes()" [fileLimit]="1" [maxFileSize]="MAXFILESIZE">
         </p-fileUpload>
       </div>
