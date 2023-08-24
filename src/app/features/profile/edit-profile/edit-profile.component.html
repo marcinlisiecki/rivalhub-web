@@ -1,12 +1,11 @@
 <section class="wrapper">
-    <h1>Edycja profilu</h1>
+    <h1 class="text-center">Edycja profilu</h1>
 
     <section class="form-container">
         <p-card>
             <form [formGroup]="editForm">
                 <div class="form-item form-avatar">
-                    <img (click)="onImageClick()" class="avatar-img" width="75" height="75" [src]="imageURL"
-                        alt="avatar">
+                    <img class="avatar-img" width="75" height="75" [src]="imageURL" alt="avatar">
 
                     <p-divider layout="vertical"></p-divider>
                     <p-fileUpload #fileupload name="uploadAvatar" [customUpload]="true"
@@ -35,7 +34,11 @@
                     </app-validation-error>
                 </div>
             </form>
+            <p-button [loading]="isLoading" [disabled]="isLoading" (onClick)="onSubmit()">
+                Zapisz ustawienia
+            </p-button>
         </p-card>
+
     </section>
 
 

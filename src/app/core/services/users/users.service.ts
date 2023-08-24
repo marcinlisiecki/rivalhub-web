@@ -25,15 +25,15 @@ export class UsersService {
     return this.http.get<UserDetailsDto>(environment.apiUrl + `/users/${id}`);
   }
 
-  editUser(id: number, user: EditUser): Observable<UserDetailsDto> {
-    const userData = new FormData();
-    userData.append('thumbnail', user.uploadedFile || '');
-    userData.append('organization', user.name);
+  editMe(user: EditUser): Observable<UserDetailsDto> {
+    return this.http.patch<UserDetailsDto>(environment.apiUrl + `/users`, user);
+  }
 
-    return this.http.patch<UserDetailsDto>(
-      environment.apiUrl + `/users/${id}`,
-      userData,
-    );
+  editMyAvatar(keepAvatar: boolean, avatar?: File): Observable<{}> {
+    const avatarData = new FormData();
+    avatarData.append('thumbnail', avatar!);
+    avatarData.append('keepAvatar', keepAvatar.toString());
+    return this.http.post<{}>(environment.apiUrl + `/users/image`, avatarData);
   }
 
   getCommonEvents(id: number): Observable<EventDto[]> {

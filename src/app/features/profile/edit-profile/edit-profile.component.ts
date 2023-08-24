@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { EditUser } from '@app/core/interfaces/user/edit-user';
 import { UserDetailsDto } from '@app/core/interfaces/user/user-details-dto';
 import { AuthService } from '@app/core/services/auth/auth.service';
 import { ImageService } from '@app/core/services/image/image.service';
@@ -15,7 +16,6 @@ import { FileSelectEvent } from 'primeng/fileupload';
 export class EditProfileComponent {
   ACCEPTEDFILETYPES = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'];
   MAXFILESIZE = 5242880;
-  color: string = '#4c4d87';
   uploadedFile: File | undefined;
   imageURL: string = '';
   clientError: string | undefined;
@@ -31,25 +31,20 @@ export class EditProfileComponent {
   });
   apiError: null | string = null;
   isLoading: boolean = false;
-  @ViewChild('colorPicker') colorPicker!: any;
 
   constructor(
     private userService: UsersService,
     private imageService: ImageService,
-    private router: Router,
-    private authService: AuthService,
   ) {}
 
   ngOnInit(): void {
     this.userService.getMe().subscribe((user: UserDetailsDto) => {
-      console.log(user);
       this.user = user;
-      // this.editForm.userName.setValue(user.name);
+      this.imageURL = this.imageService.getUserImagePath(
+        user.profilePictureUrl,
+      );
+      this.editForm.get('userName')?.setValue(user.name);
     });
-  }
-
-  ngAfterViewInit(): void {
-    this.hideInput();
   }
 
   onFileSelectClicked(event: FileSelectEvent) {
@@ -72,7 +67,6 @@ export class EditProfileComponent {
     this.customAvatar = true;
     this.imageURL = this.DEFAULTUSERAVATAR;
     this.uploadedFile = undefined;
-    this.hideInput();
   }
 
   onSubmit() {
@@ -86,27 +80,24 @@ export class EditProfileComponent {
     this.isLoading = true;
     URL.revokeObjectURL(this.imageURL);
 
-    const editUser = {
-      name: this.editForm.value.userName,
-      color: this.color,
-      uploadedFile: this.uploadedFile,
+    const editUser: EditUser = {
+      name: this.editForm.value.userName!,
     };
+
+    this.userService.editMe(editUser).subscribe({});
+    this.userService
+      .editMyAvatar(this.customAvatar, this.uploadedFile)
+      .subscribe({});
 
     this.isLoading = false;
   }
 
-  onImageClick() {
-    this.colorPicker.el.nativeElement.childNodes[0].childNodes[0].click();
-  }
   joinAcceptableImageTypes() {
     return this.ACCEPTEDFILETYPES.join(',');
   }
 
   get userName() {
     return this.editForm.get('userName');
-  }
-  hideInput() {
-    this.colorPicker.el.nativeElement.childNodes[0].childNodes[0].style.opacity = 0;
   }
 
   public readonly DEFAULTUSERAVATAR = this.imageService.DEFAULTUSERAVATAR;
