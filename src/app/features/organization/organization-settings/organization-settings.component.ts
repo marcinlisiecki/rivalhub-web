@@ -13,6 +13,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { FileSelectEvent } from 'primeng/fileupload';
 import { ImageService } from '@app/core/services/image/image.service';
 import { EditOrganization } from '@app/core/interfaces/organization/edit-organization';
+import { Observable, forkJoin, of, zip } from 'rxjs';
 
 @Component({
   selector: 'app-organization-settings',
@@ -24,6 +25,7 @@ export class OrganizationSettingsComponent {
   activeEventTypes: EventType[] = [];
   organizationId: number;
   isLoading: boolean = false;
+  toastLifeTime: number = 3 * 1000;
 
   private DEFAULTAVATAR = '/assets/img/svg/defaultOrganization.svg';
   ACCEPTEDFILETYPES = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'];
@@ -31,7 +33,7 @@ export class OrganizationSettingsComponent {
   color?: string;
   uploadedFile?: File;
   imageURL: string = this.DEFAULTAVATAR;
-  customAvatar: boolean = true;
+  customAvatar!: boolean;
 
   clientError: string | undefined;
   apiError: null | string = null;
@@ -74,6 +76,7 @@ export class OrganizationSettingsComponent {
 
   onSave() {
     this.isLoading = true;
+
     this.setOrganizationEventTypes();
     this.saveOrganizationSettings();
     this.saveOrganizationDetails();
@@ -92,7 +95,7 @@ export class OrganizationSettingsComponent {
           next: () => {
             this.messageService.add({
               severity: 'success',
-              life: 10 * 1000,
+              life: this.toastLifeTime,
               summary: 'Organizacja została pomyślnie usunięta',
             });
             this.router.navigate(['organizations']);
@@ -116,7 +119,7 @@ export class OrganizationSettingsComponent {
       });
   }
 
-  setOrganizationEventTypes() {
+  setOrganizationEventTypes(): Observable<{}> {
     const activeEventTypes = this.activeEventTypes;
     const inactiveEventTypes = this.possibleEventTypes.filter(
       (type) => !this.activeEventTypes.includes(type),
@@ -128,9 +131,10 @@ export class OrganizationSettingsComponent {
     this.eventsService
       .deleteOrganizationEventTypes(this.organizationId, inactiveEventTypes)
       .subscribe();
+    return of({});
   }
 
-  saveOrganizationSettings() {
+  saveOrganizationSettings(): Observable<{}> {
     this.organizationsService
       .setOrganizationSettings(
         this.organizationId,
@@ -141,7 +145,7 @@ export class OrganizationSettingsComponent {
           this.isLoading = false;
           this.messageService.add({
             severity: 'success',
-            life: 10 * 1000,
+            life: this.toastLifeTime,
             summary: 'Ustawienia zostały pomyślnie zapisane',
           });
         },
@@ -149,16 +153,21 @@ export class OrganizationSettingsComponent {
           this.errorsService.createErrorMessage(extractMessage(err));
         },
       });
+    return of({});
   }
   saveOrganizationAvatar() {
     this.organizationsService
-      .setOrganizationAvatar(this.organizationId, this.uploadedFile)
+      .setOrganizationAvatar(
+        this.organizationId,
+        this.customAvatar,
+        this.uploadedFile,
+      )
       .subscribe({
         next: () => {
           this.isLoading = false;
           this.messageService.add({
             severity: 'success',
-            life: 10 * 1000,
+            life: this.toastLifeTime,
             summary: 'Avatar został pomyślnie edytowany!',
           });
         },
@@ -168,7 +177,7 @@ export class OrganizationSettingsComponent {
       });
   }
 
-  saveOrganizationDetails() {
+  saveOrganizationDetails(): Observable<{}> {
     const editOrganization: EditOrganization = {
       name: this.editForm.get('organizationName')?.value,
       color: this.color,
@@ -180,7 +189,7 @@ export class OrganizationSettingsComponent {
           this.isLoading = false;
           this.messageService.add({
             severity: 'success',
-            life: 10 * 1000,
+            life: this.toastLifeTime,
             summary: 'Dane organizacji zostały pomyślnie zapisane!',
           });
         },
@@ -188,6 +197,7 @@ export class OrganizationSettingsComponent {
           this.errorsService.createErrorMessage(extractMessage(err));
         },
       });
+    return of({});
   }
 
   toggleAvailableEventType(eventType: EventType) {
@@ -227,7 +237,7 @@ export class OrganizationSettingsComponent {
           organization.imageUrl,
         );
         if (this.imageURL !== this.DEFAULTAVATAR) {
-          this.customAvatar = false;
+          this.customAvatar = true;
           this.onAvatarLoaded();
         }
       },
@@ -247,11 +257,11 @@ export class OrganizationSettingsComponent {
     this.uploadedFile;
     this.uploadedFile = event.files[0];
     this.imageURL = URL.createObjectURL(event.currentFiles[0]);
-    this.customAvatar = false;
+    this.customAvatar = true;
   }
 
   onClearClicked() {
-    this.customAvatar = true;
+    this.customAvatar = false;
     this.imageURL = this.DEFAULTAVATAR;
     this.uploadedFile = undefined;
     this.hideInput();

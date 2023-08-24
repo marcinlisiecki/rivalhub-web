@@ -6,9 +6,9 @@
       <form [formGroup]="editForm">
         <div class="form-item form-avatar">
           <img (click)="onImageClick()" class="avatar-img"
-            [ngStyle]="customAvatar ? { 'background-color': color } : null"
-            [ngClass]="{'avatar-img-hoverable': customAvatar}" width="75" height="75" [src]="imageURL" alt="avatar">
-          <p-colorPicker [disabled]="!customAvatar" #colorPicker [(ngModel)]="color"
+            [ngStyle]="!customAvatar ? { 'background-color': color } : null"
+            [ngClass]="{'avatar-img-hoverable': !customAvatar}" width="75" height="75" [src]="imageURL" alt="avatar">
+          <p-colorPicker [disabled]="customAvatar" #colorPicker [(ngModel)]="color"
             [ngModelOptions]="{standalone: true}"></p-colorPicker>
 
           <p-divider layout="vertical"></p-divider>

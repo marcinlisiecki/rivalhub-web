@@ -10,7 +10,9 @@
         <div class="organization" [class.organization-selected]="
             selectedOrganization?.id === organization.id
           " *ngFor="let organization of organizations" (click)="selectOrganization(organization)">
-          <img [src]="organization.imageUrl" alt="" />
+          <img [ngStyle]="{            
+              'background-color': checkDefaultAvatar(organization.imageUrl) ? organization.color : 'none'  
+          }" [src]="organization.imageUrl" alt="" />
         </div>
       </div>
     </section>

@@ -170,4 +170,6 @@ export class SidebarComponent implements OnInit, OnDestroy {
     this.authService.logout();
     this.selectedOrganization = null;
   }
+
+  public readonly checkDefaultAvatar = this.imageService.checkDefaultAvatar;
 }

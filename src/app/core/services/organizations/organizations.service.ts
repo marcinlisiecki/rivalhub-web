@@ -140,9 +140,14 @@ export class OrganizationsService {
     );
   }
 
-  setOrganizationAvatar(id: number, avatar?: File): Observable<{}> {
+  setOrganizationAvatar(
+    id: number,
+    keepAvatar: boolean,
+    avatar?: File,
+  ): Observable<{}> {
     const avatarData = new FormData();
     avatarData.append('thumbnail', avatar!);
+    avatarData.append('keepAvatar', keepAvatar.toString());
     return this.http.post<{}>(
       environment.apiUrl + `/organizations/${id}/image`,
       avatarData,
