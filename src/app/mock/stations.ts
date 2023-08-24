@@ -29,7 +29,7 @@ export const STATIONS: Station[] = [
 let organization: Organization = {
   id: 1,
   name: 'organizacja',
-  colorForDefaultImage: '#960101',
+  color: '#960101',
   invitationHash: '',
   imageUrl: null,
 };
