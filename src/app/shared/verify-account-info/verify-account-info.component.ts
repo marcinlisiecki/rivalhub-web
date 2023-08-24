@@ -32,7 +32,8 @@ export class VerifyAccountInfoComponent implements OnInit {
 
         this.usersService.getMe().subscribe({
           next: (user: UserDetailsDto) => {
-            this.isAccountActivated = user.activationTime !== null;
+            this.isAccountActivated =
+              user.activationTime !== null && user.activationTime !== undefined;
           },
         });
       }

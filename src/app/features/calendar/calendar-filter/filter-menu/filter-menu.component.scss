@@ -1,17 +1,21 @@
-.field-checkbox {
-  margin: 0.5rem;
-}
+.menu-comp {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 
-.types{
-  margin-top: 2rem;
-}
+  label {
+    margin-left: 0.5rem;
+  }
 
-.weekend{
-  margin-top: 2rem;
-  margin-bottom: 0.5rem;
-  font-size: 0.9rem;
-}
+  .settings {
+    label {
+      position: absolute;
+      margin-left: 0;
+      width: 5rem;
+    }
+  }
 
-label{
-  margin-left:0.5rem;
+  .field-checkbox {
+    margin: 0.5rem;
+  }
 }

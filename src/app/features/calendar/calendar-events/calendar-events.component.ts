@@ -1,10 +1,7 @@
-import {
-  Component,
-  WritableSignal,
-} from '@angular/core';
+import { Component, WritableSignal } from '@angular/core';
 import { CalendarService } from '@app/core/services/calendar/calendar.service';
 import { EventInput } from '@fullcalendar/core';
-import {categoryTypeToLabel} from "@app/core/utils/event";
+import { categoryTypeToLabel } from '@app/core/utils/event';
 
 @Component({
   selector: 'app-calendar-events',
@@ -12,7 +9,8 @@ import {categoryTypeToLabel} from "@app/core/utils/event";
   styleUrls: ['./calendar-events.component.scss'],
 })
 export class CalendarEventsComponent {
-  currentDayEvents: WritableSignal<EventInput[]> = this.calendarService.currentDayEvents;
+  currentDayEvents: WritableSignal<EventInput[]> =
+    this.calendarService.currentDayEvents;
 
   constructor(private calendarService: CalendarService) {}
 
@@ -21,4 +19,15 @@ export class CalendarEventsComponent {
   }
 
   protected readonly categoryTypeToLabel = categoryTypeToLabel;
+
+  color(event: any): { [p: string]: any } {
+    if (event['type'] === 'reservation') {
+      return {
+        backgroundColor: event['color'],
+        border: `4px solid ${event['borderColor']}`,
+      };
+    } else {
+      return { backgroundColor: event['color'] };
+    }
+  }
 }

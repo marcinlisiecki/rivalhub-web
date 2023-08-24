@@ -5,24 +5,33 @@
 </div>
 
 <ng-template #eventContent>
-  <div [class]="event['type']" *ngFor="let event of currentDayEvents()">
+  <div
+    [class]="event['type']"
+    *ngFor="let event of currentDayEvents()"
+    [ngStyle]="color(event)"
+  >
     <section>
       <i>{{ event['organisationName'] }}</i>
       <br />
-      <i>{{ categoryTypeToLabel(event!['extendedProps']!['type'])|translate }}</i>
-      <br>
+      <i>{{
+        categoryTypeToLabel(event!['extendedProps']!['type']) | translate
+      }}</i>
+      <br />
       <i>{{ event.title }}</i>
       <br />
       <b *ngIf="!event.allDay">{{ getDate(event) | date: 'hh:mm' }}</b>
-      <b *ngIf="event.allDay"> {{'calendar.allDay' | translate}}' </b>
+      <b *ngIf="event.allDay"> {{ 'calendar.allDay' | translate }}' </b>
     </section>
-    <section style="margin-left: 1rem">
-      <h5>{{ 'calendar.type.'+event['type']|translate }}</h5>
+    <section style="margin-left: 0.5rem">
+      <h5>{{ 'calendar.type.' + event['type'] | translate }}</h5>
+      <p-button styleClass="event-button">{{
+        'calendar.event.eventButton' | translate
+      }}</p-button>
     </section>
   </div>
 </ng-template>
 <ng-template #noEvents>
   <div>
-    <p>{{'calendar.noEvents'|translate}}</p>
+    <p>{{ 'calendar.noEvents' | translate }}</p>
   </div>
 </ng-template>
