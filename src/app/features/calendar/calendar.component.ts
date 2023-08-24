@@ -18,9 +18,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {}
 
   ngOnInit() {
-
     this.calendarService.createEvents();
-
   }
 
   toggleSidebar() {
@@ -34,9 +32,8 @@ export class CalendarComponent implements OnInit, AfterViewInit {
       this.sidebarWidth = '0';
       this.calendarMargin = '0';
     }
-
     setTimeout(() => {
       this.calendarService.api.view.calendar.updateSize();
-    }, 0);
+    }, 200);
   }
 }

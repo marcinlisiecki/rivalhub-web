@@ -1,20 +1,11 @@
-<div class="calendar">
-  <div class="mid">
-    <div class="button">
-      <p-toggleButton
-        styleClass="calendar-sidebar-btn"
-        (click)="toggleSidebar()"
-        onIcon="{{ sidebarIcon }}"
-        offIcon="{{ sidebarIcon }}"
-      ></p-toggleButton>
-      <app-calendar-filter></app-calendar-filter>
-    </div>
-    <div class="content">
-      <div class="left" #left [ngStyle]="{ width: sidebarWidth }">
+<div class="body">
+  <div class="bottom">
+    <div class="calendar-container">
+      <div class="left" #cal>
         <p-sidebar
           styleClass="calendarSidebar"
           [(visible)]="sidebarVisible"
-          [appendTo]="left"
+          [appendTo]="cal"
           [modal]="false"
           (onHide)="toggleSidebar()"
         >
@@ -24,7 +15,16 @@
           <app-calendar-events></app-calendar-events>
         </p-sidebar>
       </div>
-      <div class="right" [ngStyle]="{marginLeft:calendarMargin}">
+      <div class="right">
+        <div class="top">
+          <p-toggleButton
+            styleClass="calendar-sidebar-btn"
+            (click)="toggleSidebar()"
+            onIcon="{{ sidebarIcon }}"
+            offIcon="{{ sidebarIcon }}"
+          ></p-toggleButton>
+          <app-calendar-filter></app-calendar-filter>
+        </div>
         <app-calendar-body
           (dateClick)="!sidebarVisible && toggleSidebar()"
         ></app-calendar-body>

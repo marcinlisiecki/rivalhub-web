@@ -1,8 +1,4 @@
-import {
-  Component,
-  WritableSignal,
-  OnInit,
-} from '@angular/core';
+import { Component, WritableSignal, OnInit } from '@angular/core';
 import { CalendarOptions } from '@fullcalendar/core';
 import { CalendarService } from '@app/core/services/calendar/calendar.service';
 import { Organization } from '@interfaces/organization/organization';
@@ -32,20 +28,29 @@ export class CalendarFilterComponent implements OnInit {
     selectedOrganisations: this.selectedOrganisations,
     selectedTypes: ['1', '2'],
   };
+  icon: string = 'pi pi-angle-down';
 
-  constructor(
-    private calendarService: CalendarService,
-  ) {}
+  constructor(private calendarService: CalendarService) {}
   async ngOnInit() {
     this.calendarOptions = this.calendarService.options;
     await this.calendarService.getOrganisation();
     this.organisations = this.calendarService.organisations();
-    this.organisations.forEach( organisation =>{this.selectedFilters.selectedOrganisations.push(organisation.id.toString());} )
-
+    this.organisations.forEach((organisation) => {
+      this.selectedFilters.selectedOrganisations.push(
+        organisation.id.toString(),
+      );
+    });
   }
 
+  changeDisplayMenu() {
+    this.displayMenu = !this.displayMenu;
+    if (!this.displayMenu) {
+      this.icon = 'pi pi-angle-down';
+    } else {
+      this.icon = 'pi pi-angle-up';
+    }
+  }
   handleFilterChange(newFilters: Filters) {
     this.selectedFilters = newFilters;
   }
-
 }

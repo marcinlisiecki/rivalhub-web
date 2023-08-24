@@ -7,6 +7,7 @@ import {
   AfterViewInit,
   Output,
   EventEmitter,
+  signal,
 } from '@angular/core';
 import { CalendarOptions, EventClickArg } from '@fullcalendar/core';
 import { CalendarService } from '@app/core/services/calendar/calendar.service';
@@ -27,20 +28,24 @@ export class CalendarBodyComponent implements OnInit, AfterViewInit, OnDestroy {
   events = this.calendarService.visibleEvents;
 
   constructor(private calendarService: CalendarService) {}
-
   ngOnInit() {
     this.calendarOptions = this.calendarService.options;
     this.calendarOptions.mutate((options) => {
       options.dateClick = this.onDateClick.bind(this);
       options.initialDate = this.currentDate;
       options.eventClick = this.handleEventClick.bind(this);
-      options.weekends = Boolean(parseInt(<string>localStorage.getItem('showWeekends')));
+      options.weekends = Boolean(
+        parseInt(<string>localStorage.getItem('showWeekends')),
+      );
+      options.headerToolbar = {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'dayGridMonth,timeGridWeek,timeGridDay listWeek',
+      };
     });
     this.calendarService.currentDate.set(this.currentDate);
     this.calendarService.currentDayFilter(this.currentDate.toDateString());
-
-    }
-
+  }
 
   ngOnDestroy() {
     this.calendarService.langChangeEffect.destroy();
