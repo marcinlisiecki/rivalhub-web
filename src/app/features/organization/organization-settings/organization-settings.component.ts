@@ -229,7 +229,7 @@ export class OrganizationSettingsComponent {
           this.customAvatar = false;
           this.onAvatarLoaded();
         }
-        this.color = organization.colorForDefaultImage;
+        this.color = organization.color;
       },
     });
   }

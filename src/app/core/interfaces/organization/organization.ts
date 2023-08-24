@@ -1,7 +1,7 @@
 export interface Organization {
   id: number;
   name: string;
-  colorForDefaultImage: string;
+  color: string;
   invitationHash: string;
   imageUrl: string | null;
 }
