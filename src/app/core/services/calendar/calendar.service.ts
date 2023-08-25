@@ -23,6 +23,7 @@ import { Reservation } from '@interfaces/reservation/reservation';
 import { Filters } from '@app/features/calendar/calendar-filter/calendar-filter.component';
 import { lastValueFrom } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
+import { EventType } from '@interfaces/event/event-type';
 
 @Injectable({
   providedIn: 'root',
@@ -162,7 +163,10 @@ export class CalendarService {
       try {
         const [eventsResult, reservationsResult] = await Promise.all([
           await lastValueFrom(
-            this.organizationsService.getEvents(organisation.id),
+            this.organizationsService.getEvents(
+              organisation.id,
+              EventType.PING_PONG,
+            ),
           ),
           await lastValueFrom(
             this.organizationsService.getOrganizationReservations(
