@@ -1,9 +1,10 @@
 @import 'src/scss/variables';
 
 .match {
-  border: 2px dotted $shade600;
+  //border: 2px dotted $shade600;
   padding: 1rem;
   border-radius: $borderRadius;
+  background-color: $panelContentBg;
 }
 
 .teams {

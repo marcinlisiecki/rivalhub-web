@@ -21,8 +21,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { AddPingPongResultsComponent } from './ping-pong/add-ping-pong-results/add-ping-pong-results.component';
 import { AddPingPongSetComponent } from './ping-pong/add-ping-pong-set/add-ping-pong-set.component';
 import { DialogService } from 'primeng/dynamicdialog';
-import { NewEventMatchComponent } from './new-event-match/new-event-match.component';
-import { EventViewComponent } from './event-view/event-view.component';
+import { NewEventMatchComponent } from '@app/features/event/common/new-event-match/new-event-match.component';
+import { ViewEventComponent } from '@app/features/event/view-event/view-event.component';
 import { ViewPingPongMatchComponent } from '@app/features/event/ping-pong/view-ping-pong-matches/view-ping-pong-match/view-ping-pong-match.component';
 import { ViewGameSetComponent } from '@app/features/event/common/view-game-sets/view-game-set/view-game-set.component';
 import { ViewGameSetsComponent } from './common/view-game-sets/view-game-sets.component';
@@ -41,7 +41,7 @@ import { BadgeModule } from 'primeng/badge';
     AddPingPongResultsComponent,
     AddPingPongSetComponent,
     NewEventMatchComponent,
-    EventViewComponent,
+    ViewEventComponent,
     ViewPingPongMatchComponent,
     ViewGameSetComponent,
     ViewGameSetsComponent,

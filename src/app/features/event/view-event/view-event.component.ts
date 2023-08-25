@@ -12,11 +12,11 @@ import { TableFootballMatch } from '@interfaces/event/games/table-football/table
 import { categoryTypeToLabel } from '@app/core/utils/event';
 
 @Component({
-  selector: 'app-event-view',
-  templateUrl: './event-view.component.html',
-  styleUrls: ['./event-view.component.scss'],
+  selector: 'app-view-event',
+  templateUrl: './view-event.component.html',
+  styleUrls: ['./view-event.component.scss'],
 })
-export class EventViewComponent implements OnInit {
+export class ViewEventComponent implements OnInit {
   eventId!: number;
   organizationId!: number;
   eventType!: EventType;

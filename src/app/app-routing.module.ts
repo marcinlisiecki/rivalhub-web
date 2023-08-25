@@ -20,7 +20,7 @@ import { joinGuard } from '@app/core/guards/join-organization/join.guard';
 import { ProfileComponent } from '@app/features/profile/profile.component';
 import { MembersComponent } from '@app/features/organization/members/members.component';
 import { OrganizationSettingsComponent } from '@app/features/organization/organization-settings/organization-settings.component';
-import { EventViewComponent } from '@app/features/event/event-view/event-view.component';
+import { ViewEventComponent } from '@app/features/event/view-event/view-event.component';
 
 const routes: Routes = [
   {
@@ -112,7 +112,7 @@ const routes: Routes = [
   },
   {
     path: 'organizations/:organizationId/events/:eventId',
-    component: EventViewComponent,
+    component: ViewEventComponent,
     canActivate: [authenticateGuard],
   },
 ];

@@ -1,8 +1,22 @@
 @import 'src/scss/variables';
 
 .wrapper {
-  max-width: $nonBgFormWidth;
-  margin: 0 auto;
+  max-width: $pageWidth;
+  margin: 1rem auto;
+  display: flex;
+  column-gap: 2rem;
+}
+
+.main {
+  flex: 1;
+}
+
+.description {
+  color: $textSecondaryColor;
+}
+
+.participants {
+  width: 15rem;
 }
 
 .event-title {

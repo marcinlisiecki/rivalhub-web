@@ -1,0 +1,59 @@
+<section class="wrapper">
+  <section class="main">
+    <app-organization-back-button
+      [organizationId]="organizationId"
+    ></app-organization-back-button>
+
+    <section *ngIf="event">
+      <h1 class="event-title">
+        {{ event.name }}
+      </h1>
+
+      <p-badge
+        severity="info"
+        value="{{ categoryTypeToLabel(eventType) | translate }}"
+      ></p-badge>
+
+      <p class="description">{{ event.description ?? 'Brak opisu' }}</p>
+    </section>
+
+    <section>
+      <h2 class="section-title">Mecze</h2>
+
+      <app-view-ping-pong-matches
+        *ngIf="eventType === EventType.PING_PONG"
+        [matches]="getPingPongMatches()"
+      ></app-view-ping-pong-matches>
+    </section>
+
+    <section class="buttons">
+      <a
+        [routerLink]="[
+          '/organizations',
+          organizationId,
+          'events',
+          eventId,
+          'results',
+          { type: eventType }
+        ]"
+      >
+        <p-button> Dodaj wyniki </p-button>
+      </a>
+    </section>
+  </section>
+
+  <section class="participants">
+    <h2 class="section-title">Uczestnicy wydarzenia</h2>
+
+    <div class="users">
+      <a
+        class="user"
+        *ngFor="let user of participants"
+        routerLink="/profiles/{{ user.id }}"
+      >
+        <div class="user-avatar"></div>
+        <p>{{ user.name }}</p>
+      </a>
+    </div>
+  </section>
+</section>
