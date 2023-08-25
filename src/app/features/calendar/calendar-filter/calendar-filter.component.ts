@@ -4,7 +4,7 @@ import { CalendarService } from '@app/core/services/calendar/calendar.service';
 import { Organization } from '@interfaces/organization/organization';
 
 export interface Filters {
-  selectedorganizations: string[];
+  selectedOrganizations: string[];
   selectedTypes: any[];
 }
 
@@ -17,7 +17,7 @@ export class CalendarFilterComponent implements OnInit {
   calendarOptions!: WritableSignal<CalendarOptions>;
   displayMenu: boolean = false;
   organizations!: Organization[];
-  selectedorganizations: string[] = [];
+  selectedOrganizations: string[] = [];
 
   types: any[] = [
     { name: 'Wydarzenie', key: 'event', id: '1' },
@@ -25,7 +25,7 @@ export class CalendarFilterComponent implements OnInit {
   ];
 
   selectedFilters: Filters = {
-    selectedorganizations: this.selectedorganizations,
+    selectedOrganizations: this.selectedOrganizations,
     selectedTypes: ['1', '2'],
   };
   icon: string = 'pi pi-angle-down';
@@ -33,10 +33,10 @@ export class CalendarFilterComponent implements OnInit {
   constructor(private calendarService: CalendarService) {}
   async ngOnInit() {
     this.calendarOptions = this.calendarService.options;
-    await this.calendarService.getorganization();
+    await this.calendarService.getOrganization();
     this.organizations = this.calendarService.organizations();
     this.organizations.forEach((organization) => {
-      this.selectedFilters.selectedorganizations.push(
+      this.selectedFilters.selectedOrganizations.push(
         organization.id.toString(),
       );
     });

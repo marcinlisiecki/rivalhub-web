@@ -93,7 +93,7 @@ export class CalendarService {
 
   currentFilter(filers: Filters) {
     let currentTypes = filers.selectedTypes;
-    let currentOrganizations = filers.selectedorganizations;
+    let currentOrganizations = filers.selectedOrganizations;
 
     let tempEventArray: CalendarEvent[] = [];
     for (let event of this.allEvents()) {
@@ -113,7 +113,7 @@ export class CalendarService {
     );
   }
 
-  async getorganization() {
+  async getOrganization() {
     try {
       const organizations: any[] = await Promise.all(
         await lastValueFrom(this.organizationsService.getMy()),

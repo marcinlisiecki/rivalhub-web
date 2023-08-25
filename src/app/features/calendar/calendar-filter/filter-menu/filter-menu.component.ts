@@ -41,7 +41,7 @@ export class FilterMenuComponent implements OnInit, OnDestroy {
     this.calendarService.handleWeekendsToggle();
   }
 
-  selectedorganization() {
+  selectedOrganization() {
     this.calendarService.currentFilter(this.selectedFilters);
   }
 

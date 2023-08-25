@@ -5,9 +5,9 @@
       <p-checkbox
         name="organizations"
         [value]="organization.id.toString()"
-        [(ngModel)]="selectedFilters.selectedorganizations"
+        [(ngModel)]="selectedFilters.selectedOrganizations"
         [inputId]="organization.id.toString()"
-        (onChange)="selectedorganization()"
+        (onChange)="selectedOrganization()"
       ></p-checkbox>
       <label [for]="organization.id.toString()">{{ organization.name }}</label>
     </div>
