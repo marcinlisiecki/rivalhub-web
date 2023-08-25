@@ -82,40 +82,7 @@ export class EditProfileComponent {
     this.isLoading = true;
     URL.revokeObjectURL(this.imageURL);
 
-    const editUser: EditUser = {
-      name: this.editForm.get('userName')?.value!,
-    };
-
-    this.userService.editMe(editUser).subscribe({
-      next: () => {
-        this.isLoading = false;
-        this.messageService.add({
-          severity: 'success',
-          life: this.toastLifeTime,
-          summary: 'Nazwa użytkownika została pomyślnie zapisana.',
-        });
-      },
-      error: (err) => {
-        this.errorsService.createErrorMessage(extractMessage(err));
-        this.isLoading = false;
-      },
-    });
-    this.userService
-      .editMyAvatar(this.customAvatar, this.uploadedFile)
-      .subscribe({
-        next: () => {
-          this.isLoading = false;
-          this.messageService.add({
-            severity: 'success',
-            life: this.toastLifeTime,
-            summary: 'Avatar został pomyślnie zapisany.',
-          });
-        },
-        error: (err) => {
-          this.errorsService.createErrorMessage(extractMessage(err));
-          this.isLoading = false;
-        },
-      });
+    this.editProfile();
 
     this.isLoading = false;
   }
@@ -132,6 +99,47 @@ export class EditProfileComponent {
       }
       this.editForm.get('userName')?.setValue(user.name);
     });
+  }
+
+  private editMe() {
+    const editUser: EditUser = {
+      name: this.editForm.get('userName')?.value!,
+    };
+    this.userService.editMe(editUser).subscribe({
+      next: (user) => {
+        console.log('user', user);
+        this.isLoading = false;
+        this.messageService.add({
+          severity: 'success',
+          life: this.toastLifeTime,
+          summary: 'Nazwa użytkownika została pomyślnie zapisana.',
+        });
+      },
+      error: (err) => {
+        this.errorsService.createErrorMessage(extractMessage(err));
+        this.isLoading = false;
+      },
+    });
+  }
+
+  private editProfile() {
+    this.userService
+      .editMyAvatar(this.customAvatar, this.uploadedFile)
+      .subscribe({
+        next: () => {
+          this.isLoading = false;
+          this.messageService.add({
+            severity: 'success',
+            life: this.toastLifeTime,
+            summary: 'Avatar został pomyślnie zapisany.',
+          });
+          this.editMe();
+        },
+        error: (err) => {
+          this.errorsService.createErrorMessage(extractMessage(err));
+          this.isLoading = false;
+        },
+      });
   }
 
   private onAvatarLoaded() {
