@@ -28,14 +28,23 @@ p {
   justify-content: space-between;
 }
 
+.top{
+  display: flex;
+  justify-content: space-between;
+}
+
 .bottom {
   margin-top: 1.5rem;
   display: flex;
-  justify-content: space-between;
-
+  gap:1rem;
+  align-items:flex-end;
   .date {
     color: $textSecondaryColor;
-    align-self: end;
+    align-self: flex-end;
+  }
+
+  p-button:first-of-type{
+    margin-left: auto;
   }
 }
 

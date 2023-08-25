@@ -43,6 +43,7 @@ export class NewEventComponent implements OnInit, OnDestroy {
   userList: UserDetailsDto[] = [];
   addedUsers: AddEventUser[] = [];
   notAddedUserList: UserDetailsDto[] = [];
+  isPublicEvent: boolean = false;
 
   onLangChangeSub?: Subscription;
 
@@ -134,6 +135,10 @@ export class NewEventComponent implements OnInit, OnDestroy {
 
     this.addedUsers.push(data);
     this.notAddedUserList = this.getOnlyNotAddedUserList();
+  }
+
+  handleSetPublicEvent(isPublic: boolean) {
+    this.isPublicEvent = isPublic;
   }
 
   handleRemoveUser(data?: AddEventUser) {
@@ -292,12 +297,14 @@ export class NewEventComponent implements OnInit, OnDestroy {
       participants: this.addedUsers.map((user) => user.id),
       startTime: startTime,
       stationList: newEventStationList,
+      isEventPublic: this.isPublicEvent,
       name: name,
       description: description,
     };
   }
   addEvent() {
     this.buildEvent();
+    console.log(this.newEvent);
     const organizationId: number = this.route.snapshot.params['id'];
 
     this.eventsService

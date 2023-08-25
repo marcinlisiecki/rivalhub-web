@@ -11,5 +11,6 @@ export interface EventDto {
   organization: Organization;
   eventType: EventType;
   name: string;
-  description:string;
+  description: string;
+  eventPublic: boolean;
 }

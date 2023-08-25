@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AddEventFormStep } from '@interfaces/event/add-event-form-step';
 import { AddEventUser } from '@interfaces/event/add-event-user';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -11,9 +11,10 @@ import { AuthService } from '@app/core/services/auth/auth.service';
   templateUrl: './add-event-users.component.html',
   styleUrls: ['./add-event-users.component.scss'],
 })
-export class AddEventUsersComponent {
+export class AddEventUsersComponent implements OnInit {
   @Input() addedUsers: AddEventUser[] = [];
   @Input() userList: UserDetailsDto[] = [];
+  @Input() isPublicEvent: boolean = false;
 
   @Output() handleAddUser: EventEmitter<AddEventUser> =
     new EventEmitter<AddEventUser>();
@@ -21,9 +22,10 @@ export class AddEventUsersComponent {
     new EventEmitter<AddEventUser>();
   @Output() setFormStep: EventEmitter<AddEventFormStep> =
     new EventEmitter<AddEventFormStep>();
+  @Output() setPublicEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   loggedInUserId!: number | null;
-
+  publicEvent!: boolean;
   addUserDialogRef?: DynamicDialogRef;
 
   constructor(
@@ -31,6 +33,10 @@ export class AddEventUsersComponent {
     private authService: AuthService,
   ) {
     this.loggedInUserId = authService.getUserId();
+  }
+
+  ngOnInit(): void {
+    this.publicEvent = this.isPublicEvent;
   }
 
   removeUser(user: AddEventUser) {

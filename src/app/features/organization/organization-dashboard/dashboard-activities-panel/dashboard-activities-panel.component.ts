@@ -6,6 +6,9 @@ import { Subscription } from 'rxjs';
 import { ActivatedRoute, Params } from '@angular/router';
 import { categoryTypeToLabel } from '@app/core/utils/event';
 import { DISPLAY_DATE_FORMAT } from '@app/core/constants/date';
+import { EventsService } from '@app/core/services/events/events.service';
+import { MessageService } from 'primeng/api';
+import { AuthService } from '@app/core/services/auth/auth.service';
 
 @Component({
   selector: 'app-dashboard-activities-panel',
@@ -18,13 +21,40 @@ export class DashboardActivitiesPanelComponent implements OnInit {
 
   organizationId!: number;
   paramsSubscription?: Subscription;
+  toastLifeTime: number = 3 * 1000;
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(
+    private route: ActivatedRoute,
+    private eventService: EventsService,
+    private messageService: MessageService,
+    private authService: AuthService,
+  ) {}
 
   ngOnInit(): void {
     this.paramsSubscription = this.route.params.subscribe({
       next: (params: Params) => {
         this.organizationId = params['id'];
+      },
+    });
+  }
+
+  joinEvent(event: EventDto) {
+    if (event.participants.includes(this.authService.getUserId()!)) {
+      this.messageService.add({
+        severity: 'warn',
+        life: this.toastLifeTime,
+        detail: 'Jesteś już zapisany na to wydarzenie.',
+      });
+      return;
+    }
+
+    this.eventService.joinEvent(event.eventId, event.eventType).subscribe({
+      next: () => {
+        this.messageService.add({
+          severity: 'success',
+          life: this.toastLifeTime,
+          detail: 'Dołączyłeś do wydarzenia.',
+        });
       },
     });
   }
