@@ -13,6 +13,10 @@
   <section class="series">
     <h2>Przebieg rundy</h2>
 
+    <app-no-resource-info *ngIf="series?.length === 0">
+      Brak serii w tej rundzie
+    </app-no-resource-info>
+
     <div *ngFor="let seriesItem of series" class="series-item">
       <p class="series-label">Seria {{ seriesItem.seriesID }}</p>
       <div class="series-results">
@@ -25,11 +29,25 @@
         </div>
       </div>
     </div>
+
+    <p-button
+      *ngIf="editable"
+      styleClass="p-button-outlined"
+      (click)="handleAddSeries.emit(match.id)"
+      >Dodaj serię</p-button
+    >
   </section>
-  <section>
+  <section *ngIf="!editable">
     <h2>Ranking</h2>
     <div class="ranking">
-      <div *ngFor="let place of ranking" class="ranking-item">
+      <app-no-resource-info *ngIf="series?.length === 0">
+        Ranking jest niedostępny
+      </app-no-resource-info>
+
+      <div
+        *ngFor="let place of series!.length > 0 ? ranking : []"
+        class="ranking-item"
+      >
         <p class="ranking-score">{{ place.place }}</p>
         <p class="ranking-name">{{ place.name }}</p>
       </div>

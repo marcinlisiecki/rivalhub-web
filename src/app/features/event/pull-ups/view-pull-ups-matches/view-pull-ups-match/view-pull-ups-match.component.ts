@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { PullUpsMatch } from '@interfaces/event/games/pull-ups/pull-ups-match';
 import { PullUpsSeriesScores } from '@interfaces/event/games/pull-ups/pull-ups-series-scores';
 import { PullUpsDisplayRanking } from '@interfaces/event/games/pull-ups/pull-ups-display-ranking';
@@ -10,6 +10,9 @@ import { PullUpsDisplayRanking } from '@interfaces/event/games/pull-ups/pull-ups
 })
 export class ViewPullUpsMatchComponent implements OnInit {
   @Input({ required: true }) match!: PullUpsMatch;
+  @Input() editable: boolean = false;
+
+  @Output() handleAddSeries: EventEmitter<number> = new EventEmitter<number>();
 
   series: PullUpsSeriesScores[] = [];
   ranking: PullUpsDisplayRanking[] = [];

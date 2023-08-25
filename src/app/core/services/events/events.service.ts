@@ -14,6 +14,8 @@ import { UserDetailsDto } from '@interfaces/user/user-details-dto';
 import { TableFootballMatch } from '@interfaces/event/games/table-football/table-football-match';
 import { NewTableFootballMatch } from '@interfaces/event/games/table-football/new-table-football-match';
 import { PullUpsMatch } from '@interfaces/event/games/pull-ups/pull-ups-match';
+import { PullUpsSeries } from '@interfaces/event/games/pull-ups/pull-ups-series';
+import { NewPullUpsMatch } from '@interfaces/event/games/pull-ups/new-pull-ups-match';
 
 @Injectable({
   providedIn: 'root',
@@ -106,6 +108,16 @@ export class EventsService {
     );
   }
 
+  getEventUsers(
+    eventId: number,
+    eventType: EventType,
+  ): Observable<UserDetailsDto[]> {
+    return this.http.get<UserDetailsDto[]>(
+      environment.apiUrl + `/organizations/events/${eventId}/participants`,
+      { params: { type: eventType } },
+    );
+  }
+
   addTableFootballSet(
     organizationId: number,
     eventId: number,
@@ -116,6 +128,19 @@ export class EventsService {
       environment.apiUrl +
         `/organizations/${organizationId}/events/${eventId}/match/${matchId}/tablefootball?type=TABLE_FOOTBALL`,
       setList,
+    );
+  }
+
+  addPullUpsSeries(
+    organizationId: number,
+    eventId: number,
+    matchId: number,
+    series: PullUpsSeries[],
+  ): Observable<PullUpsMatch> {
+    return this.http.post<PullUpsMatch>(
+      environment.apiUrl +
+        `/organizations/${organizationId}/events/${eventId}/match/${matchId}/pullups?type=PULL_UPS`,
+      series,
     );
   }
 
@@ -140,6 +165,18 @@ export class EventsService {
       environment.apiUrl +
         `/organizations/${id}/admin/event-types?type=${eventType}`,
       {},
+    );
+  }
+
+  addPullUpsMatch(
+    organizationId: number,
+    eventId: number,
+    newMatch: NewPullUpsMatch,
+  ): Observable<PullUpsMatch> {
+    return this.http.post<PullUpsMatch>(
+      environment.apiUrl +
+        `/organizations/${organizationId}/events/${eventId}/match?type=${EventType.PULL_UPS}`,
+      newMatch,
     );
   }
 

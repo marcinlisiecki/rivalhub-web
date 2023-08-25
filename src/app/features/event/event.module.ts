@@ -35,6 +35,9 @@ import { AddResultsComponent } from './add-results/add-results.component';
 import { ViewPullUpsMatchesComponent } from './pull-ups/view-pull-ups-matches/view-pull-ups-matches.component';
 import { ViewPullUpsMatchComponent } from './pull-ups/view-pull-ups-matches/view-pull-ups-match/view-pull-ups-match.component';
 import { TableModule } from 'primeng/table';
+import { AddPullUpsResultsComponent } from './pull-ups/add-pull-ups-results/add-pull-ups-results.component';
+import { AddPullUpsSeriesComponent } from './pull-ups/add-pull-ups-series/add-pull-ups-series.component';
+import { AddUsersComponent } from './common/add-users/add-users.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +62,9 @@ import { TableModule } from 'primeng/table';
     AddResultsComponent,
     ViewPullUpsMatchesComponent,
     ViewPullUpsMatchComponent,
+    AddPullUpsResultsComponent,
+    AddPullUpsSeriesComponent,
+    AddUsersComponent,
   ],
   imports: [
     CommonModule,

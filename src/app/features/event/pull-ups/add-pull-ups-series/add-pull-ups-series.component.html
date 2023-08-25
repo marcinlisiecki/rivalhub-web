@@ -1,0 +1,14 @@
+<section class="wrapper">
+  <div *ngFor="let userResult of usersResults" class="input-box">
+    <label for="{{ userResult.name }}">{{ userResult.name }}</label>
+    <input
+      pInputText
+      type="number"
+      [name]="userResult.name"
+      [id]="userResult.name"
+      [(ngModel)]="userResult.result"
+    />
+  </div>
+</section>
+
+<p-button styleClass="button-wide" (click)="onSubmit()">Dodaj</p-button>

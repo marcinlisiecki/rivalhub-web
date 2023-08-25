@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { PullUpsMatch } from '@interfaces/event/games/pull-ups/pull-ups-match';
 
 @Component({
@@ -7,5 +7,8 @@ import { PullUpsMatch } from '@interfaces/event/games/pull-ups/pull-ups-match';
   styleUrls: ['./view-pull-ups-matches.component.scss'],
 })
 export class ViewPullUpsMatchesComponent {
-  @Input({ required: true }) matches!: PullUpsMatch[];
+  @Input({ required: true }) matches: PullUpsMatch[] = [];
+  @Input() editable: boolean = false;
+
+  @Output() handleAddSeries: EventEmitter<number> = new EventEmitter<number>();
 }
