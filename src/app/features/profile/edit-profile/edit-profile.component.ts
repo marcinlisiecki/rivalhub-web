@@ -1,11 +1,14 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, Renderer2, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { EditUser } from '@app/core/interfaces/user/edit-user';
 import { UserDetailsDto } from '@app/core/interfaces/user/user-details-dto';
 import { AuthService } from '@app/core/services/auth/auth.service';
+import { ErrorsService } from '@app/core/services/errors/errors.service';
 import { ImageService } from '@app/core/services/image/image.service';
 import { UsersService } from '@app/core/services/users/users.service';
+import { extractMessage } from '@app/core/utils/apiErrors';
+import { MessageService } from 'primeng/api';
 import { FileSelectEvent } from 'primeng/fileupload';
 
 @Component({
@@ -21,6 +24,7 @@ export class EditProfileComponent {
   clientError: string | undefined;
   customAvatar: boolean = true;
   user!: UserDetailsDto;
+  toastLifeTime: number = 3 * 1000;
 
   editForm = new FormGroup({
     userName: new FormControl('', [
@@ -31,20 +35,18 @@ export class EditProfileComponent {
   });
   apiError: null | string = null;
   isLoading: boolean = false;
+  @ViewChild('fileupload') fileUpload!: any;
 
   constructor(
     private userService: UsersService,
     private imageService: ImageService,
+    private errorsService: ErrorsService,
+    private renderer: Renderer2,
+    private messageService: MessageService,
   ) {}
 
   ngOnInit(): void {
-    this.userService.getMe().subscribe((user: UserDetailsDto) => {
-      this.user = user;
-      this.imageURL = this.imageService.getUserImagePath(
-        user.profilePictureUrl,
-      );
-      this.editForm.get('userName')?.setValue(user.name);
-    });
+    this.fetchUserData();
   }
 
   onFileSelectClicked(event: FileSelectEvent) {
@@ -60,11 +62,11 @@ export class EditProfileComponent {
 
     this.uploadedFile = event.files[0];
     this.imageURL = URL.createObjectURL(event.currentFiles[0]);
-    this.customAvatar = false;
+    this.customAvatar = true;
   }
 
   onClearClicked() {
-    this.customAvatar = true;
+    this.customAvatar = false;
     this.imageURL = this.DEFAULTUSERAVATAR;
     this.uploadedFile = undefined;
   }
@@ -81,15 +83,62 @@ export class EditProfileComponent {
     URL.revokeObjectURL(this.imageURL);
 
     const editUser: EditUser = {
-      name: this.editForm.value.userName!,
+      name: this.editForm.get('userName')?.value!,
     };
 
-    this.userService.editMe(editUser).subscribe({});
+    this.userService.editMe(editUser).subscribe({
+      next: () => {
+        this.isLoading = false;
+        this.messageService.add({
+          severity: 'success',
+          life: this.toastLifeTime,
+          summary: 'Nazwa użytkownika została pomyślnie zapisana.',
+        });
+      },
+      error: (err) => {
+        this.errorsService.createErrorMessage(extractMessage(err));
+        this.isLoading = false;
+      },
+    });
     this.userService
       .editMyAvatar(this.customAvatar, this.uploadedFile)
-      .subscribe({});
+      .subscribe({
+        next: () => {
+          this.isLoading = false;
+          this.messageService.add({
+            severity: 'success',
+            life: this.toastLifeTime,
+            summary: 'Avatar został pomyślnie zapisany.',
+          });
+        },
+        error: (err) => {
+          this.errorsService.createErrorMessage(extractMessage(err));
+          this.isLoading = false;
+        },
+      });
 
     this.isLoading = false;
+  }
+
+  private fetchUserData() {
+    this.userService.getMe().subscribe((user: UserDetailsDto) => {
+      this.user = user;
+      this.imageURL = this.imageService.getUserImagePath(
+        user.profilePictureUrl,
+      );
+      if (this.imageURL !== this.DEFAULTUSERAVATAR) {
+        this.onAvatarLoaded();
+        this.customAvatar = true;
+      }
+      this.editForm.get('userName')?.setValue(user.name);
+    });
+  }
+
+  private onAvatarLoaded() {
+    const element =
+      this.fileUpload.el.nativeElement.querySelectorAll('[disabled]')[0];
+    this.renderer.removeAttribute(element, 'disabled');
+    this.renderer.removeClass(element, 'p-disabled');
   }
 
   joinAcceptableImageTypes() {
