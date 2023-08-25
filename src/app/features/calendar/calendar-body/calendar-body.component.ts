@@ -14,7 +14,6 @@ import { FullCalendarComponent } from '@fullcalendar/angular';
 import { DateClickArg } from '@fullcalendar/interaction';
 import { DatePipe } from '@angular/common';
 import { API_DATE_FORMAT } from '@app/core/constants/date';
-import { faApple } from '@fortawesome/free-brands-svg-icons';
 
 @Component({
   selector: 'app-calendar-body',
