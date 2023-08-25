@@ -9,6 +9,9 @@ import { PingPongMatch } from '@interfaces/event/games/ping-pong/ping-pong-match
 import { GameSet } from '@app/core/interfaces/event/games/game-set';
 import { NewPingPongMatch } from '@interfaces/event/games/ping-pong/new-ping-pong-match';
 import { API_DATE_FORMAT } from '@app/core/constants/date';
+import { EventDto } from '@interfaces/event/event-dto';
+import { UserDetailsDto } from '@interfaces/user/user-details-dto';
+import { TableFootballMatch } from '@interfaces/event/games/table-football/table-football-match';
 
 @Injectable({
   providedIn: 'root',
@@ -70,13 +73,32 @@ export class EventsService {
     );
   }
 
-  getEventMatches(
+  getEvent(eventId: number, type: EventType): Observable<EventDto> {
+    return this.http.get<EventDto>(
+      environment.apiUrl + `/organizations/events/${eventId}`,
+      { params: { type } },
+    );
+  }
+
+  getEventParticipants(
+    eventId: number,
+    type: EventType,
+  ): Observable<UserDetailsDto[]> {
+    return this.http.get<UserDetailsDto[]>(
+      environment.apiUrl + `/organizations/events/${eventId}/participants`,
+      { params: { type } },
+    );
+  }
+
+  getEventMatches<T extends PingPongMatch | TableFootballMatch>(
     organizationId: number,
     eventId: number,
-  ): Observable<PingPongMatch[]> {
-    return this.http.get<PingPongMatch[]>(
+    eventType: EventType,
+  ): Observable<T[]> {
+    return this.http.get<T[]>(
       environment.apiUrl +
-        `/organizations/${organizationId}/events/${eventId}/match?type=PING_PONG`,
+        `/organizations/${organizationId}/events/${eventId}/match`,
+      { params: { type: eventType } },
     );
   }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { EventsService } from '@app/core/services/events/events.service';
 import { ActivatedRoute } from '@angular/router';
 import { PingPongMatch } from '@interfaces/event/games/ping-pong/ping-pong-match';
@@ -14,6 +14,8 @@ import { AddPingPongMatch } from '@interfaces/event/games/ping-pong/add-ping-pon
   styleUrls: ['./add-ping-pong-results.component.scss'],
 })
 export class AddPingPongResultsComponent implements OnInit {
+  @Input() editable: boolean = true;
+
   matches: PingPongMatch[] = [];
   addSetDialogRef?: DynamicDialogRef;
 
@@ -32,7 +34,7 @@ export class AddPingPongResultsComponent implements OnInit {
     this.eventId = this.route.snapshot.params['eventId'];
 
     this.eventsService
-      .getEventMatches(this.organizationId, this.eventId)
+      .getEventMatches(this.organizationId, this.eventId, EventType.PING_PONG)
       .subscribe({
         next: (matches: PingPongMatch[]) => {
           this.matches = matches;
@@ -51,7 +53,11 @@ export class AddPingPongResultsComponent implements OnInit {
       .subscribe({
         next: (res) => {
           this.eventsService
-            .getEventMatches(this.organizationId, this.eventId)
+            .getEventMatches(
+              this.organizationId,
+              this.eventId,
+              EventType.PING_PONG,
+            )
             .subscribe({
               next: (matches: PingPongMatch[]) => {
                 this.matches = matches;

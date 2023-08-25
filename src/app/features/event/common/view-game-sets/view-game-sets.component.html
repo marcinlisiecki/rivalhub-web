@@ -1,0 +1,10 @@
+<h2>Sety</h2>
+
+<app-no-resource-info *ngIf="!gameSets || gameSets.length === 0">
+  Brak setów
+</app-no-resource-info>
+
+<section class="sets">
+  <app-view-game-set *ngFor="let set of gameSets" [gameSet]="set">
+  </app-view-game-set>
+</section>

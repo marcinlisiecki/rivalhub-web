@@ -22,6 +22,12 @@ import { AddPingPongResultsComponent } from './ping-pong/add-ping-pong-results/a
 import { AddPingPongSetComponent } from './ping-pong/add-ping-pong-set/add-ping-pong-set.component';
 import { DialogService } from 'primeng/dynamicdialog';
 import { NewEventMatchComponent } from './new-event-match/new-event-match.component';
+import { EventViewComponent } from './event-view/event-view.component';
+import { ViewPingPongMatchComponent } from '@app/features/event/ping-pong/view-ping-pong-matches/view-ping-pong-match/view-ping-pong-match.component';
+import { ViewGameSetComponent } from '@app/features/event/common/view-game-sets/view-game-set/view-game-set.component';
+import { ViewGameSetsComponent } from './common/view-game-sets/view-game-sets.component';
+import { ViewPingPongMatchesComponent } from '@app/features/event/ping-pong/view-ping-pong-matches/view-ping-pong-matches.component';
+import { BadgeModule } from 'primeng/badge';
 
 @NgModule({
   declarations: [
@@ -35,6 +41,11 @@ import { NewEventMatchComponent } from './new-event-match/new-event-match.compon
     AddPingPongResultsComponent,
     AddPingPongSetComponent,
     NewEventMatchComponent,
+    EventViewComponent,
+    ViewPingPongMatchComponent,
+    ViewGameSetComponent,
+    ViewGameSetsComponent,
+    ViewPingPongMatchesComponent,
   ],
   imports: [
     CommonModule,
@@ -50,6 +61,7 @@ import { NewEventMatchComponent } from './new-event-match/new-event-match.compon
     SharedModule,
     ProgressSpinnerModule,
     TranslateModule,
+    BadgeModule,
   ],
   providers: [DialogService],
 })

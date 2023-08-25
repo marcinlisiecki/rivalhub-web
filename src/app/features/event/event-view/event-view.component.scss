@@ -1,18 +1,19 @@
 @import 'src/scss/variables';
 
 .wrapper {
-  margin: 4rem auto 0 auto;
   max-width: $nonBgFormWidth;
-
-  h1 {
-    font-size: $textXl;
-  }
+  margin: 0 auto;
 }
 
-h2 {
+.event-title {
+  font-size: $textXl;
+}
+
+.section-title {
   font-size: $textLg;
+  font-weight: $weightMedium;
 }
 
-.add-match-button-wrapper {
+.buttons {
   margin: 1rem 0;
 }

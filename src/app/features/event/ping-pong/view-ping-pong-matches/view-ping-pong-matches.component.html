@@ -1,0 +1,12 @@
+<app-no-resource-info *ngIf="matches.length === 0">
+  Brak meczów w wybranym wydarzeniu
+</app-no-resource-info>
+
+<div class="matches">
+  <app-view-ping-pong-match
+    *ngFor="let match of matches"
+    [match]="match"
+    [editable]="editable"
+    (handleAddSet)="handleAddSet.emit($event)"
+  ></app-view-ping-pong-match>
+</div>

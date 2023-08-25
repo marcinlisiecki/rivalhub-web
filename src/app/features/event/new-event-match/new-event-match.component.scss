@@ -1,5 +1,9 @@
 @import 'src/scss/variables';
 
+.wrapper {
+  margin-bottom: 1rem;
+}
+
 .teams {
   display: flex;
   gap: 1.5rem;

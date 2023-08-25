@@ -1,0 +1,11 @@
+@import 'src/scss/variables';
+
+.sets {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.5rem;
+}
+
+h2 {
+  font-size: $textBase;
+}

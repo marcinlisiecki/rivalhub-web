@@ -1,0 +1,55 @@
+<div class="match">
+  <section class="teams">
+    <div class="team">
+      <div class="team-label">
+        <p>Drużyna 1</p>
+        <p-badge
+          [severity]="match.team1Approval ? 'success' : 'danger'"
+          [value]="
+            match.team1Approval
+              ? 'Potwierdzono wyniki'
+              : 'Nie potwierdzono wyników'
+          "
+        >
+        </p-badge>
+      </div>
+      <div *ngFor="let user of match.team1" class="team-member">
+        <div class="team-member-data">
+          <div class="team-member-avatar"></div>
+          <p>{{ user.name }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="team">
+      <div class="team-label">
+        <p>Drużyna 2</p>
+        <p-badge
+          [severity]="match.team2Approval ? 'success' : 'danger'"
+          [value]="
+            match.team2Approval
+              ? 'Potwierdzono wyniki'
+              : 'Nie potwierdzono wyników'
+          "
+        >
+        </p-badge>
+      </div>
+      <div *ngFor="let user of match.team2" class="team-member">
+        <div class="team-member-data">
+          <div class="team-member-avatar"></div>
+          <p>{{ user.name }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <app-view-game-sets [gameSets]="match.sets"></app-view-game-sets>
+
+  <div class="add-set-button-wrapper" *ngIf="editable">
+    <p-button
+      (click)="handleAddSet.emit(match.id)"
+      styleClass="p-button-outlined"
+    >
+      Dodaj set
+    </p-button>
+  </div>
+</div>
