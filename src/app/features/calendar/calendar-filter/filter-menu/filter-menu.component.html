@@ -1,15 +1,15 @@
 <div class="menu-comp">
-  <div class="Organisation">
-    <h4>{{ 'calendar.filter.organisations' | translate }}</h4>
-    <div *ngFor="let organisation of organisations" class="field-checkbox">
+  <div class="organization">
+    <h4>{{ 'calendar.filter.organizations' | translate }}</h4>
+    <div *ngFor="let organization of organizations" class="field-checkbox">
       <p-checkbox
-        name="organisations"
-        [value]="organisation.id.toString()"
-        [(ngModel)]="selectedFilters.selectedOrganisations"
-        [inputId]="organisation.id.toString()"
-        (onChange)="selectedOrganisation()"
+        name="organizations"
+        [value]="organization.id.toString()"
+        [(ngModel)]="selectedFilters.selectedOrganizations"
+        [inputId]="organization.id.toString()"
+        (onChange)="selectedOrganization()"
       ></p-checkbox>
-      <label [for]="organisation.id.toString()">{{ organisation.name }}</label>
+      <label [for]="organization.id.toString()">{{ organization.name }}</label>
     </div>
   </div>
 
