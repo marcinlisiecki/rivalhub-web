@@ -12,6 +12,7 @@ import { API_DATE_FORMAT } from '@app/core/constants/date';
 import { EventDto } from '@interfaces/event/event-dto';
 import { UserDetailsDto } from '@interfaces/user/user-details-dto';
 import { TableFootballMatch } from '@interfaces/event/games/table-football/table-football-match';
+import { NewTableFootballMatch } from '@interfaces/event/games/table-football/new-table-football-match';
 
 @Injectable({
   providedIn: 'root',
@@ -102,7 +103,20 @@ export class EventsService {
     );
   }
 
-  addMatchSet(
+  addTableFootballSet(
+    organizationId: number,
+    eventId: number,
+    matchId: number,
+    setList: GameSet[],
+  ): Observable<{}> {
+    return this.http.post<{}>(
+      environment.apiUrl +
+        `/organizations/${organizationId}/events/${eventId}/match/${matchId}/tablefootball?type=TABLE_FOOTBALL`,
+      setList,
+    );
+  }
+
+  addPingPongMatchSet(
     organizationId: number,
     eventId: number,
     matchId: number,
@@ -126,15 +140,26 @@ export class EventsService {
     );
   }
 
-  addEventMatch(
+  addPingPongMatch(
     organizationId: number,
     eventId: number,
-    type: EventType,
     newMatch: NewPingPongMatch,
   ): Observable<PingPongMatch> {
     return this.http.post<PingPongMatch>(
       environment.apiUrl +
-        `/organizations/${organizationId}/events/${eventId}/match?type=${type}`,
+        `/organizations/${organizationId}/events/${eventId}/match?type=${EventType.PING_PONG}`,
+      newMatch,
+    );
+  }
+
+  addTableFootballMatch(
+    organizationId: number,
+    eventId: number,
+    newMatch: NewTableFootballMatch,
+  ): Observable<TableFootballMatch> {
+    return this.http.post<TableFootballMatch>(
+      environment.apiUrl +
+        `/organizations/${organizationId}/events/${eventId}/match?type=${EventType.TABLE_FOOTBALL}`,
       newMatch,
     );
   }

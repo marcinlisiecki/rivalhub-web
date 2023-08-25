@@ -79,6 +79,10 @@ export class ViewEventComponent implements OnInit {
     return this.matches as PingPongMatch[];
   }
 
+  getTableFootballMatches(): TableFootballMatch[] {
+    return this.matches as TableFootballMatch[];
+  }
+
   protected readonly EventType = EventType;
   protected readonly categoryTypeToLabel = categoryTypeToLabel;
 }

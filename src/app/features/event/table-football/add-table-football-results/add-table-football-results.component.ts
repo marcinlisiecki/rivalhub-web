@@ -1,22 +1,22 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { EventType } from '@interfaces/event/event-type';
 import { EventsService } from '@app/core/services/events/events.service';
 import { ActivatedRoute } from '@angular/router';
-import { PingPongMatch } from '@interfaces/event/games/ping-pong/ping-pong-match';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AddGameSetComponent } from '@app/features/event/common/add-game-set/add-game-set.component';
 import { NewGameSet } from '@interfaces/event/games/new-game-set';
-import { EventType } from '@interfaces/event/event-type';
-import { AddPingPongMatch } from '@interfaces/event/games/ping-pong/add-ping-pong-match';
+import { TableFootballMatch } from '@interfaces/event/games/table-football/table-football-match';
+import { AddTableFootballMatch } from '@interfaces/event/games/table-football/add-table-football-match';
 
 @Component({
-  selector: 'app-add-ping-pong-results',
-  templateUrl: './add-ping-pong-results.component.html',
-  styleUrls: ['./add-ping-pong-results.component.scss'],
+  selector: 'app-add-table-football-results',
+  templateUrl: './add-table-football-results.component.html',
+  styleUrls: ['./add-table-football-results.component.scss'],
 })
-export class AddPingPongResultsComponent implements OnInit {
+export class AddTableFootballResultsComponent {
   @Input() editable: boolean = true;
 
-  matches: PingPongMatch[] = [];
+  matches: TableFootballMatch[] = [];
   addSetDialogRef?: DynamicDialogRef;
 
   organizationId!: number;
@@ -35,31 +35,31 @@ export class AddPingPongResultsComponent implements OnInit {
     this.eventId = this.route.snapshot.params['eventId'];
 
     this.eventsService
-      .getEventMatches<PingPongMatch>(
+      .getEventMatches<TableFootballMatch>(
         this.organizationId,
         this.eventId,
-        EventType.PING_PONG,
+        EventType.TABLE_FOOTBALL,
       )
       .subscribe({
-        next: (matches) => {
+        next: (matches: TableFootballMatch[]) => {
           this.matches = matches;
         },
       });
   }
 
-  handleAddMatch(data: AddPingPongMatch) {
+  handleAddMatch(data: AddTableFootballMatch) {
     this.eventsService
-      .addPingPongMatch(data.organizationId, data.eventId, data.match)
+      .addTableFootballMatch(data.organizationId, data.eventId, data.match)
       .subscribe({
         next: (_) => {
           this.eventsService
-            .getEventMatches<PingPongMatch>(
+            .getEventMatches<TableFootballMatch>(
               this.organizationId,
               this.eventId,
-              EventType.PING_PONG,
+              EventType.TABLE_FOOTBALL,
             )
             .subscribe({
-              next: (matches: PingPongMatch[]) => {
+              next: (matches: TableFootballMatch[]) => {
                 this.matches = matches;
               },
             });
@@ -70,9 +70,7 @@ export class AddPingPongResultsComponent implements OnInit {
   }
 
   openAddSetDialog(matchId: number) {
-    const matchIndex = this.matches.findIndex(
-      (item: PingPongMatch) => item.id === matchId,
-    );
+    const matchIndex = this.matches.findIndex((item) => item.id === matchId);
     this.matches[matchIndex].sets = this.matches[matchIndex].sets || [];
     this.addSetDialogRef = this.dialogService.open(AddGameSetComponent, {
       header: 'Dodaj set',
@@ -93,7 +91,7 @@ export class AddPingPongResultsComponent implements OnInit {
         ].sets.push(set);
 
         this.eventsService
-          .addPingPongMatchSet(this.organizationId, this.eventId, set.matchId, [
+          .addTableFootballSet(this.organizationId, this.eventId, set.matchId, [
             set,
           ])
           .subscribe();

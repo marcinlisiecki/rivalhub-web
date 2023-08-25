@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
-  selector: 'app-add-ping-pong-set',
-  templateUrl: './add-ping-pong-set.component.html',
-  styleUrls: ['./add-ping-pong-set.component.scss'],
+  selector: 'app-add-game-set',
+  templateUrl: './add-game-set.component.html',
+  styleUrls: ['./add-game-set.component.scss'],
 })
-export class AddPingPongSetComponent {
+export class AddGameSetComponent {
   team1Score: number = 0;
   team2Score: number = 0;
   setNr!: number;

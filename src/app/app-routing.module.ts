@@ -21,6 +21,7 @@ import { ProfileComponent } from '@app/features/profile/profile.component';
 import { MembersComponent } from '@app/features/organization/members/members.component';
 import { OrganizationSettingsComponent } from '@app/features/organization/organization-settings/organization-settings.component';
 import { ViewEventComponent } from '@app/features/event/view-event/view-event.component';
+import { AddResultsComponent } from '@app/features/event/add-results/add-results.component';
 
 const routes: Routes = [
   {
@@ -107,7 +108,7 @@ const routes: Routes = [
   },
   {
     path: 'organizations/:organizationId/events/:eventId/results',
-    component: AddPingPongResultsComponent,
+    component: AddResultsComponent,
     canActivate: [authenticateGuard],
   },
   {

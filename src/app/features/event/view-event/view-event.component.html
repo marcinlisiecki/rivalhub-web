@@ -24,6 +24,12 @@
         *ngIf="eventType === EventType.PING_PONG"
         [matches]="getPingPongMatches()"
       ></app-view-ping-pong-matches>
+
+      <app-view-table-football-matches
+        *ngIf="eventType === EventType.TABLE_FOOTBALL"
+        [matches]="getTableFootballMatches()"
+      >
+      </app-view-table-football-matches>
     </section>
 
     <section class="buttons">

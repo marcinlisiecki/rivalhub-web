@@ -19,7 +19,7 @@ import { AddEventUsersComponent } from '@app/features/event/new-event/add-event-
 import { AddUserDialogComponent } from './new-event/add-user-dialog/add-user-dialog.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { AddPingPongResultsComponent } from './ping-pong/add-ping-pong-results/add-ping-pong-results.component';
-import { AddPingPongSetComponent } from './ping-pong/add-ping-pong-set/add-ping-pong-set.component';
+import { AddGameSetComponent } from '@app/features/event/common/add-game-set/add-game-set.component';
 import { DialogService } from 'primeng/dynamicdialog';
 import { NewEventMatchComponent } from '@app/features/event/common/new-event-match/new-event-match.component';
 import { ViewEventComponent } from '@app/features/event/view-event/view-event.component';
@@ -28,6 +28,10 @@ import { ViewGameSetComponent } from '@app/features/event/common/view-game-sets/
 import { ViewGameSetsComponent } from './common/view-game-sets/view-game-sets.component';
 import { ViewPingPongMatchesComponent } from '@app/features/event/ping-pong/view-ping-pong-matches/view-ping-pong-matches.component';
 import { BadgeModule } from 'primeng/badge';
+import { ViewTableFootballMatchesComponent } from './table-football/view-table-football-matches/view-table-football-matches.component';
+import { ViewTableFootballMatchComponent } from './table-football/view-table-football-matches/view-table-football-match/view-table-football-match.component';
+import { AddTableFootballResultsComponent } from './table-football/add-table-football-results/add-table-football-results.component';
+import { AddResultsComponent } from './add-results/add-results.component';
 
 @NgModule({
   declarations: [
@@ -39,13 +43,17 @@ import { BadgeModule } from 'primeng/badge';
     AddEventUsersComponent,
     AddUserDialogComponent,
     AddPingPongResultsComponent,
-    AddPingPongSetComponent,
+    AddGameSetComponent,
     NewEventMatchComponent,
     ViewEventComponent,
     ViewPingPongMatchComponent,
     ViewGameSetComponent,
     ViewGameSetsComponent,
     ViewPingPongMatchesComponent,
+    ViewTableFootballMatchesComponent,
+    ViewTableFootballMatchComponent,
+    AddTableFootballResultsComponent,
+    AddResultsComponent,
   ],
   imports: [
     CommonModule,
