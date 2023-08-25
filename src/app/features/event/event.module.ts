@@ -32,6 +32,9 @@ import { ViewTableFootballMatchesComponent } from './table-football/view-table-f
 import { ViewTableFootballMatchComponent } from './table-football/view-table-football-matches/view-table-football-match/view-table-football-match.component';
 import { AddTableFootballResultsComponent } from './table-football/add-table-football-results/add-table-football-results.component';
 import { AddResultsComponent } from './add-results/add-results.component';
+import { ViewPullUpsMatchesComponent } from './pull-ups/view-pull-ups-matches/view-pull-ups-matches.component';
+import { ViewPullUpsMatchComponent } from './pull-ups/view-pull-ups-matches/view-pull-ups-match/view-pull-ups-match.component';
+import { TableModule } from 'primeng/table';
 
 @NgModule({
   declarations: [
@@ -54,6 +57,8 @@ import { AddResultsComponent } from './add-results/add-results.component';
     ViewTableFootballMatchComponent,
     AddTableFootballResultsComponent,
     AddResultsComponent,
+    ViewPullUpsMatchesComponent,
+    ViewPullUpsMatchComponent,
   ],
   imports: [
     CommonModule,
@@ -70,6 +75,7 @@ import { AddResultsComponent } from './add-results/add-results.component';
     ProgressSpinnerModule,
     TranslateModule,
     BadgeModule,
+    TableModule,
   ],
   providers: [DialogService],
 })

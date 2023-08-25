@@ -35,7 +35,7 @@ export class AddPingPongResultsComponent implements OnInit {
     this.eventId = this.route.snapshot.params['eventId'];
 
     this.eventsService
-      .getEventMatches<PingPongMatch>(
+      .getEventMatches<PingPongMatch[]>(
         this.organizationId,
         this.eventId,
         EventType.PING_PONG,
@@ -53,7 +53,7 @@ export class AddPingPongResultsComponent implements OnInit {
       .subscribe({
         next: (_) => {
           this.eventsService
-            .getEventMatches<PingPongMatch>(
+            .getEventMatches<PingPongMatch[]>(
               this.organizationId,
               this.eventId,
               EventType.PING_PONG,

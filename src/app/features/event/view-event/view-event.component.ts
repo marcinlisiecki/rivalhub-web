@@ -10,6 +10,7 @@ import { UserDetailsDto } from '@interfaces/user/user-details-dto';
 import { PingPongMatch } from '@interfaces/event/games/ping-pong/ping-pong-match';
 import { TableFootballMatch } from '@interfaces/event/games/table-football/table-football-match';
 import { categoryTypeToLabel } from '@app/core/utils/event';
+import { PullUpsMatch } from '@interfaces/event/games/pull-ups/pull-ups-match';
 
 @Component({
   selector: 'app-view-event',
@@ -23,7 +24,7 @@ export class ViewEventComponent implements OnInit {
 
   event?: EventDto;
   participants: UserDetailsDto[] = [];
-  matches?: PingPongMatch[] | TableFootballMatch[];
+  matches?: PingPongMatch[] | TableFootballMatch[] | PullUpsMatch[];
 
   constructor(
     private route: ActivatedRoute,
@@ -81,6 +82,10 @@ export class ViewEventComponent implements OnInit {
 
   getTableFootballMatches(): TableFootballMatch[] {
     return this.matches as TableFootballMatch[];
+  }
+
+  getPullUpsMatches(): PullUpsMatch[] {
+    return this.matches as PullUpsMatch[];
   }
 
   protected readonly EventType = EventType;

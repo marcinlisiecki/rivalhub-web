@@ -13,6 +13,7 @@ import { EventDto } from '@interfaces/event/event-dto';
 import { UserDetailsDto } from '@interfaces/user/user-details-dto';
 import { TableFootballMatch } from '@interfaces/event/games/table-football/table-football-match';
 import { NewTableFootballMatch } from '@interfaces/event/games/table-football/new-table-football-match';
+import { PullUpsMatch } from '@interfaces/event/games/pull-ups/pull-ups-match';
 
 @Injectable({
   providedIn: 'root',
@@ -91,12 +92,14 @@ export class EventsService {
     );
   }
 
-  getEventMatches<T extends PingPongMatch | TableFootballMatch>(
+  getEventMatches<
+    T extends PingPongMatch[] | TableFootballMatch[] | PullUpsMatch[],
+  >(
     organizationId: number,
     eventId: number,
     eventType: EventType,
-  ): Observable<T[]> {
-    return this.http.get<T[]>(
+  ): Observable<T> {
+    return this.http.get<T>(
       environment.apiUrl +
         `/organizations/${organizationId}/events/${eventId}/match`,
       { params: { type: eventType } },

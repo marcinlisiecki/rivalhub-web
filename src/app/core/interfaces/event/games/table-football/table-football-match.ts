@@ -1,6 +1,5 @@
 import { UserDetailsDto } from '@interfaces/user/user-details-dto';
 import { GameSet } from '@interfaces/event/game-set';
-import { EventType } from '@interfaces/event/event-type';
 
 export interface TableFootballMatch {
   id: number;

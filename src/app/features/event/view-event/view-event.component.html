@@ -18,8 +18,6 @@
     </section>
 
     <section>
-      <h2 class="section-title">Mecze</h2>
-
       <app-view-ping-pong-matches
         *ngIf="eventType === EventType.PING_PONG"
         [matches]="getPingPongMatches()"
@@ -30,6 +28,12 @@
         [matches]="getTableFootballMatches()"
       >
       </app-view-table-football-matches>
+
+      <app-view-pull-ups-matches
+        *ngIf="eventType === EventType.PULL_UPS"
+        [matches]="getPullUpsMatches()"
+      >
+      </app-view-pull-ups-matches>
     </section>
 
     <section class="buttons">

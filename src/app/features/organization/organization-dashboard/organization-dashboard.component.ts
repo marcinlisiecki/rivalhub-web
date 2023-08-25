@@ -122,27 +122,20 @@ export class OrganizationDashboardComponent implements OnInit, OnDestroy {
   }
 
   private getOrganizationEvents() {
-    this.organizationsService
-      .getEvents(this.id, EventType.PING_PONG)
-      .subscribe({
-        next: (events: EventDto[]) => {
-          this.events.push(...events);
-        },
-        error: (err: HttpErrorResponse) => {
-          console.error('An error occurred:', err);
-        },
-      });
+    this.fetchEventsForType(EventType.PING_PONG);
+    this.fetchEventsForType(EventType.TABLE_FOOTBALL);
+    this.fetchEventsForType(EventType.PULL_UPS);
+  }
 
-    this.organizationsService
-      .getEvents(this.id, EventType.TABLE_FOOTBALL)
-      .subscribe({
-        next: (events: EventDto[]) => {
-          this.events.push(...events);
-        },
-        error: (err: HttpErrorResponse) => {
-          console.error('An error occurred:', err);
-        },
-      });
+  fetchEventsForType(type: EventType) {
+    this.organizationsService.getEvents(this.id, type).subscribe({
+      next: (events: EventDto[]) => {
+        this.events.push(...events);
+      },
+      error: (err: HttpErrorResponse) => {
+        console.error('An error occurred:', err);
+      },
+    });
   }
 
   private getOrganizationUsers() {

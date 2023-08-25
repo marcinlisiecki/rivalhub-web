@@ -35,7 +35,7 @@ export class AddTableFootballResultsComponent {
     this.eventId = this.route.snapshot.params['eventId'];
 
     this.eventsService
-      .getEventMatches<TableFootballMatch>(
+      .getEventMatches<TableFootballMatch[]>(
         this.organizationId,
         this.eventId,
         EventType.TABLE_FOOTBALL,
@@ -53,7 +53,7 @@ export class AddTableFootballResultsComponent {
       .subscribe({
         next: (_) => {
           this.eventsService
-            .getEventMatches<TableFootballMatch>(
+            .getEventMatches<TableFootballMatch[]>(
               this.organizationId,
               this.eventId,
               EventType.TABLE_FOOTBALL,
