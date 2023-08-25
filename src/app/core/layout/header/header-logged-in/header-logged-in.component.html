@@ -1,19 +1,19 @@
 <ul>
-    <li *ngIf="!mobileView && isAccountActivated">
-        <app-header-link routerLink="/calendar">
-            {{ 'header.calendar' | translate }}
-        </app-header-link>
-    </li>
+  <li *ngIf="!mobileView && isAccountActivated">
+    <app-header-link routerLink="/calendar">
+      {{ 'header.calendar' | translate }}
+    </app-header-link>
+  </li>
 
   <li *ngIf="!mobileView && isAccountActivated">
     <app-header-link routerLink="/organizations/new">
-      {{ 'header.organisationAdd' | translate }}
+      {{ 'header.organizationAdd' | translate }}
     </app-header-link>
   </li>
 
   <li *ngIf="!mobileView">
     <app-header-link routerLink="/organizations">
-      {{ 'header.organisationShow' | translate }}
+      {{ 'header.organizationShow' | translate }}
     </app-header-link>
   </li>
 

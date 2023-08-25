@@ -7,12 +7,13 @@ import {
   AfterViewInit,
   Output,
   EventEmitter,
-  signal,
 } from '@angular/core';
 import { CalendarOptions, EventClickArg } from '@fullcalendar/core';
 import { CalendarService } from '@app/core/services/calendar/calendar.service';
 import { FullCalendarComponent } from '@fullcalendar/angular';
 import { DateClickArg } from '@fullcalendar/interaction';
+import { DatePipe } from '@angular/common';
+import { API_DATE_FORMAT } from '@app/core/constants/date';
 
 @Component({
   selector: 'app-calendar-body',
@@ -27,7 +28,10 @@ export class CalendarBodyComponent implements OnInit, AfterViewInit, OnDestroy {
   calendarOptions!: WritableSignal<CalendarOptions>;
   events = this.calendarService.visibleEvents;
 
-  constructor(private calendarService: CalendarService) {}
+  constructor(
+    private calendarService: CalendarService,
+    private datePipe: DatePipe,
+  ) {}
   ngOnInit() {
     this.calendarOptions = this.calendarService.options;
     this.calendarOptions.mutate((options) => {
@@ -37,8 +41,40 @@ export class CalendarBodyComponent implements OnInit, AfterViewInit, OnDestroy {
       options.weekends = Boolean(
         parseInt(<string>localStorage.getItem('showWeekends')),
       );
+      options.customButtons = {
+        prevCust: {
+          icon: 'chevron-left',
+          click: () => {
+            this.calendarService.api.removeAllEvents();
+            this.calendarService.api.prev();
+            this.calendarService.getMonthEvents(
+              <string>(
+                this.datePipe.transform(
+                  this.calendarService.api.getDate(),
+                  API_DATE_FORMAT,
+                )
+              ),
+            );
+          },
+        },
+        nextCust: {
+          icon: 'chevron-right',
+          click: () => {
+            this.calendarService.api.removeAllEvents();
+            this.calendarService.api.next();
+            this.calendarService.getMonthEvents(
+              <string>(
+                this.datePipe.transform(
+                  this.calendarService.api.getDate(),
+                  API_DATE_FORMAT,
+                )
+              ),
+            );
+          },
+        },
+      };
       options.headerToolbar = {
-        left: 'prev,next today',
+        left: 'prevCust,nextCust',
         center: 'title',
         right: 'dayGridMonth,timeGridWeek,timeGridDay listWeek',
       };

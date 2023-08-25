@@ -1,8 +1,8 @@
 import { EventInput } from '@fullcalendar/core';
 
 export interface CalendarEvent extends EventInput {
-  organisationId: string;
-  organisationName: string;
+  organizationId: string;
+  organizationName: string;
   type?: string;
   typeId?: string;
   title: string;
@@ -15,8 +15,8 @@ export interface CalendarEvent extends EventInput {
   borderColor?: string;
   textColor?: string;
   extendedProps?: {
-    organisationName: string;
-    organisationId: string;
+    organizationName: string;
+    organizationId: string;
     type: string;
     backgroundColor?: string;
     description?: string;

@@ -1,9 +1,4 @@
-<full-calendar
-  class="calendar-main"
-  #calendar
-  [options]="calendarOptions()"
-  [deepChangeDetection]="true"
->
+<full-calendar class="calendar-main" #calendar [options]="calendarOptions()">
   <ng-template #eventContent let-arg>
     <div
       class="calendar-event cal-{{ arg.event.title }}"

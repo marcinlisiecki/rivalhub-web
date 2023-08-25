@@ -1,9 +1,7 @@
 import {
   effect,
   EffectRef,
-  Inject,
   Injectable,
-  LOCALE_ID,
   signal,
   WritableSignal,
 } from '@angular/core';
@@ -16,32 +14,34 @@ import allLocales from '@fullcalendar/core/locales-all';
 import { LanguageService } from '@app/core/services/language/language.service';
 import { OrganizationsService } from '@app/core/services/organizations/organizations.service';
 import { Organization } from '@interfaces/organization/organization';
-import { formatDate } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { CalendarEvent } from '@interfaces/calendar/calendar-event';
 import { EventDto } from '@interfaces/event/event-dto';
 import { Reservation } from '@interfaces/reservation/reservation';
 import { Filters } from '@app/features/calendar/calendar-filter/calendar-filter.component';
-import { lastValueFrom } from 'rxjs';
+import { forkJoin, lastValueFrom, Observable, Subscription } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
+import { categoryTypeToLabel } from '@app/core/utils/event';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CalendarService {
-  organisationReservation: WritableSignal<
-    { organisation: Organization; reservation: Reservation }[]
-  > = signal([]);
-  organisationEvents: WritableSignal<EventDto[]> = signal([]);
   api!: Calendar;
-
   currentDate = signal(new Date());
   allEvents = signal<CalendarEvent[]>([]);
   visibleEvents = signal(this.allEvents());
   currentDayEvents = signal(this.allEvents());
-  organisations: WritableSignal<Organization[]> = signal([]);
+  organizations: WritableSignal<Organization[]> = signal([]);
   currentWeekends = signal(true);
   sidebar = signal(false);
   private language = this.languageService.getCurrentLanguage();
+
+  langChangeEffect: EffectRef;
+  calendarEventsSub!: Subscription;
+
   options = signal<CalendarOptions>({
     plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin],
     eventDisplay: 'block',
@@ -58,13 +58,12 @@ export class CalendarService {
     locales: allLocales,
     locale: 'pl',
   });
-  langChangeEffect: EffectRef;
 
   constructor(
-    @Inject(LOCALE_ID) private locale: string,
     private languageService: LanguageService,
     private organizationsService: OrganizationsService,
-    private authService: AuthService,
+    private http: HttpClient,
+    private datePipe: DatePipe,
   ) {
     this.langChangeEffect = effect(
       () => {
@@ -94,12 +93,12 @@ export class CalendarService {
 
   currentFilter(filers: Filters) {
     let currentTypes = filers.selectedTypes;
-    let currentOrganisations = filers.selectedOrganisations;
+    let currentOrganizations = filers.selectedOrganizations;
 
     let tempEventArray: CalendarEvent[] = [];
     for (let event of this.allEvents()) {
       if (currentTypes.includes(event['typeId'])) {
-        if (currentOrganisations.includes(event['organisationId']))
+        if (currentOrganizations.includes(event['organizationId']))
           tempEventArray.push(event);
       }
     }
@@ -108,18 +107,18 @@ export class CalendarService {
   }
 
   currentDayFilter(currentDay: string | Date) {
-    currentDay = formatDate(currentDay, 'yyyy-MM-dd', this.locale);
+    currentDay = <string>this.datePipe.transform(currentDay, 'yyyy-MM-dd');
     this.currentDayEvents.set(
       this.searchEvents([currentDay], 'startStr', this.visibleEvents()),
     );
   }
 
-  async getOrganisation() {
+  async getOrganization() {
     try {
-      const organisations: any[] = await Promise.all(
+      const organizations: any[] = await Promise.all(
         await lastValueFrom(this.organizationsService.getMy()),
       );
-      this.organisations.set(organisations);
+      this.organizations.set(organizations);
     } catch (err) {
       console.error(err, 'wystąpił błąd');
     }
@@ -154,112 +153,105 @@ export class CalendarService {
     this.currentDayFilter(this.currentDate());
   }
 
-  async getEvents() {
-    let events: EventDto[] = [];
-    let reservations: any[] = [];
-    await this.getOrganisation();
-    for (let organisation of this.organisations()) {
-      try {
-        const [eventsResult, reservationsResult] = await Promise.all([
-          await lastValueFrom(
-            this.organizationsService.getEvents(organisation.id),
-          ),
-          await lastValueFrom(
-            this.organizationsService.getOrganizationReservations(
-              this.authService.getUserId() as number,
-            ),
-          ),
-        ]);
-
-        events.push(...eventsResult);
-        reservations.push(
-          ...reservationsResult.map((reservation) => ({
-            organisation,
-            reservation,
-          })),
-        );
-      } catch (err) {
-        console.error('An error occurred:', err);
-      }
-    }
-
-    this.organisationEvents.set(events);
-    this.organisationReservation.set(reservations);
-  }
-
-  async createEvents() {
-    await this.getEvents();
-
+  getMonthEvents(month: string) {
     let temp: any[] = [];
+    let sources = [
+      this.http.get<EventDto[]>(
+        environment.apiUrl + `/users/events?date=${month}`,
+      ),
+      this.http.get<Reservation[]>(
+        environment.apiUrl + `/users/reservations?date=${month}`,
+      ),
+    ];
 
-    for (let event of this.organisationEvents()) {
-      temp.push(this.createEvent(event));
-    }
-    for (let res of this.organisationReservation()) {
-      temp.push(this.createReservation(res));
-    }
+    this.calendarEventsSub = forkJoin(sources).subscribe(
+      ([events, reservations]) => {
+        events = <EventDto[]>events;
+        events.forEach((event) => {
+          temp.push(this.createEvent(event));
+        });
 
-    this.allEvents.set(temp);
-    this.visibleEvents.set(temp);
-    this.updateCalendar();
+        reservations = <Reservation[]>reservations;
+        reservations.forEach((reservation) => {
+          temp.push(this.createReservation(reservation));
+        });
+        this.allEvents.set(temp);
+        this.visibleEvents.set(temp);
+        this.updateCalendar();
+      },
+    );
   }
 
   private createEvent(eventData: EventDto) {
     let color = eventData.organization.color;
+    if (color == null) {
+      color = '#da2237';
+    }
     let orgName = eventData.organization.name;
     let type = 'event';
     let orgId = eventData.organization.id.toString();
+    let title = '';
+    if (!eventData.name) {
+      title = this.languageService.instant(
+        categoryTypeToLabel(eventData.eventType),
+      );
+    } else {
+      title = eventData.name;
+    }
     let newEvent: CalendarEvent = {
-      organisationId: orgId,
-      organisationName: orgName,
+      organizationId: orgId,
+      organizationName: orgName,
       type: type,
       typeId: '1',
-      title: eventData.name,
+      title: title,
       startStr: eventData.startTime.toString(),
       start: eventData.startTime,
       endStr: eventData.endTime.toString(),
       end: eventData.endTime,
       allDay: false,
       borderColor: color,
-      color: eventData.organization.color,
+      color: color,
       extendedProps: {
-        organisationName: eventData.organization.name,
-        organisationId: eventData.organization.id.toString(),
+        organizationName: eventData.organization.name,
+        organizationId: eventData.organization.id.toString(),
         type: eventData.eventType,
         backgroundColor: eventData.organization.color,
         description: eventData.description,
       },
     };
-
     return newEvent;
   }
 
-  private createReservation(res: {
-    organisation: Organization;
-    reservation: Reservation;
-  }) {
-    let orgId = res.organisation.id.toString();
-    let orgName = res.organisation.name;
+  private createReservation(res: Reservation) {
+    let color = res.organization.color;
+    if (color == null) {
+      color = '#da2237';
+    }
+    let orgId = res.organization.id.toString();
+    let orgName = res.organization.name;
     let type = 'reservation';
+    let eventType = 'null';
+    if (res.stationList[0].type.valueOf()) {
+      eventType = res.stationList[0].type.valueOf();
+    }
     let newReservation: CalendarEvent = {
-      organisationId: orgId,
-      organisationName: orgName,
+      organizationId: orgId,
+      organizationName: orgName,
       type: type,
       typeId: '2',
       title: 'rezerwacja', //eventData.name,
-      startStr: res.reservation.startTime.toString(),
-      start: res.reservation.startTime,
-      endStr: res.reservation.endTime.toString(),
-      end: res.reservation.endTime,
+      startStr: res.startTime.toString(),
+      start: res.startTime,
+      endStr: res.endTime.toString(),
+      end: res.endTime,
       color: '#367790',
       allDay: false,
-      borderColor: res.organisation.color,
+      borderColor: color,
       extendedProps: {
-        organisationName: orgName,
-        organisationId: orgId,
-        type: 'reservation',
+        organizationName: orgName,
+        organizationId: orgId,
+        type: eventType,
         backgroundColor: '#367790',
-        //description:eventData.description
       },
     };
     return newReservation;
