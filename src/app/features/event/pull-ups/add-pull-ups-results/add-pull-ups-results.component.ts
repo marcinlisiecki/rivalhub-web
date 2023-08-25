@@ -41,7 +41,9 @@ export class AddPullUpsResultsComponent implements OnInit {
   }
 
   addUser(user: AddEventUser) {
-    this.addedUsers.push(user);
+    if (user) {
+      this.addedUsers.push(user);
+    }
   }
 
   removeUser(user: AddEventUser) {
