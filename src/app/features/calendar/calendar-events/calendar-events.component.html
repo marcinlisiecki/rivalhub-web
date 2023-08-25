@@ -12,21 +12,28 @@
   >
     <section>
       <i>{{ event['organizationName'] }}</i>
-      <br />
-      <i>{{
-        categoryTypeToLabel(event!['extendedProps']!['type']) | translate
-      }}</i>
-      <br />
+
       <i>{{ event.title }}</i>
-      <br />
-      <b *ngIf="!event.allDay">{{ getDate(event) | date: 'hh:mm' }}</b>
-      <b *ngIf="event.allDay"> {{ 'calendar.allDay' | translate }}' </b>
+
+      <i>
+        {{ categoryTypeToLabel(event!['extendedProps']!['type']) | translate }}
+      </i>
+
+      <i>
+        <b *ngIf="!event.allDay">{{ getDate(event) | date: 'hh:mm' }}</b>
+      </i>
+      <i>
+        <b *ngIf="event.allDay"> {{ 'calendar.allDay' | translate }}' </b>
+      </i>
     </section>
     <section style="margin-left: 0.5rem">
       <h5>{{ 'calendar.type.' + event['type'] | translate }}</h5>
-      <p-button styleClass="event-button">{{
-        'calendar.event.eventButton' | translate
-      }}</p-button>
+      <p-button
+        *ngIf="event['type'] == 'event'"
+        class="evbtn"
+        styleClass="event-button"
+        >{{ 'calendar.event.eventButton' | translate }}</p-button
+      >
     </section>
   </div>
 </ng-template>
