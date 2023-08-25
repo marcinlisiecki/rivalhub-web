@@ -1,6 +1,18 @@
 <section class="wrapper">
+  <app-organization-back-button
+    [organizationId]="organizationId"
+  ></app-organization-back-button>
+
   <section *ngIf="event">
-    <h1 class="event-title">{{ event.name }}</h1>
+    <h1 class="event-title">
+      {{ event.name }}
+    </h1>
+
+    <p-badge
+      severity="info"
+      value="{{ categoryTypeToLabel(eventType) | translate }}"
+    ></p-badge>
+
     <p>{{ event.description ?? 'Brak opisu' }}</p>
   </section>
 
@@ -9,10 +21,15 @@
   <section>
     <h2 class="section-title">Uczestnicy wydarzenia</h2>
 
-    <div>
-      <div *ngFor="let user of participants">
+    <div class="users">
+      <a
+        class="user"
+        *ngFor="let user of participants"
+        routerLink="/profiles/{{ user.id }}"
+      >
+        <div class="user-avatar"></div>
         <p>{{ user.name }}</p>
-      </div>
+      </a>
     </div>
   </section>
 

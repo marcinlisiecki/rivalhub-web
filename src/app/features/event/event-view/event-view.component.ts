@@ -9,6 +9,7 @@ import { extractMessage } from '@app/core/utils/apiErrors';
 import { UserDetailsDto } from '@interfaces/user/user-details-dto';
 import { PingPongMatch } from '@interfaces/event/games/ping-pong/ping-pong-match';
 import { TableFootballMatch } from '@interfaces/event/games/table-football/table-football-match';
+import { categoryTypeToLabel } from '@app/core/utils/event';
 
 @Component({
   selector: 'app-event-view',
@@ -79,4 +80,5 @@ export class EventViewComponent implements OnInit {
   }
 
   protected readonly EventType = EventType;
+  protected readonly categoryTypeToLabel = categoryTypeToLabel;
 }
