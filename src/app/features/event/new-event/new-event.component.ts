@@ -304,7 +304,6 @@ export class NewEventComponent implements OnInit, OnDestroy {
   }
   addEvent() {
     this.buildEvent();
-    console.log(this.newEvent);
     const organizationId: number = this.route.snapshot.params['id'];
 
     this.eventsService

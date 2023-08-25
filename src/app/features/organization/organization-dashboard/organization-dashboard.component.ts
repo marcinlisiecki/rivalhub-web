@@ -124,8 +124,6 @@ export class OrganizationDashboardComponent implements OnInit, OnDestroy {
     this.organizationsService.getEvents(this.id).subscribe({
       next: (res: EventDto[]) => {
         this.events = res;
-        console.log('RES', res);
-        console.log('EVENTS', this.events);
       },
       error: (err: HttpErrorResponse) => {
         console.error('An error occurred:', err);

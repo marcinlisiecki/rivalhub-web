@@ -39,15 +39,6 @@ export class DashboardActivitiesPanelComponent implements OnInit {
   }
 
   joinEvent(event: EventDto) {
-    if (event.participants.includes(this.authService.getUserId()!)) {
-      this.messageService.add({
-        severity: 'warn',
-        life: this.toastLifeTime,
-        detail: 'Jesteś już zapisany na to wydarzenie.',
-      });
-      return;
-    }
-
     this.eventService.joinEvent(event.eventId, event.eventType).subscribe({
       next: () => {
         this.messageService.add({
@@ -55,8 +46,16 @@ export class DashboardActivitiesPanelComponent implements OnInit {
           life: this.toastLifeTime,
           detail: 'Dołączyłeś do wydarzenia.',
         });
+        event.participants.push(this.authService.getUserId()!);
       },
     });
+  }
+
+  canJoin(event: EventDto): boolean {
+    return (
+      event.eventPublic &&
+      !event.participants.includes(this.authService.getUserId()!)
+    );
   }
 
   protected readonly categoryTypeToLabel = categoryTypeToLabel;
