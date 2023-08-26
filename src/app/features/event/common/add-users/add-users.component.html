@@ -2,7 +2,7 @@
   <div class="team">
     <div class="team-member" *ngFor="let user of addedUsers">
       <div class="team-member-data">
-        <div class="team-member-avatar"></div>
+        <app-avatar class="team-member-avatar" [user]="user"></app-avatar>
         <p>{{ user.name }}</p>
       </div>
       <div class="team-member-remove-button" (click)="removeUser(user)">
