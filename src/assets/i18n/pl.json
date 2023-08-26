@@ -60,5 +60,9 @@
 	"organization.configurator.stations.title": "Utwórz stanowiska",
 	"organization.configurator.title": "Konfigurator organizacji",
 	"stepForm.next": "Dalej",
-	"stepForm.previous": "Powrót"
+	"stepForm.previous": "Powrót",
+	"event.sets.validation.requirePositiveNumber": "Punkty setu nie mogą być liczbą ujemną",
+	"event.sets.validation.tooBig": "Maksymalne punkty jakie można przypisać to 10.000",
+	"event.series.validation.requirePositiveNumber": "Powtórzenia nie mogą być liczbą ujemną",
+	"event.series.validation.tooBig": "Maksymalna liczba powtórzeń jaką można przypisać to 10.000"
 }

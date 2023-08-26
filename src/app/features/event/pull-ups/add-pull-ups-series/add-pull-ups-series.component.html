@@ -12,3 +12,7 @@
 </section>
 
 <p-button styleClass="button-wide" (click)="onSubmit()">Dodaj</p-button>
+
+<div class="validation-error-wrapper" *ngIf="errorMessage">
+  <app-validation-error>{{ errorMessage }}</app-validation-error>
+</div>
