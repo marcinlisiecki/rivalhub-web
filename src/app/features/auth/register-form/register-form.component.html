@@ -32,9 +32,9 @@
         <app-validation-error *ngIf="name?.errors?.['required']">
           {{ 'input.userNameRequired' | translate }}
         </app-validation-error>
-        <app-validation-error *ngIf="name?.errors?.['minlength']">
-          {{ 'input.userNameMin' | translate }}
-        </app-validation-error>
+        <app-validation-error *ngIf="name?.errors?.['minlength']">{{
+          'input.userNameMin' | translate
+        }}</app-validation-error>
         <app-validation-error *ngIf="name?.errors?.['maxlength']">
           {{ 'input.userNameMax' | translate }}
         </app-validation-error>
