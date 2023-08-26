@@ -1,4 +1,10 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { EventsService } from '@app/core/services/events/events.service';
 import { EventDto } from '@interfaces/event/event-dto';
@@ -14,13 +20,19 @@ import { categoryTypeToLabel } from '@app/core/utils/event';
 import { LanguageService } from '@app/core/services/language/language.service';
 import { EventStatusFilter } from '@interfaces/event/filter/event-status-filter';
 import { EVENT_STATUS_FILTER } from '@app/core/constants/event-status-filter';
+import { Subscription } from 'rxjs';
+import { LangChangeEvent } from '@ngx-translate/core';
+import { getStatusFilterLabels } from '@app/core/utils/filters/getStatusFilterLabels';
+import { getCategoryFilterLabels } from '@app/core/utils/filters/getCategoryFilterLabels';
 
 @Component({
   selector: 'app-view-organization-events',
   templateUrl: './view-organization-events.component.html',
   styleUrls: ['./view-organization-events.component.scss'],
 })
-export class ViewOrganizationEventsComponent implements OnInit, OnChanges {
+export class ViewOrganizationEventsComponent
+  implements OnInit, OnChanges, OnDestroy
+{
   events: EventDto[] = [];
   organizationId!: number;
 
@@ -38,6 +50,8 @@ export class ViewOrganizationEventsComponent implements OnInit, OnChanges {
   first: number = 0;
   rows: number = 5;
 
+  languageSub?: Subscription;
+
   constructor(
     private route: ActivatedRoute,
     private errorsService: ErrorsService,
@@ -54,12 +68,23 @@ export class ViewOrganizationEventsComponent implements OnInit, OnChanges {
       this.getOrganizationEvents().then();
       this.fetchActiveEventTypes(this.organizationId);
     });
+
+    setTimeout(() => this.setStatusFilterLabels(), 100);
+
+    this.languageSub = this.languageService.onLangChange.subscribe(() => {
+      this.setCategoryFilterLabels();
+      this.setStatusFilterLabels();
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['events']) {
       this.filterEvents();
     }
+  }
+
+  ngOnDestroy(): void {
+    this.languageSub?.unsubscribe();
   }
 
   joinEvent(event: EventDto) {
@@ -152,37 +177,29 @@ export class ViewOrganizationEventsComponent implements OnInit, OnChanges {
     );
   }
 
-  private filterIncomingAndActiveEvents(events: EventDto[]) {
-    return events.filter(
-      (event) =>
-        event.status === 'Active' || event.status === 'Incoming' || true,
+  private setStatusFilterLabels() {
+    this.eventStatusFilter = getStatusFilterLabels(this.languageService);
+  }
+
+  private setCategoryFilterLabels() {
+    this.eventTypesFilter = getCategoryFilterLabels(
+      this.languageService,
+      this.eventTypes,
     );
+
+    this.selectedEventTypeFilter = {
+      name: this.languageService.instant(
+        'organization.dashboard.events.categoriesFilter.all',
+      ),
+      value: 'ALL',
+    };
   }
 
   fetchActiveEventTypes(organizationId: number) {
     this.eventsService.getEventTypesInOrganization(organizationId).subscribe({
       next: (eventTypes: EventType[]) => {
         this.eventTypes = eventTypes;
-        this.eventTypesFilter = [
-          {
-            name: this.languageService.instant(
-              'organization.dashboard.events.categoriesFilter.all',
-            ),
-            value: 'ALL',
-          },
-        ];
-        this.eventTypesFilter = this.eventTypesFilter.concat(
-          eventTypes.map((type) => ({
-            name: this.languageService.instant(categoryTypeToLabel(type)),
-            value: type,
-          })),
-        );
-        this.selectedEventTypeFilter = {
-          name: this.languageService.instant(
-            'organization.dashboard.events.categoriesFilter.all',
-          ),
-          value: 'ALL',
-        };
+        this.setCategoryFilterLabels();
       },
     });
   }

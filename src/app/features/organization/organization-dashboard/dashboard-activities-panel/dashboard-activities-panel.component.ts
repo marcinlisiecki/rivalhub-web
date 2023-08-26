@@ -2,6 +2,7 @@ import {
   Component,
   Input,
   OnChanges,
+  OnDestroy,
   OnInit,
   SimpleChanges,
 } from '@angular/core';
@@ -17,13 +18,16 @@ import { AuthService } from '@app/core/services/auth/auth.service';
 import { EventType } from '@interfaces/event/event-type';
 import { LanguageService } from '@app/core/services/language/language.service';
 import { EventCategoryFilter } from '@interfaces/event/filter/event-category-filter';
+import { getCategoryFilterLabels } from '@app/core/utils/filters/getCategoryFilterLabels';
 
 @Component({
   selector: 'app-dashboard-activities-panel',
   templateUrl: './dashboard-activities-panel.component.html',
   styleUrls: ['./dashboard-activities-panel.component.scss'],
 })
-export class DashboardActivitiesPanelComponent implements OnInit, OnChanges {
+export class DashboardActivitiesPanelComponent
+  implements OnInit, OnChanges, OnDestroy
+{
   @Input({ required: true }) reservations!: Reservation[];
   @Input({ required: true }) events!: EventDto[];
 
@@ -40,6 +44,8 @@ export class DashboardActivitiesPanelComponent implements OnInit, OnChanges {
   first: number = 0;
   rows: number = 5;
 
+  languageSub?: Subscription;
+
   constructor(
     private route: ActivatedRoute,
     private eventsService: EventsService,
@@ -55,12 +61,20 @@ export class DashboardActivitiesPanelComponent implements OnInit, OnChanges {
         this.fetchActiveEventTypes(this.organizationId);
       },
     });
+
+    this.languageSub = this.languageService.onLangChange.subscribe(() => {
+      this.setCategoryFilterLabels();
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['events']) {
       this.filterEvents();
     }
+  }
+
+  ngOnDestroy(): void {
+    this.languageSub?.unsubscribe();
   }
 
   onPageChange(event: any) {
@@ -113,30 +127,25 @@ export class DashboardActivitiesPanelComponent implements OnInit, OnChanges {
     );
   }
 
+  private setCategoryFilterLabels() {
+    this.eventTypesFilter = getCategoryFilterLabels(
+      this.languageService,
+      this.eventTypes,
+    );
+
+    this.selectedFilter = {
+      name: this.languageService.instant(
+        'organization.dashboard.events.categoriesFilter.all',
+      ),
+      value: 'ALL',
+    };
+  }
+
   fetchActiveEventTypes(organizationId: number) {
     this.eventsService.getEventTypesInOrganization(organizationId).subscribe({
       next: (eventTypes: EventType[]) => {
         this.eventTypes = eventTypes;
-        this.eventTypesFilter = [
-          {
-            name: this.languageService.instant(
-              'organization.dashboard.events.categoriesFilter.all',
-            ),
-            value: 'ALL',
-          },
-        ];
-        this.eventTypesFilter = this.eventTypesFilter.concat(
-          eventTypes.map((type) => ({
-            name: this.languageService.instant(categoryTypeToLabel(type)),
-            value: type,
-          })),
-        );
-        this.selectedFilter = {
-          name: this.languageService.instant(
-            'organization.dashboard.events.categoriesFilter.all',
-          ),
-          value: 'ALL',
-        };
+        this.setCategoryFilterLabels();
       },
     });
   }

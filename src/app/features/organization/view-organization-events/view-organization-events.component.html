@@ -3,12 +3,12 @@
     [organizationId]="organizationId"
   ></app-organization-back-button>
   <header>
-    <h1>Wydarzenia</h1>
+    <h1>{{ 'organization.events.label' | translate }}</h1>
     <a routerLink="/organizations/{{ organizationId }}/events/new"
       ><p-button
         icon="pi pi-plus"
         iconPos="right"
-        label="Nowe wydarzenie"
+        label="{{ 'events.new' | translate }}"
       ></p-button
     ></a>
   </header>
@@ -38,11 +38,13 @@
     </section>
     <section class="filters-wrapper">
       <header>
-        <h1>Filtry</h1>
+        <h1>{{ 'filters.label' | translate }}</h1>
       </header>
 
       <div class="input-box">
-        <label for="event-category">Kategoria wydarzenia</label>
+        <label for="event-category">{{
+          'filters.events.category.label' | translate
+        }}</label>
         <p-dropdown
           inputId="event-category"
           [style]="{ width: '100%' }"
@@ -54,7 +56,9 @@
       </div>
 
       <div class="input-box">
-        <label for="event-status">Czas wydarzenia</label>
+        <label for="event-status">{{
+          'filters.events.status.label' | translate
+        }}</label>
         <p-dropdown
           inputId="event-status"
           [style]="{ width: '100%' }"
@@ -66,9 +70,9 @@
       </div>
 
       <div class="switch">
-        <label for="only-my-events"
-          >Tylko wydarzenia, w których biorę udział</label
-        >
+        <label for="only-my-events">{{
+          'filters.events.onlyMyEvents.label' | translate
+        }}</label>
         <p-inputSwitch
           inputId="only-my-events"
           [(ngModel)]="onlyMyEvents"
