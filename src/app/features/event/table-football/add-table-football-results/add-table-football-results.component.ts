@@ -7,6 +7,7 @@ import { AddGameSetComponent } from '@app/features/event/common/add-game-set/add
 import { NewGameSet } from '@interfaces/event/games/new-game-set';
 import { TableFootballMatch } from '@interfaces/event/games/table-football/table-football-match';
 import { AddTableFootballMatch } from '@interfaces/event/games/table-football/add-table-football-match';
+import { UserDetailsDto } from '@interfaces/user/user-details-dto';
 
 @Component({
   selector: 'app-add-table-football-results',
@@ -18,6 +19,7 @@ export class AddTableFootballResultsComponent {
 
   matches: TableFootballMatch[] = [];
   addSetDialogRef?: DynamicDialogRef;
+  eventUsers: UserDetailsDto[] = [];
 
   organizationId!: number;
   eventId!: number;
@@ -34,6 +36,11 @@ export class AddTableFootballResultsComponent {
     this.organizationId = this.route.snapshot.params['organizationId'];
     this.eventId = this.route.snapshot.params['eventId'];
 
+    this.fetchMatches();
+    this.fetchEventUsers();
+  }
+
+  fetchMatches() {
     this.eventsService
       .getEventMatches<TableFootballMatch[]>(
         this.organizationId,
@@ -43,6 +50,16 @@ export class AddTableFootballResultsComponent {
       .subscribe({
         next: (matches: TableFootballMatch[]) => {
           this.matches = matches;
+        },
+      });
+  }
+
+  fetchEventUsers() {
+    this.eventsService
+      .getEventUsers(this.eventId, EventType.PING_PONG)
+      .subscribe({
+        next: (users: UserDetailsDto[]) => {
+          this.eventUsers = users;
         },
       });
   }

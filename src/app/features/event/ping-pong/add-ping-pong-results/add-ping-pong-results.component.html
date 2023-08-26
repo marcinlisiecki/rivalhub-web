@@ -19,6 +19,8 @@
     </div>
 
     <app-new-event-match
+      [fetchUsers]="false"
+      [providedUsers]="eventUsers"
       *ngIf="showAddNewMatch"
       (addMatch)="handleAddMatch($event)"
     ></app-new-event-match>

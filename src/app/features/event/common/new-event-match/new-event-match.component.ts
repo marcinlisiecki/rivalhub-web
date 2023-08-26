@@ -22,6 +22,8 @@ export class NewEventMatchComponent implements OnInit {
   userList: UserDetailsDto[] = [];
   notAddedUserList: UserDetailsDto[] = [];
   @Input() teamCount: number = 2;
+  @Input() providedUsers: UserDetailsDto[] = [];
+  @Input() fetchUsers: boolean = true;
 
   loggedInUserId!: number | null;
 
@@ -41,7 +43,12 @@ export class NewEventMatchComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.fetchUserList();
+    if (this.fetchUsers) {
+      this.fetchUserList();
+    } else {
+      this.userList = this.providedUsers;
+      this.notAddedUserList = this.getOnlyNotAddedUserList();
+    }
   }
 
   removeUser(teamIndex: number, user: AddEventUser) {

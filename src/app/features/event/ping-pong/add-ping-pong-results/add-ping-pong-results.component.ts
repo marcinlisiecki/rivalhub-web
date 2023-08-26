@@ -7,6 +7,7 @@ import { AddGameSetComponent } from '@app/features/event/common/add-game-set/add
 import { NewGameSet } from '@interfaces/event/games/new-game-set';
 import { EventType } from '@interfaces/event/event-type';
 import { AddPingPongMatch } from '@interfaces/event/games/ping-pong/add-ping-pong-match';
+import { UserDetailsDto } from '@interfaces/user/user-details-dto';
 
 @Component({
   selector: 'app-add-ping-pong-results',
@@ -18,6 +19,7 @@ export class AddPingPongResultsComponent implements OnInit {
 
   matches: PingPongMatch[] = [];
   addSetDialogRef?: DynamicDialogRef;
+  eventUsers: UserDetailsDto[] = [];
 
   organizationId!: number;
   eventId!: number;
@@ -34,6 +36,11 @@ export class AddPingPongResultsComponent implements OnInit {
     this.organizationId = this.route.snapshot.params['organizationId'];
     this.eventId = this.route.snapshot.params['eventId'];
 
+    this.fetchMatches();
+    this.fetchEventUsers();
+  }
+
+  fetchMatches() {
     this.eventsService
       .getEventMatches<PingPongMatch[]>(
         this.organizationId,
@@ -43,6 +50,16 @@ export class AddPingPongResultsComponent implements OnInit {
       .subscribe({
         next: (matches) => {
           this.matches = matches;
+        },
+      });
+  }
+
+  fetchEventUsers() {
+    this.eventsService
+      .getEventUsers(this.eventId, EventType.PING_PONG)
+      .subscribe({
+        next: (users: UserDetailsDto[]) => {
+          this.eventUsers = users;
         },
       });
   }
