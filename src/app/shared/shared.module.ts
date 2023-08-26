@@ -29,6 +29,7 @@ import { EventCardComponent } from './event-card/event-card.component';
 import { TagModule } from 'primeng/tag';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterLink } from '@angular/router';
+import { GoBackButtonComponent } from './go-back-button/go-back-button.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { RouterLink } from '@angular/router';
     EventWaitingComponent,
     OrganizationBackButtonComponent,
     EventCardComponent,
+    GoBackButtonComponent,
   ],
   exports: [
     ValidationErrorComponent,
@@ -65,6 +67,7 @@ import { RouterLink } from '@angular/router';
     EventResultComponent,
     OrganizationBackButtonComponent,
     EventCardComponent,
+    GoBackButtonComponent,
   ],
   imports: [
     CommonModule,
