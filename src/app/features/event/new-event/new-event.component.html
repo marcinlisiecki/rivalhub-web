@@ -27,6 +27,8 @@
     [userList]="notAddedUserList"
     (handleAddUser)="handleAddUser($event)"
     (handleRemoveUser)="handleRemoveUser($event)"
+    [isPublicEvent]="isPublicEvent"
+    (setPublicEvent)="handleSetPublicEvent($event)"
     [addedUsers]="addedUsers"
   >
   </app-add-event-users>

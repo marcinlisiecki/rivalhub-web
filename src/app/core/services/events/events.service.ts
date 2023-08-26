@@ -220,7 +220,14 @@ export class EventsService {
         participants: addEvent.participants,
         description: addEvent.description,
         name: addEvent.name,
+        isEventPublic: addEvent.isEventPublic,
       },
+    );
+  }
+
+  joinEvent(eventId: number, type: string) {
+    return this.http.get(
+      environment.apiUrl + `/organizations/${eventId}/events/join?type=${type}`,
     );
   }
 }

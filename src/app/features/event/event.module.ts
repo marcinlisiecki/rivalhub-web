@@ -21,7 +21,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { AddPingPongResultsComponent } from './ping-pong/add-ping-pong-results/add-ping-pong-results.component';
 import { AddGameSetComponent } from '@app/features/event/common/add-game-set/add-game-set.component';
 import { DialogService } from 'primeng/dynamicdialog';
-import { NewEventMatchComponent } from '@app/features/event/common/new-event-match/new-event-match.component';
+import { NewEventMatchComponent } from './new-event-match/new-event-match.component';
+import { InputSwitchModule } from 'primeng/inputswitch';
 import { ViewEventComponent } from '@app/features/event/view-event/view-event.component';
 import { ViewPingPongMatchComponent } from '@app/features/event/ping-pong/view-ping-pong-matches/view-ping-pong-match/view-ping-pong-match.component';
 import { ViewGameSetComponent } from '@app/features/event/common/view-game-sets/view-game-set/view-game-set.component';
@@ -82,6 +83,7 @@ import { AddUsersComponent } from './common/add-users/add-users.component';
     TranslateModule,
     BadgeModule,
     TableModule,
+    InputSwitchModule,
   ],
   providers: [DialogService],
 })

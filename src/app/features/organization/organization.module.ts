@@ -30,6 +30,7 @@ import { ColorPickerModule } from 'primeng/colorpicker';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { AdminCardComponent } from './members/admin-card/admin-card.component';
 import { OrganizationSettingsComponent } from '@app/features/organization/organization-settings/organization-settings.component';
+import { Tag, TagModule } from 'primeng/tag';
 
 @NgModule({
   declarations: [
@@ -72,6 +73,7 @@ import { OrganizationSettingsComponent } from '@app/features/organization/organi
     FormsModule,
     ConfirmPopupModule,
     ColorPickerModule,
+    TagModule,
   ],
   exports: [
     MyOrganizationsComponent,
@@ -83,6 +85,7 @@ import { OrganizationSettingsComponent } from '@app/features/organization/organi
     DashboardActivitiesPanelComponent,
     ActivityItemComponent,
     ColorPickerModule,
+    TagModule,
   ],
 })
 export class OrganizationModule {}

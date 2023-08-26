@@ -12,5 +12,6 @@ export interface EventDto {
   eventType: EventType;
   name: string;
   description: string;
+  eventPublic: boolean;
   status: string;
 }

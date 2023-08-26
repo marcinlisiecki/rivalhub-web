@@ -40,6 +40,7 @@ export class NewEventMatchComponent implements OnInit {
     private eventsService: EventsService,
   ) {
     this.loggedInUserId = authService.getUserId();
+    console.log('tutaj');
   }
 
   ngOnInit() {

@@ -7,7 +7,12 @@
   ></app-activity-item>
 
   <div class="item-container" *ngFor="let event of events">
-    <p class="name">Wydarzenie</p>
+    <div class="top">
+      <p class="name">Wydarzenie</p>
+      <p-tag *ngIf="event.eventPublic" severity="success" value="Publiczne"></p-tag>
+      <p-tag *ngIf="!event.eventPublic" severity="danger" value="Prywatne"></p-tag>
+
+    </div>
     <div class="content">
       <div class="stations">
         {{ categoryTypeToLabel(event.eventType) | translate }}
@@ -17,7 +22,8 @@
           {{ event.startTime | date: DISPLAY_DATE_FORMAT }} -
           {{ event.endTime | date: DISPLAY_DATE_FORMAT }}
         </p>
-        <p-button
+          <p-button *ngIf="canJoin(event)" (onClick)="joinEvent(event)" styleClass="p-button-secondary">Dołącz</p-button>
+          <p-button
           styleClass="p-button-secondary"
           [routerLink]="[
             '/organizations',
