@@ -1,0 +1,45 @@
+<section class="wrapper">
+    <h1 class="text-center">Edycja profilu</h1>
+
+    <section class="form-container">
+        <p-card>
+            <form [formGroup]="editForm">
+                <div class="form-item form-avatar">
+                    <img class="avatar-img" width="75" height="75" [src]="imageURL" alt="avatar">
+
+                    <p-divider layout="vertical"></p-divider>
+                    <p-fileUpload #fileupload name="uploadAvatar" [customUpload]="true"
+                        (onSelect)="onFileSelectClicked($event)" (onClear)="onClearClicked()" [showUploadButton]="false"
+                        cancelLabel="Usuń" chooseLabel="Dodaj zdjęcie" [accept]="joinAcceptableImageTypes()"
+                        [fileLimit]="1" [maxFileSize]="MAXFILESIZE">
+                    </p-fileUpload>
+                </div>
+
+                <div class="input-box">
+                    <label for="organization-name">Nazwa użytkownika</label>
+                    <input #organization id="organization-name" type="text" pInputText formControlName="userName" />
+                    <small id="organization-name-help" class="input-helper-text">
+                        Podaj nazwę użytkonika.
+                    </small>
+                </div>
+                <div *ngIf="userName?.invalid && userName?.touched">
+                    <app-validation-error *ngIf="userName?.errors?.['required']">
+                        Nazwa jest wymagana
+                    </app-validation-error>
+                    <app-validation-error *ngIf="userName?.errors?.['minlength']">
+                        Nazwa użytkownika musi mieć co najmniej 3 znaki
+                    </app-validation-error>
+                    <app-validation-error *ngIf="userName?.errors?.['maxlength']">
+                        Nazwa użytkownika nie może mieć więcej niż 256 znaków
+                    </app-validation-error>
+                </div>
+            </form>
+            <p-button [loading]="isLoading" [disabled]="isLoading" (onClick)="onSubmit()">
+                Zapisz ustawienia
+            </p-button>
+        </p-card>
+
+    </section>
+
+
+</section>

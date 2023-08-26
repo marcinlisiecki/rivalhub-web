@@ -13,7 +13,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { FileSelectEvent } from 'primeng/fileupload';
 import { ImageService } from '@app/core/services/image/image.service';
 import { EditOrganization } from '@app/core/interfaces/organization/edit-organization';
-import { Observable, forkJoin, of, zip } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-organization-settings',

@@ -1,5 +1,6 @@
 <div class="wrapper" id="user-{{ user.id }}" #userItem>
-  <img class="item-avatar" alt="{{ user.name }}" [src]="profileImg" />
+  <img class="item-avatar" alt="{{ user.name }}" [src]="imageUrl" />
+  
   <p>{{ user.name }}</p>
 </div>
 <p-contextMenu

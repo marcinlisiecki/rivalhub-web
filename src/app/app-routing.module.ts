@@ -22,6 +22,7 @@ import { MembersComponent } from '@app/features/organization/members/members.com
 import { OrganizationSettingsComponent } from '@app/features/organization/organization-settings/organization-settings.component';
 import { ViewEventComponent } from '@app/features/event/view-event/view-event.component';
 import { AddResultsComponent } from '@app/features/event/add-results/add-results.component';
+import { EditProfileComponent } from './features/profile/edit-profile/edit-profile.component';
 
 const routes: Routes = [
   {
@@ -85,6 +86,11 @@ const routes: Routes = [
   {
     path: 'profiles/:id',
     component: ProfileComponent,
+    canActivate: [authenticateGuard],
+  },
+  {
+    path: 'profiles/:id/edit',
+    component: EditProfileComponent,
     canActivate: [authenticateGuard],
   },
   {

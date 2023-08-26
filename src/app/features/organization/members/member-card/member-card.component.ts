@@ -1,27 +1,37 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
-import {UserDetailsDto} from "@interfaces/user/user-details-dto";
-import {ConfirmationService} from "primeng/api";
-import {OrganizationsService} from "@app/core/services/organizations/organizations.service";
-import {ActivatedRoute, Router} from "@angular/router";
-import {AuthService} from "@app/core/services/auth/auth.service";
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
+import { UserDetailsDto } from '@interfaces/user/user-details-dto';
+import { ConfirmationService } from 'primeng/api';
+import { OrganizationsService } from '@app/core/services/organizations/organizations.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '@app/core/services/auth/auth.service';
+import { ImageService } from '@app/core/services/image/image.service';
 
 @Component({
   selector: 'app-member-card',
   templateUrl: './member-card.component.html',
-  styleUrls: ['./member-card.component.scss']
+  styleUrls: ['./member-card.component.scss'],
 })
 export class MemberCardComponent implements OnInit {
-  @Input() user!: UserDetailsDto
-  @Input() amIAdmin: boolean = false
-  @Output() changedStatus = new EventEmitter<void>()
+  @Input() user!: UserDetailsDto;
+  @Input() amIAdmin: boolean = false;
+  @Output() changedStatus = new EventEmitter<void>();
   // @Output() admined = new EventEmitter<void>()
+  imageUrl!: string;
 
-  private organizationId!: number
-  private confirmKickMessage: string = "Na pewno chcesz usunąć tego członka?"
-  public adminButtonText: string = "Nadaj uprawnienia admina"
-  public kickButtonText: string = "Wyrzuć";
-  private grantAdminMessage: string = "Na pewno chcesz dać admina temu członkowi?"
-  public myself: boolean = false
+  private organizationId!: number;
+  private confirmKickMessage: string = 'Na pewno chcesz usunąć tego członka?';
+  public adminButtonText: string = 'Nadaj uprawnienia admina';
+  public kickButtonText: string = 'Wyrzuć';
+  private grantAdminMessage: string =
+    'Na pewno chcesz dać admina temu członkowi?';
+  public myself: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -29,13 +39,17 @@ export class MemberCardComponent implements OnInit {
     private organizationService: OrganizationsService,
     private router: Router,
     private authService: AuthService,
+    private imageService: ImageService,
   ) {}
 
   ngOnInit() {
+    this.imageUrl = this.imageService.getUserImagePath(
+      this.user.profilePictureUrl,
+    );
     this.route.params.subscribe((params) => {
       this.organizationId = params['id'];
     });
-    this.loadMyself()
+    this.loadMyself();
   }
 
   getImagePath(imageUrl: string | null): string {
@@ -48,7 +62,7 @@ export class MemberCardComponent implements OnInit {
 
   loadMyself() {
     if (this.authService.getUserId() == this.user.id) {
-      this.myself = true
+      this.myself = true;
     }
   }
 
@@ -60,11 +74,13 @@ export class MemberCardComponent implements OnInit {
       rejectLabel: 'Nie',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.organizationService.kickUser(this.organizationId, this.user.id).subscribe({
-          next: response => {
-            this.changedStatus.emit()
-          }
-        })
+        this.organizationService
+          .kickUser(this.organizationId, this.user.id)
+          .subscribe({
+            next: (response) => {
+              this.changedStatus.emit();
+            },
+          });
       },
       reject: () => {},
     });
@@ -89,17 +105,19 @@ export class MemberCardComponent implements OnInit {
       rejectLabel: 'Nie',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.organizationService.grantAdmin(this.organizationId, this.user.id).subscribe({
-          next: response => {
-            this.changedStatus.emit()
-          }
-        })
+        this.organizationService
+          .grantAdmin(this.organizationId, this.user.id)
+          .subscribe({
+            next: (response) => {
+              this.changedStatus.emit();
+            },
+          });
       },
-      reject: () => {}
-    })
+      reject: () => {},
+    });
   }
 
   takeToUserProfile() {
-    this.router.navigateByUrl(`profiles/${this.user.id}`).then()
+    this.router.navigateByUrl(`profiles/${this.user.id}`).then();
   }
 }
