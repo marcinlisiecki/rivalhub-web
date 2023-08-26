@@ -1,8 +1,22 @@
 <div class="avatar">
-    <img class="dashboard-header-image" [src]="organization.imageUrl"
-        [ngStyle]="{'background-color': defaultAvatar ? organization.color : 'none'}" alt="Image">
+  <img
+    class="dashboard-header-image"
+    [src]="organization.imageUrl"
+    [ngStyle]="{
+      'background-color': defaultAvatar ? organization.color : 'none'
+    }"
+    alt="Image"
+  />
 </div>
 <div class="info">
+  <div class="basic-info">
     <p class="info-title">Organizacja</p>
-    <h4 class="info-name">{{organization.name}}</h4>
+    <h4 class="info-name">{{ organization.name }}</h4>
+  </div>
+
+  <div class="statistics">
+    <p *ngIf="usersCount">
+      {{ usersCount }} {{ usersCount === 1 ? 'Członek' : 'Członków' }}
+    </p>
+  </div>
 </div>

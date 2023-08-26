@@ -16,9 +16,8 @@
     align-items: center;
     flex: $flexRow;
     background-color: $panelContentBg;
-    padding: 10px;
+    padding: 1rem;
     border-radius: $dashboardRadius;
-    border: $dashboardBorder;
   }
 
   &-nav {

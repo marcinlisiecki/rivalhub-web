@@ -1,15 +1,57 @@
-<p class="name">Rezerwacja</p>
-<div class="content">
-  <div class="stations">
-    <p *ngFor="let station of reservation.stationList">
-      {{ station.name }}
-    </p>
-  </div>
-  <div class="bottom">
-    <p class="date">
-      {{ reservation.startTime | date: DISPLAY_DATE_FORMAT }} -
-      {{ reservation.endTime | date: DISPLAY_DATE_FORMAT }}
-    </p>
-    <p-button styleClass="p-button-secondary">Zobacz wydarzenie</p-button>
-  </div>
-</div>
+<section class="wrapper">
+  <header>
+    <div>
+      <i class="pi pi-calendar"></i>
+      <p class="event-label">
+        {{ categoryTypeToLabel(event.eventType) | translate }}
+      </p>
+    </div>
+    <div>
+      <p-tag
+        *ngIf="event.eventPublic"
+        severity="success"
+        value="Publiczne"
+      ></p-tag>
+      <p-tag
+        *ngIf="!event.eventPublic"
+        severity="danger"
+        value="Prywatne"
+      ></p-tag>
+    </div>
+  </header>
+
+  <p class="event-name">{{ event.name }}</p>
+
+  <footer>
+    <div class="date">
+      {{ event.startTime | date: DISPLAY_DATE_FORMAT }}・{{
+        timeDifferenceInHours
+      }}h {{ timeDifferenceInMinutes }}m・{{ event.participants.length }}
+      {{ event.participants.length === 1 ? 'uczestnik' : 'uczestników' }}
+    </div>
+    <div class="actions">
+      <p-button
+        *ngIf="canJoin"
+        (onClick)="joinEvent.emit(event)"
+        styleClass="p-button-secondary p-button-text"
+        iconPos="left"
+        icon="pi pi-plus"
+        label="Dołącz"
+      ></p-button>
+      <p-button
+        styleClass="p-button-secondary p-button-outlined p-button-sm"
+        [routerLink]="[
+          '/organizations',
+          organizationId,
+          'events',
+          event.eventId,
+          { type: event.eventType }
+        ]"
+        label="Zobacz wydarzenie"
+        iconPos="right"
+        icon="pi pi-arrow-right"
+      >
+      </p-button>
+    </div>
+  </footer>
+</section>
