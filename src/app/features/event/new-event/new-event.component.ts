@@ -19,6 +19,7 @@ import { AuthService } from '@app/core/services/auth/auth.service';
 import { LanguageService } from '@app/core/services/language/language.service';
 import { EventsService } from '@app/core/services/events/events.service';
 import { AddEvent } from '@interfaces/event/add-event';
+import { UsersService } from '@app/core/services/users/users.service';
 
 @Component({
   selector: 'app-new-event',
@@ -31,7 +32,6 @@ export class NewEventComponent implements OnInit, OnDestroy {
   formSteps: MenuItem[] = [];
   formStepIndex: number = 0;
   isChallenge: boolean = false;
-
   events: EventType[] = [];
   selectedEventType: EventType | null = null;
 
@@ -40,6 +40,7 @@ export class NewEventComponent implements OnInit, OnDestroy {
 
   dateError: string | null = null;
 
+  oponent?: UserDetailsDto;
   userList: UserDetailsDto[] = [];
   addedUsers: AddEventUser[] = [];
   notAddedUserList: UserDetailsDto[] = [];
@@ -74,26 +75,27 @@ export class NewEventComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private router: Router,
     private languageService: LanguageService,
+    private userService: UsersService,
   ) {}
 
   ngOnInit(): void {
-    if (
-      this.authService.getUserName() === null ||
-      this.authService.getUserId() === null
-    ) {
-      this.router.navigateByUrl('/login').then();
-      return;
-    }
+    this.userService.getMe().subscribe({
+      next: (user: UserDetailsDto) => {
+        this.addedUsers.push({
+          id: user.id,
+          name: user.name,
+          profilePictureUrl: user.profilePictureUrl,
+        });
 
-    this.addedUsers.push({
-      id: this.authService.getUserId() || 0,
-      name: this.authService.getUserName() || '',
+        this.handleQuickChallenge();
+        this.handleLanguage();
+        this.fetchUserList();
+        this.fetchEventTypes();
+      },
+      error: () => {
+        this.router.navigateByUrl('/login').then();
+      },
     });
-
-    this.handleQuickChallenge();
-    this.handleLanguage();
-    this.fetchUserList();
-    this.fetchEventTypes();
   }
 
   handleLanguage() {
@@ -108,19 +110,25 @@ export class NewEventComponent implements OnInit, OnDestroy {
     const challengeName = this.route.snapshot.queryParams['challengeName'];
     const challengeType = this.route.snapshot.queryParams['challengeType'];
 
-    if (!challengeName || !challengeId || !challengeType) {
-      return;
-    }
+    this.userService
+      .getUser(parseInt(this.route.snapshot.queryParams['challengeId']))
+      .subscribe({
+        next: (user: UserDetailsDto) => {
+          this.isChallenge = true;
+          this.addedUsers.push({
+            id: user.id,
+            name: user.name,
+            profilePictureUrl: user.profilePictureUrl,
+          });
 
-    this.isChallenge = true;
-    this.addedUsers.push({
-      id: parseInt(challengeId),
-      name: challengeName,
-    });
-
-    this.selectedEventType = challengeType as EventType;
-    this.basicInfoForm.get('name')?.setValue('Szybkie wyzwanie');
-    this.setFormStep(AddEventFormStep.DATE);
+          this.selectedEventType = challengeType as EventType;
+          this.basicInfoForm.get('name')?.setValue('Szybkie wyzwanie');
+          this.setFormStep(AddEventFormStep.DATE);
+        },
+        error: () => {
+          //TODO obsługa błedu
+        },
+      });
   }
 
   fetchEventTypes() {

@@ -18,8 +18,7 @@
   </li>
 
   <li (click)="showSidebar()">
-    <div class="user-avatar">
-      <i class="pi pi-user"></i>
-    </div>
+    <app-avatar class="user-avatar" *ngIf="user" [user]="user"></app-avatar>
+    
   </li>
 </ul>
