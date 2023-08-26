@@ -76,5 +76,6 @@
 	"event.joinEvent": "Dołącz",
 	"organization.label": "Organizacja",
 	"organization.incomingEvents": "Nadchodzące wydarzenia",
-	"organization.noIncomingEvents": "Brak nadchodzących wydarzeń"
+	"organization.noIncomingEvents": "Brak nadchodzących wydarzeń",
+	"organization.noEvents": "Brak wydarzeń"
 }

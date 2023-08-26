@@ -23,6 +23,7 @@ import { OrganizationSettingsComponent } from '@app/features/organization/organi
 import { ViewEventComponent } from '@app/features/event/view-event/view-event.component';
 import { AddResultsComponent } from '@app/features/event/add-results/add-results.component';
 import { EditProfileComponent } from './features/profile/edit-profile/edit-profile.component';
+import { ViewOrganizationEventsComponent } from '@app/features/organization/view-organization-events/view-organization-events.component';
 
 const routes: Routes = [
   {
@@ -71,6 +72,11 @@ const routes: Routes = [
   {
     path: 'organizations/:id/invite',
     component: InviteUserComponent,
+    canActivate: [authenticateGuard],
+  },
+  {
+    path: 'organizations/:id/events',
+    component: ViewOrganizationEventsComponent,
     canActivate: [authenticateGuard],
   },
   {

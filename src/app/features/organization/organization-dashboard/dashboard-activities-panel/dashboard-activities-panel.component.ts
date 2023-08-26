@@ -11,13 +11,12 @@ import { EventDto } from '@interfaces/event/event-dto';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Params } from '@angular/router';
 import { categoryTypeToLabel } from '@app/core/utils/event';
-import { DISPLAY_DATE_FORMAT } from '@app/core/constants/date';
 import { EventsService } from '@app/core/services/events/events.service';
 import { MessageService } from 'primeng/api';
 import { AuthService } from '@app/core/services/auth/auth.service';
 import { EventType } from '@interfaces/event/event-type';
 import { LanguageService } from '@app/core/services/language/language.service';
-import { EventFilter } from '@interfaces/event/event-filter';
+import { EventCategoryFilter } from '@interfaces/event/filter/event-category-filter';
 
 @Component({
   selector: 'app-dashboard-activities-panel',
@@ -33,8 +32,8 @@ export class DashboardActivitiesPanelComponent implements OnInit, OnChanges {
   toastLifeTime: number = 3 * 1000;
 
   eventTypes: EventType[] = [];
-  eventTypesFilter: EventFilter[] = [];
-  selectedFilter?: EventFilter;
+  eventTypesFilter: EventCategoryFilter[] = [];
+  selectedFilter?: EventCategoryFilter;
   filteredEvents: EventDto[] = [];
   paginatedEvents: EventDto[] = [];
 
@@ -143,5 +142,4 @@ export class DashboardActivitiesPanelComponent implements OnInit, OnChanges {
   }
 
   protected readonly categoryTypeToLabel = categoryTypeToLabel;
-  protected readonly DISPLAY_DATE_FORMAT = DISPLAY_DATE_FORMAT;
 }
