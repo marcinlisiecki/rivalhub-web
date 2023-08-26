@@ -90,33 +90,37 @@ export class NewEventComponent implements OnInit, OnDestroy {
       name: this.authService.getUserName() || '',
     });
 
-    const challengeId = this.route.snapshot.queryParams['challengeId'];
-    const challengeName = this.route.snapshot.queryParams['challengeName'];
-    if (
-      challengeId &&
-      challengeName &&
-      challengeId !== this.authService.getUserId()
-    ) {
-      this.isChallenge = true;
-      this.addedUsers.push({
-        id: parseInt(challengeId),
-        name: challengeName,
-      });
-    }
+    this.handleQuickChallenge();
+    this.handleLanguage();
+    this.fetchUserList();
+    this.fetchEventTypes();
+  }
 
-    const challengeType = this.route.snapshot.queryParams['challengeType'];
-    if (challengeType) {
-      this.selectedEventType = challengeType as EventType;
-      this.setFormStep(AddEventFormStep.BASIC_INFO);
-    }
-
+  handleLanguage() {
     setTimeout(() => this.setStepsMenu(), 100);
     this.onLangChangeSub = this.languageService.onLangChange.subscribe(() =>
       this.setStepsMenu(),
     );
+  }
 
-    this.fetchUserList();
-    this.fetchEventTypes();
+  handleQuickChallenge() {
+    const challengeId = this.route.snapshot.queryParams['challengeId'];
+    const challengeName = this.route.snapshot.queryParams['challengeName'];
+    const challengeType = this.route.snapshot.queryParams['challengeType'];
+
+    if (!challengeName || !challengeId || !challengeType) {
+      return;
+    }
+
+    this.isChallenge = true;
+    this.addedUsers.push({
+      id: parseInt(challengeId),
+      name: challengeName,
+    });
+
+    this.selectedEventType = challengeType as EventType;
+    this.basicInfoForm.get('name')?.setValue('Szybkie wyzwanie');
+    this.setFormStep(AddEventFormStep.DATE);
   }
 
   fetchEventTypes() {
