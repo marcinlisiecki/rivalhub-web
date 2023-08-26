@@ -15,6 +15,8 @@ import { OrganizationSettings } from '@interfaces/organization/organization-sett
 import { AuthService } from '@app/core/services/auth/auth.service';
 import { ImageService } from '@app/core/services/image/image.service';
 import { EventType } from '@interfaces/event/event-type';
+import { ErrorsService } from '@app/core/services/errors/errors.service';
+import { extractMessage } from '@app/core/utils/apiErrors';
 
 @Component({
   selector: 'app-organization-dashboard',
@@ -23,7 +25,6 @@ import { EventType } from '@interfaces/event/event-type';
   animations: [navAnimation],
 })
 export class OrganizationDashboardComponent implements OnInit, OnDestroy {
-  navVisible: boolean = false;
   mobileView!: boolean;
   reservations: Reservation[] = [];
   events: EventDto[] = [];
@@ -31,9 +32,7 @@ export class OrganizationDashboardComponent implements OnInit, OnDestroy {
   users!: UserDetailsDto[];
   id!: number;
   canUserInvite: boolean = false;
-
   amIAdmin!: boolean;
-
   resizeEventSub?: Subscription;
   paramsSub?: Subscription;
 
@@ -45,28 +44,50 @@ export class OrganizationDashboardComponent implements OnInit, OnDestroy {
     private messageService: MessageService,
     private authService: AuthService,
     private imageService: ImageService,
+    private errorsService: ErrorsService,
   ) {}
 
   ngOnInit(): void {
+    this.handleRWD();
+
+    this.paramsSub = this.route.params.subscribe((params) => {
+      this.id = params['id'];
+
+      this.getOrganizationInfo();
+      this.getOrganizationUsers();
+      this.fetchSettings();
+      this.getOrganizationEvents().then();
+    });
+
+    this.handleConfigured();
+    this.handleInvitation();
+
+    this.amIAdmin = this.authService.amIAdmin(this.id);
+  }
+
+  ngOnDestroy(): void {
+    this.resizeEventSub?.unsubscribe();
+    this.paramsSub?.unsubscribe();
+  }
+
+  private handleRWD() {
     this.mobileView = this.viewService.mobileView;
     this.resizeEventSub = this.viewService.resizeSubject.subscribe(
       (value: boolean) => {
         this.mobileView = value;
       },
     );
+  }
 
-    this.paramsSub = this.route.params.subscribe((params) => {
-      this.id = params['id'];
-      this.getOrganizationInfo();
-      this.getOrganizationUsers();
-
-      this.organizationsService.getSettings(this.id).subscribe({
-        next: (settings: OrganizationSettings) => {
-          this.canUserInvite = !settings.onlyAdminCanSeeInvitationLink;
-        },
-      });
+  private fetchSettings() {
+    this.organizationsService.getSettings(this.id).subscribe({
+      next: (settings: OrganizationSettings) => {
+        this.canUserInvite = !settings.onlyAdminCanSeeInvitationLink;
+      },
     });
+  }
 
+  private handleConfigured() {
     const configured = this.route.snapshot.queryParams['configured'];
     if (configured) {
       this.messageService.add({
@@ -81,7 +102,9 @@ export class OrganizationDashboardComponent implements OnInit, OnDestroy {
         })
         .then();
     }
+  }
 
+  private handleInvitation() {
     const inviteSuccess = this.route.snapshot.queryParams['invited'];
     if (inviteSuccess) {
       this.messageService.add({
@@ -96,14 +119,6 @@ export class OrganizationDashboardComponent implements OnInit, OnDestroy {
         })
         .then();
     }
-
-    this.amIAdmin = this.authService.amIAdmin(this.id);
-    this.getOrganizationEvents();
-  }
-
-  ngOnDestroy(): void {
-    this.resizeEventSub?.unsubscribe();
-    this.paramsSub?.unsubscribe();
   }
 
   private getOrganizationInfo() {
@@ -114,27 +129,44 @@ export class OrganizationDashboardComponent implements OnInit, OnDestroy {
           res.imageUrl,
         );
       },
-      //Dodaj kiedyś obsługę błędów jak wpadniesz na fajny pomysł jak to zrobić
       error: (err: HttpErrorResponse) => {
-        console.error('An error occurred:', err);
+        this.errorsService.createErrorMessage(extractMessage(err));
       },
     });
   }
 
-  private getOrganizationEvents() {
-    this.fetchEventsForType(EventType.PING_PONG);
-    this.fetchEventsForType(EventType.TABLE_FOOTBALL);
-    this.fetchEventsForType(EventType.PULL_UPS);
+  private async getOrganizationEvents() {
+    const tempEvents: EventDto[] = [];
+
+    try {
+      tempEvents.push(...(await this.fetchEventsForType(EventType.PING_PONG)));
+      tempEvents.push(
+        ...(await this.fetchEventsForType(EventType.TABLE_FOOTBALL)),
+      );
+      tempEvents.push(...(await this.fetchEventsForType(EventType.PULL_UPS)));
+    } catch (err: unknown) {
+      this.errorsService.createErrorMessage(extractMessage(err));
+    } finally {
+      this.events = this.filterIncomingAndActiveEvents(tempEvents);
+    }
   }
 
-  fetchEventsForType(type: EventType) {
-    this.organizationsService.getEvents(this.id, type).subscribe({
-      next: (events: EventDto[]) => {
-        this.events.push(...events);
-      },
-      error: (err: HttpErrorResponse) => {
-        console.error('An error occurred:', err);
-      },
+  private filterIncomingAndActiveEvents(events: EventDto[]) {
+    return events.filter(
+      (event) => event.status === 'Active' || event.status === 'Incoming',
+    );
+  }
+
+  async fetchEventsForType(type: EventType) {
+    return new Promise<EventDto[]>((resolve, reject) => {
+      this.organizationsService.getEvents(this.id, type).subscribe({
+        next: (events: EventDto[]) => {
+          resolve(events);
+        },
+        error: (err: HttpErrorResponse) => {
+          reject(err);
+        },
+      });
     });
   }
 
@@ -143,14 +175,9 @@ export class OrganizationDashboardComponent implements OnInit, OnDestroy {
       next: (res: PagedResponse<UserDetailsDto>) => {
         this.users = res.content;
       },
-      //Dodaj kiedyś obsługę błędów jak wpadniesz na fajny pomysł jak to zrobić
       error: (err: HttpErrorResponse) => {
-        console.error('An error occurred:', err);
+        this.errorsService.createErrorMessage(extractMessage(err));
       },
     });
-  }
-
-  toggleNav() {
-    this.navVisible = !this.navVisible;
   }
 }
