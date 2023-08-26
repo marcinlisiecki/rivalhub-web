@@ -22,6 +22,7 @@ import { AddPingPongResultsComponent } from './ping-pong/add-ping-pong-results/a
 import { AddPingPongSetComponent } from './ping-pong/add-ping-pong-set/add-ping-pong-set.component';
 import { DialogService } from 'primeng/dynamicdialog';
 import { NewEventMatchComponent } from './new-event-match/new-event-match.component';
+import { InputSwitchModule } from 'primeng/inputswitch';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { NewEventMatchComponent } from './new-event-match/new-event-match.compon
     SharedModule,
     ProgressSpinnerModule,
     TranslateModule,
+    InputSwitchModule,
   ],
   providers: [DialogService],
 })

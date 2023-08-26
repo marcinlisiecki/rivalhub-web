@@ -20,21 +20,24 @@
         <p>Dodaj użytkownika</p>
       </div>
     </div>
+
+
+  </section>
+  <p-divider></p-divider>
+
+  <section class="public-event-setting">
+    <label for="publicEvent">Publiczne wydarzenie:</label>
+    <p-inputSwitch id="publicEvent" [(ngModel)]="publicEvent" (onChange)="setPublicEvent.emit(publicEvent)"></p-inputSwitch>
   </section>
 
   <p-divider></p-divider>
 
+
   <div class="form-step-navigation">
-    <p-button
-      styleClass="p-button-outlined"
-      (onClick)="setFormStep.emit(AddEventFormStep.BASIC_INFO)"
-    >
+    <p-button styleClass="p-button-outlined" (onClick)="setFormStep.emit(AddEventFormStep.BASIC_INFO)">
       Powrót
     </p-button>
-    <p-button
-      (onClick)="setFormStep.emit(AddEventFormStep.DATE)"
-      [disabled]="addedUsers.length === 0"
-    >
+    <p-button (onClick)="setFormStep.emit(AddEventFormStep.DATE)" [disabled]="addedUsers.length === 0">
       Dalej
     </p-button>
   </div>
