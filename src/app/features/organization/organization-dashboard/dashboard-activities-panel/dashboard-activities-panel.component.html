@@ -1,6 +1,6 @@
 <section>
   <header class="header-wrapper">
-    <h4>Nadchodzące wydarzenia</h4>
+    <h4>{{ 'organization.incomingEvents' | translate }}</h4>
 
     <div class="filters">
       <p-dropdown
@@ -14,7 +14,7 @@
 
   <section class="list-wrapper">
     <app-no-resource-info *ngIf="filteredEvents.length === 0">
-      Brak nadchodzących wydarzeń
+      {{ 'organization.noIncomingEvents' | translate }}
     </app-no-resource-info>
 
     <app-activity-item

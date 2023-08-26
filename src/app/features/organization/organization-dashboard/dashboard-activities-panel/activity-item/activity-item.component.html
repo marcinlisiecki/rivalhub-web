@@ -10,12 +10,12 @@
       <p-tag
         *ngIf="event.eventPublic"
         severity="success"
-        value="Publiczne"
+        value="{{ 'event.privateLabel' | translate }}"
       ></p-tag>
       <p-tag
         *ngIf="!event.eventPublic"
         severity="danger"
-        value="Prywatne"
+        value="{{ 'event.publicLabel' | translate }}"
       ></p-tag>
     </div>
   </header>
@@ -27,7 +27,11 @@
       {{ event.startTime | date: DISPLAY_DATE_FORMAT }}・{{
         timeDifferenceInHours
       }}h {{ timeDifferenceInMinutes }}m・{{ event.participants.length }}
-      {{ event.participants.length === 1 ? 'uczestnik' : 'uczestników' }}
+      {{
+        event.participants.length === 1
+          ? ('event.participantsCount.singular' | translate)
+          : ('event.participantsCount.plural' | translate)
+      }}
     </div>
     <div class="actions">
       <p-button
@@ -36,7 +40,7 @@
         styleClass="p-button-secondary p-button-text"
         iconPos="left"
         icon="pi pi-plus"
-        label="Dołącz"
+        label="{{ 'event.joinEvent' | translate }}"
       ></p-button>
       <p-button
         styleClass="p-button-secondary p-button-outlined p-button-sm"
@@ -47,7 +51,7 @@
           event.eventId,
           { type: event.eventType }
         ]"
-        label="Zobacz wydarzenie"
+        label="{{ 'event.showEvent' | translate }}"
         iconPos="right"
         icon="pi pi-arrow-right"
       >
