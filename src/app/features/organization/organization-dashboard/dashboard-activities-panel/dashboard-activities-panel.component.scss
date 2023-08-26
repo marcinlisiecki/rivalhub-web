@@ -28,7 +28,7 @@ p {
   justify-content: space-between;
 }
 
-.top{
+.top {
   display: flex;
   justify-content: space-between;
 }
@@ -36,14 +36,14 @@ p {
 .bottom {
   margin-top: 1.5rem;
   display: flex;
-  gap:1rem;
-  align-items:flex-end;
+  gap: 1rem;
+  align-items: flex-end;
   .date {
     color: $textSecondaryColor;
     align-self: flex-end;
   }
 
-  p-button:first-of-type{
+  p-button:first-of-type {
     margin-left: auto;
   }
 }
@@ -54,4 +54,11 @@ p {
   column-gap: 1rem;
   flex-wrap: wrap;
   width: 100%;
+}
+
+.header-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
 }

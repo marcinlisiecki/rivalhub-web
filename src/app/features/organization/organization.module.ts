@@ -31,6 +31,7 @@ import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { AdminCardComponent } from './members/admin-card/admin-card.component';
 import { OrganizationSettingsComponent } from '@app/features/organization/organization-settings/organization-settings.component';
 import { Tag, TagModule } from 'primeng/tag';
+import {DropdownModule} from "primeng/dropdown";
 
 @NgModule({
   declarations: [
@@ -74,6 +75,7 @@ import { Tag, TagModule } from 'primeng/tag';
     ConfirmPopupModule,
     ColorPickerModule,
     TagModule,
+    DropdownModule,
   ],
   exports: [
     MyOrganizationsComponent,

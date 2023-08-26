@@ -1,52 +1,70 @@
-<h4>Nadchodzące wydarzenia</h4>
-<div class="list-wrapper">
-  <app-activity-item
-    class="item-container"
-    *ngFor="let reservation of reservations"
-    [reservation]="reservation"
-  ></app-activity-item>
+<section>
+  <header class="header-wrapper">
+    <h4>Nadchodzące wydarzenia</h4>
 
-  <div class="item-container" *ngFor="let event of events">
-    <div class="top">
-      <p class="name">Wydarzenie</p>
-      <p-tag
-        *ngIf="event.eventPublic"
-        severity="success"
-        value="Publiczne"
-      ></p-tag>
-      <p-tag
-        *ngIf="!event.eventPublic"
-        severity="danger"
-        value="Prywatne"
-      ></p-tag>
+    <div class="filters">
+      <p-dropdown
+        (onChange)="filterEvents()"
+        [options]="eventTypesFilter"
+        optionLabel="name"
+        [(ngModel)]="selectedFilter"
+      ></p-dropdown>
     </div>
-    <div class="content">
-      <div class="stations">
-        {{ categoryTypeToLabel(event.eventType) | translate }}
+  </header>
+
+  <section class="list-wrapper">
+    <app-activity-item
+      class="item-container"
+      *ngFor="let reservation of reservations"
+      [reservation]="reservation"
+    ></app-activity-item>
+
+    <app-no-resource-info *ngIf="filteredEvents.length === 0">
+      Brak nadchodzących wydarzeń
+    </app-no-resource-info>
+
+    <div class="item-container" *ngFor="let event of filteredEvents">
+      <div class="top">
+        <p class="name">Wydarzenie</p>
+        <p-tag
+          *ngIf="event.eventPublic"
+          severity="success"
+          value="Publiczne"
+        ></p-tag>
+        <p-tag
+          *ngIf="!event.eventPublic"
+          severity="danger"
+          value="Prywatne"
+        ></p-tag>
       </div>
-      <div class="bottom">
-        <p class="date">
-          {{ event.startTime | date: DISPLAY_DATE_FORMAT }} -
-          {{ event.endTime | date: DISPLAY_DATE_FORMAT }}
-        </p>
-        <p-button
-          *ngIf="canJoin(event)"
-          (onClick)="joinEvent(event)"
-          styleClass="p-button-secondary"
-          >Dołącz</p-button
-        >
-        <p-button
-          styleClass="p-button-secondary"
-          [routerLink]="[
-            '/organizations',
-            organizationId,
-            'events',
-            event.eventId,
-            { type: event.eventType }
-          ]"
-          >Zobacz wydarzenie</p-button
-        >
+      <div class="content">
+        <div class="stations">
+          {{ categoryTypeToLabel(event.eventType) | translate }}
+        </div>
+        <div class="bottom">
+          <p class="date">
+            {{ event.startTime | date: DISPLAY_DATE_FORMAT }} -
+            {{ event.endTime | date: DISPLAY_DATE_FORMAT }}
+          </p>
+          <p-button
+            *ngIf="canJoin(event)"
+            (onClick)="joinEvent(event)"
+            styleClass="p-button-secondary"
+            >Dołącz</p-button
+          >
+          <p-button
+            styleClass="p-button-secondary"
+            [routerLink]="[
+              '/organizations',
+              organizationId,
+              'events',
+              event.eventId,
+              { type: event.eventType }
+            ]"
+            >Zobacz wydarzenie</p-button
+          >
+        </div>
       </div>
     </div>
-  </div>
-</div>
+  </section>
+</section>
