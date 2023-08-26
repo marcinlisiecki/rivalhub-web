@@ -2,7 +2,8 @@
   <app-dashboard-header
     class="dashboard-container-header"
     [organization]="organization"
-    *ngIf="organization"
+    *ngIf="organization && users"
+    [usersCount]="users.length"
   ></app-dashboard-header>
 
   <div class="dashboard-panels">

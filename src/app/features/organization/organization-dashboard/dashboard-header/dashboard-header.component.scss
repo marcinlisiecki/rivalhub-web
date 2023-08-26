@@ -1,26 +1,37 @@
 @import 'src/scss/variables';
 
-
 .avatar {
-    height: 100px;
-    border-radius: $dashboardRadius;
+  height: 100px;
+  border-radius: $dashboardRadius;
 }
 
 .info {
-    display: flex;
-    flex-direction: column;
-    height: 100px;
+  height: 100px;
+  margin-left: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
-    &-title {
-        text-wrap: balance;
-        margin: 10px 0 10px 15px;
-        font-weight: $weightMedium;
-        color: $textSecondaryColor;
+  &-title {
+    font-weight: $weightRegular;
+    color: $primaryColor;
+    font-size: $textSm;
+    text-transform: uppercase;
+    padding: 0;
+    margin: 0;
+  }
+
+  &-name {
+    font-weight: $weightBold;
+    font-size: $textXl;
+    padding: 0;
+    margin: 0.3rem 0 0 0;
+  }
+
+  .statistics {
+    p {
+      margin: 0;
+      color: $textSecondaryColor;
     }
-
-    &-name {
-        margin: 10px 0 10px 15px;
-        font-weight: $weightBold;
-    }
-
+  }
 }
