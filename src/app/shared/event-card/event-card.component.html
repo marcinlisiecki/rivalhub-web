@@ -10,12 +10,12 @@
       <p-tag
         *ngIf="event.eventPublic"
         severity="success"
-        value="{{ 'event.privateLabel' | translate }}"
+        value="{{ 'event.publicLabel' | translate }}"
       ></p-tag>
       <p-tag
         *ngIf="!event.eventPublic"
         severity="danger"
-        value="{{ 'event.publicLabel' | translate }}"
+        value="{{ 'event.privateLabel' | translate }}"
       ></p-tag>
     </div>
   </header>
