@@ -59,7 +59,7 @@
         *ngFor="let user of participants"
         routerLink="/profiles/{{ user.id }}"
       >
-        <div class="user-avatar"></div>
+        <app-avatar class="user-avatar" [user]="user"></app-avatar>
         <p>{{ user.name }}</p>
       </a>
     </div>

@@ -17,6 +17,7 @@ export class HeaderLoggedInComponent implements OnInit {
   profileItems?: MenuItem[];
   logout!: string;
   isAccountActivated: boolean = false;
+  user!: UserDetailsDto;
 
   constructor(
     private authService: AuthService,
@@ -32,7 +33,8 @@ export class HeaderLoggedInComponent implements OnInit {
 
     if (this.authService.isAuth()) {
       this.usersService.getMe().subscribe((user: UserDetailsDto) => {
-        console.log(user);
+        this.user = user;
+        console.log(this.user);
         this.isAccountActivated = user.activationTime !== null;
       });
     }
