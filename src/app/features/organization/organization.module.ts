@@ -5,7 +5,6 @@ import { DashboardUsersPanelComponent } from '@app/features/organization/organiz
 import { UserItemComponent } from '@app/features/organization/organization-dashboard/dashboard-users-panel/user-item/user-item.component';
 import { DashboardHeaderComponent } from '@app/features/organization/organization-dashboard/dashboard-header/dashboard-header.component';
 import { DashboardActivitiesPanelComponent } from '@app/features/organization/organization-dashboard/dashboard-activities-panel/dashboard-activities-panel.component';
-import { ActivityItemComponent } from '@app/features/organization/organization-dashboard/dashboard-activities-panel/activity-item/activity-item.component';
 import { AddOrganizationComponent } from '@app/features/organization/add-organization/add-organization.component';
 import { MyOrganizationsComponent } from '@app/features/organization/my-organizations/my-organizations.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -31,7 +30,7 @@ import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { AdminCardComponent } from './members/admin-card/admin-card.component';
 import { OrganizationSettingsComponent } from '@app/features/organization/organization-settings/organization-settings.component';
 import { Tag, TagModule } from 'primeng/tag';
-import {DropdownModule} from "primeng/dropdown";
+import { DropdownModule } from 'primeng/dropdown';
 
 @NgModule({
   declarations: [
@@ -42,7 +41,6 @@ import {DropdownModule} from "primeng/dropdown";
     UserItemComponent,
     DashboardHeaderComponent,
     DashboardActivitiesPanelComponent,
-    ActivityItemComponent,
     InviteUserComponent,
     JoinOrganizationComponent,
     ConfiguratorComponent,
@@ -85,7 +83,6 @@ import {DropdownModule} from "primeng/dropdown";
     UserItemComponent,
     DashboardHeaderComponent,
     DashboardActivitiesPanelComponent,
-    ActivityItemComponent,
     ColorPickerModule,
     TagModule,
   ],

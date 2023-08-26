@@ -17,55 +17,12 @@
       {{ 'organization.noIncomingEvents' | translate }}
     </app-no-resource-info>
 
-    <app-activity-item
+    <app-event-card
       *ngFor="let event of filteredEvents"
       [event]="event"
       (joinEvent)="joinEvent($event)"
       [canJoin]="canJoin(event)"
-    ></app-activity-item>
-
-    <!--    <div class="item-container" *ngFor="let event of filteredEvents">-->
-    <!--      <div class="top">-->
-    <!--        <p class="name">Wydarzenie</p>-->
-    <!--        <p-tag-->
-    <!--          *ngIf="event.eventPublic"-->
-    <!--          severity="success"-->
-    <!--          value="Publiczne"-->
-    <!--        ></p-tag>-->
-    <!--        <p-tag-->
-    <!--          *ngIf="!event.eventPublic"-->
-    <!--          severity="danger"-->
-    <!--          value="Prywatne"-->
-    <!--        ></p-tag>-->
-    <!--      </div>-->
-    <!--      <div class="content">-->
-    <!--        <div class="stations">-->
-    <!--          {{ categoryTypeToLabel(event.eventType) | translate }}-->
-    <!--        </div>-->
-    <!--        <div class="bottom">-->
-    <!--          <p class="date">-->
-    <!--            {{ event.startTime | date: DISPLAY_DATE_FORMAT }} - -->
-    <!--            {{ event.endTime | date: DISPLAY_DATE_FORMAT }}-->
-    <!--          </p>-->
-    <!--          <p-button-->
-    <!--            *ngIf="canJoin(event)"-->
-    <!--            (onClick)="joinEvent(event)"-->
-    <!--            styleClass="p-button-secondary"-->
-    <!--            >Dołącz</p-button-->
-    <!--          >-->
-    <!--          <p-button-->
-    <!--            styleClass="p-button-secondary"-->
-    <!--            [routerLink]="[-->
-    <!--              '/organizations',-->
-    <!--              organizationId,-->
-    <!--              'events',-->
-    <!--              event.eventId,-->
-    <!--              { type: event.eventType }-->
-    <!--            ]"-->
-    <!--            >Zobacz wydarzenie</p-button-->
-    <!--          >-->
-    <!--        </div>-->
-    <!--      </div>-->
-    <!--    </div>-->
+    >
+    </app-event-card>
   </section>
 </section>

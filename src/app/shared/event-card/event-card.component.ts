@@ -1,17 +1,16 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-
 import { EventDto } from '@interfaces/event/event-dto';
+import { ActivatedRoute } from '@angular/router';
+import * as moment from 'moment/moment';
 import { categoryTypeToLabel } from '@app/core/utils/event';
 import { DISPLAY_DATE_FORMAT } from '@app/core/constants/date';
-import * as moment from 'moment';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-activity-item',
-  templateUrl: './activity-item.component.html',
-  styleUrls: ['./activity-item.component.scss'],
+  selector: 'app-event-card',
+  templateUrl: './event-card.component.html',
+  styleUrls: ['./event-card.component.scss'],
 })
-export class ActivityItemComponent implements OnInit {
+export class EventCardComponent implements OnInit {
   @Input() event!: EventDto;
   @Input() canJoin!: boolean;
 
