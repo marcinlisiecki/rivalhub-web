@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { EventsService } from '@app/core/services/events/events.service';
 import { ActivatedRoute } from '@angular/router';
 import { PingPongMatch } from '@interfaces/event/games/ping-pong/ping-pong-match';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { AddPingPongSetComponent } from '@app/features/event/ping-pong/add-ping-pong-set/add-ping-pong-set.component';
+import { AddGameSetComponent } from '@app/features/event/common/add-game-set/add-game-set.component';
 import { NewGameSet } from '@interfaces/event/games/new-game-set';
 import { EventType } from '@interfaces/event/event-type';
 import { AddPingPongMatch } from '@interfaces/event/games/ping-pong/add-ping-pong-match';
+import { UserDetailsDto } from '@interfaces/user/user-details-dto';
 
 @Component({
   selector: 'app-add-ping-pong-results',
@@ -14,11 +15,15 @@ import { AddPingPongMatch } from '@interfaces/event/games/ping-pong/add-ping-pon
   styleUrls: ['./add-ping-pong-results.component.scss'],
 })
 export class AddPingPongResultsComponent implements OnInit {
+  @Input() editable: boolean = true;
+
   matches: PingPongMatch[] = [];
   addSetDialogRef?: DynamicDialogRef;
+  eventUsers: UserDetailsDto[] = [];
 
   organizationId!: number;
   eventId!: number;
+
   showAddNewMatch: boolean = false;
 
   constructor(
@@ -31,27 +36,45 @@ export class AddPingPongResultsComponent implements OnInit {
     this.organizationId = this.route.snapshot.params['organizationId'];
     this.eventId = this.route.snapshot.params['eventId'];
 
+    this.fetchMatches();
+    this.fetchEventUsers();
+  }
+
+  fetchMatches() {
     this.eventsService
-      .getEventMatches(this.organizationId, this.eventId)
+      .getEventMatches<PingPongMatch[]>(
+        this.organizationId,
+        this.eventId,
+        EventType.PING_PONG,
+      )
       .subscribe({
-        next: (matches: PingPongMatch[]) => {
+        next: (matches) => {
           this.matches = matches;
+        },
+      });
+  }
+
+  fetchEventUsers() {
+    this.eventsService
+      .getEventUsers(this.eventId, EventType.PING_PONG)
+      .subscribe({
+        next: (users: UserDetailsDto[]) => {
+          this.eventUsers = users;
         },
       });
   }
 
   handleAddMatch(data: AddPingPongMatch) {
     this.eventsService
-      .addEventMatch(
-        data.organizationId,
-        data.eventId,
-        EventType.PING_PONG,
-        data.match,
-      )
+      .addPingPongMatch(data.organizationId, data.eventId, data.match)
       .subscribe({
-        next: (res) => {
+        next: (_) => {
           this.eventsService
-            .getEventMatches(this.organizationId, this.eventId)
+            .getEventMatches<PingPongMatch[]>(
+              this.organizationId,
+              this.eventId,
+              EventType.PING_PONG,
+            )
             .subscribe({
               next: (matches: PingPongMatch[]) => {
                 this.matches = matches;
@@ -64,9 +87,11 @@ export class AddPingPongResultsComponent implements OnInit {
   }
 
   openAddSetDialog(matchId: number) {
-    const matchIndex = this.matches.findIndex((item) => item.id === matchId);
+    const matchIndex = this.matches.findIndex(
+      (item: PingPongMatch) => item.id === matchId,
+    );
     this.matches[matchIndex].sets = this.matches[matchIndex].sets || [];
-    this.addSetDialogRef = this.dialogService.open(AddPingPongSetComponent, {
+    this.addSetDialogRef = this.dialogService.open(AddGameSetComponent, {
       header: 'Dodaj set',
       width: '25rem',
       data: {
@@ -85,7 +110,9 @@ export class AddPingPongResultsComponent implements OnInit {
         ].sets.push(set);
 
         this.eventsService
-          .addMatchSet(this.organizationId, this.eventId, set.matchId, [set])
+          .addPingPongMatchSet(this.organizationId, this.eventId, set.matchId, [
+            set,
+          ])
           .subscribe();
       }
     });

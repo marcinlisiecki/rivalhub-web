@@ -1,0 +1,52 @@
+@import 'src/scss/variables';
+
+.wrapper {
+  max-width: $pageWidth;
+  margin: 1rem auto;
+  display: flex;
+  column-gap: 2rem;
+}
+
+.main {
+  flex: 1;
+}
+
+.description {
+  color: $textSecondaryColor;
+}
+
+.participants {
+  width: 15rem;
+}
+
+.event-title {
+  font-size: $textXl;
+}
+
+.buttons {
+  margin: 1rem 0;
+}
+
+h1 {
+  margin: 0.5rem 0;
+}
+
+.users {
+  display: flex;
+  flex-direction: column;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  column-gap: 0.75rem;
+  color: $primaryTextColor;
+  text-decoration: none;
+
+  &-avatar {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50rem;
+    background-color: $shade600;
+  }
+}

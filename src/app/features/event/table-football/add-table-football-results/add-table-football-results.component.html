@@ -1,0 +1,28 @@
+<section class="wrapper">
+  <section>
+    <h1>Mecze</h1>
+
+    <app-view-table-football-matches
+      [matches]="matches"
+      [editable]="true"
+      (handleAddSet)="openAddSetDialog($event)"
+    >
+    </app-view-table-football-matches>
+
+    <div class="add-match-button-wrapper">
+      <p-button
+        *ngIf="!showAddNewMatch && editable"
+        (onClick)="showAddNewMatch = true"
+      >
+        Dodaj nowy mecz
+      </p-button>
+    </div>
+
+    <app-new-event-match
+      [fetchUsers]="false"
+      [providedUsers]="eventUsers"
+      *ngIf="showAddNewMatch"
+      (addMatch)="handleAddMatch($event)"
+    ></app-new-event-match>
+  </section>
+</section>

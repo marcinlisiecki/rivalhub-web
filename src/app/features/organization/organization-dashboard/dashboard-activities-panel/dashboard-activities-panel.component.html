@@ -1,7 +1,10 @@
 <h4>Nadchodzące wydarzenia</h4>
 <div class="list-wrapper">
-  <app-activity-item class="item-container" *ngFor="let reservation of reservations"
-    [reservation]="reservation"></app-activity-item>
+  <app-activity-item
+    class="item-container"
+    *ngFor="let reservation of reservations"
+    [reservation]="reservation"
+  ></app-activity-item>
 
   <div class="item-container" *ngFor="let event of events">
     <div class="top">
@@ -19,11 +22,18 @@
           {{ event.startTime | date: DISPLAY_DATE_FORMAT }} -
           {{ event.endTime | date: DISPLAY_DATE_FORMAT }}
         </p>
-        <p-button *ngIf="canJoin(event)" (onClick)="joinEvent(event)" styleClass="p-button-secondary">Dołącz</p-button>
-
-        <p-button styleClass="p-button-secondary" routerLink="/organizations/{{ organizationId }}/events/{{
-            event.eventId
-          }}/results">Wprowadź wyniki</p-button>
+          <p-button *ngIf="canJoin(event)" (onClick)="joinEvent(event)" styleClass="p-button-secondary">Dołącz</p-button>
+          <p-button
+          styleClass="p-button-secondary"
+          [routerLink]="[
+            '/organizations',
+            organizationId,
+            'events',
+            event.eventId,
+            { type: event.eventType }
+          ]"
+          >Zobacz wydarzenie</p-button
+        >
       </div>
     </div>
   </div>

@@ -1,0 +1,69 @@
+<section class="wrapper">
+  <section class="main">
+    <app-organization-back-button
+      [organizationId]="organizationId"
+    ></app-organization-back-button>
+
+    <section *ngIf="event">
+      <h1 class="event-title">
+        {{ event.name }}
+      </h1>
+
+      <p-badge
+        severity="info"
+        value="{{ categoryTypeToLabel(eventType) | translate }}"
+      ></p-badge>
+
+      <p class="description">{{ event.description ?? 'Brak opisu' }}</p>
+    </section>
+
+    <section>
+      <app-view-ping-pong-matches
+        *ngIf="eventType === EventType.PING_PONG"
+        [matches]="getPingPongMatches()"
+      ></app-view-ping-pong-matches>
+
+      <app-view-table-football-matches
+        *ngIf="eventType === EventType.TABLE_FOOTBALL"
+        [matches]="getTableFootballMatches()"
+      >
+      </app-view-table-football-matches>
+
+      <app-view-pull-ups-matches
+        *ngIf="eventType === EventType.PULL_UPS"
+        [matches]="getPullUpsMatches()"
+      >
+      </app-view-pull-ups-matches>
+    </section>
+
+    <section class="buttons">
+      <a
+        [routerLink]="[
+          '/organizations',
+          organizationId,
+          'events',
+          eventId,
+          'results',
+          { type: eventType }
+        ]"
+      >
+        <p-button> Dodaj wyniki </p-button>
+      </a>
+    </section>
+  </section>
+
+  <section class="participants">
+    <h2 class="section-title">Uczestnicy wydarzenia</h2>
+
+    <div class="users">
+      <a
+        class="user"
+        *ngFor="let user of participants"
+        routerLink="/profiles/{{ user.id }}"
+      >
+        <div class="user-avatar"></div>
+        <p>{{ user.name }}</p>
+      </a>
+    </div>
+  </section>
+</section>

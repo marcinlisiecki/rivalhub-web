@@ -24,6 +24,7 @@ import { AccordionModule } from 'primeng/accordion';
 import { EventResultComponent } from './event-result/event-result.component';
 import { PingPingResultComponent } from './event-result/ping-ping-result/ping-ping-result.component';
 import { EventWaitingComponent } from './event-result/event-waiting/event-waiting.component';
+import { OrganizationBackButtonComponent } from './organization-back-button/organization-back-button.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { EventWaitingComponent } from './event-result/event-waiting/event-waitin
     EventResultComponent,
     PingPingResultComponent,
     EventWaitingComponent,
+    OrganizationBackButtonComponent,
   ],
   exports: [
     ValidationErrorComponent,
@@ -56,6 +58,7 @@ import { EventWaitingComponent } from './event-result/event-waiting/event-waitin
     VerifyAccountInfoComponent,
     NoResourceInfoComponent,
     EventResultComponent,
+    OrganizationBackButtonComponent,
   ],
   imports: [
     CommonModule,

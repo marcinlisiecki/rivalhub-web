@@ -1,0 +1,15 @@
+<h2 class="section-title" *ngIf="!editable">Rundy</h2>
+
+<app-no-resource-info *ngIf="matches?.length === 0">
+  Brak meczów w wybranym wydarzeniu
+</app-no-resource-info>
+
+<div class="matches">
+  <app-view-pull-ups-match
+    *ngFor="let match of matches"
+    [match]="match"
+    [editable]="editable"
+    (handleAddSeries)="handleAddSeries.emit($event)"
+  >
+  </app-view-pull-ups-match>
+</div>

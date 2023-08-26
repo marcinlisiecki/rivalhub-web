@@ -1,0 +1,14 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+  margin-bottom: 1rem;
+
+  input {
+    width: 100%;
+  }
+}
+
+.validation-error-wrapper {
+  margin-top: 1rem;
+}

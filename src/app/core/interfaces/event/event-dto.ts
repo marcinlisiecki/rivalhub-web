@@ -13,4 +13,5 @@ export interface EventDto {
   name: string;
   description: string;
   eventPublic: boolean;
+  status: string;
 }

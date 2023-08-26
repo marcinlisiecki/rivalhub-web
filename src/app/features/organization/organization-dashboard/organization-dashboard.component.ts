@@ -1,8 +1,8 @@
-import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { navAnimation } from '@app/core/animations/nav-animation';
 import { OrganizationsService } from '@app/core/services/organizations/organizations.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { ViewService } from '@app/core/services/view/view.service';
 import { EventDto } from '@interfaces/event/event-dto';
 import { Organization } from '@interfaces/organization/organization';
@@ -14,6 +14,7 @@ import { MessageService } from 'primeng/api';
 import { OrganizationSettings } from '@interfaces/organization/organization-settings';
 import { AuthService } from '@app/core/services/auth/auth.service';
 import { ImageService } from '@app/core/services/image/image.service';
+import { EventType } from '@interfaces/event/event-type';
 
 @Component({
   selector: 'app-organization-dashboard',
@@ -121,9 +122,15 @@ export class OrganizationDashboardComponent implements OnInit, OnDestroy {
   }
 
   private getOrganizationEvents() {
-    this.organizationsService.getEvents(this.id).subscribe({
-      next: (res: EventDto[]) => {
-        this.events = res;
+    this.fetchEventsForType(EventType.PING_PONG);
+    this.fetchEventsForType(EventType.TABLE_FOOTBALL);
+    this.fetchEventsForType(EventType.PULL_UPS);
+  }
+
+  fetchEventsForType(type: EventType) {
+    this.organizationsService.getEvents(this.id, type).subscribe({
+      next: (events: EventDto[]) => {
+        this.events.push(...events);
       },
       error: (err: HttpErrorResponse) => {
         console.error('An error occurred:', err);

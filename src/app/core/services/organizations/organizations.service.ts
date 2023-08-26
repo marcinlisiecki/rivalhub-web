@@ -68,12 +68,12 @@ export class OrganizationsService {
     );
   }
 
-  getEvents(id: number): Observable<EventDto[]> {
+  getEvents(id: number, type: EventType): Observable<EventDto[]> {
     return this.http.get<EventDto[]>(
       environment.apiUrl + `/organizations/${id}/events`,
       {
         params: {
-          type: 'PING_PONG',
+          type,
         },
       },
     );

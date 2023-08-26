@@ -9,6 +9,13 @@ import { PingPongMatch } from '@interfaces/event/games/ping-pong/ping-pong-match
 import { GameSet } from '@app/core/interfaces/event/games/game-set';
 import { NewPingPongMatch } from '@interfaces/event/games/ping-pong/new-ping-pong-match';
 import { API_DATE_FORMAT } from '@app/core/constants/date';
+import { EventDto } from '@interfaces/event/event-dto';
+import { UserDetailsDto } from '@interfaces/user/user-details-dto';
+import { TableFootballMatch } from '@interfaces/event/games/table-football/table-football-match';
+import { NewTableFootballMatch } from '@interfaces/event/games/table-football/new-table-football-match';
+import { PullUpsMatch } from '@interfaces/event/games/pull-ups/pull-ups-match';
+import { PullUpsSeries } from '@interfaces/event/games/pull-ups/pull-ups-series';
+import { NewPullUpsMatch } from '@interfaces/event/games/pull-ups/new-pull-ups-match';
 
 @Injectable({
   providedIn: 'root',
@@ -70,17 +77,74 @@ export class EventsService {
     );
   }
 
-  getEventMatches(
-    organizationId: number,
-    eventId: number,
-  ): Observable<PingPongMatch[]> {
-    return this.http.get<PingPongMatch[]>(
-      environment.apiUrl +
-        `/organizations/${organizationId}/events/${eventId}/match?type=PING_PONG`,
+  getEvent(eventId: number, type: EventType): Observable<EventDto> {
+    return this.http.get<EventDto>(
+      environment.apiUrl + `/organizations/events/${eventId}`,
+      { params: { type } },
     );
   }
 
-  addMatchSet(
+  getEventParticipants(
+    eventId: number,
+    type: EventType,
+  ): Observable<UserDetailsDto[]> {
+    return this.http.get<UserDetailsDto[]>(
+      environment.apiUrl + `/organizations/events/${eventId}/participants`,
+      { params: { type } },
+    );
+  }
+
+  getEventMatches<
+    T extends PingPongMatch[] | TableFootballMatch[] | PullUpsMatch[],
+  >(
+    organizationId: number,
+    eventId: number,
+    eventType: EventType,
+  ): Observable<T> {
+    return this.http.get<T>(
+      environment.apiUrl +
+        `/organizations/${organizationId}/events/${eventId}/match`,
+      { params: { type: eventType } },
+    );
+  }
+
+  getEventUsers(
+    eventId: number,
+    eventType: EventType,
+  ): Observable<UserDetailsDto[]> {
+    return this.http.get<UserDetailsDto[]>(
+      environment.apiUrl + `/organizations/events/${eventId}/participants`,
+      { params: { type: eventType } },
+    );
+  }
+
+  addTableFootballSet(
+    organizationId: number,
+    eventId: number,
+    matchId: number,
+    setList: GameSet[],
+  ): Observable<{}> {
+    return this.http.post<{}>(
+      environment.apiUrl +
+        `/organizations/${organizationId}/events/${eventId}/match/${matchId}/tablefootball?type=TABLE_FOOTBALL`,
+      setList,
+    );
+  }
+
+  addPullUpsSeries(
+    organizationId: number,
+    eventId: number,
+    matchId: number,
+    series: PullUpsSeries[],
+  ): Observable<PullUpsMatch> {
+    return this.http.post<PullUpsMatch>(
+      environment.apiUrl +
+        `/organizations/${organizationId}/events/${eventId}/match/${matchId}/pullups?type=PULL_UPS`,
+      series,
+    );
+  }
+
+  addPingPongMatchSet(
     organizationId: number,
     eventId: number,
     matchId: number,
@@ -104,15 +168,38 @@ export class EventsService {
     );
   }
 
-  addEventMatch(
+  addPullUpsMatch(
     organizationId: number,
     eventId: number,
-    type: EventType,
+    newMatch: NewPullUpsMatch,
+  ): Observable<PullUpsMatch> {
+    return this.http.post<PullUpsMatch>(
+      environment.apiUrl +
+        `/organizations/${organizationId}/events/${eventId}/match?type=${EventType.PULL_UPS}`,
+      newMatch,
+    );
+  }
+
+  addPingPongMatch(
+    organizationId: number,
+    eventId: number,
     newMatch: NewPingPongMatch,
   ): Observable<PingPongMatch> {
     return this.http.post<PingPongMatch>(
       environment.apiUrl +
-        `/organizations/${organizationId}/events/${eventId}/match?type=${type}`,
+        `/organizations/${organizationId}/events/${eventId}/match?type=${EventType.PING_PONG}`,
+      newMatch,
+    );
+  }
+
+  addTableFootballMatch(
+    organizationId: number,
+    eventId: number,
+    newMatch: NewTableFootballMatch,
+  ): Observable<TableFootballMatch> {
+    return this.http.post<TableFootballMatch>(
+      environment.apiUrl +
+        `/organizations/${organizationId}/events/${eventId}/match?type=${EventType.TABLE_FOOTBALL}`,
       newMatch,
     );
   }

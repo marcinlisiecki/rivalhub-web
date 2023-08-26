@@ -1,8 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { EventType } from '@interfaces/event/event-type';
 import { categoryTypeToLabel } from '../../../core/utils/event';
-import { STATIONS } from '../../../mock/stations';
-import * as moment from 'moment/moment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OrganizationsService } from '@app/core/services/organizations/organizations.service';
 import { extractMessage } from '@app/core/utils/apiErrors';
@@ -74,8 +72,8 @@ export class AddReservationComponent {
   getOrganizationCategories() {
     const organizationId: number = this.route.snapshot.params['id'];
     this.organizationService.getEventsCategories(organizationId).subscribe({
-      next: (avaliableCategories: EventType[]) => {
-        this.types = new Set(avaliableCategories);
+      next: (availableCategories: EventType[]) => {
+        this.types = new Set(availableCategories);
       },
     });
   }
@@ -85,7 +83,6 @@ export class AddReservationComponent {
     const organizationId: number = this.route.snapshot.params['id'];
     this.getOrganizationCategories();
     setTimeout(() => {
-      this.organizationService.getEvents(organizationId);
       this.stationsService
         .getAvailableStations(organizationId, this.startTime, this.finishTime)
         .subscribe({
