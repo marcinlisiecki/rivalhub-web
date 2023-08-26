@@ -1,0 +1,84 @@
+<section class="wrapper">
+  <app-organization-back-button
+    [organizationId]="organizationId"
+  ></app-organization-back-button>
+  <header>
+    <h1>{{ 'organization.events.label' | translate }}</h1>
+    <a routerLink="/organizations/{{ organizationId }}/events/new"
+      ><p-button
+        icon="pi pi-plus"
+        iconPos="right"
+        label="{{ 'events.new' | translate }}"
+      ></p-button
+    ></a>
+  </header>
+
+  <p-divider></p-divider>
+
+  <section class="content-wrapper">
+    <section class="events-wrapper">
+      <app-no-resource-info *ngIf="paginatedEvents.length === 0">
+        {{ 'organization.noEvents' | translate }}
+      </app-no-resource-info>
+
+      <app-event-card
+        *ngFor="let event of paginatedEvents"
+        [event]="event"
+        [canJoin]="canJoin(event)"
+        (joinEvent)="joinEvent($event)"
+      >
+      </app-event-card>
+
+      <p-paginator
+        (onPageChange)="onPageChange($event)"
+        [first]="first"
+        [rows]="rows"
+        [totalRecords]="filteredEvents.length"
+      ></p-paginator>
+    </section>
+    <section class="filters-wrapper">
+      <header>
+        <h1>{{ 'filters.label' | translate }}</h1>
+      </header>
+
+      <div class="input-box">
+        <label for="event-category">{{
+          'filters.events.category.label' | translate
+        }}</label>
+        <p-dropdown
+          inputId="event-category"
+          [style]="{ width: '100%' }"
+          (onChange)="filterEvents()"
+          [options]="eventTypesFilter"
+          optionLabel="name"
+          [(ngModel)]="selectedEventTypeFilter"
+        ></p-dropdown>
+      </div>
+
+      <div class="input-box">
+        <label for="event-status">{{
+          'filters.events.status.label' | translate
+        }}</label>
+        <p-dropdown
+          inputId="event-status"
+          [style]="{ width: '100%' }"
+          (onChange)="filterEvents()"
+          [options]="eventStatusFilter"
+          optionLabel="name"
+          [(ngModel)]="selectedEventStatusFilter"
+        ></p-dropdown>
+      </div>
+
+      <div class="switch">
+        <label for="only-my-events">{{
+          'filters.events.onlyMyEvents.label' | translate
+        }}</label>
+        <p-inputSwitch
+          inputId="only-my-events"
+          [(ngModel)]="onlyMyEvents"
+          (onChange)="filterEvents()"
+        ></p-inputSwitch>
+      </div>
+    </section>
+  </section>
+</section>

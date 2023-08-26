@@ -1,0 +1,50 @@
+@import 'src/scss/variables';
+
+.wrapper {
+  max-width: $pageWidth;
+  margin: 2rem auto 1rem auto;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h1 {
+    margin: 0;
+    font-size: $textXl;
+  }
+}
+
+.events-wrapper {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+  flex: 1;
+}
+
+.content-wrapper {
+  display: flex;
+  column-gap: 3rem;
+}
+
+.filters-wrapper {
+  width: 20rem;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+
+  h1 {
+    font-size: $textLg;
+  }
+}
+
+.paginator-wrapper {
+  margin-top: 1rem;
+}
+
+.switch {
+  display: flex;
+  align-items: center;
+  column-gap: 1rem;
+}

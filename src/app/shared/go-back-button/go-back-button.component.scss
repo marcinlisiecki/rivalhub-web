@@ -1,0 +1,25 @@
+@import 'src/scss/variables';
+
+a {
+  color: $primaryColor;
+  text-decoration: none;
+  display: flex;
+  column-gap: 0.4rem;
+  align-items: center;
+  cursor: pointer;
+
+  i {
+    color: $primaryColor;
+  }
+
+  p {
+    padding: 0;
+    margin: 0;
+  }
+
+  &:hover {
+    p {
+      text-decoration: underline;
+    }
+  }
+}

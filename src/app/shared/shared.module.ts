@@ -30,6 +30,7 @@ import { TagModule } from 'primeng/tag';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterLink } from '@angular/router';
 import { AvatarComponent } from './avatar/avatar.component';
+import { GoBackButtonComponent } from './go-back-button/go-back-button.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { AvatarComponent } from './avatar/avatar.component';
     OrganizationBackButtonComponent,
     EventCardComponent,
     AvatarComponent,
+    GoBackButtonComponent,
   ],
   exports: [
     ValidationErrorComponent,
@@ -68,6 +70,7 @@ import { AvatarComponent } from './avatar/avatar.component';
     OrganizationBackButtonComponent,
     EventCardComponent,
     AvatarComponent,
+    GoBackButtonComponent,
   ],
   imports: [
     CommonModule,
