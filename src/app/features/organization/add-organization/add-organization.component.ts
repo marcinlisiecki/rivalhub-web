@@ -39,8 +39,6 @@ export class AddOrganizationComponent implements AfterViewInit {
     private authService: AuthService,
   ) {}
 
-  //Ale dla jasności - to jest potrzebne do tego,
-  //żeby po kliknięciu na awatar pokazywał się colorpicker i chował się oryginalny guziczek.
   @ViewChild('colorPicker') colorPicker!: any;
   onImageClick() {
     this.colorPicker.el.nativeElement.childNodes[0].childNodes[0].click();
@@ -65,7 +63,7 @@ export class AddOrganizationComponent implements AfterViewInit {
     this.customAvatar = false;
   }
 
-  onClearClicked(event: Event) {
+  onClearClicked() {
     this.customAvatar = true;
     this.imageURL = this.DEFAULTAVATAR;
     this.uploadedFile = undefined;

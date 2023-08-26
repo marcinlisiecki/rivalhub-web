@@ -19,7 +19,7 @@ export class UserItemComponent implements OnInit {
   @Input({ required: true }) eventTypes: EventType[] = [];
 
   items?: MenuItem[];
-  profileImg!: string;
+  imageUrl!: string;
   organizationId!: number;
 
   constructor(
@@ -60,7 +60,7 @@ export class UserItemComponent implements OnInit {
       this.items = [profileItem];
     }
 
-    this.profileImg = this.imageService.getUserImagePath(
+    this.imageUrl = this.imageService.getUserImagePath(
       this.user.profilePictureUrl,
     );
   }

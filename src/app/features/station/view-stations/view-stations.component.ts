@@ -24,11 +24,7 @@ export class ViewStationsComponent implements OnInit {
 
   stationsOptions: string[] = [];
 
-  newStation: NewStation = {
-    name: '',
-    type: EventType.PING_PONG,
-    active: false,
-  };
+  newStation!: NewStation;
 
   clonedStations: { [s: string]: Station } = {};
 
@@ -72,7 +68,7 @@ export class ViewStationsComponent implements OnInit {
         this.newStation = {
           name: '',
           type: types[0] || null,
-          active: false,
+          active: true,
         };
       });
   }
@@ -102,8 +98,8 @@ export class ViewStationsComponent implements OnInit {
     // Resetuj nowy rekord do domyślnych wartości
     this.newStation = {
       name: '',
-      type: EventType.PING_PONG,
-      active: false,
+      type: EventType.PING_PONG || null,
+      active: true,
     };
   }
 
