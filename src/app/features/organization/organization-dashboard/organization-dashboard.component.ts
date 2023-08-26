@@ -154,10 +154,7 @@ export class OrganizationDashboardComponent implements OnInit, OnDestroy {
   private filterIncomingAndActiveEvents(events: EventDto[]) {
     return events
       .filter(
-        (event) =>
-          event.status === 'Active' ||
-          event.status === 'Incoming' ||
-          event.status === null,
+        (event) => event.status === 'Active' || event.status === 'Incoming',
       )
       .sort(
         (a, b) =>

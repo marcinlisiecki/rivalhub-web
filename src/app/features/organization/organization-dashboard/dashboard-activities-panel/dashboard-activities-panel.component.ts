@@ -36,6 +36,10 @@ export class DashboardActivitiesPanelComponent implements OnInit, OnChanges {
   eventTypesFilter: EventFilter[] = [];
   selectedFilter?: EventFilter;
   filteredEvents: EventDto[] = [];
+  paginatedEvents: EventDto[] = [];
+
+  first: number = 0;
+  rows: number = 5;
 
   constructor(
     private route: ActivatedRoute,
@@ -60,6 +64,19 @@ export class DashboardActivitiesPanelComponent implements OnInit, OnChanges {
     }
   }
 
+  onPageChange(event: any) {
+    this.first = event.first;
+    this.rows = event.rows;
+    this.setPaginatedEvents();
+  }
+
+  setPaginatedEvents() {
+    this.paginatedEvents = this.filteredEvents.slice(
+      this.first,
+      this.first + this.rows,
+    );
+  }
+
   joinEvent(event: EventDto) {
     this.eventsService.joinEvent(event.eventId, event.eventType).subscribe({
       next: () => {
@@ -74,14 +91,20 @@ export class DashboardActivitiesPanelComponent implements OnInit, OnChanges {
   }
 
   filterEvents() {
+    this.first = 0;
+
     if (this.selectedFilter?.value === 'ALL' || !this.selectedFilter) {
       this.filteredEvents = this.events;
+      this.setPaginatedEvents();
+
       return;
     }
 
     this.filteredEvents = this.events.filter(
       (event) => event.eventType === this.selectedFilter?.value,
     );
+
+    this.setPaginatedEvents();
   }
 
   canJoin(event: EventDto): boolean {

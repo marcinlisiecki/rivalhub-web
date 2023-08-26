@@ -31,6 +31,7 @@ import { AdminCardComponent } from './members/admin-card/admin-card.component';
 import { OrganizationSettingsComponent } from '@app/features/organization/organization-settings/organization-settings.component';
 import { Tag, TagModule } from 'primeng/tag';
 import { DropdownModule } from 'primeng/dropdown';
+import { PaginatorModule } from 'primeng/paginator';
 
 @NgModule({
   declarations: [
@@ -74,6 +75,7 @@ import { DropdownModule } from 'primeng/dropdown';
     ColorPickerModule,
     TagModule,
     DropdownModule,
+    PaginatorModule,
   ],
   exports: [
     MyOrganizationsComponent,
