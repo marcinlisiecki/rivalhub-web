@@ -50,7 +50,7 @@ export class MembersComponent implements OnInit {
         this.loadUsers();
       },
       error: (error: HttpErrorResponse) => {
-        console.log(error.error);
+        console.error(error.error);
       },
     });
   }
@@ -68,7 +68,7 @@ export class MembersComponent implements OnInit {
           );
         },
         error: (error: HttpErrorResponse) => {
-          console.log(error.error);
+          console.error(error.error);
         },
         complete: () => this.toggleLoading(),
       });
@@ -89,7 +89,7 @@ export class MembersComponent implements OnInit {
           );
         },
         error: (error: HttpErrorResponse) => {
-          console.log(error.error.message);
+          console.error(error.error.message);
           this.noMore = true;
         },
         complete: () => this.toggleLoading(),

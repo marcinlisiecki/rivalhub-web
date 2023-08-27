@@ -122,7 +122,7 @@ export class NewEventComponent implements OnInit, OnDestroy {
           });
 
           this.selectedEventType = challengeType as EventType;
-          this.basicInfoForm.get('name')?.setValue('Szybkie wyzwanie');
+          this.basicInfoForm.get('name')?.setValue(this.languageService.instant('event.fastChallenge'));
           this.setFormStep(AddEventFormStep.DATE);
         },
         error: () => {
@@ -222,7 +222,7 @@ export class NewEventComponent implements OnInit, OnDestroy {
     const endDate: Date = this.dateForm.get('endDate')?.value;
 
     if (startDate.getTime() > endDate.getTime()) {
-      this.dateError = 'Godzina startowa musi być przed godziną zakończenia';
+      this.dateError = this.languageService.instant('event.date.dateErr');
       return false;
     }
 

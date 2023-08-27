@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,12 +20,14 @@ import {
   TranslateService,
 } from '@ngx-translate/core';
 import { MessageService } from 'primeng/api';
-import {InfiniteScrollModule} from "ngx-infinite-scroll";
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ProfileModule } from './features/profile/profile.module';
 import { CalendarModule } from '@app/features/calendar/calendar.module';
 import { UserModule } from './features/user/user.module';
 import { DatePipe } from '@angular/common';
+import { lastValueFrom } from 'rxjs';
+import { LanguageService } from '@app/core/services/language/language.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -68,6 +70,12 @@ import { DatePipe } from '@angular/common';
       useClass: AuthenticateInterceptor,
       multi: true,
     },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: appInitializerFactory,
+      deps: [LanguageService],
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent],
 })
@@ -75,4 +83,11 @@ export class AppModule {}
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
+
+export function appInitializerFactory(translate: LanguageService) {
+  return () => {
+    translate.setLocalStorage();
+    return lastValueFrom(translate.use(translate.currentLanguage()));
+  };
 }

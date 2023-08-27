@@ -10,6 +10,7 @@ import { UserDetailsDto } from '@interfaces/user/user-details-dto';
 import { AddEventUser } from '@interfaces/event/add-event-user';
 import { NewPingPongMatch } from '@interfaces/event/games/ping-pong/new-ping-pong-match';
 import { NewPullUpsMatch } from '@interfaces/event/games/pull-ups/new-pull-ups-match';
+import { LanguageService } from '@app/core/services/language/language.service';
 
 @Component({
   selector: 'app-add-pull-ups-results',
@@ -30,6 +31,7 @@ export class AddPullUpsResultsComponent implements OnInit {
     private eventsService: EventsService,
     private route: ActivatedRoute,
     private dialogService: DialogService,
+    private languageService: LanguageService,
   ) {}
 
   ngOnInit(): void {
@@ -81,7 +83,7 @@ export class AddPullUpsResultsComponent implements OnInit {
     this.addSeriesDialogRef = this.dialogService.open(
       AddPullUpsSeriesComponent,
       {
-        header: 'Dodaj serię',
+        header: this.languageService.instant('event.rounds.addSeries'),
         width: '25rem',
         data: {
           matchId,

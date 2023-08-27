@@ -14,6 +14,7 @@ import { FileSelectEvent } from 'primeng/fileupload';
 import { ImageService } from '@app/core/services/image/image.service';
 import { EditOrganization } from '@app/core/interfaces/organization/edit-organization';
 import { Observable, of } from 'rxjs';
+import { LanguageService } from '@app/core/services/language/language.service';
 
 @Component({
   selector: 'app-organization-settings',
@@ -59,6 +60,7 @@ export class OrganizationSettingsComponent {
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private renderer: Renderer2,
+    private languageService: LanguageService,
   ) {
     this.organizationId = parseInt(this.route.snapshot.params['id']);
   }
@@ -86,17 +88,17 @@ export class OrganizationSettingsComponent {
   onDelete(event: Event) {
     this.confirmationService.confirm({
       target: event.target as EventTarget,
-      acceptLabel: 'Tak',
-      rejectLabel: 'Nie',
+      acceptLabel: this.languageService.instant('common.yes'),
+      rejectLabel: this.languageService.instant('common.no'),
       icon: 'pi pi-exclamation-triangle',
-      message: 'Czy na pewno chcesz usunąć organizację?',
+      message: this.languageService.instant('organization.deleteConfQ'),
       accept: () => {
         this.organizationsService.delete(this.organizationId).subscribe({
           next: () => {
             this.messageService.add({
               severity: 'success',
               life: this.toastLifeTime,
-              summary: 'Organizacja została pomyślnie usunięta',
+              summary: this.languageService.instant('organization.deleteConf'),
             });
             this.router.navigate(['organizations']);
           },
@@ -146,7 +148,7 @@ export class OrganizationSettingsComponent {
           this.messageService.add({
             severity: 'success',
             life: this.toastLifeTime,
-            summary: 'Ustawienia zostały pomyślnie zapisane',
+            summary: this.languageService.instant('organization.settingsConf'),
           });
         },
         error: (err: HttpErrorResponse) => {
@@ -168,7 +170,7 @@ export class OrganizationSettingsComponent {
           this.messageService.add({
             severity: 'success',
             life: this.toastLifeTime,
-            summary: 'Avatar został pomyślnie edytowany!',
+            summary: this.languageService.instant('organization.avatarEdited'),
           });
         },
         error: (err: HttpErrorResponse) => {
@@ -190,7 +192,7 @@ export class OrganizationSettingsComponent {
           this.messageService.add({
             severity: 'success',
             life: this.toastLifeTime,
-            summary: 'Dane organizacji zostały pomyślnie zapisane!',
+            summary: this.languageService.instant('organization.edited'),
           });
         },
         error: (err: HttpErrorResponse) => {
@@ -247,11 +249,13 @@ export class OrganizationSettingsComponent {
   onFileSelectClicked(event: FileSelectEvent) {
     this.clientError = undefined;
     if (!this.ACCEPTEDFILETYPES.includes(event.files[0].type)) {
-      this.clientError = 'Obsługujemy tylko pliki .png, .jpg, .jpeg i .gif.';
+      this.clientError = this.languageService.instant('organization.files');
       return;
     }
     if (event.files[0].size > this.MAXFILESIZE) {
-      this.clientError = 'Plik jest za duży.';
+      this.clientError = this.languageService.instant(
+        'organization.fileToLarge',
+      );
       return;
     }
     this.uploadedFile;

@@ -10,6 +10,7 @@ import { MessageService } from 'primeng/api';
 import { InvitationsService } from '@app/core/services/invitations/invitations.service';
 import { UsersService } from '@app/core/services/users/users.service';
 import { ImageService } from '@app/core/services/image/image.service';
+import { LanguageService } from '@app/core/services/language/language.service';
 
 @Component({
   selector: 'app-my-organizations',
@@ -32,6 +33,7 @@ export class MyOrganizationsComponent implements OnInit {
     private usersService: UsersService,
     private route: ActivatedRoute,
     private imageService: ImageService,
+    private languageService: LanguageService,
   ) {}
 
   ngOnInit(): void {
@@ -43,9 +45,8 @@ export class MyOrganizationsComponent implements OnInit {
     if (registered) {
       this.messageService.add({
         severity: 'success',
-        summary: 'Pomyślnie zarejestrowano i zalogowano',
-        detail:
-          'Na podany adres mailowy został wysłany link do aktywacji konta.',
+        summary: this.languageService.instant('organization.registerSummary'),
+        detail: this.languageService.instant('organization.registerDetail'),
         life: 1000 * 15,
       });
     }
@@ -90,7 +91,7 @@ export class MyOrganizationsComponent implements OnInit {
         error: (err: HttpErrorResponse) => {
           this.messageService.add({
             severity: 'error',
-            summary: 'Wystąpił błąd',
+            summary: this.languageService.instant('api.error.summary'),
             detail: extractMessage(err),
           });
         },

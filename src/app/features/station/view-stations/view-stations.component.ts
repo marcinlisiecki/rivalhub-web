@@ -9,6 +9,7 @@ import { Station } from '@app/core/interfaces/station/station';
 import { NewStation } from '@app/core/interfaces/station/new-station';
 import { ConfirmationService } from 'primeng/api';
 import { EventsService } from '@app/core/services/events/events.service';
+import { LanguageService } from '@app/core/services/language/language.service';
 @Component({
   selector: 'app-view-stations',
   templateUrl: './view-stations.component.html',
@@ -35,6 +36,7 @@ export class ViewStationsComponent implements OnInit {
     private stationsService: StationsService,
     private confirmationService: ConfirmationService,
     private eventsService: EventsService,
+    private languageService: LanguageService,
   ) {
     this.route.params.subscribe((params) => {
       this.organizationId = params['id'];
@@ -136,7 +138,9 @@ export class ViewStationsComponent implements OnInit {
     //trim name
     this.newStation.name = this.newStation.name.trim();
     if (this.newStation.name.length < 3 || this.newStation.name.length > 255) {
-      this.inputError = 'Nazwa stanowiska musi mieć od 3 do 255 znaków';
+      this.inputError = this.languageService.instant(
+        'organization.stationNameLength',
+      );
       return;
     }
     this.inputError = null;
@@ -150,9 +154,9 @@ export class ViewStationsComponent implements OnInit {
   onRowDelete(event: Event, station: Station) {
     this.confirmationService.confirm({
       target: event.target as EventTarget,
-      message: 'Na pewno chcesz usunąć to stanowisko?',
-      acceptLabel: 'Tak',
-      rejectLabel: 'Nie',
+      message: this.languageService.instant('organization.stationDelete'),
+      acceptLabel: this.languageService.instant('common.yes'),
+      rejectLabel: this.languageService.instant('common.no'),
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.deleteStation(station);

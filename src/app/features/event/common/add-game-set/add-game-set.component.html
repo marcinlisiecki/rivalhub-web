@@ -1,6 +1,8 @@
 <div class="wrapper">
   <div class="input-box">
-    <label for="team1Score">Drużyna 1</label>
+    <label for="team1Score"
+      >{{ 'event.common.team' | translate }}{{ ' 1' }}</label
+    >
     <input
       pInputText
       type="number"
@@ -11,7 +13,9 @@
   </div>
 
   <div class="input-box">
-    <label for="team2Score">Drużyna 2</label>
+    <label for="team2Score"
+      >{{ 'event.common.team' | translate }}{{ ' 2' }}</label
+    >
     <input
       pInputText
       type="number"
@@ -22,7 +26,9 @@
   </div>
 </div>
 
-<p-button styleClass="button-wide" (click)="onSubmit()">Dodaj</p-button>
+<p-button styleClass="button-wide" (click)="onSubmit()">{{
+  'button.add' | translate
+}}</p-button>
 
 <div class="validation-error-wrapper" *ngIf="errorMessage">
   <app-validation-error>{{ errorMessage }}</app-validation-error>

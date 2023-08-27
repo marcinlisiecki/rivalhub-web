@@ -74,11 +74,12 @@
       </p-button>
       <p class="api-error-wrapper" *ngIf="apiError">
         <app-validation-error>
-          {{ apiError }}
+          {{ apiError | translate }}
         </app-validation-error>
       </p>
       <p class="already-have-account-wrapper">
-        Masz już konto? <a routerLink="/login">Zaloguj się</a>
+        {{ 'register.login' | translate }}
+        <a routerLink="/login">{{ 'button.signIn' | translate }}</a>
       </p>
     </div>
   </form>

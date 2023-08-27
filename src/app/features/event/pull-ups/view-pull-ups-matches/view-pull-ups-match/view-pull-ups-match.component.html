@@ -1,7 +1,7 @@
 <section class="match">
   <section class="teams">
     <section class="team">
-      <h2>Uczestnicy rundy</h2>
+      <h2>{{ 'event.rounds.participants' | translate }}</h2>
       <div *ngFor="let user of match.userDetailsDtos" class="team-member">
         <div class="team-member-data">
           <app-avatar class="team-member-avatar" [user]="user"></app-avatar>
@@ -11,14 +11,16 @@
     </section>
   </section>
   <section class="series">
-    <h2>Przebieg rundy</h2>
+    <h2>{{ 'event.rounds.course' | translate }}</h2>
 
     <app-no-resource-info *ngIf="series?.length === 0">
-      Brak serii w tej rundzie
+      {{ 'event.rounds.noSeries' | translate }}
     </app-no-resource-info>
 
     <div *ngFor="let seriesItem of series" class="series-item">
-      <p class="series-label">Seria {{ seriesItem.seriesID }}</p>
+      <p class="series-label">
+        {{ 'event.rounds.series' | translate }} {{ seriesItem.seriesID }}
+      </p>
       <div class="series-results">
         <div
           *ngFor="let userResults of seriesItem.scores"
@@ -34,14 +36,14 @@
       *ngIf="editable"
       styleClass="p-button-outlined"
       (click)="handleAddSeries.emit(match.id)"
-      >Dodaj serię</p-button
+      >{{ 'event.rounds.addSeries' | translate }}</p-button
     >
   </section>
   <section *ngIf="!editable">
-    <h2>Ranking</h2>
+    <h2>{{ 'event.rounds.ranking.ranking' | translate }}</h2>
     <div class="ranking">
       <app-no-resource-info *ngIf="series?.length === 0">
-        Ranking jest niedostępny
+        {{ 'event.rounds.ranking.unavailable' | translate }}
       </app-no-resource-info>
 
       <div

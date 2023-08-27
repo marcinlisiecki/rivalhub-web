@@ -1,7 +1,7 @@
-<h2 class="section-title" *ngIf="!editable">Mecze</h2>
+<h2 class="section-title" *ngIf="!editable">{{ 'event.games' | translate }}</h2>
 
 <app-no-resource-info *ngIf="matches?.length === 0">
-  Brak meczów w wybranym wydarzeniu
+  {{ 'event.noGames' | translate }}
 </app-no-resource-info>
 
 <div class="matches">

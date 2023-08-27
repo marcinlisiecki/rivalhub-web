@@ -1,17 +1,17 @@
 <p-accordion [activeIndex]="[]">
   <p-accordionTab [disabled]="stations.length === 0">
     <ng-template pTemplate="header">
-      <div>        
+      <div>
         <span class="vertical-align-middle">{{ categoryLabel }}</span
         ><span
           class="inactive-text"
           *ngIf="
-          stations.length === 0 &&
+            stations.length === 0 &&
             closestAvailable?.stations?.length === 0 &&
             closestAvailable.firstAvailable === null
           "
         >
-          Stanowiska z tej kategorii nie zostały jeszcze dodane</span
+          {{ 'organization.stationsNotAdded' | translate }}</span
         ><span
           class="inactive-text"
           *ngIf="
@@ -19,7 +19,7 @@
             closestAvailable.firstAvailable !== null
           "
         >
-          Najbliższa dostępna stacja o:
+          {{ 'organization.stationsTime' | translate }}:
           {{ closestAvailable.formatedFirstAvailable }}</span
         >
       </div>

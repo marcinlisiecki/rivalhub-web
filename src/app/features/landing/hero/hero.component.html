@@ -1,36 +1,40 @@
-
-<div *ngIf="!value; else loggedIn " class="landing">
+<div *ngIf="!value; else loggedIn" class="landing">
   <div class="landing-content">
     <div class="landing-content-left">
-    <div class="landing-header">
-       <span>{{ 'landing.welcome' | translate }}</span> <app-rivalhub-logo></app-rivalhub-logo>
-    </div>
+      <div class="landing-header">
+        <span>{{ 'landing.welcome' | translate }}</span>
+        <app-rivalhub-logo></app-rivalhub-logo>
+      </div>
       <p>
-      <span>
-        {{ 'landing.text1' | translate }}
+        <span>
+          {{ 'landing.text1' | translate }}
         </span>
         <app-rivalhub-logo></app-rivalhub-logo>
-      <span>
-       {{ 'landing.text2' | translate }}
-      </span>
+        <span>
+          {{ 'landing.text2' | translate }}
+        </span>
       </p>
       <h3>{{ 'landing.join' | translate }}</h3>
     </div>
     <div class="landing-content-right">
-      <img priority alt="athlete" ngSrc="assets/img/athlete.png" width="444" height="288">
+      <img
+        priority
+        alt="athlete"
+        ngSrc="assets/img/athlete.png"
+        width="444"
+        height="288"
+      />
     </div>
   </div>
 </div>
 
 <ng-template #loggedIn>
-
-  <p-card header="Zalogowano" styleClass="centered-form">
+  <p-card [header]="'common.logged' | translate" styleClass="centered-form">
     <p>
-      Przekierowywanie do organizacji
+      {{ 'landing.redirect' | translate }}
     </p>
     <div class="logged">
-    <p-progressSpinner></p-progressSpinner>
+      <p-progressSpinner></p-progressSpinner>
     </div>
   </p-card>
-
 </ng-template>

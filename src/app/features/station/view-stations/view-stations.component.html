@@ -1,5 +1,5 @@
 <section class="wrapper">
-  <h1 *ngIf="showHeading">Stanowiska w organizacji</h1>
+  <h1 *ngIf="showHeading">{{ 'organization.stations' | translate }}</h1>
 
   <p-table
     [value]="stations"
@@ -9,9 +9,9 @@
   >
     <ng-template pTemplate="header">
       <tr>
-        <th style="width: 35%">Nazwa</th>
-        <th style="width: 35%">Typ</th>
-        <th style="width: 15%">Aktywny</th>
+        <th style="width: 35%">{{ 'common.name' | translate }}</th>
+        <th style="width: 35%">{{ 'common.type' | translate }}</th>
+        <th style="width: 15%">{{ 'common.active' | translate }}</th>
         <th style="width: 15%"></th>
 
         <!-- Przyciski zmiany stanowiska do zmiany koloru np biały sekundary chociaż wizualnie spoko <3  -->
@@ -163,5 +163,7 @@
   <app-validation-error *ngIf="inputError">{{
     inputError
   }}</app-validation-error>
-  <app-validation-error *ngIf="apiError">{{ apiError }}</app-validation-error>
+  <app-validation-error *ngIf="apiError">{{
+    apiError | translate
+  }}</app-validation-error>
 </section>

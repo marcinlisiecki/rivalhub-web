@@ -7,6 +7,7 @@ import { extractMessage } from '@app/core/utils/apiErrors';
 import { UsersService } from '@app/core/services/users/users.service';
 import { InvitationsService } from '@app/core/services/invitations/invitations.service';
 import { AuthService } from '@app/core/services/auth/auth.service';
+import { LanguageService } from '@app/core/services/language/language.service';
 
 @Component({
   selector: 'app-join-organization',
@@ -29,6 +30,7 @@ export class JoinOrganizationComponent implements OnInit {
     private usersService: UsersService,
     private invitationService: InvitationsService,
     private authService: AuthService,
+    private languageService: LanguageService,
   ) {}
 
   ngOnInit() {
@@ -71,7 +73,9 @@ export class JoinOrganizationComponent implements OnInit {
     this.organizationService.choose(id).subscribe({
       next: (resource: Organization) => {
         this.organization = resource;
-        this.mainMessage = `Dołączyć do "${this.organization.name}"?`;
+        this.mainMessage = `${this.languageService.instant(
+          'organization.joinTo',
+        )} "${this.organization.name}"?`;
         this.isLoaded = true;
       },
       error: (error: HttpErrorResponse) => {
