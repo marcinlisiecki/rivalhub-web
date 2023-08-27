@@ -91,7 +91,7 @@ export class MyOrganizationsComponent implements OnInit {
         error: (err: HttpErrorResponse) => {
           this.messageService.add({
             severity: 'error',
-            summary: this.languageService.instant('api.error'),
+            summary: this.languageService.instant('api.error.summary'),
             detail: extractMessage(err),
           });
         },

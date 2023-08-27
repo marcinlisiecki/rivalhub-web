@@ -17,7 +17,7 @@
 
       <div class="team-add-button" (click)="openAddUserDialog()">
         <i class="pi pi-plus"></i>
-        <p>{{ 'event.new.steps.addUser' }}</p>
+        <p>{{ 'event.new.steps.addUsers' | translate }}</p>
       </div>
     </div>
   </section>
@@ -39,13 +39,13 @@
       styleClass="p-button-outlined"
       (onClick)="setFormStep.emit(AddEventFormStep.BASIC_INFO)"
     >
-      {{ 'stepForm.next' | translate }}
+      {{ 'stepForm.previous' | translate }}
     </p-button>
     <p-button
       (onClick)="setFormStep.emit(AddEventFormStep.DATE)"
       [disabled]="addedUsers.length === 0"
     >
-      {{ 'stepForm.previous' | translate }}
+      {{ 'stepForm.next' | translate }}
     </p-button>
   </div>
 </section>

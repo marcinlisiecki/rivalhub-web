@@ -55,7 +55,7 @@
       </p-button>
       <p class="api-error-wrapper" *ngIf="apiError">
         <app-validation-error>
-          {{ apiError }}
+          {{ apiError | translate }}
         </app-validation-error>
       </p>
       <p class="no-account-wrapper">

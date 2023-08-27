@@ -17,7 +17,7 @@ export class ErrorsService {
       severity: 'error',
       life: 1000 * 10,
       summary: this.languageService.instant('error.summary'),
-      detail: message,
+      detail: this.languageService.instant(message),
     });
   }
 }

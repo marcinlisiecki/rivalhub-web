@@ -88,8 +88,8 @@ export class OrganizationSettingsComponent {
   onDelete(event: Event) {
     this.confirmationService.confirm({
       target: event.target as EventTarget,
-      acceptLabel: 'Tak',
-      rejectLabel: 'Nie',
+      acceptLabel: this.languageService.instant('common.yes'),
+      rejectLabel: this.languageService.instant('common.no'),
       icon: 'pi pi-exclamation-triangle',
       message: this.languageService.instant('organization.deleteConfQ'),
       accept: () => {

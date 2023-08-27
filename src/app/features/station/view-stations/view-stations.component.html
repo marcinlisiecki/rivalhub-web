@@ -163,5 +163,7 @@
   <app-validation-error *ngIf="inputError">{{
     inputError
   }}</app-validation-error>
-  <app-validation-error *ngIf="apiError">{{ apiError }}</app-validation-error>
+  <app-validation-error *ngIf="apiError">{{
+    apiError | translate
+  }}</app-validation-error>
 </section>
