@@ -15,7 +15,7 @@
       </div>
       <div *ngFor="let user of match.team1" class="team-member">
         <div class="team-member-data">
-        <app-avatar class="team-member-avatar" [user]="user"></app-avatar>
+          <app-avatar class="team-member-avatar" [user]="user"></app-avatar>
           <p>{{ user.name }}</p>
         </div>
       </div>
@@ -35,14 +35,17 @@
       </div>
       <div *ngFor="let user of match.team2" class="team-member">
         <div class="team-member-data">
-        <app-avatar class="team-member-avatar" [user]="user"></app-avatar>
+          <app-avatar class="team-member-avatar" [user]="user"></app-avatar>
           <p>{{ user.name }}</p>
         </div>
       </div>
     </div>
   </section>
 
-  <app-view-game-sets [gameSets]="match.sets"></app-view-game-sets>
+  <app-view-game-sets
+    [gameSets]="match.sets"
+    [editable]="editable"
+  ></app-view-game-sets>
 
   <div class="add-set-button-wrapper" *ngIf="editable">
     <p-button

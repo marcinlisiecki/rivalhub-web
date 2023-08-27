@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 })
 export class ViewGameSetsComponent {
   @Input({ required: true }) gameSets!: GameSet[];
+  @Input() editable: boolean = false;
 
   constructor(
     private confirmationService: ConfirmationService,

@@ -23,6 +23,7 @@
         {{ 'event.rounds.series' | translate }} {{ seriesItem.seriesID }}
         <i
           class="pi pi-times-circle"
+          *ngIf="editable"
           (click)="deleteSeries($event, seriesItem)"
         ></i>
       </p>

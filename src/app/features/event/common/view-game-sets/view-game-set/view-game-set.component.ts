@@ -9,6 +9,7 @@ import { DeleteSetEvent } from '@interfaces/event/delete-set-event';
 })
 export class ViewGameSetComponent {
   @Input({ required: true }) gameSet!: GameSet;
+  @Input() editable: boolean = false;
 
   @Output() deleteSet: EventEmitter<DeleteSetEvent> =
     new EventEmitter<DeleteSetEvent>();

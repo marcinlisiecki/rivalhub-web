@@ -8,6 +8,7 @@
   <p-confirmPopup></p-confirmPopup>
 
   <app-view-game-set
+    [editable]="editable"
     *ngFor="let set of gameSets"
     [gameSet]="set"
     (deleteSet)="deleteGameSet($event)"
