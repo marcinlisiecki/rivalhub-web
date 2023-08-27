@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { PingPongMatch } from '@interfaces/event/games/ping-pong/ping-pong-match';
 import { LanguageService } from '@app/core/services/language/language.service';
+import { DeleteSetEvent } from '@interfaces/event/delete-set-event';
 
 @Component({
   selector: 'app-view-ping-pong-match',

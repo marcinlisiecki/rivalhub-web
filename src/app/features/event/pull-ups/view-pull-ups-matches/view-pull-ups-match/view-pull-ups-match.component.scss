@@ -104,6 +104,14 @@
     text-transform: uppercase;
     color: $textSecondaryColor;
     font-weight: $weightMedium;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    i {
+      cursor: pointer;
+      color: $dangerButtonBg;
+    }
   }
 
   &-results {

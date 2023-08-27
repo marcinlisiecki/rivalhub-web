@@ -2,6 +2,11 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { PullUpsMatch } from '@interfaces/event/games/pull-ups/pull-ups-match';
 import { PullUpsSeriesScores } from '@interfaces/event/games/pull-ups/pull-ups-series-scores';
 import { PullUpsDisplayRanking } from '@interfaces/event/games/pull-ups/pull-ups-display-ranking';
+import { DeleteSetEvent } from '@interfaces/event/delete-set-event';
+import { PullUpsSeries } from '@interfaces/event/games/pull-ups/pull-ups-series';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { LanguageService } from '@app/core/services/language/language.service';
+import { TOAST_LIFETIME } from '@app/core/constants/messages';
 
 @Component({
   selector: 'app-view-pull-ups-match',
@@ -17,11 +22,48 @@ export class ViewPullUpsMatchComponent implements OnInit {
   series: PullUpsSeriesScores[] = [];
   ranking: PullUpsDisplayRanking[] = [];
 
-  constructor() {}
+  constructor(
+    private confirmationService: ConfirmationService,
+    private languageService: LanguageService,
+    private messageService: MessageService,
+  ) {}
 
   ngOnInit(): void {
     this.generateSeries();
     this.generateRanking();
+  }
+
+  deleteSeries(event: Event, series: PullUpsSeriesScores) {
+    this.confirmationService.confirm({
+      target: event.target as EventTarget,
+      acceptLabel: this.languageService.instant('common.yes'),
+      rejectLabel: this.languageService.instant('common.no'),
+      icon: 'pi pi-exclamation-triangle',
+      message: this.languageService.instant('event.series.deleteQuestion'),
+      accept: () => {
+        this.match.scores = this.match.scores
+          .filter((s) => s.seriesID !== series.seriesID)
+          .map((s) => {
+            if (s.seriesID > series.seriesID) {
+              s.seriesID--;
+            }
+
+            return s;
+          });
+
+        this.series = [];
+        this.generateSeries();
+
+        this.messageService.add({
+          severity: 'success',
+          life: TOAST_LIFETIME,
+          summary: this.languageService.instant(
+            'event.series.deleteConfirmation',
+          ),
+        });
+      },
+      reject: () => {},
+    });
   }
 
   generateRanking() {

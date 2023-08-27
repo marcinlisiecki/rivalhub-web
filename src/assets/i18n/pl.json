@@ -264,5 +264,13 @@
   "event.participants.removeConfirmation": "Usunięto użytkownika z wydarzenia",
   "event.delete": "Usuń wydarzenie",
   "event.deleteQuestion": "Czy na pewno chcesz usunąć to wydarzenie?",
-  "event.deleteConfirmation": "Usunięto wydarzenie"
+  "event.deleteConfirmation": "Usunięto wydarzenie",
+  "event.set.deleteQuestion": "Czy na pewno chcesz usunąć ten set?",
+  "event.set.deleteConfirmation": "Usunięto set",
+  "event.series.deleteQuestion": "Czy na pewno chcesz usunąć tę serię?",
+  "event.series.deleteConfirmation": "Usunięto serię",
+  "event.match.deleteQuestion": "Czy na pewno chcesz usunąć ten mecz?",
+  "event.match.deleteConfirmation": "Usunięto mecz",
+  "event.round.deleteQuestion": "Czy na pewno chcesz usunąć tę rundę?",
+  "event.round.deleteConfirmation": "Usunięto rundę"
 }
