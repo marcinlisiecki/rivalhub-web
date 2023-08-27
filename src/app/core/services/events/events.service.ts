@@ -105,6 +105,18 @@ export class EventsService {
     );
   }
 
+  addEventParticipant(
+    eventId: number,
+    participantId: number,
+    type: EventType,
+  ): Observable<UserDetailsDto[]> {
+    return this.http.post<UserDetailsDto[]>(
+      environment.apiUrl + `/organizations/events/${eventId}/participants`,
+      participantId,
+      { params: { type } },
+    );
+  }
+
   getEventMatches<
     T extends PingPongMatch[] | TableFootballMatch[] | PullUpsMatch[],
   >(

@@ -16,6 +16,11 @@ import { UsersService } from '@app/core/services/users/users.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { TOAST_LIFETIME } from '@app/core/constants/messages';
 import { LanguageService } from '@app/core/services/language/language.service';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { AddUserDialogComponent } from '@app/features/event/new-event/add-user-dialog/add-user-dialog.component';
+import { OrganizationsService } from '@app/core/services/organizations/organizations.service';
+import { PagedResponse } from '@interfaces/generic/paged-response';
+import { ex } from '@fullcalendar/core/internal-common';
 
 @Component({
   selector: 'app-view-event',
@@ -28,11 +33,14 @@ export class ViewEventComponent implements OnInit {
   eventType!: EventType;
 
   event?: EventDto;
+  organizationUsers: UserDetailsDto[] = [];
   participants: UserDetailsDto[] = [];
   matches?: PingPongMatch[] | TableFootballMatch[] | PullUpsMatch[];
   loggedInUserId!: number;
   canEdit: boolean = false;
   canJoin: boolean = false;
+
+  addUserDialogRef?: DynamicDialogRef;
 
   constructor(
     private route: ActivatedRoute,
@@ -44,6 +52,8 @@ export class ViewEventComponent implements OnInit {
     private languageService: LanguageService,
     private confirmationService: ConfirmationService,
     private router: Router,
+    private dialogService: DialogService,
+    private organizationsService: OrganizationsService,
   ) {}
 
   ngOnInit(): void {
@@ -55,7 +65,68 @@ export class ViewEventComponent implements OnInit {
 
     this.fetchEvent();
     this.fetchParticipants();
+    this.fetchOrganizationUsers();
     this.fetchMatches();
+  }
+
+  openAddUserDialog() {
+    const users: UserDetailsDto[] = [];
+    this.organizationUsers.forEach((user) => {
+      let exists = false;
+
+      this.participants.forEach((participant) => {
+        if (participant.id === user.id) {
+          exists = true;
+        }
+      });
+
+      if (!exists) {
+        users.push(user);
+      }
+    });
+
+    this.addUserDialogRef = this.dialogService.open(AddUserDialogComponent, {
+      data: {
+        require3Characters: true,
+        userList: users,
+      },
+      header: this.languageService.instant('event.addUser'),
+      width: '25rem',
+    });
+
+    this.addUserDialogRef.onClose.subscribe((user?: UserDetailsDto) => {
+      if (user) {
+        this.eventsService
+          .addEventParticipant(this.eventId, user.id, this.eventType)
+          .subscribe({
+            next: (participants: UserDetailsDto[]) => {
+              this.messageService.add({
+                severity: 'success',
+                life: TOAST_LIFETIME,
+                summary: this.languageService.instant(
+                  'event.participants.addConfirmation',
+                ),
+              });
+              this.participants = participants;
+              this.handleCanJoin();
+              this.handleCanEdit();
+            },
+            error: (err: HttpErrorResponse) => {
+              this.errorsService.createErrorMessage(extractMessage(err));
+            },
+          });
+      }
+    });
+  }
+
+  fetchOrganizationUsers() {
+    this.organizationsService
+      .getUsers(this.organizationId, 0, 10000)
+      .subscribe({
+        next: (users: PagedResponse<UserDetailsDto>) => {
+          this.organizationUsers = users.content;
+        },
+      });
   }
 
   joinEvent() {

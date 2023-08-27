@@ -103,6 +103,13 @@
           (click)="onRemoveUser($event, user)"
         ></p-button>
       </div>
+
+      <p-button
+        *ngIf="loggedInUserId === event.host"
+        (click)="openAddUserDialog()"
+        styleClass="button-wide p-button-text p-button-secondary"
+        label="{{ 'event.addUser' | translate }}"
+      ></p-button>
     </div>
   </section>
 </section>
