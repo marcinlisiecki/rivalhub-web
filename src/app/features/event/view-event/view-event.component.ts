@@ -27,7 +27,7 @@ export class ViewEventComponent implements OnInit {
   organizationId!: number;
   eventType!: EventType;
 
-  event!: EventDto;
+  event?: EventDto;
   participants: UserDetailsDto[] = [];
   matches?: PingPongMatch[] | TableFootballMatch[] | PullUpsMatch[];
   loggedInUserId!: number;
@@ -58,6 +58,10 @@ export class ViewEventComponent implements OnInit {
   }
 
   joinEvent() {
+    if (!this.event) {
+      return;
+    }
+
     this.eventsService
       .joinEvent(this.event.eventId, this.event.eventType)
       .subscribe({
@@ -67,7 +71,7 @@ export class ViewEventComponent implements OnInit {
             life: TOAST_LIFETIME,
             detail: this.languageService.instant('organization.eventJoin'),
           });
-          this.event.participants.push(this.authService.getUserId()!);
+          this.event!.participants.push(this.authService.getUserId()!);
 
           this.usersService.getMe().subscribe({
             next: (me: UserDetailsDto) => {
@@ -139,14 +143,17 @@ export class ViewEventComponent implements OnInit {
 
   handleCanJoin() {
     this.canJoin =
-      this.event?.eventPublic &&
-      !this.participants.map((u) => u.id).includes(this.loggedInUserId);
+      (this.event?.eventPublic &&
+        !this.participants.map((u) => u.id).includes(this.loggedInUserId)) ||
+      false;
   }
 
   fetchEvent() {
     this.eventsService.getEvent(this.eventId, this.eventType).subscribe({
       next: (event: EventDto) => {
         this.event = event;
+        this.handleCanEdit();
+        this.handleCanJoin();
       },
       error: (err: HttpErrorResponse) => {
         this.errorsService.createErrorMessage(extractMessage(err));
