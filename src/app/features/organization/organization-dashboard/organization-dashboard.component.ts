@@ -17,6 +17,7 @@ import { ImageService } from '@app/core/services/image/image.service';
 import { EventType } from '@interfaces/event/event-type';
 import { ErrorsService } from '@app/core/services/errors/errors.service';
 import { extractMessage } from '@app/core/utils/apiErrors';
+import { LanguageService } from '@app/core/services/language/language.service';
 
 @Component({
   selector: 'app-organization-dashboard',
@@ -45,6 +46,7 @@ export class OrganizationDashboardComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private imageService: ImageService,
     private errorsService: ErrorsService,
+    private languageService: LanguageService,
   ) {}
 
   ngOnInit(): void {
@@ -93,7 +95,7 @@ export class OrganizationDashboardComponent implements OnInit, OnDestroy {
       this.messageService.add({
         severity: 'success',
         life: 1000 * 10,
-        summary: 'Pomyślnie skonfigurowano organizację',
+        summary: this.languageService.instant('organization.configured'),
       });
       this.router
         .navigate([], {
@@ -110,7 +112,7 @@ export class OrganizationDashboardComponent implements OnInit, OnDestroy {
       this.messageService.add({
         severity: 'success',
         life: 1000 * 10,
-        summary: 'Pomyślnie wysłano zaproszenie',
+        summary: this.languageService.instant('organization.invitationSended'),
       });
       this.router
         .navigate([], {

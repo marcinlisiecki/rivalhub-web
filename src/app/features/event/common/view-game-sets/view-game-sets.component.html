@@ -1,7 +1,7 @@
-<h2>Sety</h2>
+<h2>{{ 'event.common.set' | translate }}</h2>
 
 <app-no-resource-info *ngIf="!gameSets || gameSets.length === 0">
-  Brak setów
+  {{ 'event.common.noSets' | translate }}
 </app-no-resource-info>
 
 <section class="sets">

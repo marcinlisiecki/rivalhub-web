@@ -96,7 +96,7 @@ export class DashboardActivitiesPanelComponent
         this.messageService.add({
           severity: 'success',
           life: this.toastLifeTime,
-          detail: 'Dołączyłeś do wydarzenia.',
+          detail: this.languageService.instant('organization.eventJoin'),
         });
         event.participants.push(this.authService.getUserId()!);
       },

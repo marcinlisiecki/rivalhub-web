@@ -8,6 +8,7 @@ import { NewGameSet } from '@interfaces/event/games/new-game-set';
 import { EventType } from '@interfaces/event/event-type';
 import { AddPingPongMatch } from '@interfaces/event/games/ping-pong/add-ping-pong-match';
 import { UserDetailsDto } from '@interfaces/user/user-details-dto';
+import { LanguageService } from '@app/core/services/language/language.service';
 
 @Component({
   selector: 'app-add-ping-pong-results',
@@ -30,6 +31,7 @@ export class AddPingPongResultsComponent implements OnInit {
     private eventsService: EventsService,
     private route: ActivatedRoute,
     private dialogService: DialogService,
+    private languageService: LanguageService,
   ) {}
 
   ngOnInit(): void {
@@ -92,7 +94,7 @@ export class AddPingPongResultsComponent implements OnInit {
     );
     this.matches[matchIndex].sets = this.matches[matchIndex].sets || [];
     this.addSetDialogRef = this.dialogService.open(AddGameSetComponent, {
-      header: 'Dodaj set',
+      header: this.languageService.instant('event.common.addSet'),
       width: '25rem',
       data: {
         matchId,

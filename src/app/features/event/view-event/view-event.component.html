@@ -12,7 +12,9 @@
         value="{{ categoryTypeToLabel(eventType) | translate }}"
       ></p-badge>
 
-      <p class="description">{{ event.description ?? 'Brak opisu' }}</p>
+      <p class="description">
+        {{ event.description ?? ('event.noDescription' | translate) }}
+      </p>
     </section>
 
     <section>
@@ -45,13 +47,13 @@
           { type: eventType }
         ]"
       >
-        <p-button> Dodaj wyniki </p-button>
+        <p-button>{{ 'event.addResults' | translate }} </p-button>
       </a>
     </section>
   </section>
 
   <section class="participants">
-    <h2 class="section-title">Uczestnicy wydarzenia</h2>
+    <h2 class="section-title">{{ 'event.participants' | translate }}</h2>
 
     <div class="users">
       <a

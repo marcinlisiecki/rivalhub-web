@@ -1,6 +1,6 @@
 <div class="wrapper">
   <div class="dashboard-container">
-    <h2>Administratorzy</h2>
+    <h2>{{ 'organization.admins' | translate }}</h2>
     <app-admin-card
       [amIAdmin]="amIAdmin"
       *ngFor="let adminUser of adminUsers; let i = index"
@@ -13,10 +13,19 @@
 
   <div>
     <span class="p-input-icon-right">
-    <i class="pi pi-search"></i>
-    <input type="text" [(ngModel)]="searchQuery" (input)="onSearchInputChange()" pInputText placeholder="Szukaj...">
-</span>
-    <div *ngIf="searchQuery; else infiniteScrollContent" class="dashboard-container">
+      <i class="pi pi-search"></i>
+      <input
+        type="text"
+        [(ngModel)]="searchQuery"
+        (input)="onSearchInputChange()"
+        pInputText
+        placeholder="{{ 'common.search' | translate }}..."
+      />
+    </span>
+    <div
+      *ngIf="searchQuery; else infiniteScrollContent"
+      class="dashboard-container"
+    >
       <app-member-card
         [amIAdmin]="amIAdmin"
         *ngFor="let filteredUser of filteredUsers; let i = index"

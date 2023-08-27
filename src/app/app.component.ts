@@ -13,7 +13,6 @@ export class AppComponent implements OnInit {
     private cal: CalendarService,
   ) {}
   ngOnInit(): void {
-    this.lang.setLocalStorage();
     this.cal.setLocalStorage();
   }
 }
