@@ -14,14 +14,14 @@ export class ImageService {
     if (imageUrl !== null) {
       return `${environment.apiUrl}/${imageUrl}`;
     }
-    return '/assets/img/svg/defaultOrganization.svg';
+    return this.DEFAULTORGANIZATIONAVATAR;
   }
 
   getUserImagePath(imageUrl: string | null): string {
     if (imageUrl !== null) {
       return `${environment.apiUrl}/${imageUrl}`;
     }
-    return '/assets/img/avatars/user.png';
+    return this.DEFAULTUSERAVATAR;
   }
 
   checkDefaultAvatar(imageUrl: string | null): boolean {

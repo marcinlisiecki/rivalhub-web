@@ -70,7 +70,6 @@ export class UserItemComponent implements OnInit {
       .navigate(['organizations', this.organizationId, 'events', 'new'], {
         queryParams: {
           challengeId: this.user.id,
-          challengeName: this.user.name,
           challengeType: type,
         },
       })

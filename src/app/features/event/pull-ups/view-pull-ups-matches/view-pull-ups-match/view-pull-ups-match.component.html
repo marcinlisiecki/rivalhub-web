@@ -4,7 +4,7 @@
       <h2>{{ "'event.rounds.participants'" | translate }}</h2>
       <div *ngFor="let user of match.userDetailsDtos" class="team-member">
         <div class="team-member-data">
-          <div class="team-member-avatar"></div>
+          <app-avatar class="team-member-avatar" [user]="user"></app-avatar>
           <p>{{ user.name }}</p>
         </div>
       </div>

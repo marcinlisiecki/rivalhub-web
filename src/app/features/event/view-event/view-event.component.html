@@ -1,8 +1,6 @@
 <section class="wrapper">
   <section class="main">
-    <app-organization-back-button
-      [organizationId]="organizationId"
-    ></app-organization-back-button>
+    <app-go-back-button></app-go-back-button>
 
     <section *ngIf="event">
       <h1 class="event-title">
@@ -63,7 +61,7 @@
         *ngFor="let user of participants"
         routerLink="/profiles/{{ user.id }}"
       >
-        <div class="user-avatar"></div>
+        <app-avatar class="user-avatar" [user]="user"></app-avatar>
         <p>{{ user.name }}</p>
       </a>
     </div>

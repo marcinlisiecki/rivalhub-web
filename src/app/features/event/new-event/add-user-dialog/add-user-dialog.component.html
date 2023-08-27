@@ -21,8 +21,8 @@
           : []
       "
     >
-      <div class="user-data">
-        <div class="user-avatar"></div>
+      <div class="user-data">        
+        <app-avatar class="user-avatar" [user]="user"></app-avatar>
         <p>{{ user.name }}</p>
       </div>
       <div class="user-add-button" (click)="handleAddUser(user)">

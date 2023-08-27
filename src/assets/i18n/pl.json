@@ -214,4 +214,18 @@
 	"sidebar.stations": "Stanowiska",
 	"stepForm.next": "Dalej",
 	"stepForm.previous": "Powrót"
+	"organization.incomingEvents": "Nadchodzące wydarzenia",
+	"organization.noIncomingEvents": "Brak nadchodzących wydarzeń",
+	"organization.noEvents": "Brak wydarzeń",
+	"organization.events.label": "Wydarzenia",
+	"events.new": "Nowe wydarzenie",
+	"filters.label": "Filtry",
+	"filters.events.category.label": "Kategoria wydarzenia",
+	"filters.events.status.label": "Czas wydarzenia",
+	"filters.events.onlyMyEvents.label": "Tylko wydarzenia, w których biorę udział",
+	"organization.events.statusFilter.all": "Wszystkie",
+	"organization.events.statusFilter.futureAndActive": "Aktywne i przyszłe",
+	"organization.events.statusFilter.historical": "Przeszłe",
+	"backToOrganization": "Powrót do organizacji",
+	"back": "Powrót"
 }

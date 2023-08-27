@@ -32,6 +32,8 @@ import { OrganizationSettingsComponent } from '@app/features/organization/organi
 import { Tag, TagModule } from 'primeng/tag';
 import { DropdownModule } from 'primeng/dropdown';
 import { PaginatorModule } from 'primeng/paginator';
+import { ViewOrganizationEventsComponent } from './view-organization-events/view-organization-events.component';
+import { InputSwitchModule } from 'primeng/inputswitch';
 
 @NgModule({
   declarations: [
@@ -52,6 +54,7 @@ import { PaginatorModule } from 'primeng/paginator';
     MemberCardComponent,
     AdminCardComponent,
     OrganizationSettingsComponent,
+    ViewOrganizationEventsComponent,
   ],
   imports: [
     RouterModule,
@@ -76,6 +79,7 @@ import { PaginatorModule } from 'primeng/paginator';
     TagModule,
     DropdownModule,
     PaginatorModule,
+    InputSwitchModule,
   ],
   exports: [
     MyOrganizationsComponent,
