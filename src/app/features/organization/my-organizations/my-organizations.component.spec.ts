@@ -142,7 +142,6 @@ describe('MyOrganizationsComponent', () => {
         imageUrl: 'https://example.com/image5.png',
         invitationHash: 'hash5',
       },
-      // Add more organizations as needed
     ];
 
     component.organizations = mockOrganizations;
@@ -156,27 +155,20 @@ describe('MyOrganizationsComponent', () => {
   });
 
   it('should create link to create organization if user is not in any organization', () => {
-    // Simulate a list of organizations
     const mockOrganizations: Organization[] = [];
 
-    // Set the organizations property in the component
     component.organizations = mockOrganizations;
 
-    // Trigger change detection
     fixture.detectChanges();
 
-    // Get the elements with the 'organization-card' class
     const organizationCardElements =
       fixture.nativeElement.querySelectorAll('.organization-card');
 
-    // Assert that the correct number of organization cards are created
     expect(organizationCardElements.length).toEqual(0);
 
-    // Get the element with the 'create-organization' class
     const createOrganizationElement =
       fixture.nativeElement.querySelector('.no-organizations');
 
-    // Assert that the element is created
     expect(createOrganizationElement).toBeTruthy();
   });
 
