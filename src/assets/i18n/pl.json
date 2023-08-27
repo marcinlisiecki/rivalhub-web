@@ -259,5 +259,7 @@
 	"sidebar.signOut": "Wyloguj się",
 	"sidebar.stations": "Stanowiska",
 	"stepForm.next": "Dalej",
-	"stepForm.previous": "Powrót"
+	"stepForm.previous": "Powrót",
+  "event.participants.removeQuestion": "Czy na pewno chcesz usunąć tego użytkownika z wydarzenia?",
+  "event.participants.removeConfirmation": "Usunięto użytkownika z wydarzenia"
 }

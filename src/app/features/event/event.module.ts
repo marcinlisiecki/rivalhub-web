@@ -40,6 +40,7 @@ import { AddPullUpsResultsComponent } from './pull-ups/add-pull-ups-results/add-
 import { AddPullUpsSeriesComponent } from './pull-ups/add-pull-ups-series/add-pull-ups-series.component';
 import { AddUsersComponent } from './common/add-users/add-users.component';
 import { TagModule } from 'primeng/tag';
+import {ConfirmPopupModule} from "primeng/confirmpopup";
 
 @NgModule({
   declarations: [
@@ -86,6 +87,7 @@ import { TagModule } from 'primeng/tag';
     TableModule,
     InputSwitchModule,
     TagModule,
+    ConfirmPopupModule,
   ],
   providers: [DialogService],
 })

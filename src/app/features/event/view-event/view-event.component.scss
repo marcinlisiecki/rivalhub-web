@@ -37,14 +37,25 @@ h1 {
 .users {
   display: flex;
   flex-direction: column;
+  row-gap: 1rem;
 }
 
 .user {
   display: flex;
   align-items: center;
-  column-gap: 0.75rem;
-  color: $primaryTextColor;
-  text-decoration: none;
+  justify-content: space-between;
+
+  p {
+    margin: 0;
+  }
+
+  &-data {
+    display: flex;
+    column-gap: 0.75rem;
+    align-items: center;
+    text-decoration: none;
+    color: $primaryTextColor;
+  }
 
   &-avatar {
     width: 2rem;

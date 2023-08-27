@@ -78,16 +78,22 @@
 
   <section class="participants">
     <h2 class="section-title">{{ 'event.participants' | translate }}</h2>
+    <p-confirmPopup></p-confirmPopup>
 
     <div class="users">
-      <a
-        class="user"
-        *ngFor="let user of participants"
-        routerLink="/profiles/{{ user.id }}"
-      >
-        <app-avatar class="user-avatar" [user]="user"></app-avatar>
-        <p>{{ user.name }}</p>
-      </a>
+      <div class="user" *ngFor="let user of participants">
+        <a routerLink="/profiles/{{ user.id }}" class="user-data">
+          <app-avatar class="user-avatar" [user]="user"></app-avatar>
+          <p>{{ user.name }}</p>
+        </a>
+
+        <p-button
+          *ngIf="user.id !== event.host && loggedInUserId === event.host"
+          icon="pi pi-times-circle"
+          styleClass="p-button-danger p-button-text p-button-sm"
+          (click)="onRemoveUser($event, user)"
+        ></p-button>
+      </div>
     </div>
   </section>
 </section>

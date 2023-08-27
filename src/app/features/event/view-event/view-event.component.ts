@@ -13,7 +13,7 @@ import { categoryTypeToLabel } from '@app/core/utils/event';
 import { PullUpsMatch } from '@interfaces/event/games/pull-ups/pull-ups-match';
 import { AuthService } from '@app/core/services/auth/auth.service';
 import { UsersService } from '@app/core/services/users/users.service';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { TOAST_LIFETIME } from '@app/core/constants/messages';
 import { LanguageService } from '@app/core/services/language/language.service';
 
@@ -42,6 +42,7 @@ export class ViewEventComponent implements OnInit {
     private usersService: UsersService,
     private messageService: MessageService,
     private languageService: LanguageService,
+    private confirmationService: ConfirmationService,
   ) {}
 
   ngOnInit(): void {
@@ -77,6 +78,40 @@ export class ViewEventComponent implements OnInit {
           });
         },
       });
+  }
+
+  onRemoveUser(event: Event, user: UserDetailsDto) {
+    this.confirmationService.confirm({
+      target: event.target as EventTarget,
+      acceptLabel: this.languageService.instant('common.yes'),
+      rejectLabel: this.languageService.instant('common.no'),
+      icon: 'pi pi-exclamation-triangle',
+      message: this.languageService.instant(
+        'event.participants.removeQuestion',
+      ),
+      accept: () => {
+        this.eventsService
+          .removeEventParticipant(this.eventId, user.id, this.eventType)
+          .subscribe({
+            next: (participants: UserDetailsDto[]) => {
+              this.messageService.add({
+                severity: 'success',
+                life: TOAST_LIFETIME,
+                summary: this.languageService.instant(
+                  'event.participants.removeConfirmation',
+                ),
+              });
+              this.participants = participants;
+              this.handleCanJoin();
+              this.handleCanEdit();
+            },
+            error: (err) => {
+              this.errorsService.createErrorMessage(extractMessage(err));
+            },
+          });
+      },
+      reject: () => {},
+    });
   }
 
   leaveEvent() {
