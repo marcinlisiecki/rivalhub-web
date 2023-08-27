@@ -8,6 +8,7 @@ import { extractMessage } from '@app/core/utils/apiErrors';
 import { Organization } from '@interfaces/organization/organization';
 import { AuthService } from '@app/core/services/auth/auth.service';
 import { NewOrganization } from '@app/core/interfaces/organization/new-organization';
+import { LanguageService } from '@app/core/services/language/language.service';
 
 @Component({
   selector: 'app-add-organization',
@@ -37,6 +38,7 @@ export class AddOrganizationComponent implements AfterViewInit {
     private organizationService: OrganizationsService,
     private router: Router,
     private authService: AuthService,
+    private languageService: LanguageService,
   ) {}
 
   @ViewChild('colorPicker') colorPicker!: any;
@@ -50,11 +52,13 @@ export class AddOrganizationComponent implements AfterViewInit {
   onFileSelectClicked(event: FileSelectEvent) {
     this.clientError = undefined;
     if (!this.ACCEPTEDFILETYPES.includes(event.files[0].type)) {
-      this.clientError = 'Obsługujemy tylko pliki .png, .jpg, .jpeg i .gif.';
+      this.clientError = this.languageService.instant('organization.files');
       return;
     }
     if (event.files[0].size > this.MAXFILESIZE) {
-      this.clientError = 'Plik jest za duży.';
+      this.clientError = this.languageService.instant(
+        'organization.fileToLarge',
+      );
       return;
     }
 

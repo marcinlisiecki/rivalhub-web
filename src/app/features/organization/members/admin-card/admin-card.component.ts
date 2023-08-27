@@ -14,6 +14,7 @@ import { AuthService } from '@app/core/services/auth/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { take } from 'rxjs';
 import { ImageService } from '@app/core/services/image/image.service';
+import { LanguageService } from '@app/core/services/language/language.service';
 
 @Component({
   selector: 'app-admin-card',
@@ -26,11 +27,18 @@ export class AdminCardComponent implements OnInit {
   @Output() changedStatus = new EventEmitter<void>();
 
   private organizationId!: number;
-  private confirmKickMessage: string = 'Na pewno chcesz usunąć tego członka?';
-  private unAdminMessage: string =
-    'Na pewno chcesz odebrać admina temu członkowi?';
-  public adminButtonText: string = 'Odbierz admina';
-  public kickButtonText: string = 'Wyrzuć';
+  private confirmKickMessage: string = this.languageService.instant(
+    'organization.confirmKickMessage',
+  );
+  private unAdminMessage: string = this.languageService.instant(
+    'organization.unAdminMessage',
+  );
+  public adminButtonText: string = this.languageService.instant(
+    'organization.adminButtonText',
+  );
+  public kickButtonText: string = this.languageService.instant(
+    'organization.kickButtonText',
+  );
   public myself: boolean = false;
   imageUrl!: string;
   constructor(
@@ -40,6 +48,7 @@ export class AdminCardComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     private imageService: ImageService,
+    private languageService: LanguageService,
   ) {}
 
   ngOnInit() {
@@ -71,8 +80,8 @@ export class AdminCardComponent implements OnInit {
     this.confirmationService.confirm({
       target: event.target as EventTarget,
       message: this.confirmKickMessage,
-      acceptLabel: 'Tak',
-      rejectLabel: 'Nie',
+      acceptLabel: this.languageService.instant('common.yes'),
+      rejectLabel: this.languageService.instant('common.no'),
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.organizationService
@@ -85,9 +94,7 @@ export class AdminCardComponent implements OnInit {
         this.organizationService
           .unAdmin(this.organizationId, this.user.id)
           .subscribe({
-            next: (response) => {
-              console.log('git');
-            },
+            next: (response) => {},
           });
       },
       reject: () => {},
@@ -109,8 +116,8 @@ export class AdminCardComponent implements OnInit {
     this.confirmationService.confirm({
       target: event.target as EventTarget,
       message: this.unAdminMessage,
-      acceptLabel: 'Tak',
-      rejectLabel: 'Nie',
+      acceptLabel: this.languageService.instant('common.yes'),
+      rejectLabel: this.languageService.instant('common.no'),
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.organizationService
@@ -120,7 +127,7 @@ export class AdminCardComponent implements OnInit {
               this.changedStatus.emit();
             },
             error: (HttpErrorResponse) => {
-              console.log('nie git');
+              console.error(HttpErrorResponse);
             },
           });
       },

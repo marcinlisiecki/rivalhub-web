@@ -5,8 +5,7 @@
 
   <p-messages severity="info" *ngIf="isAccountVerified === false">
     <ng-template pTemplate>
-      Musisz zweryfikować konto, aby móc dołączyć do organizacji. Zaproszenie
-      zostało dodane do listy zaproszeń.
+      {{ 'organization.info' | translate }}
     </ng-template>
   </p-messages>
 
@@ -18,7 +17,7 @@
       type="submit"
       (onClick)="onSubmit()"
     >
-      Dołącz
+      {{ 'common.join' | translate }}
     </p-button>
     <app-validation-error *ngIf="responseError">
       {{ responseError }}

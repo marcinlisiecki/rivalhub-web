@@ -1,6 +1,6 @@
 <section class="form-step-wrapper">
   <header>
-    <h1>Kategoria</h1>
+    <h1>{{ 'event.category' | translate }}</h1>
   </header>
   <section class="categories">
     <div
@@ -21,7 +21,7 @@
       [disabled]="selectedEventType === null"
       (onClick)="setFormStep.emit(AddEventFormStep.BASIC_INFO)"
     >
-      Dalej
+      {{ 'stepForm.next' | translate }}
     </p-button>
   </div>
 </section>

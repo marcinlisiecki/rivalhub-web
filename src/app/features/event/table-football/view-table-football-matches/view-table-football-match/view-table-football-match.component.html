@@ -2,13 +2,13 @@
   <section class="teams">
     <div class="team">
       <div class="team-label">
-        <p>Drużyna 1</p>
+        <p>{{ 'event.common.team' | translate }} 1</p>
         <p-badge
           [severity]="match.team1Approval ? 'success' : 'danger'"
           [value]="
             match.team1Approval
-              ? 'Potwierdzono wyniki'
-              : 'Nie potwierdzono wyników'
+              ? languageService.instant('event.approval')
+              : languageService.instant('event.noApproval')
           "
         >
         </p-badge>
@@ -22,13 +22,13 @@
     </div>
     <div class="team">
       <div class="team-label">
-        <p>Drużyna 2</p>
+        <p>{{ 'event.common.team' | translate }} 2</p>
         <p-badge
           [severity]="match.team2Approval ? 'success' : 'danger'"
           [value]="
             match.team2Approval
-              ? 'Potwierdzono wyniki'
-              : 'Nie potwierdzono wyników'
+              ? languageService.instant('event.approval')
+              : languageService.instant('event.noApproval')
           "
         >
         </p-badge>
@@ -49,7 +49,7 @@
       (click)="handleAddSet.emit(match.id)"
       styleClass="p-button-outlined"
     >
-      Dodaj set
+      {{ 'event.common.addSet' | translate }}
     </p-button>
   </div>
 </div>

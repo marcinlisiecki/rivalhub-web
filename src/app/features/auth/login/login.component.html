@@ -11,7 +11,7 @@
     <div class="registered-message-wrapper" *ngIf="invitation">
       <p-messages severity="info">
         <ng-template pTemplate>
-          Zaloguj się aby dołączyć do organizacji.
+          {{ 'login.loginRequested' | translate }}
         </ng-template>
       </p-messages>
     </div>
@@ -59,7 +59,8 @@
         </app-validation-error>
       </p>
       <p class="no-account-wrapper">
-        Nie masz konta? <a routerLink="/register">Zarejestruj się</a>
+        {{ 'login.register' | translate }}
+        <a routerLink="/register">{{ 'button.signUp' | translate }}</a>
       </p>
     </div>
   </form>

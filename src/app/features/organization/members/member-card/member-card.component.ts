@@ -12,6 +12,7 @@ import { OrganizationsService } from '@app/core/services/organizations/organizat
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '@app/core/services/auth/auth.service';
 import { ImageService } from '@app/core/services/image/image.service';
+import { LanguageService } from '@app/core/services/language/language.service';
 
 @Component({
   selector: 'app-member-card',
@@ -26,11 +27,19 @@ export class MemberCardComponent implements OnInit {
   imageUrl!: string;
 
   private organizationId!: number;
-  private confirmKickMessage: string = 'Na pewno chcesz usunąć tego członka?';
-  public adminButtonText: string = 'Nadaj uprawnienia admina';
-  public kickButtonText: string = 'Wyrzuć';
-  private grantAdminMessage: string =
-    'Na pewno chcesz dać admina temu członkowi?';
+  private confirmKickMessage: string = this.languageService.instant(
+    'organization.confirmKickMessage',
+  );
+  public adminButtonText: string = this.languageService.instant(
+    'organization.adminButtonText',
+  );
+  public kickButtonText: string = this.languageService.instant(
+    'organization.kickButtonText',
+  );
+  private grantAdminMessage: string = this.languageService.instant(
+    'organization.grantAdminMessage',
+  );
+
   public myself: boolean = false;
 
   constructor(
@@ -40,6 +49,7 @@ export class MemberCardComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     private imageService: ImageService,
+    private languageService: LanguageService,
   ) {}
 
   ngOnInit() {
@@ -70,8 +80,8 @@ export class MemberCardComponent implements OnInit {
     this.confirmationService.confirm({
       target: event.target as EventTarget,
       message: this.confirmKickMessage,
-      acceptLabel: 'Tak',
-      rejectLabel: 'Nie',
+      acceptLabel: this.languageService.instant('common.yes'),
+      rejectLabel: this.languageService.instant('common.no'),
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.organizationService
@@ -101,8 +111,8 @@ export class MemberCardComponent implements OnInit {
     this.confirmationService.confirm({
       target: event.target as EventTarget,
       message: this.grantAdminMessage,
-      acceptLabel: 'Tak',
-      rejectLabel: 'Nie',
+      acceptLabel: this.languageService.instant('common.yes'),
+      rejectLabel: this.languageService.instant('common.no'),
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.organizationService

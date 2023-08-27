@@ -8,6 +8,7 @@ import { NewGameSet } from '@interfaces/event/games/new-game-set';
 import { TableFootballMatch } from '@interfaces/event/games/table-football/table-football-match';
 import { AddTableFootballMatch } from '@interfaces/event/games/table-football/add-table-football-match';
 import { UserDetailsDto } from '@interfaces/user/user-details-dto';
+import { LanguageService } from '@app/core/services/language/language.service';
 
 @Component({
   selector: 'app-add-table-football-results',
@@ -30,6 +31,7 @@ export class AddTableFootballResultsComponent {
     private eventsService: EventsService,
     private route: ActivatedRoute,
     private dialogService: DialogService,
+    private languageService: LanguageService,
   ) {}
 
   ngOnInit(): void {
@@ -90,7 +92,7 @@ export class AddTableFootballResultsComponent {
     const matchIndex = this.matches.findIndex((item) => item.id === matchId);
     this.matches[matchIndex].sets = this.matches[matchIndex].sets || [];
     this.addSetDialogRef = this.dialogService.open(AddGameSetComponent, {
-      header: 'Dodaj set',
+      header: this.languageService.instant('event.common.addSet'),
       width: '25rem',
       data: {
         matchId,

@@ -34,7 +34,7 @@ export class UserItemComponent implements OnInit {
     this.organizationId = this.route.snapshot.params['id'];
 
     const challengeItem: MenuItem = {
-      label: 'Rzuć wyzwanie',
+      label: this.languageService.instant('organization.challenge'),
       icon: 'pi pi-bolt',
 
       items: [
@@ -47,7 +47,7 @@ export class UserItemComponent implements OnInit {
     };
 
     const profileItem: MenuItem = {
-      label: 'Zobacz profil',
+      label: this.languageService.instant('organization.showProfile'),
       icon: 'pi pi-user',
       command: (_: MenuItemCommandEvent) => {
         this.router.navigate(['profiles', this.user.id]).then();

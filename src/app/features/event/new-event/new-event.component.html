@@ -1,5 +1,11 @@
 <section class="wrapper">
-  <h1>{{ isChallenge ? 'Nowe wyzwanie' : 'Nowe wydarzenie' }}</h1>
+  <h1>
+    {{
+      isChallenge
+        ? ('event.newChallenge' | translate)
+        : ('event.new.event' | translate)
+    }}
+  </h1>
 
   <p-steps
     [model]="formSteps"

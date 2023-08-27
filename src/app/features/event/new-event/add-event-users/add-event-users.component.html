@@ -1,6 +1,6 @@
 <section class="form-step-wrapper">
   <header>
-    <h1>Dodaj użytkowników</h1>
+    <h1>{{ 'event.new.steps.addUsers' | translate }}</h1>
   </header>
 
   <section class="teams">
@@ -17,28 +17,35 @@
 
       <div class="team-add-button" (click)="openAddUserDialog()">
         <i class="pi pi-plus"></i>
-        <p>Dodaj użytkownika</p>
+        <p>{{ 'event.new.steps.addUser' }}</p>
       </div>
     </div>
-
-
   </section>
   <p-divider></p-divider>
 
   <section class="public-event-setting">
-    <label for="publicEvent">Publiczne wydarzenie:</label>
-    <p-inputSwitch id="publicEvent" [(ngModel)]="publicEvent" (onChange)="setPublicEvent.emit(publicEvent)"></p-inputSwitch>
+    <label for="publicEvent">{{ 'event.public' | translate }}</label>
+    <p-inputSwitch
+      id="publicEvent"
+      [(ngModel)]="publicEvent"
+      (onChange)="setPublicEvent.emit(publicEvent)"
+    ></p-inputSwitch>
   </section>
 
   <p-divider></p-divider>
 
-
   <div class="form-step-navigation">
-    <p-button styleClass="p-button-outlined" (onClick)="setFormStep.emit(AddEventFormStep.BASIC_INFO)">
-      Powrót
+    <p-button
+      styleClass="p-button-outlined"
+      (onClick)="setFormStep.emit(AddEventFormStep.BASIC_INFO)"
+    >
+      {{ 'stepForm.next' | translate }}
     </p-button>
-    <p-button (onClick)="setFormStep.emit(AddEventFormStep.DATE)" [disabled]="addedUsers.length === 0">
-      Dalej
+    <p-button
+      (onClick)="setFormStep.emit(AddEventFormStep.DATE)"
+      [disabled]="addedUsers.length === 0"
+    >
+      {{ 'stepForm.previous' | translate }}
     </p-button>
   </div>
 </section>

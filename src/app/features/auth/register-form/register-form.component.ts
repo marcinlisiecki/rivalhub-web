@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { extractMessage } from '@app/core/utils/apiErrors';
 import { MEDIUM_REGEX, STRONG_REGEX } from '@app/core/constants/password';
 import { InvitationsService } from '@app/core/services/invitations/invitations.service';
+import { LanguageService } from '@app/core/services/language/language.service';
 
 @Component({
   selector: 'app-register-form',
@@ -32,15 +33,11 @@ export class RegisterFormComponent {
     private authService: AuthService,
     private router: Router,
     private invitationService: InvitationsService,
+    private languageService: LanguageService,
   ) {}
 
   setPasswordPrompt(): string {
-    let lang: string = <string>localStorage.getItem('currentLanguage');
-    if (lang === 'pl') {
-      return 'Wprowadź hasło';
-    } else {
-      return 'Enter password';
-    }
+    return this.languageService.instant('input.passwordPromptLabel');
   }
 
   onSubmit() {

@@ -1,6 +1,6 @@
 <section class="wrapper">
   <section>
-    <h1>Rundy</h1>
+    <h1>{{ 'event.rounds' | translate }}</h1>
 
     <app-view-pull-ups-matches
       [matches]="matches"
@@ -9,13 +9,13 @@
     ></app-view-pull-ups-matches>
 
     <div class="new-round-toggle-button">
-      <p-button *ngIf="!showAddNewMatch" (click)="showAddNewMatch = true"
-        >Dodaj nową rundę</p-button
-      >
+      <p-button *ngIf="!showAddNewMatch" (click)="showAddNewMatch = true">{{
+        'event.rounds.add' | translate
+      }}</p-button>
     </div>
 
     <div class="new-round-wrapper" *ngIf="showAddNewMatch">
-      <p>Dodaj nową rundę</p>
+      <p>{{ 'event.rounds.add' | translate }}</p>
 
       <app-add-users
         (handleAddUser)="addUser($event)"
@@ -25,9 +25,9 @@
       ></app-add-users>
 
       <div class="add-round-button">
-        <p-button [disabled]="addedUsers.length < 1" (onClick)="addMatch()"
-          >Dodaj</p-button
-        >
+        <p-button [disabled]="addedUsers.length < 1" (onClick)="addMatch()">{{
+          'button.add' | translate
+        }}</p-button>
       </div>
     </div>
   </section>

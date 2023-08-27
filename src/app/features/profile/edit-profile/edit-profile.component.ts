@@ -10,6 +10,7 @@ import { UsersService } from '@app/core/services/users/users.service';
 import { extractMessage } from '@app/core/utils/apiErrors';
 import { MessageService } from 'primeng/api';
 import { FileSelectEvent } from 'primeng/fileupload';
+import { LanguageService } from '@app/core/services/language/language.service';
 
 @Component({
   selector: 'app-edit-profile',
@@ -43,6 +44,7 @@ export class EditProfileComponent {
     private errorsService: ErrorsService,
     private renderer: Renderer2,
     private messageService: MessageService,
+    private languageService: LanguageService,
   ) {}
 
   ngOnInit(): void {
@@ -52,11 +54,13 @@ export class EditProfileComponent {
   onFileSelectClicked(event: FileSelectEvent) {
     this.clientError = undefined;
     if (!this.ACCEPTEDFILETYPES.includes(event.files[0].type)) {
-      this.clientError = 'Obsługujemy tylko pliki .png, .jpg, .jpeg i .gif.';
+      this.clientError = this.languageService.instant('organization.files');
       return;
     }
     if (event.files[0].size > this.MAXFILESIZE) {
-      this.clientError = 'Plik jest za duży.';
+      this.clientError = this.languageService.instant(
+        'organization.fileToLarge',
+      );
       return;
     }
 
@@ -112,7 +116,7 @@ export class EditProfileComponent {
         this.messageService.add({
           severity: 'success',
           life: this.toastLifeTime,
-          summary: 'Nazwa użytkownika została pomyślnie zapisana.',
+          summary: this.languageService.instant('organization.userEditSaved'),
         });
       },
       error: (err) => {
@@ -131,7 +135,7 @@ export class EditProfileComponent {
           this.messageService.add({
             severity: 'success',
             life: this.toastLifeTime,
-            summary: 'Avatar został pomyślnie zapisany.',
+            summary: this.languageService.instant('organization.avatarSaved'),
           });
           this.editMe();
         },

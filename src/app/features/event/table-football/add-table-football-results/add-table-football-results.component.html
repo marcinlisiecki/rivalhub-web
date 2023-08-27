@@ -1,6 +1,6 @@
 <section class="wrapper">
   <section>
-    <h1>Mecze</h1>
+    <h1>{{ 'event.games' | translate }}</h1>
 
     <app-view-table-football-matches
       [matches]="matches"
@@ -14,7 +14,7 @@
         *ngIf="!showAddNewMatch && editable"
         (onClick)="showAddNewMatch = true"
       >
-        Dodaj nowy mecz
+        {{ 'event.addGame' | translate }}
       </p-button>
     </div>
 

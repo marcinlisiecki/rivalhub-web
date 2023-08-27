@@ -5,6 +5,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AddUserDialogComponent } from '@app/features/event/new-event/add-user-dialog/add-user-dialog.component';
 import { UserDetailsDto } from '@interfaces/user/user-details-dto';
 import { AuthService } from '@app/core/services/auth/auth.service';
+import { LanguageService } from '@app/core/services/language/language.service';
 
 @Component({
   selector: 'app-add-event-users',
@@ -31,6 +32,7 @@ export class AddEventUsersComponent implements OnInit {
   constructor(
     private dialogService: DialogService,
     private authService: AuthService,
+    private languageService: LanguageService,
   ) {
     this.loggedInUserId = authService.getUserId();
   }
@@ -52,7 +54,7 @@ export class AddEventUsersComponent implements OnInit {
             this.addedUsers.findIndex((item) => user.id === item.id) === -1,
         ),
       },
-      header: 'Dodaj użytkownika',
+      header: this.languageService.instant('event.addUser'),
       width: '25rem',
     });
 

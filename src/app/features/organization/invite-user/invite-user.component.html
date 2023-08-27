@@ -1,13 +1,13 @@
 <div class="content-wrapper">
   <p-card
     *ngIf="organization"
-    header="Zaproś użytkownika"
+    header="{{ 'organization.invite' | translate }}"
     styleClass="centered-form"
-    subheader="Do organizacji {{ organization.name }}"
+    subheader="{{ 'organization.toOrg' | translate }} {{ organization.name }}"
   >
     <form [formGroup]="inviteForm" (ngSubmit)="onSubmit()" class="invite-form">
       <div class="input-box">
-        <label for="email">Adres email</label>
+        <label for="email">{{ 'input.email' | translate }}</label>
         <input
           id="email"
           formControlName="email"
@@ -17,15 +17,17 @@
         />
         <div *ngIf="email?.invalid && email?.touched">
           <app-validation-error *ngIf="email?.errors?.['required']">
-            Adres email jest wymagany
+            {{ 'input.emailWarning' | translate }}
           </app-validation-error>
         </div>
       </div>
-      <p-button styleClass="button-wide" type="submit">Zaproś</p-button>
+      <p-button styleClass="button-wide" type="submit">{{
+        'common.invite' | translate
+      }}</p-button>
     </form>
 
     <div class="invite-link" *ngIf="invitationLink">
-      <p>Albo udostępnij link</p>
+      <p>{{ 'organization.inviteLink' | translate }}</p>
       <span class="supporting-text">{{ invitationLink }}</span>
     </div>
   </p-card>

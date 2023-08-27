@@ -11,6 +11,7 @@ import { PagedResponse } from '@interfaces/generic/paged-response';
 import { EventsService } from '@app/core/services/events/events.service';
 import { EventType } from '@interfaces/event/event-type';
 import { AddPingPongMatch } from '@interfaces/event/games/ping-pong/add-ping-pong-match';
+import { LanguageService } from '@app/core/services/language/language.service';
 
 @Component({
   selector: 'app-new-event-match',
@@ -38,9 +39,9 @@ export class NewEventMatchComponent implements OnInit {
     private organizationsService: OrganizationsService,
     private route: ActivatedRoute,
     private eventsService: EventsService,
+    private languageService: LanguageService,
   ) {
     this.loggedInUserId = authService.getUserId();
-    console.log('tutaj');
   }
 
   ngOnInit() {
@@ -114,7 +115,7 @@ export class NewEventMatchComponent implements OnInit {
         userList: this.notAddedUserList,
         teamIndex,
       },
-      header: 'Dodaj użytkownika',
+      header: this.languageService.instant('event.addUser'),
       width: '25rem',
     });
 

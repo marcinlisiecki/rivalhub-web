@@ -1,4 +1,4 @@
-<p class="name">Rezerwacja</p>
+<p class="name">{{ 'event.reservation' | translate }}</p>
 <div class="content">
   <div class="stations">
     <p *ngFor="let station of reservation.stationList">
@@ -10,6 +10,8 @@
       {{ reservation.startTime | date: DISPLAY_DATE_FORMAT }} -
       {{ reservation.endTime | date: DISPLAY_DATE_FORMAT }}
     </p>
-    <p-button styleClass="p-button-secondary">Zobacz</p-button>
+    <p-button styleClass="p-button-secondary">{{
+      'common.show' | translate
+    }}</p-button>
   </div>
 </div>

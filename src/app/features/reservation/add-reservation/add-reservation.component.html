@@ -1,9 +1,9 @@
 <section class="add-reservation-container">
-  <h1>Nowa rezerwacja</h1>
+  <h1>{{ 'organization.newReservation' | translate }}</h1>
   <div class="form-container">
     <div class="dates-wrapper">
       <div class="input-box">
-        <label for="startDate">Data rozpoczęcia</label>
+        <label for="startDate">{{ 'event.date.start' | translate }}</label>
         <p-calendar
           inputId="startDate"
           styleClass="input-wide"
@@ -15,7 +15,7 @@
         ></p-calendar>
       </div>
       <div class="input-box">
-        <label for="endDate">Data zakończenia</label>
+        <label for="endDate">{{ 'event.date.end' | translate }}</label>
         <p-calendar
           inputId="endDate"
           [minDate]="today"
@@ -28,16 +28,18 @@
       </div>
     </div>
 
-    <p class="invalid-data" *ngIf="emptyData">Należy wypełnić wszystkie pola</p>
+    <p class="invalid-data" *ngIf="emptyData">
+      {{ 'organization.allField' | translate }}
+    </p>
     <p class="invalid-data" *ngIf="invalidDate">
-      Godzina startowa musi być przed godziną zakończenia
+      {{ 'organization.reservationStart' | translate }}
     </p>
     <p-button
       styleClass="button-wide p-button-secondary"
       [style]="{ 'margin-top': '10px' }"
       type="submit"
       (onClick)="fetchStations()"
-      >Zatwierdź date
+      >{{ 'organization.dateSubmit' | translate }}
     </p-button>
   </div>
 
@@ -63,5 +65,5 @@
   <!--    [closestAvailable]="closestAvailable"-->
   <!--  ></app-no-available-stations>-->
 
-  <p-button (onClick)="onSubmit()">Zapisz</p-button>
+  <p-button (onClick)="onSubmit()">{{ 'common.save' | translate }}</p-button>
 </section>

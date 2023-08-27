@@ -1,15 +1,17 @@
 <div class="set">
-  <p class="set-index">SET {{ gameSet.setNr }}</p>
+  <p class="set-index">
+    {{ 'event.common.set' | translate }} {{ gameSet.setNr }}
+  </p>
 
   <div class="set-results">
     <div class="set-result">
-      <p class="set-label">Drużyna 1</p>
+      <p class="set-label">{{ 'event.common.team' | translate }}{{ ' 1' }}</p>
       <p class="set-score">{{ gameSet.team1Score }}</p>
     </div>
 
     <div class="set-result">
       <p class="set-score">{{ gameSet.team2Score }}</p>
-      <p class="set-label">Drużyna 2</p>
+      <p class="set-label">{{ 'event.common.team' | translate }}{{ ' 2' }}</p>
     </div>
   </div>
 </div>

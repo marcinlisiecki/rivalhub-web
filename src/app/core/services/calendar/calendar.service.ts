@@ -239,7 +239,7 @@ export class CalendarService {
       organizationName: orgName,
       type: type,
       typeId: '2',
-      title: 'rezerwacja', //eventData.name,
+      title: this.languageService.instant('event.reservation'),
       startStr: res.startTime.toString(),
       start: res.startTime,
       endStr: res.endTime.toString(),
