@@ -198,21 +198,25 @@ export class ViewEventComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       message: this.languageService.instant('event.deleteQuestion'),
       accept: () => {
-        this.eventsService.removeEvent(this.eventId, this.eventType).subscribe({
-          next: () => {
-            this.messageService.add({
-              severity: 'success',
-              life: TOAST_LIFETIME,
-              summary: this.languageService.instant('event.removeConfirmation'),
-            });
-            this.router.navigateByUrl(
-              `/organizations/${this.organizationId}/events`,
-            );
-          },
-          error: (err) => {
-            this.errorsService.createErrorMessage(extractMessage(err));
-          },
-        });
+        this.eventsService
+          .removeEvent(this.organizationId, this.eventId, this.eventType)
+          .subscribe({
+            next: () => {
+              this.messageService.add({
+                severity: 'success',
+                life: TOAST_LIFETIME,
+                summary: this.languageService.instant(
+                  'event.removeConfirmation',
+                ),
+              });
+              this.router.navigateByUrl(
+                `/organizations/${this.organizationId}/events`,
+              );
+            },
+            error: (err) => {
+              this.errorsService.createErrorMessage(extractMessage(err));
+            },
+          });
       },
       reject: () => {},
     });

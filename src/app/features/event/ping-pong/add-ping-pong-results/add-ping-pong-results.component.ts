@@ -44,6 +44,10 @@ export class AddPingPongResultsComponent implements OnInit {
     this.fetchEventUsers();
   }
 
+  ngOnDestroy(): void {
+    this.addSetDialogRef?.destroy();
+  }
+
   fetchMatches() {
     this.eventsService
       .getEventMatches<PingPongMatch[]>(
@@ -117,7 +121,11 @@ export class AddPingPongResultsComponent implements OnInit {
           .addPingPongMatchSet(this.organizationId, this.eventId, set.matchId, [
             set,
           ])
-          .subscribe();
+          .subscribe({
+            next: () => {
+              this.fetchMatches();
+            },
+          });
       }
     });
   }

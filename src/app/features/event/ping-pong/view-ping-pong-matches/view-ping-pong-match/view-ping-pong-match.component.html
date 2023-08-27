@@ -45,6 +45,7 @@
   <app-view-game-sets
     [gameSets]="match.sets"
     [editable]="editable"
+    [matchId]="match.id"
   ></app-view-game-sets>
 
   <div class="add-set-button-wrapper" *ngIf="editable">

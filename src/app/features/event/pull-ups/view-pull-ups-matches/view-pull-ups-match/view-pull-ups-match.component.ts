@@ -2,11 +2,14 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { PullUpsMatch } from '@interfaces/event/games/pull-ups/pull-ups-match';
 import { PullUpsSeriesScores } from '@interfaces/event/games/pull-ups/pull-ups-series-scores';
 import { PullUpsDisplayRanking } from '@interfaces/event/games/pull-ups/pull-ups-display-ranking';
-import { DeleteSetEvent } from '@interfaces/event/delete-set-event';
-import { PullUpsSeries } from '@interfaces/event/games/pull-ups/pull-ups-series';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { LanguageService } from '@app/core/services/language/language.service';
 import { TOAST_LIFETIME } from '@app/core/constants/messages';
+import { EventsService } from '@app/core/services/events/events.service';
+import { ActivatedRoute } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
+import { extractMessage } from '@app/core/utils/apiErrors';
+import { ErrorsService } from '@app/core/services/errors/errors.service';
 
 @Component({
   selector: 'app-view-pull-ups-match',
@@ -26,6 +29,9 @@ export class ViewPullUpsMatchComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private languageService: LanguageService,
     private messageService: MessageService,
+    private eventsService: EventsService,
+    private route: ActivatedRoute,
+    private errorsService: ErrorsService,
   ) {}
 
   ngOnInit(): void {
@@ -54,13 +60,30 @@ export class ViewPullUpsMatchComponent implements OnInit {
         this.series = [];
         this.generateSeries();
 
-        this.messageService.add({
-          severity: 'success',
-          life: TOAST_LIFETIME,
-          summary: this.languageService.instant(
-            'event.series.deleteConfirmation',
-          ),
-        });
+        const organizationId = this.route.snapshot.params['organizationId'];
+        const eventId = this.route.snapshot.params['eventId'];
+
+        this.eventsService
+          .removePullUpsSeries(
+            organizationId,
+            eventId,
+            this.match.id,
+            series.seriesID,
+          )
+          .subscribe({
+            next: () => {
+              this.messageService.add({
+                severity: 'success',
+                life: TOAST_LIFETIME,
+                summary: this.languageService.instant(
+                  'event.series.deleteConfirmation',
+                ),
+              });
+            },
+            error: (err: HttpErrorResponse) => {
+              this.errorsService.createErrorMessage(extractMessage(err));
+            },
+          });
       },
       reject: () => {},
     });

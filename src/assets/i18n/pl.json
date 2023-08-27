@@ -274,5 +274,6 @@
   "event.match.deleteConfirmation": "Usunięto mecz",
   "event.round.deleteQuestion": "Czy na pewno chcesz usunąć tę rundę?",
   "event.round.deleteConfirmation": "Usunięto rundę",
-  "event.participants.addConfirmation": "Dodano użytkownika"
+  "event.participants.addConfirmation": "Dodano użytkownika",
+  "event.removeConfirmation": "Usunięto wydarzenie"
 }
