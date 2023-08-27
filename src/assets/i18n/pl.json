@@ -261,5 +261,8 @@
 	"stepForm.next": "Dalej",
 	"stepForm.previous": "Powrót",
   "event.participants.removeQuestion": "Czy na pewno chcesz usunąć tego użytkownika z wydarzenia?",
-  "event.participants.removeConfirmation": "Usunięto użytkownika z wydarzenia"
+  "event.participants.removeConfirmation": "Usunięto użytkownika z wydarzenia",
+  "event.delete": "Usuń wydarzenie",
+  "event.deleteQuestion": "Czy na pewno chcesz usunąć to wydarzenie?",
+  "event.deleteConfirmation": "Usunięto wydarzenie"
 }

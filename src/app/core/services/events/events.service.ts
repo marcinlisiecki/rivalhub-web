@@ -215,6 +215,13 @@ export class EventsService {
     );
   }
 
+  removeEvent(eventId: number, type: EventType): Observable<{}> {
+    return this.http.delete(
+      environment.apiUrl + `/organizations/events/${eventId}`,
+      { params: { type } },
+    );
+  }
+
   addEvent(
     addEvent: AddEvent,
     organizationId: number,

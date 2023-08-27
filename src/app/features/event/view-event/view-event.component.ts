@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { EventsService } from '@app/core/services/events/events.service';
 import { EventType } from '@interfaces/event/event-type';
 import { EventDto } from '@interfaces/event/event-dto';
@@ -43,6 +43,7 @@ export class ViewEventComponent implements OnInit {
     private messageService: MessageService,
     private languageService: LanguageService,
     private confirmationService: ConfirmationService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -113,6 +114,34 @@ export class ViewEventComponent implements OnInit {
               this.errorsService.createErrorMessage(extractMessage(err));
             },
           });
+      },
+      reject: () => {},
+    });
+  }
+
+  onRemoveEvent(event: Event) {
+    this.confirmationService.confirm({
+      target: event.target as EventTarget,
+      acceptLabel: this.languageService.instant('common.yes'),
+      rejectLabel: this.languageService.instant('common.no'),
+      icon: 'pi pi-exclamation-triangle',
+      message: this.languageService.instant('event.deleteQuestion'),
+      accept: () => {
+        this.eventsService.removeEvent(this.eventId, this.eventType).subscribe({
+          next: () => {
+            this.messageService.add({
+              severity: 'success',
+              life: TOAST_LIFETIME,
+              summary: this.languageService.instant('event.removeConfirmation'),
+            });
+            this.router.navigateByUrl(
+              `/organizations/${this.organizationId}/events`,
+            );
+          },
+          error: (err) => {
+            this.errorsService.createErrorMessage(extractMessage(err));
+          },
+        });
       },
       reject: () => {},
     });

@@ -1,5 +1,6 @@
 <section class="wrapper" *ngIf="event">
   <section class="main">
+    <p-confirmPopup></p-confirmPopup>
     <app-go-back-button></app-go-back-button>
 
     <section *ngIf="event">
@@ -73,12 +74,20 @@
       >
         <p-button>{{ 'event.addResults' | translate }} </p-button>
       </a>
+      <p-button
+        *ngIf="loggedInUserId === event.host"
+        icon="pi pi-times"
+        iconPos="left"
+        styleClass="p-button-danger p-button-outlined"
+        label="{{ 'event.delete' | translate }}"
+        (click)="onRemoveEvent($event)"
+      >
+      </p-button>
     </section>
   </section>
 
   <section class="participants">
     <h2 class="section-title">{{ 'event.participants' | translate }}</h2>
-    <p-confirmPopup></p-confirmPopup>
 
     <div class="users">
       <div class="user" *ngFor="let user of participants">
