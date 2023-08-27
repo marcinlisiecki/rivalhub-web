@@ -138,10 +138,9 @@ export class ViewEventComponent implements OnInit {
   }
 
   handleCanJoin() {
-    this.canJoin = !!(
+    this.canJoin =
       this.event?.eventPublic &&
-      !this.participants.map((u) => u.id).includes(this.loggedInUserId)
-    );
+      !this.participants.map((u) => u.id).includes(this.loggedInUserId);
   }
 
   fetchEvent() {
