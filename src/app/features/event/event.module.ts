@@ -39,7 +39,12 @@ import { TableModule } from 'primeng/table';
 import { AddPullUpsResultsComponent } from './pull-ups/add-pull-ups-results/add-pull-ups-results.component';
 import { AddPullUpsSeriesComponent } from './pull-ups/add-pull-ups-series/add-pull-ups-series.component';
 import { AddUsersComponent } from './common/add-users/add-users.component';
-
+import { ViewDartsMatchesComponent } from './darts/view-darts-matches/view-darts-matches.component';
+import { AddDartsResultsComponent } from './darts/add-darts-results/add-darts-results.component';
+import { AddLegComponent } from './darts/add-darts-results/add-leg/add-leg.component';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { ViewDartsMatchComponent } from './darts/view-darts-matches/view-darts-match/view-darts-match.component';
+import { TagModule } from 'primeng/tag';
 @NgModule({
   declarations: [
     NewEventComponent,
@@ -66,6 +71,10 @@ import { AddUsersComponent } from './common/add-users/add-users.component';
     AddPullUpsResultsComponent,
     AddPullUpsSeriesComponent,
     AddUsersComponent,
+    ViewDartsMatchesComponent,
+    AddDartsResultsComponent,
+    AddLegComponent,
+    ViewDartsMatchComponent,
   ],
   imports: [
     CommonModule,
@@ -84,6 +93,8 @@ import { AddUsersComponent } from './common/add-users/add-users.component';
     BadgeModule,
     TableModule,
     InputSwitchModule,
+    SelectButtonModule,
+    TagModule,
   ],
   providers: [DialogService],
 })

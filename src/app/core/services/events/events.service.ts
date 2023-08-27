@@ -16,6 +16,8 @@ import { NewTableFootballMatch } from '@interfaces/event/games/table-football/ne
 import { PullUpsMatch } from '@interfaces/event/games/pull-ups/pull-ups-match';
 import { PullUpsSeries } from '@interfaces/event/games/pull-ups/pull-ups-series';
 import { NewPullUpsMatch } from '@interfaces/event/games/pull-ups/new-pull-ups-match';
+import { DartsLeg } from '@app/core/interfaces/event/games/darts/darts-leg';
+import { AddDartsLeg } from '@app/core/interfaces/event/games/darts/add-darts-leg';
 
 @Injectable({
   providedIn: 'root',
@@ -95,7 +97,11 @@ export class EventsService {
   }
 
   getEventMatches<
-    T extends PingPongMatch[] | TableFootballMatch[] | PullUpsMatch[],
+    T extends
+      | PingPongMatch[]
+      | TableFootballMatch[]
+      | PullUpsMatch[]
+      | DartsLeg[],
   >(
     organizationId: number,
     eventId: number,
@@ -154,6 +160,18 @@ export class EventsService {
       environment.apiUrl +
         `/organizations/${organizationId}/events/${eventId}/match/${matchId}/pingpong?type=PING_PONG`,
       setList,
+    );
+  }
+
+  addDartsLeg(
+    organizationId: number,
+    eventId: number,
+    leg: AddDartsLeg,
+  ): Observable<DartsLeg> {
+    return this.http.post<DartsLeg>(
+      environment.apiUrl +
+        `/organizations/${organizationId}/events/${eventId}/match?type=DARTS`,
+      leg,
     );
   }
 

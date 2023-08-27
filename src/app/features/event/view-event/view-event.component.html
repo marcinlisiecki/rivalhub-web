@@ -34,6 +34,10 @@
         [matches]="getPullUpsMatches()"
       >
       </app-view-pull-ups-matches>
+
+      <app-view-darts-matches
+        *ngIf="eventType === EventType.DARTS"
+        [matches]="getDartsMatches()"> </app-view-darts-matches>
     </section>
 
     <section class="buttons">

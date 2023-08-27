@@ -1,0 +1,63 @@
+@import 'src/scss/variables';
+
+.wrapper {
+  margin-bottom: 1rem;
+}
+
+.teams {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+h1 {
+  font-size: $textLg;
+}
+
+.event-options {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+    row-gap: 1rem;
+}
+
+.participants{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.team {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  h2 {
+    font-size: $textBase;
+  }
+
+  &-member {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 3rem;
+
+    &-data {
+      display: flex;
+      align-items: center;
+      column-gap: 0.75rem;
+    }
+
+    &-avatar {
+      width: 2rem;
+      height: 2rem;
+      border-radius: 20%;
+      background-color: $shade600;
+    }
+
+  }
+
+}

@@ -1,0 +1,16 @@
+<section class="wrapper">
+    <section>
+        <app-go-back-button></app-go-back-button>
+
+        <app-view-darts-matches [matches]="matches"></app-view-darts-matches>
+
+        <div class="add-match-button-wrapper">
+            <p-button *ngIf="!showAddNewMatch && editable" (onClick)="showAddNewMatch = true">
+                {{ 'event.addLeg' | translate }}
+            </p-button>
+        </div>
+
+        <app-add-leg (addLeg)="handleAddLeg($event)" [participants]="eventUsers" *ngIf="showAddNewMatch"></app-add-leg>
+        
+    </section>
+</section>

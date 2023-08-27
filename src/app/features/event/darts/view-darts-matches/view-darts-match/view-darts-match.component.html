@@ -1,0 +1,37 @@
+<div class="dart-wrapper">
+    <section class="tags">
+        <p-tag severity="success" value="Dart"></p-tag>
+        <p-tag severity="success" [value]="match.dartFormat"></p-tag>
+        <p-tag severity="success" [value]="match.dartRule"></p-tag>
+    </section>
+    <section class="participants-list">
+        <div class="participant" *ngFor="let participant of match.participants">
+            <app-avatar class="participant-avatar" [user]="participant"></app-avatar>
+            <p>{{ participant.name }}</p>
+        </div>
+    </section>
+
+    <section>
+        <div *ngFor="let queue of match.queue" class="leg-score">
+            <div class="queue">{{queue.queueid}} - {{queue.score[0]}}
+                <ng-container *ngFor="let _ of getHits(queue.bounceOuts[0])">
+                    <img class="dart-icon" src="assets/img/dart/dart-hit.png">
+                </ng-container>
+                <ng-container *ngFor="let _ of getMisses(queue.bounceOuts[0])">
+                    <img class="dart-icon" src="assets/img/dart/dart-miss.png">
+                </ng-container>
+                <p-divider layout="vertical"></p-divider>
+                 {{queue.score[1]}}
+                 <ng-container *ngFor="let _ of getHits(queue.bounceOuts[1])">
+                    <img class="dart-icon" src="assets/img/dart/dart-hit.png">
+                </ng-container>
+                <ng-container *ngFor="let _ of getMisses(queue.bounceOuts[1])">
+                    <img class="dart-icon" src="assets/img/dart/dart-miss.png">
+                </ng-container>
+
+
+            </div>
+<p-divider></p-divider>
+        </div>
+    </section>
+</div>

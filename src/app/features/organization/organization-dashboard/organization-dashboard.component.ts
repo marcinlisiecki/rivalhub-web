@@ -146,6 +146,7 @@ export class OrganizationDashboardComponent implements OnInit, OnDestroy {
         ...(await this.fetchEventsForType(EventType.TABLE_FOOTBALL)),
       );
       tempEvents.push(...(await this.fetchEventsForType(EventType.PULL_UPS)));
+      tempEvents.push(...(await this.fetchEventsForType(EventType.DARTS)));
     } catch (err: unknown) {
       this.errorsService.createErrorMessage(extractMessage(err));
     } finally {
