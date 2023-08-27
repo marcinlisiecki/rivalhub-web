@@ -198,6 +198,14 @@ export class CalendarService {
     } else {
       title = eventData.name;
     }
+
+    let eventURL = [
+      '/organizations',
+      eventData.organization.id,
+      'events',
+      eventData.eventId,
+      { type: eventData.eventType },
+    ];
     let newEvent: CalendarEvent = {
       organizationId: orgId,
       organizationName: orgName,
@@ -211,6 +219,7 @@ export class CalendarService {
       allDay: false,
       borderColor: color,
       color: color,
+      eventURL: eventURL,
       extendedProps: {
         organizationName: eventData.organization.name,
         organizationId: eventData.organization.id.toString(),
