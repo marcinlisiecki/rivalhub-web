@@ -5,12 +5,29 @@
     <section *ngIf="event">
       <h1 class="event-title">
         {{ event.name }}
+        <p-button
+          *ngIf="canJoin"
+          (click)="joinEvent()"
+          styleClass="p-button-secondary p-button-outlined p-button-sm"
+          iconPos="left"
+          icon="pi pi-plus"
+          label="{{ 'event.joinEvent' | translate }}"
+        ></p-button>
       </h1>
 
-      <p-badge
-        severity="info"
-        value="{{ categoryTypeToLabel(eventType) | translate }}"
-      ></p-badge>
+      <div class="tags">
+        <p-tag
+          severity="info"
+          value="{{ categoryTypeToLabel(eventType) | translate }}"
+        ></p-tag>
+        <p-tag
+          [severity]="event.eventPublic ? 'success' : 'danger'"
+          value="{{
+            (event.eventPublic ? 'event.publicLabel' : 'event.privateLabel')
+              | translate
+          }}"
+        ></p-tag>
+      </div>
 
       <p class="description">
         {{ event.description ?? ('event.noDescription' | translate) }}

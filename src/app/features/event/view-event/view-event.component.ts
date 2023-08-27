@@ -12,6 +12,10 @@ import { TableFootballMatch } from '@interfaces/event/games/table-football/table
 import { categoryTypeToLabel } from '@app/core/utils/event';
 import { PullUpsMatch } from '@interfaces/event/games/pull-ups/pull-ups-match';
 import { AuthService } from '@app/core/services/auth/auth.service';
+import { UsersService } from '@app/core/services/users/users.service';
+import { MessageService } from 'primeng/api';
+import { TOAST_LIFETIME } from '@app/core/constants/messages';
+import { LanguageService } from '@app/core/services/language/language.service';
 
 @Component({
   selector: 'app-view-event',
@@ -23,17 +27,21 @@ export class ViewEventComponent implements OnInit {
   organizationId!: number;
   eventType!: EventType;
 
-  event?: EventDto;
+  event!: EventDto;
   participants: UserDetailsDto[] = [];
   matches?: PingPongMatch[] | TableFootballMatch[] | PullUpsMatch[];
   loggedInUserId!: number;
   canEdit: boolean = false;
+  canJoin: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
     private eventsService: EventsService,
     private errorsService: ErrorsService,
     private authService: AuthService,
+    private usersService: UsersService,
+    private messageService: MessageService,
+    private languageService: LanguageService,
   ) {}
 
   ngOnInit(): void {
@@ -48,9 +56,41 @@ export class ViewEventComponent implements OnInit {
     this.fetchMatches();
   }
 
+  joinEvent() {
+    this.eventsService
+      .joinEvent(this.event.eventId, this.event.eventType)
+      .subscribe({
+        next: () => {
+          this.messageService.add({
+            severity: 'success',
+            life: TOAST_LIFETIME,
+            detail: this.languageService.instant('organization.eventJoin'),
+          });
+          this.event.participants.push(this.authService.getUserId()!);
+          this.handleCanEdit();
+          this.handleCanJoin();
+
+          this.usersService.getMe().subscribe({
+            next: (me: UserDetailsDto) => {
+              this.participants.push(me);
+            },
+          });
+        },
+      });
+  }
+
   handleCanEdit() {
     if (this.participants.map((u) => u.id).includes(this.loggedInUserId)) {
       this.canEdit = true;
+    }
+  }
+
+  handleCanJoin() {
+    if (
+      this.event?.eventPublic &&
+      !this.participants.map((u) => u.id).includes(this.loggedInUserId)
+    ) {
+      this.canJoin = true;
     }
   }
 
@@ -72,6 +112,7 @@ export class ViewEventComponent implements OnInit {
         next: (participants: UserDetailsDto[]) => {
           this.participants = participants;
           this.handleCanEdit();
+          this.handleCanJoin();
         },
         error: (err: HttpErrorResponse) => {
           this.errorsService.createErrorMessage(extractMessage(err));

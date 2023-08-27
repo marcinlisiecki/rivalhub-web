@@ -21,6 +21,9 @@
 
 .event-title {
   font-size: $textXl;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .buttons {
@@ -49,4 +52,10 @@ h1 {
     border-radius: 20%;
     background-color: $shade600;
   }
+}
+
+.tags {
+  display: flex;
+  align-items: center;
+  column-gap: 0.5rem;
 }
