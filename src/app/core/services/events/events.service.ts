@@ -94,6 +94,17 @@ export class EventsService {
     );
   }
 
+  removeEventParticipant(
+    eventId: number,
+    participantId: number,
+    type: EventType,
+  ): Observable<UserDetailsDto[]> {
+    return this.http.delete<UserDetailsDto[]>(
+      environment.apiUrl + `/organizations/events/${eventId}/participants`,
+      { body: participantId, params: { type } },
+    );
+  }
+
   getEventMatches<
     T extends PingPongMatch[] | TableFootballMatch[] | PullUpsMatch[],
   >(

@@ -67,31 +67,46 @@ export class ViewEventComponent implements OnInit {
             detail: this.languageService.instant('organization.eventJoin'),
           });
           this.event.participants.push(this.authService.getUserId()!);
-          this.handleCanEdit();
-          this.handleCanJoin();
 
           this.usersService.getMe().subscribe({
             next: (me: UserDetailsDto) => {
               this.participants.push(me);
+              this.handleCanEdit();
+              this.handleCanJoin();
             },
           });
         },
       });
   }
 
+  leaveEvent() {
+    this.eventsService
+      .removeEventParticipant(this.eventId, this.loggedInUserId, this.eventType)
+      .subscribe({
+        next: (participants: UserDetailsDto[]) => {
+          this.participants = participants;
+          this.handleCanJoin();
+          this.handleCanEdit();
+          this.messageService.add({
+            severity: 'success',
+            life: TOAST_LIFETIME,
+            detail: this.languageService.instant('organization.eventLeave'),
+          });
+        },
+      });
+  }
+
   handleCanEdit() {
-    if (this.participants.map((u) => u.id).includes(this.loggedInUserId)) {
-      this.canEdit = true;
-    }
+    this.canEdit = this.participants
+      .map((u) => u.id)
+      .includes(this.loggedInUserId);
   }
 
   handleCanJoin() {
-    if (
+    this.canJoin = !!(
       this.event?.eventPublic &&
       !this.participants.map((u) => u.id).includes(this.loggedInUserId)
-    ) {
-      this.canJoin = true;
-    }
+    );
   }
 
   fetchEvent() {
