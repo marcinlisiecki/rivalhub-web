@@ -34,7 +34,7 @@
       </app-view-pull-ups-matches>
     </section>
 
-    <section class="buttons">
+    <section class="buttons" *ngIf="canEdit">
       <a
         [routerLink]="[
           '/organizations',

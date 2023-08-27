@@ -11,6 +11,7 @@ import { PingPongMatch } from '@interfaces/event/games/ping-pong/ping-pong-match
 import { TableFootballMatch } from '@interfaces/event/games/table-football/table-football-match';
 import { categoryTypeToLabel } from '@app/core/utils/event';
 import { PullUpsMatch } from '@interfaces/event/games/pull-ups/pull-ups-match';
+import { AuthService } from '@app/core/services/auth/auth.service';
 
 @Component({
   selector: 'app-view-event',
@@ -25,11 +26,14 @@ export class ViewEventComponent implements OnInit {
   event?: EventDto;
   participants: UserDetailsDto[] = [];
   matches?: PingPongMatch[] | TableFootballMatch[] | PullUpsMatch[];
+  loggedInUserId!: number;
+  canEdit: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
     private eventsService: EventsService,
     private errorsService: ErrorsService,
+    private authService: AuthService,
   ) {}
 
   ngOnInit(): void {
@@ -37,9 +41,17 @@ export class ViewEventComponent implements OnInit {
     this.organizationId = this.route.snapshot.params['organizationId'];
     this.eventType = this.route.snapshot.params['type'];
 
+    this.loggedInUserId = this.authService.getUserId() as number;
+
     this.fetchEvent();
     this.fetchParticipants();
     this.fetchMatches();
+  }
+
+  handleCanEdit() {
+    if (this.participants.map((u) => u.id).includes(this.loggedInUserId)) {
+      this.canEdit = true;
+    }
   }
 
   fetchEvent() {
@@ -59,6 +71,7 @@ export class ViewEventComponent implements OnInit {
       .subscribe({
         next: (participants: UserDetailsDto[]) => {
           this.participants = participants;
+          this.handleCanEdit();
         },
         error: (err: HttpErrorResponse) => {
           this.errorsService.createErrorMessage(extractMessage(err));
