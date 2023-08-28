@@ -6,6 +6,7 @@ export interface PingPongMatch {
   team1: UserDetailsDto[];
   team2: UserDetailsDto[];
   sets: GameSet[];
-  team1Approval: boolean;
-  team2Approval: boolean;
+  userApprovalMap: {
+    [id: number]: boolean;
+  };
 }
