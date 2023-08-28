@@ -11,10 +11,17 @@
         severity="info"
         value="{{ categoryTypeToLabel(eventType) | translate }}"
       ></p-badge>
-
-      <p class="description">
-        {{ event.description ?? ('event.noDescription' | translate) }}
-      </p>
+      <span *ngIf="event.description; then desc; else noDesc"> </span>
+      <ng-template #desc>
+        <p class="description">
+          {{ event.description }}
+        </p>
+      </ng-template>
+      <ng-template #noDesc>
+        <p class="description">
+          {{ 'event.noDescription' | translate }}
+        </p>
+      </ng-template>
     </section>
 
     <section>
