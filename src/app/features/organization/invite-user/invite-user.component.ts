@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 import { OrganizationsService } from '@app/core/services/organizations/organizations.service';
 import { environment } from '../../../../environments/environment';
 import { Organization } from '@interfaces/organization/organization';
@@ -29,7 +29,7 @@ export class InviteUserComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.route.params.subscribe((params) => {
+    this.route.params.subscribe((params: Params) => {
       this.organizationId = params['id'];
 
       this.organizationsService.getInvitationLink(this.organizationId).subscribe({
