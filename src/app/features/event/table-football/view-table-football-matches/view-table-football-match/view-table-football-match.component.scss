@@ -77,6 +77,12 @@
   }
 }
 
+.match-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .add-set-button-wrapper {
   margin-top: 1rem;
 }

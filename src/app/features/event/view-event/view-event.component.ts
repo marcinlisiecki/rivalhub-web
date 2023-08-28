@@ -11,6 +11,7 @@ import { PingPongMatch } from '@interfaces/event/games/ping-pong/ping-pong-match
 import { TableFootballMatch } from '@interfaces/event/games/table-football/table-football-match';
 import { categoryTypeToLabel } from '@app/core/utils/event';
 import { PullUpsMatch } from '@interfaces/event/games/pull-ups/pull-ups-match';
+import { AuthService } from '@app/core/services/auth/auth.service';
 
 @Component({
   selector: 'app-view-event',
@@ -30,6 +31,7 @@ export class ViewEventComponent implements OnInit {
     private route: ActivatedRoute,
     private eventsService: EventsService,
     private errorsService: ErrorsService,
+    private authService: AuthService,
   ) {}
 
   ngOnInit(): void {
@@ -40,6 +42,25 @@ export class ViewEventComponent implements OnInit {
     this.fetchEvent();
     this.fetchParticipants();
     this.fetchMatches();
+  }
+
+  approveMatch(matchId: number) {
+    this.eventsService
+      .approveMatch(this.organizationId, this.eventId, matchId, this.eventType)
+      .subscribe({
+        next: () => {
+          const matchIndex = this.matches?.findIndex((m) => m.id === matchId);
+          if (this.matches && matchIndex) {
+            const loggedInUserId = this.authService.getUserId() as number;
+            this.matches[matchIndex].userApprovalMap[loggedInUserId] = true;
+          }
+
+          this.fetchMatches();
+        },
+        error: (err: HttpErrorResponse) => {
+          this.errorsService.createErrorMessage(extractMessage(err));
+        },
+      });
   }
 
   fetchEvent() {

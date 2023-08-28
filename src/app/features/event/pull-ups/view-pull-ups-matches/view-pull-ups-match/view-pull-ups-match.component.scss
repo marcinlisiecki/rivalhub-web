@@ -6,6 +6,12 @@
   background-color: $panelContentBg;
 }
 
+.match-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .teams {
   margin-top: 1rem;
   display: flex;

@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { PingPongMatch } from '@interfaces/event/games/ping-pong/ping-pong-match';
 import { LanguageService } from '@app/core/services/language/language.service';
+import { AuthService } from '@app/core/services/auth/auth.service';
 
 @Component({
   selector: 'app-view-ping-pong-match',
@@ -12,6 +13,14 @@ export class ViewPingPongMatchComponent {
   @Input() editable: boolean = false;
 
   @Output() handleAddSet: EventEmitter<number> = new EventEmitter<number>();
+  @Output() approveMatch: EventEmitter<number> = new EventEmitter<number>();
 
-  constructor(public languageService: LanguageService) {}
+  loggedInUserId!: number;
+
+  constructor(
+    public languageService: LanguageService,
+    private authService: AuthService,
+  ) {
+    this.loggedInUserId = authService.getUserId() as number;
+  }
 }

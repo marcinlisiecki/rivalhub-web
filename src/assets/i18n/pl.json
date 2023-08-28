@@ -261,5 +261,6 @@
   "notification.content": "Jesteś proszony o potwierdzenie wyników meczu w kategorii",
   "notification.showMatch": "Pokaż mecz",
   "notification.header": "Powiadomienia",
-  "notification.noNotifications": "Brak nowych powiadomień"
+  "notification.noNotifications": "Brak nowych powiadomień",
+  "event.confirmResults": "Potwierdź wyniki"
 }
