@@ -111,7 +111,6 @@ export class EditProfileComponent {
     };
     this.userService.editMe(editUser).subscribe({
       next: (user) => {
-        console.log('user', user);
         this.isLoading = false;
         this.messageService.add({
           severity: 'success',

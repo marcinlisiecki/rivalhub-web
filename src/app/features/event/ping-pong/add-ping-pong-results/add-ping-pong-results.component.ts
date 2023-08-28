@@ -9,6 +9,8 @@ import { EventType } from '@interfaces/event/event-type';
 import { AddPingPongMatch } from '@interfaces/event/games/ping-pong/add-ping-pong-match';
 import { UserDetailsDto } from '@interfaces/user/user-details-dto';
 import { LanguageService } from '@app/core/services/language/language.service';
+import { DeleteSetEvent } from '@interfaces/event/delete-set-event';
+import { TOAST_LIFETIME } from '@app/core/constants/messages';
 
 @Component({
   selector: 'app-add-ping-pong-results',
@@ -40,6 +42,10 @@ export class AddPingPongResultsComponent implements OnInit {
 
     this.fetchMatches();
     this.fetchEventUsers();
+  }
+
+  ngOnDestroy(): void {
+    this.addSetDialogRef?.destroy();
   }
 
   fetchMatches() {
@@ -115,7 +121,11 @@ export class AddPingPongResultsComponent implements OnInit {
           .addPingPongMatchSet(this.organizationId, this.eventId, set.matchId, [
             set,
           ])
-          .subscribe();
+          .subscribe({
+            next: () => {
+              this.fetchMatches();
+            },
+          });
       }
     });
   }

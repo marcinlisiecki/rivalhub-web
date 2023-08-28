@@ -1,6 +1,17 @@
 <div class="set">
   <p class="set-index">
+    <span class="invisible">
+      <i class="pi pi-times-circle"></i>
+    </span>
     {{ 'event.common.set' | translate }} {{ gameSet.setNr }}
+    <i
+      [style]="{
+        opacity: editable ? 1 : 0,
+        pointerEvents: editable ? 'all' : 'none'
+      }"
+      class="pi pi-times-circle"
+      (click)="onDelete($event)"
+    ></i>
   </p>
 
   <div class="set-results">
