@@ -53,13 +53,15 @@ export class MemberCardComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.imageUrl = this.imageService.getUserImagePath(
-      this.user.profilePictureUrl,
-    );
+
     this.route.params.subscribe((params) => {
       this.organizationId = params['id'];
+      this.loadMyself();
+      this.imageUrl = this.imageService.getUserImagePath(
+        this.user.profilePictureUrl,
+      );
     });
-    this.loadMyself();
+
   }
 
   getImagePath(imageUrl: string | null): string {
