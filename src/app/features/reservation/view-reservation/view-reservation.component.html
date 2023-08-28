@@ -1,0 +1,49 @@
+<section class="wrapper">
+  <section class="main">
+    <app-go-back-button></app-go-back-button>
+    <p-confirmPopup></p-confirmPopup>
+
+    <section>
+      <h1 class="event-title">Rezerwacja</h1>
+
+      <div class="data-wrapper">
+        <div class="date">
+          <i class="pi pi-clock"></i>
+          <p>
+            {{ reservation?.startTime | date: DISPLAY_DATE_FORMAT }}・{{
+              reservation?.endTime | date: DISPLAY_DATE_FORMAT
+            }}
+          </p>
+        </div>
+
+        <div class="user" *ngIf="reservation">
+          <app-avatar
+            class="user-avatar avatar-wrapper"
+            [user]="reservation.user"
+          ></app-avatar>
+
+          <p>{{ reservation.user.name }}</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Zarezerowane obiekty</h2>
+      <div class="stations">
+        <div *ngFor="let station of reservation?.stationList" class="station">
+          {{ station.name }}
+        </div>
+      </div>
+    </section>
+
+    <section
+      *ngIf="reservation && loggedUserId === reservation.user.id"
+      class="actions"
+    >
+      <p-button
+        label="Usuń rezerwację"
+        (click)="onRemoveEvent($event)"
+      ></p-button>
+    </section>
+  </section>
+</section>
