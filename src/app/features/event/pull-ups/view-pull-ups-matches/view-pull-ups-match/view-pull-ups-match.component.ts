@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { PullUpsMatch } from '@interfaces/event/games/pull-ups/pull-ups-match';
 import { PullUpsSeriesScores } from '@interfaces/event/games/pull-ups/pull-ups-series-scores';
 import { PullUpsDisplayRanking } from '@interfaces/event/games/pull-ups/pull-ups-display-ranking';
+import { LanguageService } from '@app/core/services/language/language.service';
 
 @Component({
   selector: 'app-view-pull-ups-match',
@@ -17,7 +18,7 @@ export class ViewPullUpsMatchComponent implements OnInit {
   series: PullUpsSeriesScores[] = [];
   ranking: PullUpsDisplayRanking[] = [];
 
-  constructor() {}
+  constructor(public languageService: LanguageService) {}
 
   ngOnInit(): void {
     this.generateSeries();

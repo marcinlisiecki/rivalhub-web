@@ -1,4 +1,14 @@
 <section class="match">
+  <p-badge
+    [severity]="match.approved ? 'success' : 'danger'"
+    [value]="
+      match.approved
+        ? languageService.instant('event.approval')
+        : languageService.instant('event.noApproval')
+    "
+  >
+  </p-badge>
+
   <section class="teams">
     <section class="team">
       <h2>{{ 'event.rounds.participants' | translate }}</h2>
@@ -6,6 +16,10 @@
         <div class="team-member-data">
           <app-avatar class="team-member-avatar" [user]="user"></app-avatar>
           <p>{{ user.name }}</p>
+          <i
+            class="pi pi-check-circle"
+            *ngIf="match.userApprovalMap[user.id]"
+          ></i>
         </div>
       </div>
     </section>
