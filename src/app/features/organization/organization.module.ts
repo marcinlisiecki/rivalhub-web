@@ -34,6 +34,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { PaginatorModule } from 'primeng/paginator';
 import { ViewOrganizationEventsComponent } from './view-organization-events/view-organization-events.component';
 import { InputSwitchModule } from 'primeng/inputswitch';
+import {AngularSvgIconModule} from "angular-svg-icon";
 
 @NgModule({
   declarations: [
@@ -80,6 +81,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
     DropdownModule,
     PaginatorModule,
     InputSwitchModule,
+    AngularSvgIconModule,
   ],
   exports: [
     MyOrganizationsComponent,
