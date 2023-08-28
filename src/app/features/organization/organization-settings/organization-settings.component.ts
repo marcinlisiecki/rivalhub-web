@@ -2,7 +2,7 @@ import { Component, Renderer2, ViewChild } from '@angular/core';
 import { EventType } from '@interfaces/event/event-type';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { EventsService } from '@app/core/services/events/events.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 import { OrganizationsService } from '@app/core/services/organizations/organizations.service';
 import { ErrorsService } from '@app/core/services/errors/errors.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -13,7 +13,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { FileSelectEvent } from 'primeng/fileupload';
 import { ImageService } from '@app/core/services/image/image.service';
 import { EditOrganization } from '@app/core/interfaces/organization/edit-organization';
-import { Observable, of } from 'rxjs';
+import {Observable, of, Subscription} from 'rxjs';
 import { LanguageService } from '@app/core/services/language/language.service';
 
 @Component({
@@ -24,7 +24,8 @@ import { LanguageService } from '@app/core/services/language/language.service';
 export class OrganizationSettingsComponent {
   possibleEventTypes: EventType[] = [];
   activeEventTypes: EventType[] = [];
-  organizationId: number;
+  organizationId!: number;
+  paramsSub?: Subscription
   isLoading: boolean = false;
   toastLifeTime: number = 3 * 1000;
 
@@ -61,15 +62,16 @@ export class OrganizationSettingsComponent {
     private messageService: MessageService,
     private renderer: Renderer2,
     private languageService: LanguageService,
-  ) {
-    this.organizationId = parseInt(this.route.snapshot.params['id']);
-  }
+  ) {}
 
   ngOnInit(): void {
-    this.fetchAllEventTypes();
-    this.fetchActiveEventTypes();
-    this.fetchOrganizationsSettings();
-    this.fetchOrganizationNameAndAvatar();
+    this.paramsSub = this.route.params.subscribe((params: Params) => {
+      this.organizationId = params['id']
+      this.fetchAllEventTypes();
+      this.fetchActiveEventTypes();
+      this.fetchOrganizationsSettings();
+      this.fetchOrganizationNameAndAvatar();
+    })
   }
 
   ngAfterViewInit(): void {

@@ -13,7 +13,7 @@ import {MessageService} from "primeng/api";
   styleUrls: ['./invite-user.component.scss'],
 })
 export class InviteUserComponent implements OnInit {
-  orgId!: number;
+  organizationId!: number;
   invitationLink: string | null = null;
   organization: Organization | null = null;
   inviteForm = new FormGroup({
@@ -30,15 +30,15 @@ export class InviteUserComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe((params) => {
-      this.orgId = params['id'];
+      this.organizationId = params['id'];
 
-      this.organizationsService.getInvitationLink(this.orgId).subscribe({
+      this.organizationsService.getInvitationLink(this.organizationId).subscribe({
         next: (link: string) => {
           this.invitationLink = link;
         },
       });
+      this.loadOrganizationInfo(this.organizationId);
     });
-    this.loadOrganizationInfo(this.orgId);
   }
   loadOrganizationInfo(id: number) {
     this.organizationsService.choose(id).subscribe({
@@ -58,14 +58,14 @@ export class InviteUserComponent implements OnInit {
     }
 
     this.organizationsService
-      .sendInvitation(this.orgId, emailAddress).subscribe({
+      .sendInvitation(this.organizationId, emailAddress).subscribe({
     next: (response) => {
-      this.router.navigateByUrl(`/organizations/${this.orgId}?invited=true`).then();
+      this.router.navigateByUrl(`/organizations/${this.organizationId}?invited=true`).then();
     },
       error: (error: HttpErrorResponse) => {
         this.messageService.add({
           severity: 'error',
-          life: 1000 * 10,
+          life: 1000 * 5,
           summary: error.error.message,
         });
       }

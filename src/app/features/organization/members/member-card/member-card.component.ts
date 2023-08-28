@@ -31,7 +31,7 @@ export class MemberCardComponent implements OnInit {
     'organization.confirmKickMessage',
   );
   public adminButtonText: string = this.languageService.instant(
-    'organization.adminButtonText',
+    'organization.onAdminButtonText',
   );
   public kickButtonText: string = this.languageService.instant(
     'organization.kickButtonText',
