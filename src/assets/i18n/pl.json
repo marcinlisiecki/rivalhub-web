@@ -169,6 +169,7 @@
 	"organization.accountVerify": "Zweryfikuj konto, klikając na link, który został wysłany na podany adres mailowy, aby móc korzystać z funkcji organizacji.",
 	"organization.add": "Dodaj organizację",
 	"organization.adminButtonText": "Odbierz admina",
+  "organization.onAdminButtonText": "Nadaj uprawnienia admina",
 	"organization.admins": "Administratorzy",
 	"organization.allField": "Należy wypełnić wszystkie pola",
 	"organization.avatarEdited": "Avatar został pomyślnie edytowany!",

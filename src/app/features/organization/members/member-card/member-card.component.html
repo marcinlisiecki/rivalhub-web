@@ -16,7 +16,7 @@
     styleClass="p-button-sm"
     class="card-btn"
     (onClick)="onKickUser($event)"
-    >{{ kickButtonText }}</p-button
+    >{{ 'organization.kickButtonText' | translate }}</p-button
   >
   <p-button
     *ngIf="amIAdmin && !myself"
@@ -24,7 +24,7 @@
     class="card-btn"
     (onClick)="grantAdmin($event)"
   >
-    {{ adminButtonText }}</p-button
+    {{ 'organization.onAdminButtonText' | translate }}</p-button
   >
   <p-button
     *ngIf="!myself"
