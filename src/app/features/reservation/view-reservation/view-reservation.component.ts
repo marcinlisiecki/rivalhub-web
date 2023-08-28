@@ -10,6 +10,7 @@ import { AuthService } from '@app/core/services/auth/auth.service';
 import { TOAST_LIFETIME } from '@app/core/constants/messages';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { LanguageService } from '@app/core/services/language/language.service';
+import { categoryTypeToLabel } from '@app/core/utils/event';
 
 @Component({
   selector: 'app-view-reservation',
@@ -84,4 +85,5 @@ export class ViewReservationComponent {
   }
 
   protected readonly DISPLAY_DATE_FORMAT = DISPLAY_DATE_FORMAT;
+  protected readonly categoryTypeToLabel = categoryTypeToLabel;
 }

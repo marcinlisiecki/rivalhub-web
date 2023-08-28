@@ -31,7 +31,10 @@
       <h2>{{ 'reservation.reservedObjects.label' | translate }}</h2>
       <div class="stations">
         <div *ngFor="let station of reservation?.stationList" class="station">
-          {{ station.name }}
+          {{ station.name + '' }}
+          <span [ngStyle]="{ marginLeft: '1rem', color: 'grey' }">
+            <i>{{ categoryTypeToLabel(station.type) | translate }}</i>
+          </span>
         </div>
       </div>
     </section>
