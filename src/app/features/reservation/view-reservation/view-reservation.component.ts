@@ -57,7 +57,7 @@ export class ViewReservationComponent {
       acceptLabel: this.languageService.instant('common.yes'),
       rejectLabel: this.languageService.instant('common.no'),
       icon: 'pi pi-exclamation-triangle',
-      message: this.languageService.instant('event.deleteQuestion'),
+      message: this.languageService.instant('reservation.deleteQuestion'),
       accept: () => {
         this.reservationsService
           .deleteReservation(this.reservationId)
@@ -67,7 +67,7 @@ export class ViewReservationComponent {
                 severity: 'success',
                 life: TOAST_LIFETIME,
                 summary: this.languageService.instant(
-                  'event.removeConfirmation',
+                  'reservation.deleteConfirmation',
                 ),
               });
               this.router.navigateByUrl(

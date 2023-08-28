@@ -257,5 +257,9 @@
 	"sidebar.signOut": "Wyloguj się",
 	"sidebar.stations": "Stanowiska",
 	"stepForm.next": "Dalej",
-	"stepForm.previous": "Powrót"
+	"stepForm.previous": "Powrót",
+  "reservation.reservedObjects.label": "Zarezerwowane obiekty",
+  "reservation.deleteButton": "Usuń rezerwację",
+  "reservation.deleteQuestion": "Czy na pewno chcesz usunąć tę rezerwację?",
+  "reservation.deleteConfirmation": "Usunięto rezerwację"
 }

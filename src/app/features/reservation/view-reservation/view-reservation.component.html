@@ -4,7 +4,7 @@
     <p-confirmPopup></p-confirmPopup>
 
     <section>
-      <h1 class="event-title">Rezerwacja</h1>
+      <h1 class="event-title">{{ 'calendar.type.reservation' | translate }}</h1>
 
       <div class="data-wrapper">
         <div class="date">
@@ -28,7 +28,7 @@
     </section>
 
     <section>
-      <h2>Zarezerowane obiekty</h2>
+      <h2>{{ 'reservation.reservedObjects.label' | translate }}</h2>
       <div class="stations">
         <div *ngFor="let station of reservation?.stationList" class="station">
           {{ station.name }}
@@ -41,7 +41,7 @@
       class="actions"
     >
       <p-button
-        label="Usuń rezerwację"
+        label="{{ 'reservation.deleteButton' | translate }}"
         (click)="onRemoveEvent($event)"
       ></p-button>
     </section>
