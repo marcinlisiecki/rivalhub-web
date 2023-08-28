@@ -15,6 +15,7 @@ import { ImageService } from '@app/core/services/image/image.service';
 import { EditOrganization } from '@app/core/interfaces/organization/edit-organization';
 import { Observable, of } from 'rxjs';
 import { LanguageService } from '@app/core/services/language/language.service';
+import { EventIcon } from '@interfaces/event/event-icon';
 
 @Component({
   selector: 'app-organization-settings',
@@ -297,4 +298,5 @@ export class OrganizationSettingsComponent {
   }
 
   protected readonly categoryTypeToLabel = categoryTypeToLabel;
+  protected readonly EventIcon = EventIcon;
 }
