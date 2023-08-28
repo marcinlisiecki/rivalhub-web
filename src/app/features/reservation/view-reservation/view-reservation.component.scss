@@ -1,0 +1,70 @@
+@import 'src/scss/variables';
+
+.wrapper {
+  max-width: $nonBgFormWidth;
+  margin: 1rem auto;
+}
+
+.event-title {
+  font-size: $textXl;
+  margin: 0.5rem 0;
+}
+
+.date {
+  display: flex;
+  align-items: center;
+  column-gap: 0.5rem;
+  color: $textSecondaryColor;
+  font-size: $textSm;
+
+  p {
+    margin: 0;
+  }
+}
+
+h2 {
+  font-size: $textLg;
+}
+
+.avatar-wrapper {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50000000rem;
+  overflow: hidden;
+}
+
+.stations {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 0.5rem;
+}
+
+.station {
+  display: flex;
+  align-items: center;
+  column-gap: 0.5rem;
+  border: 2px solid $shade600;
+  border-radius: $borderRadius;
+  padding: 1rem;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  column-gap: 0.5rem;
+  color: $textSecondaryColor;
+
+  p {
+    margin: 0;
+  }
+}
+
+.actions {
+  margin-top: 1rem;
+}
+
+.data-wrapper {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.5rem;
+}

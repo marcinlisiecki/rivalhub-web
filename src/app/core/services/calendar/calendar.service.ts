@@ -243,6 +243,12 @@ export class CalendarService {
     if (res.stationList[0].type.valueOf()) {
       eventType = res.stationList[0].type.valueOf();
     }
+    let eventURL = [
+      '/organizations',
+      res.organization.id,
+      'reservations',
+      res.id,
+    ];
     let newReservation: CalendarEvent = {
       organizationId: orgId,
       organizationName: orgName,
@@ -256,6 +262,7 @@ export class CalendarService {
       color: '#367790',
       allDay: false,
       borderColor: color,
+      eventURL: eventURL,
       extendedProps: {
         organizationName: orgName,
         organizationId: orgId,
