@@ -69,6 +69,7 @@
 	"error.summary": "Wystąpił błąd",
 	"event.addGame": "Dodaj mecz",
 	"event.addLeg": "Dodaj lega",
+	"event.addQueue":"Dodaj kolejkę",
 	"event.addResults": "Dodaj wyniki",
 	"event.addUser": "Dodaj użytkownika",
 	"event.approval": "Potwierdzono wyniki",

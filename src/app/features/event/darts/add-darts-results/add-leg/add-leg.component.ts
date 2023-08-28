@@ -22,10 +22,10 @@ export class AddLegComponent implements OnInit {
   ];
   dartFormat = '301';
   dartFormats: any[] = [
-    { label: '301', value: '301' },
-    { label: '501', value: '501' },
-    { label: '701', value: '701' },
-    { label: '901', value: '901' },
+    { label: '301', value: '_301' },
+    { label: '501', value: '_501' },
+    { label: '701', value: '_701' },
+    { label: '901', value: '_901' },
   ];
 
   organizationId!: number;

@@ -6,11 +6,11 @@
 
         <div class="add-match-button-wrapper">
             <p-button *ngIf="!showAddNewMatch && editable" (onClick)="showAddNewMatch = true">
-                {{ 'event.addLeg' | translate }}
+                {{ 'event.addGame' | translate }}
             </p-button>
         </div>
 
-        <app-add-leg (addLeg)="handleAddLeg($event)" [participants]="eventUsers" *ngIf="showAddNewMatch"></app-add-leg>
-        
+
+
     </section>
 </section>

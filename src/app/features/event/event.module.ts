@@ -45,6 +45,7 @@ import { AddLegComponent } from './darts/add-darts-results/add-leg/add-leg.compo
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { ViewDartsMatchComponent } from './darts/view-darts-matches/view-darts-match/view-darts-match.component';
 import { TagModule } from 'primeng/tag';
+import { AddQueueComponent } from './darts/add-darts-results/add-leg/add-queue/add-queue.component';
 @NgModule({
   declarations: [
     NewEventComponent,
@@ -75,6 +76,7 @@ import { TagModule } from 'primeng/tag';
     AddDartsResultsComponent,
     AddLegComponent,
     ViewDartsMatchComponent,
+    AddQueueComponent,
   ],
   imports: [
     CommonModule,

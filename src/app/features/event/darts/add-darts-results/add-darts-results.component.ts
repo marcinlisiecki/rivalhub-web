@@ -6,7 +6,7 @@ import { UserDetailsDto } from '@app/core/interfaces/user/user-details-dto';
 import { EventsService } from '@app/core/services/events/events.service';
 import { LanguageService } from '@app/core/services/language/language.service';
 import { DialogService } from 'primeng/dynamicdialog';
-import { MOCKLEGS } from '../view-darts-matches/mock-legs';
+import { MOCKLEGS, MOCKLEGS2 } from '../view-darts-matches/mock-legs';
 import { AddDartsLeg } from '@app/core/interfaces/event/games/darts/add-darts-leg';
 
 @Component({

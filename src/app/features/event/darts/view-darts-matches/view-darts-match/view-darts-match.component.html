@@ -5,33 +5,52 @@
         <p-tag severity="success" [value]="match.dartRule"></p-tag>
     </section>
     <section class="participants-list">
-        <div class="participant" *ngFor="let participant of match.participants">
+        <div class="participant" *ngFor="let participant of match.participants; let pindex=index">
             <app-avatar class="participant-avatar" [user]="participant"></app-avatar>
-            <p>{{ participant.name }}</p>
+            <p>P{{pindex+1}}-{{ participant.name }}</p>
         </div>
     </section>
 
-    <section>
-        <div *ngFor="let queue of match.queue" class="leg-score">
-            <div class="queue">{{queue.queueid}} - {{queue.score[0]}}
-                <ng-container *ngFor="let _ of getHits(queue.bounceOuts[0])">
-                    <img class="dart-icon" src="assets/img/dart/dart-hit.png">
-                </ng-container>
-                <ng-container *ngFor="let _ of getMisses(queue.bounceOuts[0])">
-                    <img class="dart-icon" src="assets/img/dart/dart-miss.png">
-                </ng-container>
-                <p-divider layout="vertical"></p-divider>
-                 {{queue.score[1]}}
-                 <ng-container *ngFor="let _ of getHits(queue.bounceOuts[1])">
-                    <img class="dart-icon" src="assets/img/dart/dart-hit.png">
-                </ng-container>
-                <ng-container *ngFor="let _ of getMisses(queue.bounceOuts[1])">
-                    <img class="dart-icon" src="assets/img/dart/dart-miss.png">
-                </ng-container>
+    <section class="grid-container">
+        <div class="header" [style.grid-template-columns]="'repeat(' + calculateRows() + ', 1fr)'">
+            <div class="row">
+                <p>P#</p>
+            </div>
+            <div class="row" *ngFor="let user of match.participants; let i=index">
+                <p>P{{i+1}}</p>
+            </div>
 
+        </div>
+        <p-divider></p-divider>
+
+        <div *ngFor="let queue of match.queue" class="leg-score">
+            <div class="queue" [style.grid-template-columns]="'repeat(' + calculateRows() + ', 1fr)'">
+                <div class="flex-center">
+                    <p>#{{queue.queueid}}</p>
+                </div>
+
+                <div class="row" *ngFor="let item of queue.score; let i=index">
+
+                    <p class="points-got">{{queue.score[i]}}</p>
+                    <div class="shots">
+
+                        <img *ngFor="let _ of getHits(queue.bounceOuts[i])" class="dart-icon"
+                            src="assets/img/dart/dart-hit.png">
+
+                        <img *ngFor="let _ of getMisses(queue.bounceOuts[i])" class="dart-icon"
+                            src="assets/img/dart/dart-miss.png">
+
+                    </div>
+                    <p class="points-left">232</p>
+                </div>
 
             </div>
-<p-divider></p-divider>
+            <p-divider></p-divider>
         </div>
+    </section>
+
+
+    <section>
+        <p-button (onClick)="openAddQueueDialog()">{{'event.addQueue' | translate}}</p-button>
     </section>
 </div>

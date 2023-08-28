@@ -12,19 +12,19 @@
         </div>
     </section>
 
-    <section class="participants"> 
+    <section class="participants">
         <h2>Uczestnicy</h2>
-        <div  *ngFor="let participant of participants">           
-                <div class="team-member-data">
-                    <app-avatar class="team-member-avatar" [user]="participant"></app-avatar>
-                    <p>{{ participant.name }}</p>
-                </div>
+        <div *ngFor="let participant of participants">
+            <div class="team-member-data">
+                <app-avatar class="team-member-avatar" [user]="participant"></app-avatar>
+                <p>{{ participant.name }}</p>
+            </div>
         </div>
     </section>
 
-    
+
 
     <p-button (onClick)="handleAddMatch()">
-        {{ 'event.addLeg' | translate }}
+        {{ 'event.addGame' | translate }}
     </p-button>
 </section>
