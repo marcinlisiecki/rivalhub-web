@@ -78,7 +78,12 @@
       [class.card-checkbox-selected]="activeEventTypes.includes(type)"
       (click)="toggleAvailableEventType(type)"
     >
-      <i class="pi pi-calendar"></i>
+      <svg-icon
+        [src]="EventIcon[type]"
+        [svgStyle]="{
+          width: '100%'
+        }"
+      ></svg-icon>
       <p>{{ categoryTypeToLabel(type) | translate }}</p>
     </div>
   </section>

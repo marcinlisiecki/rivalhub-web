@@ -41,6 +41,7 @@ import { AddPullUpsSeriesComponent } from './pull-ups/add-pull-ups-series/add-pu
 import { AddUsersComponent } from './common/add-users/add-users.component';
 import { TagModule } from 'primeng/tag';
 import {ConfirmPopupModule} from "primeng/confirmpopup";
+import {AngularSvgIconModule} from "angular-svg-icon";
 
 @NgModule({
   declarations: [
@@ -88,6 +89,7 @@ import {ConfirmPopupModule} from "primeng/confirmpopup";
     InputSwitchModule,
     TagModule,
     ConfirmPopupModule,
+    AngularSvgIconModule,
   ],
   providers: [DialogService],
 })

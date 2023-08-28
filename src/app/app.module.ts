@@ -28,6 +28,7 @@ import { UserModule } from './features/user/user.module';
 import { DatePipe } from '@angular/common';
 import { lastValueFrom } from 'rxjs';
 import { LanguageService } from '@app/core/services/language/language.service';
+import { AngularSvgIconModule } from 'angular-svg-icon';
 
 @NgModule({
   declarations: [AppComponent],
@@ -41,6 +42,7 @@ import { LanguageService } from '@app/core/services/language/language.service';
     AppRoutingModule,
     SharedModule,
     AuthModule,
+    AngularSvgIconModule.forRoot(),
     CookieModule.withOptions(),
     EventModule,
     TranslateModule.forRoot({

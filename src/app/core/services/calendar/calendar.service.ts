@@ -198,6 +198,14 @@ export class CalendarService {
     } else {
       title = eventData.name;
     }
+
+    let eventURL = [
+      '/organizations',
+      eventData.organization.id,
+      'events',
+      eventData.eventId,
+      { type: eventData.eventType },
+    ];
     let newEvent: CalendarEvent = {
       organizationId: orgId,
       organizationName: orgName,
@@ -211,6 +219,7 @@ export class CalendarService {
       allDay: false,
       borderColor: color,
       color: color,
+      eventURL: eventURL,
       extendedProps: {
         organizationName: eventData.organization.name,
         organizationId: eventData.organization.id.toString(),
@@ -234,6 +243,12 @@ export class CalendarService {
     if (res.stationList[0].type.valueOf()) {
       eventType = res.stationList[0].type.valueOf();
     }
+    let eventURL = [
+      '/organizations',
+      res.organization.id,
+      'reservations',
+      res.id,
+    ];
     let newReservation: CalendarEvent = {
       organizationId: orgId,
       organizationName: orgName,
@@ -247,6 +262,7 @@ export class CalendarService {
       color: '#367790',
       allDay: false,
       borderColor: color,
+      eventURL: eventURL,
       extendedProps: {
         organizationName: orgName,
         organizationId: orgId,

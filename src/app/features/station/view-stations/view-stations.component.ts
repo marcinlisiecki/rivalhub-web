@@ -37,13 +37,11 @@ export class ViewStationsComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private eventsService: EventsService,
     private languageService: LanguageService,
-  ) {
-    this.route.params.subscribe((params) => {
-      this.organizationId = params['id'];
-    });
-  }
+  ) {}
 
   ngOnInit(): void {
+  this.route.params.subscribe((params) => {
+    this.organizationId = params['id'];
     this.stationsService
       .getOrganizationEditStations(this.organizationId)
       .subscribe({
@@ -55,7 +53,8 @@ export class ViewStationsComponent implements OnInit {
         },
       });
 
-    this.fetchStationTypes();
+      this.fetchStationTypes();
+    });
   }
 
   ngOnAfterViewInit(): void {

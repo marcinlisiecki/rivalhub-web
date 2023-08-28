@@ -28,6 +28,7 @@
     "@fullcalendar/timegrid": "^6.1.8",
     "@ngx-translate/core": "^15.0.0",
     "@ngx-translate/http-loader": "^8.0.0",
+    "angular-svg-icon": "^16.0.0",
     "jwt-decode": "^3.1.2",
     "moment": "^2.29.4",
     "ngx-cookie": "^6.0.1",

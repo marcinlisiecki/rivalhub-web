@@ -59,7 +59,7 @@ export class RegisterFormComponent {
     this.authService.register(credentials).subscribe({
       next: (res) => {
         if (res?.token) {
-          this.router.navigateByUrl('/organizations?registered=true').then();
+          this.router.navigateByUrl('/organizations?registered=true');
           this.invitationService.setUserIds();
         }
 
