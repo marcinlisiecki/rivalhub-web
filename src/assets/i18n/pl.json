@@ -257,5 +257,9 @@
 	"sidebar.signOut": "Wyloguj się",
 	"sidebar.stations": "Stanowiska",
 	"stepForm.next": "Dalej",
-	"stepForm.previous": "Powrót"
+	"stepForm.previous": "Powrót",
+  "notification.content": "Jesteś proszony o potwierdzenie wyników meczu w kategorii",
+  "notification.showMatch": "Pokaż mecz",
+  "notification.header": "Powiadomienia",
+  "notification.noNotifications": "Brak nowych powiadomień"
 }
