@@ -10,7 +10,7 @@ import {
 import { CalendarOptions } from '@fullcalendar/core';
 import { CalendarService } from '@app/core/services/calendar/calendar.service';
 import { Organization } from '@interfaces/organization/organization';
-import { Filters } from '@app/features/calendar/calendar-filter/calendar-filter.component';
+import { Filters } from '@interfaces/calendar/calendar-filters';
 
 @Component({
   selector: 'app-calendar-filter-menu',

@@ -1,12 +1,8 @@
-import { Component, WritableSignal, OnInit } from '@angular/core';
+import { Component, WritableSignal, OnInit, Input } from '@angular/core';
 import { CalendarOptions } from '@fullcalendar/core';
 import { CalendarService } from '@app/core/services/calendar/calendar.service';
 import { Organization } from '@interfaces/organization/organization';
-
-export interface Filters {
-  selectedOrganizations: string[];
-  selectedTypes: any[];
-}
+import { Filters } from '@interfaces/calendar/calendar-filters';
 
 @Component({
   selector: 'app-calendar-filter',
@@ -14,33 +10,19 @@ export interface Filters {
   styleUrls: ['./calendar-filter.component.scss'],
 })
 export class CalendarFilterComponent implements OnInit {
-  calendarOptions!: WritableSignal<CalendarOptions>;
+  @Input() selectedFilters!: Filters;
+  @Input() organizations!: Organization[];
   displayMenu: boolean = false;
-  organizations!: Organization[];
-  selectedOrganizations: string[] = [];
 
   types: any[] = [
     { name: 'Wydarzenie', key: 'event', id: '1' },
     { name: 'Rezerwacja', key: 'reservation', id: '2' },
   ];
 
-  selectedFilters: Filters = {
-    selectedOrganizations: this.selectedOrganizations,
-    selectedTypes: ['1', '2'],
-  };
   icon: string = 'pi pi-angle-down';
 
   constructor(private calendarService: CalendarService) {}
-  async ngOnInit() {
-    this.calendarOptions = this.calendarService.options;
-    await this.calendarService.getOrganization();
-    this.organizations = this.calendarService.organizations();
-    this.organizations.forEach((organization) => {
-      this.selectedFilters.selectedOrganizations.push(
-        organization.id.toString(),
-      );
-    });
-  }
+  async ngOnInit() {}
 
   changeDisplayMenu() {
     this.displayMenu = !this.displayMenu;
@@ -52,5 +34,6 @@ export class CalendarFilterComponent implements OnInit {
   }
   handleFilterChange(newFilters: Filters) {
     this.selectedFilters = newFilters;
+    this.calendarService.filters = newFilters;
   }
 }
