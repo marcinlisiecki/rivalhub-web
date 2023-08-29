@@ -9,9 +9,6 @@
         alt="Logo"
       />
     </a>
-    <i *ngIf="isLoggedIn" [ngStyle]="{ margin: 'auto', fontSize: '.85rem' }"
-      >{{ 'sidebar.hello' | translate }} {{ userName.slice(0, 15) }}</i
-    >
   </ng-template>
   <ng-template pTemplate="content">
     <section *ngIf="isLoggedIn">
@@ -143,7 +140,8 @@
             routerLink="/organizations"
           >
           </app-section-item>
-          <i *ngIf="isLoggedIn" [ngStyle]="{ fontSize: '.85rem' }"
+
+          <i *ngIf="isLoggedIn" [ngStyle]="{ fontSize: '.95rem' }"
             >{{ 'sidebar.hello' | translate }} {{ userName.slice(0, 15) }}</i
           >
           <app-section-item
