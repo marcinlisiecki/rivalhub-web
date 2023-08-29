@@ -8,6 +8,6 @@
   </p-messages>
 
   <p-messages severity="error" *ngIf="errorMessage !== null">
-    <ng-template pTemplate> {{ errorMessage }} </ng-template>
+    <ng-template pTemplate> {{ errorMessage | translate }} </ng-template>
   </p-messages>
 </section>

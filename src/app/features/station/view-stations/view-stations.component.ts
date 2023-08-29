@@ -29,7 +29,7 @@ export class ViewStationsComponent implements OnInit {
 
   clonedStations: { [s: string]: Station } = {};
 
-  stationTypes!: string[];
+  stationTypes: string[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -40,18 +40,18 @@ export class ViewStationsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-  this.route.params.subscribe((params) => {
-    this.organizationId = params['id'];
-    this.stationsService
-      .getOrganizationEditStations(this.organizationId)
-      .subscribe({
-        next: (res: Station[]) => {
-          this.stations = res;
-        },
-        error: (err: unknown) => {
-          this.apiError = extractMessage(err);
-        },
-      });
+    this.route.params.subscribe((params) => {
+      this.organizationId = params['id'];
+      this.stationsService
+        .getOrganizationEditStations(this.organizationId)
+        .subscribe({
+          next: (res: Station[]) => {
+            this.stations = res;
+          },
+          error: (err: unknown) => {
+            this.apiError = extractMessage(err);
+          },
+        });
 
       this.fetchStationTypes();
     });
@@ -65,7 +65,12 @@ export class ViewStationsComponent implements OnInit {
     this.eventsService
       .getEventTypesInOrganization(this.organizationId)
       .subscribe((types) => {
-        this.stationTypes = types;
+        types.forEach((type) => {
+          this.stationTypes.push(
+            this.languageService.instant(categoryTypeToLabel(type)),
+          );
+        });
+
         this.newStation = {
           name: '',
           type: types[0] || null,
