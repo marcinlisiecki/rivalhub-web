@@ -9,6 +9,9 @@
         alt="Logo"
       />
     </a>
+    <i *ngIf="isLoggedIn" [ngStyle]="{ margin: 'auto', fontSize: '.85rem' }"
+      >{{ 'sidebar.hello' | translate }} {{ userName.slice(0, 15) }}</i
+    >
   </ng-template>
   <ng-template pTemplate="content">
     <section *ngIf="isLoggedIn">
@@ -56,9 +59,16 @@
           </app-section-item>
 
           <app-section-item
-            icon="pi pi-user"
+            icon="pi pi-users"
             title="{{ 'sidebar.participants' | translate }}"
             routerLink="/organizations/{{ selectedOrganization.id }}/members"
+          >
+          </app-section-item>
+
+          <app-section-item
+            icon="pi pi-chart-bar"
+            title="{{ 'sidebar.ranking' | translate }}"
+            routerLink="/organizations/{{ selectedOrganization.id }}/ranking"
           >
           </app-section-item>
 
@@ -131,6 +141,15 @@
             icon="pi pi-th-large"
             title="{{ 'sidebar.myOrganizations' | translate }}"
             routerLink="/organizations"
+          >
+          </app-section-item>
+          <i *ngIf="isLoggedIn" [ngStyle]="{ fontSize: '.85rem' }"
+            >{{ 'sidebar.hello' | translate }} {{ userName.slice(0, 15) }}</i
+          >
+          <app-section-item
+            icon="pi pi-user"
+            title="{{ 'sidebar.profile' | translate }}"
+            routerLink="/profiles/1"
           >
           </app-section-item>
 
