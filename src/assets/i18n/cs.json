@@ -64,6 +64,7 @@
 	"common.save": "Uložit",
 	"common.search": "Vyhledávání",
 	"common.show": "Pohled",
+  "common.pageNotFound":  "Oops! Vypadá to jako faul. Stránka nebyla nalezena",
 	"common.type": "Typ",
 	"common.won": "Vyhrát",
 	"common.yes": "Tak",

@@ -64,6 +64,7 @@
 	"common.save": "Zapisz",
 	"common.search": "Szukaj",
 	"common.show": "Zobacz",
+  "common.pageNotFound": "Oops! To wygląda na faul. Nie znaleziono strony",
 	"common.type": "Typ",
 	"common.won": "Wygrana",
 	"common.yes": "Tak",

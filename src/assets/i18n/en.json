@@ -64,6 +64,7 @@
 	"common.save": "Save",
 	"common.search": "Search",
 	"common.show": "View",
+  "common.pageNotFound": "Oops! Looks like a foul. The page couldn't be found",
 	"common.type": "Type",
 	"common.won": "Win",
 	"common.yes": "Yes",
