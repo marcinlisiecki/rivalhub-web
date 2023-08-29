@@ -1,2 +1,2 @@
 export const extractMessage = (err: any) =>
-  err?.error?.message || 'Wystąpił nieoczekiwany błąd';
+  err?.error?.message || 'api.error.DEFAULT_ERROR';
