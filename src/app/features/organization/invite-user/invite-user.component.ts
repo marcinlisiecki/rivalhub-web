@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import {ActivatedRoute, Params, Router} from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { OrganizationsService } from '@app/core/services/organizations/organizations.service';
 import { environment } from '../../../../environments/environment';
 import { Organization } from '@interfaces/organization/organization';
 import { HttpErrorResponse } from '@angular/common/http';
-import {MessageService} from "primeng/api";
+import { MessageService } from 'primeng/api';
+import { extractMessage } from '@app/core/utils/apiErrors';
+import { ErrorsService } from '@app/core/services/errors/errors.service';
 
 @Component({
   selector: 'app-invite-user',
@@ -20,23 +22,24 @@ export class InviteUserComponent implements OnInit {
     email: new FormControl('', [Validators.required, Validators.email]),
   });
 
-
   constructor(
     private route: ActivatedRoute,
     private organizationsService: OrganizationsService,
     private router: Router,
-    private messageService: MessageService,
+    private errorsService: ErrorsService,
   ) {}
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
       this.organizationId = params['id'];
 
-      this.organizationsService.getInvitationLink(this.organizationId).subscribe({
-        next: (link: string) => {
-          this.invitationLink = link;
-        },
-      });
+      this.organizationsService
+        .getInvitationLink(this.organizationId)
+        .subscribe({
+          next: (link: string) => {
+            this.invitationLink = link;
+          },
+        });
       this.loadOrganizationInfo(this.organizationId);
     });
   }
@@ -58,18 +61,17 @@ export class InviteUserComponent implements OnInit {
     }
 
     this.organizationsService
-      .sendInvitation(this.organizationId, emailAddress).subscribe({
-    next: (response) => {
-      this.router.navigateByUrl(`/organizations/${this.organizationId}?invited=true`).then();
-    },
-      error: (error: HttpErrorResponse) => {
-        this.messageService.add({
-          severity: 'error',
-          life: 1000 * 5,
-          summary: error.error.message,
-        });
-      }
-    })
+      .sendInvitation(this.organizationId, emailAddress)
+      .subscribe({
+        next: (response) => {
+          this.router
+            .navigateByUrl(`/organizations/${this.organizationId}?invited=true`)
+            .then();
+        },
+        error: (err: HttpErrorResponse) => {
+          this.errorsService.createErrorMessage(extractMessage(err));
+        },
+      });
   }
 
   get email() {
