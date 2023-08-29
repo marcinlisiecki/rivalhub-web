@@ -1,6 +1,9 @@
 import { Component, Input } from '@angular/core';
 import { BilliardsMatch } from '@interfaces/event/games/billiards/billiards-match';
 import { EventType } from '@interfaces/event/event-type';
+import { LanguageService } from '@app/core/services/language/language.service';
+import { AuthService } from '@app/core/services/auth/auth.service';
+import { WinType } from '@interfaces/event/games/billiards/billiards-win-type';
 
 @Component({
   selector: 'app-view-billiards-matches',
@@ -9,14 +12,23 @@ import { EventType } from '@interfaces/event/event-type';
 })
 export class ViewBilliardsMatchesComponent {
   @Input({ required: true }) matches!: BilliardsMatch[];
-  mockMatches!: BilliardsMatch[];
   @Input() editable: boolean = false;
 
-  constructor() {
+  mockMatches!: BilliardsMatch[];
+  loggedInUserId!: number;
+
+  constructor(
+    public languageService: LanguageService,
+    private authService: AuthService,
+  ) {
+    this.loggedInUserId = authService.getUserId() as number;
+
     this.mockMatches = [
       {
+        userApprovalMap: { 1: true, 2: true },
+        approved: true,
         eventId: 1,
-
+        id: 1,
         eventType: EventType.BILLIARDS,
         howManyBillsLeftTeam1: 0,
         howManyBillsLeftTeam2: 4,
@@ -26,7 +38,7 @@ export class ViewBilliardsMatchesComponent {
             id: 1,
             activationTime: null,
             email: 'xd',
-            profilePictureUrl: '',
+            profilePictureUrl: 'null',
           },
         ],
         team2: [
@@ -42,8 +54,10 @@ export class ViewBilliardsMatchesComponent {
         team1PlaysFull: false, // czy pierwszy gra pełnymi
         team1Won: true, // 2x false
         team2Won: false,
-        winType: 'ALL_IN',
+        winType: WinType.FOUL_BILL8_IN,
       },
     ];
   }
+
+  protected readonly WinType = WinType;
 }

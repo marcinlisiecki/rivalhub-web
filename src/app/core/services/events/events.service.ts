@@ -17,6 +17,7 @@ import { PullUpsMatch } from '@interfaces/event/games/pull-ups/pull-ups-match';
 import { PullUpsSeries } from '@interfaces/event/games/pull-ups/pull-ups-series';
 import { NewPullUpsMatch } from '@interfaces/event/games/pull-ups/new-pull-ups-match';
 import { PullUpsSeriesScores } from '@interfaces/event/games/pull-ups/pull-ups-series-scores';
+import { BilliardsMatch } from '@interfaces/event/games/billiards/billiards-match';
 
 @Injectable({
   providedIn: 'root',
@@ -132,7 +133,11 @@ export class EventsService {
   }
 
   getEventMatches<
-    T extends PingPongMatch[] | TableFootballMatch[] | PullUpsMatch[],
+    T extends
+      | PingPongMatch[]
+      | TableFootballMatch[]
+      | PullUpsMatch[]
+      | BilliardsMatch[],
   >(
     organizationId: number,
     eventId: number,

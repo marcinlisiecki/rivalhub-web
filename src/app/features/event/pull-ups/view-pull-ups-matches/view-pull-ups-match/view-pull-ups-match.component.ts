@@ -3,7 +3,6 @@ import { PullUpsMatch } from '@interfaces/event/games/pull-ups/pull-ups-match';
 import { PullUpsSeriesScores } from '@interfaces/event/games/pull-ups/pull-ups-series-scores';
 import { PullUpsDisplayRanking } from '@interfaces/event/games/pull-ups/pull-ups-display-ranking';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { LanguageService } from '@app/core/services/language/language.service';
 import { TOAST_LIFETIME } from '@app/core/constants/messages';
 import { EventsService } from '@app/core/services/events/events.service';
 import { ActivatedRoute } from '@angular/router';
@@ -32,7 +31,7 @@ export class ViewPullUpsMatchComponent implements OnInit {
 
   constructor(
     private confirmationService: ConfirmationService,
-    private languageService: LanguageService,
+    public languageService: LanguageService,
     private messageService: MessageService,
     private eventsService: EventsService,
     private route: ActivatedRoute,

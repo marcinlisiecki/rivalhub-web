@@ -12,7 +12,6 @@ import { TableFootballMatch } from '@interfaces/event/games/table-football/table
 import { categoryTypeToLabel } from '@app/core/utils/event';
 import { PullUpsMatch } from '@interfaces/event/games/pull-ups/pull-ups-match';
 import { AuthService } from '@app/core/services/auth/auth.service';
-import { AuthService } from '@app/core/services/auth/auth.service';
 import { UsersService } from '@app/core/services/users/users.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { TOAST_LIFETIME } from '@app/core/constants/messages';
@@ -52,7 +51,6 @@ export class ViewEventComponent implements OnInit {
     private route: ActivatedRoute,
     private eventsService: EventsService,
     private errorsService: ErrorsService,
-    private authService: AuthService,
     private usersService: UsersService,
     private messageService: MessageService,
     private languageService: LanguageService,
