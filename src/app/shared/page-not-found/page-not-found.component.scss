@@ -1,0 +1,22 @@
+.main {
+  margin-top: 8rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  .content {
+    margin: auto;
+    padding: 2rem;
+    width: 75em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    svg-icon {
+      display: flex;
+      flex-direction: column;
+      align-content: center;
+      flex-wrap: wrap;
+    }
+  }
+}
