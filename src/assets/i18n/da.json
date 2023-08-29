@@ -64,6 +64,7 @@
 	"common.save": "Gemme",
 	"common.search": "Søg",
 	"common.show": "Se",
+  "common.pageNotFound": "Ups! Det ligner på en fejl. Siden kunne ikke findes",
 	"common.type": "Type",
 	"common.won": "Vinde",
 	"common.yes": "Ja",

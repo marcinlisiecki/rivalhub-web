@@ -7,4 +7,8 @@ export interface PullUpsMatch {
   userDetailsDtos: UserDetailsDto[];
   scores: PullUpsSeries[];
   places: Place[];
+  approved: boolean;
+  userApprovalMap: {
+    [id: number]: boolean;
+  };
 }

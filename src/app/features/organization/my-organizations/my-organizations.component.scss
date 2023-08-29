@@ -11,8 +11,51 @@
   margin-top: 2rem;
 }
 
-.invitations {
+.notifications {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.5rem;
+  width: 100%;
+  margin: 1rem 0;
+
+  h1 {
+    padding: 0;
+    margin: 0 0 0.5rem 0;
+    font-size: $textLg;
+    font-weight: $weightRegular;
+    color: $textSecondaryColor;
+  }
+}
+
+.notification {
+  background-color: $panelContentBg;
+  border-radius: $borderRadius;
+  padding: 1rem;
+  margin: 0;
+
+  p {
+    padding: 0;
+    margin: 0;
+  }
+
+  a {
+    display: block;
+    margin-top: 0.5rem;
+    color: $primaryColor;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.right-panel {
   width: 400px;
+}
+
+.invitations {
+  width: 100%;
   display: flex;
   flex-direction: column;
   row-gap: 0.5rem;

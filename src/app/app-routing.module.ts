@@ -26,6 +26,7 @@ import { EditProfileComponent } from './features/profile/edit-profile/edit-profi
 import { ViewOrganizationEventsComponent } from '@app/features/organization/view-organization-events/view-organization-events.component';
 import { ViewReservationComponent } from '@app/features/reservation/view-reservation/view-reservation.component';
 import { RankingComponent } from '@app/features/ranking/ranking.component';
+import { PageNotFoundComponent } from '@app/shared/page-not-found/page-not-found.component';
 
 const routes: Routes = [
   {
@@ -140,6 +141,7 @@ const routes: Routes = [
     component: ViewEventComponent,
     canActivate: [authenticateGuard],
   },
+  { path: '**', pathMatch: 'full', component: PageNotFoundComponent },
 ];
 
 @NgModule({

@@ -54,17 +54,20 @@
       <app-view-ping-pong-matches
         *ngIf="eventType === EventType.PING_PONG"
         [matches]="getPingPongMatches()"
+        (approveMatch)="approveMatch($event)"
       ></app-view-ping-pong-matches>
 
       <app-view-table-football-matches
         *ngIf="eventType === EventType.TABLE_FOOTBALL"
         [matches]="getTableFootballMatches()"
+        (approveMatch)="approveMatch($event)"
       >
       </app-view-table-football-matches>
 
       <app-view-pull-ups-matches
         *ngIf="eventType === EventType.PULL_UPS"
         [matches]="getPullUpsMatches()"
+        (approveMatch)="approveMatch($event)"
       >
       </app-view-pull-ups-matches>
     </section>

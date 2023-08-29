@@ -36,32 +36,65 @@
       </div>
     </div>
 
-    <section class="invitations">
-      <header>
-        <h1>{{ 'organization.invitations' | translate }}</h1>
-      </header>
+    <section class="right-panel">
+      <section class="invitations">
+        <header>
+          <h1>{{ 'organization.invitations' | translate }}</h1>
+        </header>
 
-      <div *ngFor="let invitation of invitations" class="invitation">
-        <p>{{ invitation.organization.name }}</p>
-        <div>
-          <p-button
-            [disabled]="!isAccountVerified"
-            styleClass="p-button-text p-button-success"
-            icon="pi pi-check"
-            (onClick)="acceptInvitation(invitation)"
-          ></p-button>
-          <p-button
-            [disabled]="!isAccountVerified"
-            styleClass="p-button-text p-button-danger"
-            icon="pi pi-times"
-            (onClick)="rejectInvitation(invitation)"
-          ></p-button>
+        <div *ngFor="let invitation of invitations" class="invitation">
+          <p>{{ invitation.organization.name }}</p>
+          <div>
+            <p-button
+              [disabled]="!isAccountVerified"
+              styleClass="p-button-text p-button-success"
+              icon="pi pi-check"
+              (onClick)="acceptInvitation(invitation)"
+            ></p-button>
+            <p-button
+              [disabled]="!isAccountVerified"
+              styleClass="p-button-text p-button-danger"
+              icon="pi pi-times"
+              (onClick)="rejectInvitation(invitation)"
+            ></p-button>
+          </div>
         </div>
-      </div>
 
-      <app-no-resource-info *ngIf="invitations.length === 0">
-        {{ 'organization.noInvitations' | translate }}
-      </app-no-resource-info>
+        <app-no-resource-info *ngIf="invitations.length === 0">
+          {{ 'organization.noInvitations' | translate }}
+        </app-no-resource-info>
+      </section>
+
+      <section class="notifications">
+        <header>
+          <h1>{{ 'notification.header' | translate }}</h1>
+        </header>
+
+        <div *ngFor="let notification of notifications" class="notification">
+          <p>
+            {{ 'notification.content' | translate }}
+            <strong>{{
+              categoryTypeToLabel(notification.type) | translate
+            }}</strong>
+            <!-- TODO: Zmienić id organizacji, jak backend zacznie je zwracać -->
+          </p>
+
+          <a
+            [routerLink]="[
+              '/organizations',
+              0,
+              'events',
+              notification.eventId,
+              { type: notification.type }
+            ]"
+            >{{ 'notification.showMatch' | translate }}</a
+          >
+        </div>
+
+        <app-no-resource-info *ngIf="notifications.length === 0">
+          {{ 'notification.noNotifications' | translate }}
+        </app-no-resource-info>
+      </section>
     </section>
   </div>
 </section>

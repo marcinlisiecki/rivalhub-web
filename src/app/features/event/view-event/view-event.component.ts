@@ -12,6 +12,7 @@ import { TableFootballMatch } from '@interfaces/event/games/table-football/table
 import { categoryTypeToLabel } from '@app/core/utils/event';
 import { PullUpsMatch } from '@interfaces/event/games/pull-ups/pull-ups-match';
 import { AuthService } from '@app/core/services/auth/auth.service';
+import { AuthService } from '@app/core/services/auth/auth.service';
 import { UsersService } from '@app/core/services/users/users.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { TOAST_LIFETIME } from '@app/core/constants/messages';
@@ -54,6 +55,7 @@ export class ViewEventComponent implements OnInit {
     private router: Router,
     private dialogService: DialogService,
     private organizationsService: OrganizationsService,
+    private authService: AuthService,
   ) {}
 
   ngOnInit(): void {
@@ -67,6 +69,25 @@ export class ViewEventComponent implements OnInit {
     this.fetchParticipants();
     this.fetchOrganizationUsers();
     this.fetchMatches();
+  }
+
+  approveMatch(matchId: number) {
+    this.eventsService
+      .approveMatch(this.organizationId, this.eventId, matchId, this.eventType)
+      .subscribe({
+        next: () => {
+          const matchIndex = this.matches?.findIndex((m) => m.id === matchId);
+          if (this.matches && matchIndex) {
+            const loggedInUserId = this.authService.getUserId() as number;
+            this.matches[matchIndex].userApprovalMap[loggedInUserId] = true;
+          }
+
+          this.fetchMatches();
+        },
+        error: (err: HttpErrorResponse) => {
+          this.errorsService.createErrorMessage(extractMessage(err));
+        },
+      });
   }
 
   openAddUserDialog() {

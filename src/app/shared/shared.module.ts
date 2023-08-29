@@ -31,6 +31,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { RouterLink } from '@angular/router';
 import { AvatarComponent } from './avatar/avatar.component';
 import { GoBackButtonComponent } from './go-back-button/go-back-button.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { AngularSvgIconModule } from 'angular-svg-icon';
 
 @NgModule({
   declarations: [
@@ -47,6 +49,7 @@ import { GoBackButtonComponent } from './go-back-button/go-back-button.component
     EventCardComponent,
     AvatarComponent,
     GoBackButtonComponent,
+    PageNotFoundComponent,
   ],
   exports: [
     ValidationErrorComponent,
@@ -92,6 +95,7 @@ import { GoBackButtonComponent } from './go-back-button/go-back-button.component
     TagModule,
     TranslateModule,
     RouterLink,
+    AngularSvgIconModule,
   ],
 })
 export class SharedModule {}

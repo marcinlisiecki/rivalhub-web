@@ -11,4 +11,5 @@ export class ViewTableFootballMatchesComponent {
   @Input() editable: boolean = false;
 
   @Output() handleAddSet: EventEmitter<number> = new EventEmitter<number>();
+  @Output() approveMatch: EventEmitter<number> = new EventEmitter<number>();
 }

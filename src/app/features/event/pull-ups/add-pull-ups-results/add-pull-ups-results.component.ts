@@ -135,6 +135,7 @@ export class AddPullUpsResultsComponent implements OnInit {
   addMatch() {
     const newMatch: NewPullUpsMatch = {
       team1Ids: this.addedUsers.map((i) => i.id),
+      team2Ids: [],
       team3Approval: false,
       team1Approval: false,
       team2Approval: false,
