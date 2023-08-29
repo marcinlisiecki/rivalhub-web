@@ -44,9 +44,11 @@ import { AddDartsResultsComponent } from './darts/add-darts-results/add-darts-re
 import { AddLegComponent } from './darts/add-darts-results/add-leg/add-leg.component';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { ViewDartsMatchComponent } from './darts/view-darts-matches/view-darts-match/view-darts-match.component';
-import { TagModule } from 'primeng/tag';
 import { AddQueueComponent } from './darts/add-darts-results/add-leg/add-queue/add-queue.component';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { TagModule } from 'primeng/tag';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { AngularSvgIconModule } from 'angular-svg-icon';
 @NgModule({
   declarations: [
     NewEventComponent,
@@ -99,6 +101,8 @@ import { InputNumberModule } from 'primeng/inputnumber';
     SelectButtonModule,
     TagModule,
     InputNumberModule,
+    ConfirmPopupModule,
+    AngularSvgIconModule,
   ],
   providers: [DialogService],
 })

@@ -14,6 +14,7 @@ export interface CalendarEvent extends EventInput {
   color?: string;
   borderColor?: string;
   textColor?: string;
+  EventURL?: any[];
   extendedProps?: {
     organizationName: string;
     organizationId: string;

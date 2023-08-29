@@ -9,7 +9,12 @@
       *ngFor="let event of events"
       (click)="selectEvent.emit(event)"
     >
-      <i class="pi pi-calendar"></i>
+      <svg-icon
+        [src]="EventIcon[event]"
+        [svgStyle]="{
+          width: '100%'
+        }"
+      ></svg-icon>
       <p>{{ categoryTypeToLabel(event) | translate }}</p>
     </div>
   </section>

@@ -1,17 +1,38 @@
-<section class="wrapper">
+<section class="wrapper" *ngIf="event">
   <section class="main">
+    <p-confirmPopup></p-confirmPopup>
     <app-go-back-button></app-go-back-button>
 
     <section *ngIf="event">
       <h1 class="event-title">
         {{ event.name }}
+        <p-button *ngIf="canJoin" (click)="joinEvent()" styleClass="p-button-secondary p-button-outlined p-button-sm"
+          iconPos="left" icon="pi pi-plus" label="{{ 'event.joinEvent' | translate }}"></p-button>
+        <p-button *ngIf="canEdit && event.host !== loggedInUserId" (click)="leaveEvent()"
+          styleClass="p-button-danger p-button-outlined p-button-sm" iconPos="left"
+          label="{{ 'event.leaveEvent' | translate }}"></p-button>
       </h1>
 
       <p-badge severity="info" value="{{ categoryTypeToLabel(eventType) | translate }}"></p-badge>
+      <div class="tags">
+        <p-tag severity="info" value="{{ categoryTypeToLabel(eventType) | translate }}"></p-tag>
+        <p-tag [severity]="event.eventPublic ? 'success' : 'danger'" value="{{
+            (event.eventPublic ? 'event.publicLabel' : 'event.privateLabel')
+              | translate
+          }}"></p-tag>
+      </div>
 
-      <p class="description">
-        {{ event.description ?? ('event.noDescription' | translate) }}
-      </p>
+      <span *ngIf="event.description; then desc; else noDesc"> </span>
+      <ng-template #desc>
+        <p class="description">
+          {{ event.description }}
+        </p>
+      </ng-template>
+      <ng-template #noDesc>
+        <p class="description">
+          {{ 'event.noDescription' | translate }}
+        </p>
+      </ng-template>
     </section>
 
     <section>
@@ -29,7 +50,7 @@
       </app-view-darts-matches>
     </section>
 
-    <section class="buttons">
+    <section class="buttons" *ngIf="canEdit">
       <a [routerLink]="[
           '/organizations',
           organizationId,
@@ -40,6 +61,10 @@
         ]">
         <p-button>{{ 'event.addResults' | translate }} </p-button>
       </a>
+      <p-button *ngIf="loggedInUserId === event.host" icon="pi pi-times" iconPos="left"
+        styleClass="p-button-danger p-button-outlined" label="{{ 'event.delete' | translate }}"
+        (click)="onRemoveEvent($event)">
+      </p-button>
     </section>
   </section>
 
@@ -47,10 +72,18 @@
     <h2 class="section-title">{{ 'event.participants' | translate }}</h2>
 
     <div class="users">
-      <a class="user" *ngFor="let user of participants" routerLink="/profiles/{{ user.id }}">
-        <app-avatar class="user-avatar" [user]="user"></app-avatar>
-        <p>{{ user.name }}</p>
-      </a>
+      <div class="user" *ngFor="let user of participants">
+        <a routerLink="/profiles/{{ user.id }}" class="user-data">
+          <app-avatar class="user-avatar" [user]="user"></app-avatar>
+          <p>{{ user.name }}</p>
+        </a>
+
+        <p-button *ngIf="user.id !== event.host && loggedInUserId === event.host" icon="pi pi-times-circle"
+          styleClass="p-button-danger p-button-text p-button-sm" (click)="onRemoveUser($event, user)"></p-button>
+      </div>
+
+      <p-button *ngIf="loggedInUserId === event.host" (click)="openAddUserDialog()"
+        styleClass="button-wide p-button-text p-button-secondary" label="{{ 'event.addUser' | translate }}"></p-button>
     </div>
   </section>
 </section>

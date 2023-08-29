@@ -11,6 +11,7 @@
     </section>
   </section>
   <section class="series">
+    <p-confirmPopup></p-confirmPopup>
     <h2>{{ 'event.rounds.course' | translate }}</h2>
 
     <app-no-resource-info *ngIf="series?.length === 0">
@@ -20,6 +21,11 @@
     <div *ngFor="let seriesItem of series" class="series-item">
       <p class="series-label">
         {{ 'event.rounds.series' | translate }} {{ seriesItem.seriesID }}
+        <i
+          class="pi pi-times-circle"
+          *ngIf="editable"
+          (click)="deleteSeries($event, seriesItem)"
+        ></i>
       </p>
       <div class="series-results">
         <div

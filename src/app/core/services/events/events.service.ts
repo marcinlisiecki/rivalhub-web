@@ -22,6 +22,7 @@ import { AddQueue } from '@app/core/interfaces/event/games/darts/add-queue';
 import { CreatedDartsMatch } from '@app/core/interfaces/event/games/darts/created-darts-match';
 import { FakeDartsLeg } from '@app/core/interfaces/event/games/darts/fake-darts-leg';
 import { DartsLeg } from '@app/core/interfaces/event/games/darts/dart-leg';
+import { PullUpsSeriesScores } from '@interfaces/event/games/pull-ups/pull-ups-series-scores';
 
 @Injectable({
   providedIn: 'root',
@@ -96,6 +97,29 @@ export class EventsService {
   ): Observable<UserDetailsDto[]> {
     return this.http.get<UserDetailsDto[]>(
       environment.apiUrl + `/organizations/events/${eventId}/participants`,
+      { params: { type } },
+    );
+  }
+
+  removeEventParticipant(
+    eventId: number,
+    participantId: number,
+    type: EventType,
+  ): Observable<UserDetailsDto[]> {
+    return this.http.delete<UserDetailsDto[]>(
+      environment.apiUrl + `/organizations/events/${eventId}/participants`,
+      { body: participantId, params: { type } },
+    );
+  }
+
+  addEventParticipant(
+    eventId: number,
+    participantId: number,
+    type: EventType,
+  ): Observable<UserDetailsDto[]> {
+    return this.http.post<UserDetailsDto[]>(
+      environment.apiUrl + `/organizations/events/${eventId}/participants`,
+      participantId,
       { params: { type } },
     );
   }
@@ -207,6 +231,32 @@ export class EventsService {
       leg,
     );
   }
+  removePullUpsSeries(
+    organizationId: number,
+    eventId: number,
+    matchId: number,
+    seriesId: number,
+  ) {
+    return this.http.delete<{}>(
+      environment.apiUrl +
+        `/organizations/${organizationId}/events/${eventId}/match/${matchId}/pullups`,
+      { body: seriesId },
+    );
+  }
+
+  removePingPongOrTableFootballMatchSet(
+    organizationId: number,
+    eventId: number,
+    matchId: number,
+    set: GameSet,
+    game: 'pingpong' | 'tablefootball',
+  ): Observable<{}> {
+    return this.http.delete<{}>(
+      environment.apiUrl +
+        `/organizations/${organizationId}/events/${eventId}/match/${matchId}/${game}`,
+      { body: set },
+    );
+  }
 
   deleteOrganizationEventType(
     id: number,
@@ -252,6 +302,19 @@ export class EventsService {
       environment.apiUrl +
         `/organizations/${organizationId}/events/${eventId}/match?type=${EventType.TABLE_FOOTBALL}`,
       newMatch,
+    );
+  }
+
+  removeEvent(
+    organizationId: number,
+    eventId: number,
+    type: EventType,
+  ): Observable<{}> {
+    console.log(eventId);
+
+    return this.http.delete(
+      environment.apiUrl +
+        `/organizations/${organizationId}/events/${eventId}?type=${type}`,
     );
   }
 
