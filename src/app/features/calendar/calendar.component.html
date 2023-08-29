@@ -27,7 +27,10 @@
               onIcon="{{ sidebarIcon }}"
               offIcon="{{ sidebarIcon }}"
             ></p-toggleButton>
-            <app-calendar-filter></app-calendar-filter>
+            <app-calendar-filter
+              [selectedFilters]="selectedFilters"
+              [organizations]="organizations"
+            ></app-calendar-filter>
           </div>
           <app-calendar-body
             (dateClick)="!sidebarVisible && toggleSidebar()"

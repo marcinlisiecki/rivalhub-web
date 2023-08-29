@@ -18,7 +18,7 @@ import { DatePipe } from '@angular/common';
 import { CalendarEvent } from '@interfaces/calendar/calendar-event';
 import { EventDto } from '@interfaces/event/event-dto';
 import { Reservation } from '@interfaces/reservation/reservation';
-import { Filters } from '@app/features/calendar/calendar-filter/calendar-filter.component';
+import { Filters } from '@interfaces/calendar/calendar-filters';
 import { forkJoin, lastValueFrom, Observable, Subscription } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 import { HttpClient } from '@angular/common/http';
@@ -58,7 +58,7 @@ export class CalendarService {
     locales: allLocales,
     locale: 'pl',
   });
-
+  filters!: Filters;
   constructor(
     private languageService: LanguageService,
     private organizationsService: OrganizationsService,
@@ -92,6 +92,7 @@ export class CalendarService {
   }
 
   currentFilter(filers: Filters) {
+    this.filters = filers;
     let currentTypes = filers.selectedTypes;
     let currentOrganizations = filers.selectedOrganizations;
 
@@ -112,6 +113,8 @@ export class CalendarService {
       this.searchEvents([currentDay], 'startStr', this.visibleEvents()),
     );
   }
+
+  async getFilters() {}
 
   async getOrganization() {
     try {
@@ -177,6 +180,7 @@ export class CalendarService {
         });
         this.allEvents.set(temp);
         this.visibleEvents.set(temp);
+        this.currentFilter(this.filters);
         this.updateCalendar();
       },
     );
