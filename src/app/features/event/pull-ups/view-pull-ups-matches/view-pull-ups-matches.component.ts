@@ -11,4 +11,5 @@ export class ViewPullUpsMatchesComponent {
   @Input() editable: boolean = false;
 
   @Output() handleAddSeries: EventEmitter<number> = new EventEmitter<number>();
+  @Output() approveMatch: EventEmitter<number> = new EventEmitter<number>();
 }

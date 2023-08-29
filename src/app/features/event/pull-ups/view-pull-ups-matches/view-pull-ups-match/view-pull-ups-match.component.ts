@@ -10,6 +10,8 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { extractMessage } from '@app/core/utils/apiErrors';
 import { ErrorsService } from '@app/core/services/errors/errors.service';
+import { LanguageService } from '@app/core/services/language/language.service';
+import { AuthService } from '@app/core/services/auth/auth.service';
 
 @Component({
   selector: 'app-view-pull-ups-match',
@@ -21,6 +23,9 @@ export class ViewPullUpsMatchComponent implements OnInit {
   @Input() editable: boolean = false;
 
   @Output() handleAddSeries: EventEmitter<number> = new EventEmitter<number>();
+  @Output() approveMatch: EventEmitter<number> = new EventEmitter<number>();
+
+  loggedInUserId!: number;
 
   series: PullUpsSeriesScores[] = [];
   ranking: PullUpsDisplayRanking[] = [];
@@ -32,7 +37,10 @@ export class ViewPullUpsMatchComponent implements OnInit {
     private eventsService: EventsService,
     private route: ActivatedRoute,
     private errorsService: ErrorsService,
-  ) {}
+    private authService: AuthService,
+  ) {
+    this.loggedInUserId = authService.getUserId() as number;
+  }
 
   ngOnInit(): void {
     this.generateSeries();

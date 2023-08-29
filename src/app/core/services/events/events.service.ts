@@ -33,6 +33,19 @@ export class EventsService {
     );
   }
 
+  approveMatch(
+    organizationId: number,
+    eventId: number,
+    matchId: number,
+    type: EventType,
+  ): Observable<{}> {
+    return this.http.get<{}>(
+      environment.apiUrl +
+        `/organizations/${organizationId}/events/${eventId}/match/${matchId}/approve`,
+      { params: { type } },
+    );
+  }
+
   getEventTypesInOrganization(organizationId: number): Observable<EventType[]> {
     return this.http.get<EventType[]>(
       environment.apiUrl + `/organizations/${organizationId}/event-types`,
