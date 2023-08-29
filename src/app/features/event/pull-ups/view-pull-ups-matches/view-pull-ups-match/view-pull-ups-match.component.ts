@@ -10,7 +10,6 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { extractMessage } from '@app/core/utils/apiErrors';
 import { ErrorsService } from '@app/core/services/errors/errors.service';
-import { LanguageService } from '@app/core/services/language/language.service';
 import { AuthService } from '@app/core/services/auth/auth.service';
 
 @Component({
@@ -32,7 +31,7 @@ export class ViewPullUpsMatchComponent implements OnInit {
 
   constructor(
     private confirmationService: ConfirmationService,
-    private languageService: LanguageService,
+    public languageService: LanguageService,
     private messageService: MessageService,
     private eventsService: EventsService,
     private route: ActivatedRoute,
