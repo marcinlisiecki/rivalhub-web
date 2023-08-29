@@ -146,7 +146,7 @@ export class EventsService {
       | TableFootballMatch[]
       | PullUpsMatch[]
       | BilliardsMatch[]
-        | FakeDartsLeg[],
+      | FakeDartsLeg[],
   >(
     organizationId: number,
     eventId: number,
