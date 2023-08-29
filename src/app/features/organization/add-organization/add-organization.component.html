@@ -1,81 +1,84 @@
-<div class="form-container">
-  <p-card [header]="'organization.add' | translate">
-    <form [formGroup]="addForm" (ngSubmit)="onSubmit()">
-      <div class="form-item form-avatar">
-        <img
-          (click)="onImageClick()"
-          class="avatar-img"
-          [ngStyle]="customAvatar ? { 'background-color': color } : null"
-          width="75"
-          height="75"
-          [src]="imageURL"
-          alt="avatar"
-        />
-        <p-colorPicker
-          [disabled]="!customAvatar"
-          #colorPicker
-          [(ngModel)]="color"
-          [ngModelOptions]="{ standalone: true }"
-        ></p-colorPicker>
+<div class="main">
+  <app-go-back-button [ngStyle]="{ marginBottom: '1rem' }"></app-go-back-button>
+  <div class="form-container">
+    <p-card [header]="'organization.add' | translate">
+      <form [formGroup]="addForm" (ngSubmit)="onSubmit()">
+        <div class="form-item form-avatar">
+          <img
+            (click)="onImageClick()"
+            class="avatar-img"
+            [ngStyle]="customAvatar ? { 'background-color': color } : null"
+            width="75"
+            height="75"
+            [src]="imageURL"
+            alt="avatar"
+          />
+          <p-colorPicker
+            [disabled]="!customAvatar"
+            #colorPicker
+            [(ngModel)]="color"
+            [ngModelOptions]="{ standalone: true }"
+          ></p-colorPicker>
 
-        <p-divider layout="vertical"></p-divider>
-        <p-fileUpload
-          name="uploadAvatar"
-          [customUpload]="true"
-          (onSelect)="onFileSelectClicked($event)"
-          (onClear)="onClearClicked()"
-          [showUploadButton]="false"
-          [cancelLabel]="'common.cancel' | translate"
-          [chooseLabel]="'common.addPicture' | translate"
-          [accept]="joinAcceptableImageTypes()"
-          [fileLimit]="1"
-          [maxFileSize]="MAXFILESIZE"
-        >
-        </p-fileUpload>
-      </div>
-      <div class="input-box">
-        <label for="organization-name">{{
-          'organization.name' | translate
-        }}</label>
-        <input
-          #organization
-          id="organization-name"
-          type="text"
-          pInputText
-          formControlName="name"
-        />
-        <small id="organization-name-help" class="input-helper-text">
-          {{ 'organization.nameHelp' | translate }}
-        </small>
-      </div>
-      <div *ngIf="name?.invalid && name?.touched">
-        <app-validation-error *ngIf="name?.errors?.['required']">
-          {{ 'organization.name' | translate }}
-        </app-validation-error>
-        <app-validation-error *ngIf="name?.errors?.['minlength']">
-          {{ 'organization.minLength' | translate }}
-        </app-validation-error>
-        <app-validation-error *ngIf="name?.errors?.['maxlength']">
-          {{ 'organization.maxLength' | translate }}
-        </app-validation-error>
-      </div>
-      <div>
-        <div class="button-wrapper">
-          <p-button type="submit">{{
-            'organization.create' | translate
-          }}</p-button>
+          <p-divider layout="vertical"></p-divider>
+          <p-fileUpload
+            name="uploadAvatar"
+            [customUpload]="true"
+            (onSelect)="onFileSelectClicked($event)"
+            (onClear)="onClearClicked()"
+            [showUploadButton]="false"
+            [cancelLabel]="'common.cancel' | translate"
+            [chooseLabel]="'common.addPicture' | translate"
+            [accept]="joinAcceptableImageTypes()"
+            [fileLimit]="1"
+            [maxFileSize]="MAXFILESIZE"
+          >
+          </p-fileUpload>
         </div>
-        <p class="api-error-wrapper">
-          <app-validation-error *ngIf="clientError">
-            {{ clientError }}
+        <div class="input-box">
+          <label for="organization-name">{{
+            'organization.name' | translate
+          }}</label>
+          <input
+            #organization
+            id="organization-name"
+            type="text"
+            pInputText
+            formControlName="name"
+          />
+          <small id="organization-name-help" class="input-helper-text">
+            {{ 'organization.nameHelp' | translate }}
+          </small>
+        </div>
+        <div *ngIf="name?.invalid && name?.touched">
+          <app-validation-error *ngIf="name?.errors?.['required']">
+            {{ 'organization.name' | translate }}
           </app-validation-error>
-        </p>
-        <p class="api-error-wrapper">
-          <app-validation-error *ngIf="apiError">
-            {{ apiError | translate }}
+          <app-validation-error *ngIf="name?.errors?.['minlength']">
+            {{ 'organization.minLength' | translate }}
           </app-validation-error>
-        </p>
-      </div>
-    </form>
-  </p-card>
+          <app-validation-error *ngIf="name?.errors?.['maxlength']">
+            {{ 'organization.maxLength' | translate }}
+          </app-validation-error>
+        </div>
+        <div>
+          <div class="button-wrapper">
+            <p-button type="submit">{{
+              'organization.create' | translate
+            }}</p-button>
+          </div>
+          <p class="api-error-wrapper">
+            <app-validation-error *ngIf="clientError">
+              {{ clientError }}
+            </app-validation-error>
+          </p>
+          <p class="api-error-wrapper">
+            <app-validation-error *ngIf="apiError">
+              {{ apiError | translate }}
+            </app-validation-error>
+          </p>
+        </div>
+      </form>
+    </p-card>
+  </div>
 </div>
