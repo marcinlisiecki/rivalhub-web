@@ -58,6 +58,7 @@ export class ViewEventComponent implements OnInit {
     private router: Router,
     private dialogService: DialogService,
     private organizationsService: OrganizationsService,
+    private authService: AuthService,
   ) {}
 
   ngOnInit(): void {
