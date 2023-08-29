@@ -54,12 +54,12 @@ export class AdminCardComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe((params) => {
       this.organizationId = params['id'];
+      this.loadMyself();
+      this.imageUrl = this.imageService.getUserImagePath(
+        this.user.profilePictureUrl,
+      );
     });
-    this.loadMyself();
 
-    this.imageUrl = this.imageService.getUserImagePath(
-      this.user.profilePictureUrl,
-    );
   }
 
   getImagePath(imageUrl: string | null): string {

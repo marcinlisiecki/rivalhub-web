@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnDestroy } from '@angular/core';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { EventType } from '@interfaces/event/event-type';
 import { EventsService } from '@app/core/services/events/events.service';
@@ -15,7 +15,7 @@ import { LanguageService } from '@app/core/services/language/language.service';
   templateUrl: './add-table-football-results.component.html',
   styleUrls: ['./add-table-football-results.component.scss'],
 })
-export class AddTableFootballResultsComponent {
+export class AddTableFootballResultsComponent implements OnDestroy {
   @Input() editable: boolean = true;
 
   matches: TableFootballMatch[] = [];
@@ -42,6 +42,10 @@ export class AddTableFootballResultsComponent {
     this.fetchEventUsers();
   }
 
+  ngOnDestroy(): void {
+    this.addSetDialogRef?.destroy();
+  }
+
   fetchMatches() {
     this.eventsService
       .getEventMatches<TableFootballMatch[]>(
@@ -58,7 +62,7 @@ export class AddTableFootballResultsComponent {
 
   fetchEventUsers() {
     this.eventsService
-      .getEventUsers(this.eventId, EventType.PING_PONG)
+      .getEventUsers(this.eventId, EventType.TABLE_FOOTBALL)
       .subscribe({
         next: (users: UserDetailsDto[]) => {
           this.eventUsers = users;
@@ -113,7 +117,11 @@ export class AddTableFootballResultsComponent {
           .addTableFootballSet(this.organizationId, this.eventId, set.matchId, [
             set,
           ])
-          .subscribe();
+          .subscribe({
+            next: () => {
+              this.fetchMatches();
+            },
+          });
       }
     });
   }

@@ -29,12 +29,9 @@
     <section style="margin-left: 0.5rem">
       <h5>{{ 'calendar.type.' + event['type'] | translate }}</h5>
       <a [routerLink]="event['eventURL']">
-        <p-button
-          *ngIf="event['type'] == 'event'"
-          class="evbtn"
-          styleClass="event-button"
-          >{{ 'calendar.event.eventButton' | translate }}</p-button
-        >
+        <p-button class="evbtn" styleClass="event-button">{{
+          'calendar.event.eventButton' | translate
+        }}</p-button>
       </a>
     </section>
   </div>

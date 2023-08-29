@@ -60,10 +60,10 @@
     *ngIf="readyDateAndValid && stations === null"
   ></app-centered-spinner>
 
-  <!--  <app-no-available-stations-->
-  <!--    *ngIf="readyDateAndValid && stations !== null && stations.length === 0"-->
-  <!--    [closestAvailable]="closestAvailable"-->
-  <!--  ></app-no-available-stations>-->
-
-  <p-button (onClick)="onSubmit()">{{ 'common.save' | translate }}</p-button>
+  <p-button
+    (onClick)="onSubmit()"
+    [disabled]="selectedStations.length === 0"
+    *ngIf="readyDateAndValid"
+    >{{ 'common.save' | translate }}</p-button
+  >
 </section>

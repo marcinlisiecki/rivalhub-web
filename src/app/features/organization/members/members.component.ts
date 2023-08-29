@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { UserDetailsDto } from '@interfaces/user/user-details-dto';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '@app/core/services/auth/auth.service';
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-members',
@@ -23,6 +24,7 @@ export class MembersComponent implements OnInit {
   public searchQuery: string = '';
   public noMore: boolean = false;
   public amIAdmin!: boolean;
+  private paramsSub?: Subscription
 
   toggleLoading = () => (this.isLoading = !this.isLoading);
 
@@ -33,12 +35,14 @@ export class MembersComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.route.params.subscribe((params) => {
+    this.paramsSub = this.route.params.subscribe((params) => {
       this.organizationId = params['id'];
+      this.amIAdmin = this.authService.amIAdmin(this.organizationId);
+      this.loadData();
     });
 
-    this.amIAdmin = this.authService.amIAdmin(this.organizationId);
-    this.loadData();
+
+
     // TODO debounce 500 ms
   }
 

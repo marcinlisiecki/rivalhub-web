@@ -3,6 +3,7 @@ import { categoryTypeToLabel } from '@app/core/utils/event';
 import { EventType } from '@interfaces/event/event-type';
 import { OrganizationConfiguratorStep } from '@interfaces/organization/organization-configurator-step';
 import { ActivatedRoute, Router } from '@angular/router';
+import { EventIcon } from '@interfaces/event/event-icon';
 
 @Component({
   selector: 'app-available-events-configurator',
@@ -32,4 +33,5 @@ export class AvailableEventsConfiguratorComponent {
   protected readonly categoryTypeToLabel = categoryTypeToLabel;
   protected readonly OrganizationConfiguratorStep =
     OrganizationConfiguratorStep;
+  protected readonly EventIcon = EventIcon;
 }

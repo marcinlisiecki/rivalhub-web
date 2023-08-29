@@ -122,7 +122,9 @@ export class NewEventComponent implements OnInit, OnDestroy {
           });
 
           this.selectedEventType = challengeType as EventType;
-          this.basicInfoForm.get('name')?.setValue(this.languageService.instant('event.fastChallenge'));
+          this.basicInfoForm
+            .get('name')
+            ?.setValue(this.languageService.instant('event.fastChallenge'));
           this.setFormStep(AddEventFormStep.DATE);
         },
         error: () => {

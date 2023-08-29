@@ -39,6 +39,9 @@ import { TableModule } from 'primeng/table';
 import { AddPullUpsResultsComponent } from './pull-ups/add-pull-ups-results/add-pull-ups-results.component';
 import { AddPullUpsSeriesComponent } from './pull-ups/add-pull-ups-series/add-pull-ups-series.component';
 import { AddUsersComponent } from './common/add-users/add-users.component';
+import { TagModule } from 'primeng/tag';
+import {ConfirmPopupModule} from "primeng/confirmpopup";
+import {AngularSvgIconModule} from "angular-svg-icon";
 
 @NgModule({
   declarations: [
@@ -84,6 +87,9 @@ import { AddUsersComponent } from './common/add-users/add-users.component';
     BadgeModule,
     TableModule,
     InputSwitchModule,
+    TagModule,
+    ConfirmPopupModule,
+    AngularSvgIconModule,
   ],
   providers: [DialogService],
 })

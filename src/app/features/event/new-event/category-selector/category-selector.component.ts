@@ -3,6 +3,7 @@ import { EventType } from '@interfaces/event/event-type';
 import { categoryTypeToLabel } from '../../../../core/utils/event';
 import { AvailableEvent } from '@interfaces/event/available-event';
 import { AddEventFormStep } from '@interfaces/event/add-event-form-step';
+import { EventIcon } from '@interfaces/event/event-icon';
 
 @Component({
   selector: 'app-category-selector',
@@ -20,4 +21,5 @@ export class CategorySelectorComponent {
 
   protected readonly categoryTypeToLabel = categoryTypeToLabel;
   protected readonly AddEventFormStep = AddEventFormStep;
+  protected readonly EventIcon = EventIcon;
 }

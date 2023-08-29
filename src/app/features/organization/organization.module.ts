@@ -35,6 +35,7 @@ import { PaginatorModule } from 'primeng/paginator';
 import { ViewOrganizationEventsComponent } from './view-organization-events/view-organization-events.component';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import {AccordionModule} from "primeng/accordion";
+import {AngularSvgIconModule} from "angular-svg-icon";
 
 @NgModule({
   declarations: [
@@ -82,6 +83,7 @@ import {AccordionModule} from "primeng/accordion";
     PaginatorModule,
     InputSwitchModule,
     AccordionModule,
+    AngularSvgIconModule,
   ],
   exports: [
     MyOrganizationsComponent,

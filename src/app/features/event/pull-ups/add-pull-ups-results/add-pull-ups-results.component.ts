@@ -42,6 +42,10 @@ export class AddPullUpsResultsComponent implements OnInit {
     this.fetchEventUsers();
   }
 
+  ngOnDestroy(): void {
+    this.addSeriesDialogRef?.destroy();
+  }
+
   addUser(user: AddEventUser) {
     if (user) {
       this.addedUsers.push(user);
