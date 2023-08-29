@@ -8,6 +8,7 @@
 }
 
 .teams {
+  margin-top: 1rem;
   display: flex;
   column-gap: 0.5rem;
 
@@ -41,6 +42,11 @@
         display: flex;
         align-items: center;
         column-gap: 0.75rem;
+
+        i {
+          color: $successButtonBg;
+          font-size: $textSm;
+        }
       }
 
       &-avatar {
@@ -69,6 +75,12 @@
       }
     }
   }
+}
+
+.match-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .add-set-button-wrapper {

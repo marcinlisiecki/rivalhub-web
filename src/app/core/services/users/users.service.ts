@@ -6,6 +6,7 @@ import { environment } from '../../../../environments/environment';
 import { Reservation } from '@app/core/interfaces/reservation/reservation';
 import { EventDto } from '@app/core/interfaces/event/event-dto';
 import { EditUser } from '@app/core/interfaces/user/edit-user';
+import { Notification } from '@interfaces/user/notification/notification';
 
 @Injectable({
   providedIn: 'root',
@@ -34,6 +35,12 @@ export class UsersService {
     avatarData.append('thumbnail', avatar!);
     avatarData.append('keepAvatar', keepAvatar.toString());
     return this.http.post<{}>(environment.apiUrl + `/users/image`, avatarData);
+  }
+
+  getMyNotifications(): Observable<Notification[]> {
+    return this.http.get<Notification[]>(
+      environment.apiUrl + '/users/notifications',
+    );
   }
 
   getCommonEvents(id: number): Observable<EventDto[]> {

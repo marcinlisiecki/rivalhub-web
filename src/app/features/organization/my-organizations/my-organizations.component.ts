@@ -11,6 +11,9 @@ import { InvitationsService } from '@app/core/services/invitations/invitations.s
 import { UsersService } from '@app/core/services/users/users.service';
 import { ImageService } from '@app/core/services/image/image.service';
 import { LanguageService } from '@app/core/services/language/language.service';
+import { Notification } from '@interfaces/user/notification/notification';
+import { ErrorsService } from '@app/core/services/errors/errors.service';
+import { categoryTypeToLabel } from '@app/core/utils/event';
 
 @Component({
   selector: 'app-my-organizations',
@@ -23,6 +26,7 @@ export class MyOrganizationsComponent implements OnInit {
   invitations: Invitation[] = [];
   isAccountVerified: boolean = false;
   isLoading: boolean = true;
+  notifications: Notification[] = [];
 
   constructor(
     private organizationsService: OrganizationsService,
@@ -34,12 +38,14 @@ export class MyOrganizationsComponent implements OnInit {
     private route: ActivatedRoute,
     private imageService: ImageService,
     private languageService: LanguageService,
+    private errorsService: ErrorsService,
   ) {}
 
   ngOnInit(): void {
     this.setMyOrganizations();
     this.setMyInvitations();
     this.checkIfAccountIsVerified();
+    this.fetchNotifications();
 
     const registered = this.route.snapshot.queryParams['registered'];
     if (registered) {
@@ -50,6 +56,19 @@ export class MyOrganizationsComponent implements OnInit {
         life: 1000 * 15,
       });
     }
+  }
+
+  fetchNotifications() {
+    this.usersService.getMyNotifications().subscribe({
+      next: (notifications: Notification[]) => {
+        this.notifications = notifications.filter(
+          (n) => n.status === 'NOT_CONFIRMED',
+        );
+      },
+      error: (err: HttpErrorResponse) => {
+        this.errorsService.createErrorMessage(extractMessage(err));
+      },
+    });
   }
 
   setMyOrganizations() {
@@ -125,4 +144,7 @@ export class MyOrganizationsComponent implements OnInit {
   }
 
   protected readonly checkDefaultAvatar = this.imageService.checkDefaultAvatar;
+  protected readonly categoryTypeToLabel = categoryTypeToLabel;
+  protected readonly Event = Event;
+  protected readonly EventTarget = EventTarget;
 }
