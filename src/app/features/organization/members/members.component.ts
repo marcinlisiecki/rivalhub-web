@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { UserDetailsDto } from '@interfaces/user/user-details-dto';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '@app/core/services/auth/auth.service';
-import {Subscription} from "rxjs";
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-members',
@@ -12,7 +12,7 @@ import {Subscription} from "rxjs";
   styleUrls: ['./members.component.scss'],
 })
 export class MembersComponent implements OnInit {
-  private organizationId!: number;
+  organizationId!: number;
   private isLoading = false;
   private currentPage = 0;
   private itemsPerPage = 15;
@@ -24,7 +24,7 @@ export class MembersComponent implements OnInit {
   public searchQuery: string = '';
   public noMore: boolean = false;
   public amIAdmin!: boolean;
-  private paramsSub?: Subscription
+  private paramsSub?: Subscription;
 
   toggleLoading = () => (this.isLoading = !this.isLoading);
 
@@ -40,8 +40,6 @@ export class MembersComponent implements OnInit {
       this.amIAdmin = this.authService.amIAdmin(this.organizationId);
       this.loadData();
     });
-
-
 
     // TODO debounce 500 ms
   }

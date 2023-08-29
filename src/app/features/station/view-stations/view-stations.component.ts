@@ -29,7 +29,7 @@ export class ViewStationsComponent implements OnInit {
 
   clonedStations: { [s: string]: Station } = {};
 
-  stationTypes: string[] = [];
+  stationTypes!: string[];
 
   constructor(
     private route: ActivatedRoute,
@@ -37,24 +37,25 @@ export class ViewStationsComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private eventsService: EventsService,
     private languageService: LanguageService,
-  ) {}
-
-  ngOnInit(): void {
+  ) {
     this.route.params.subscribe((params) => {
       this.organizationId = params['id'];
-      this.stationsService
-        .getOrganizationEditStations(this.organizationId)
-        .subscribe({
-          next: (res: Station[]) => {
-            this.stations = res;
-          },
-          error: (err: unknown) => {
-            this.apiError = extractMessage(err);
-          },
-        });
-
-      this.fetchStationTypes();
     });
+  }
+
+  ngOnInit(): void {
+    this.stationsService
+      .getOrganizationEditStations(this.organizationId)
+      .subscribe({
+        next: (res: Station[]) => {
+          this.stations = res;
+        },
+        error: (err: unknown) => {
+          this.apiError = extractMessage(err);
+        },
+      });
+
+    this.fetchStationTypes();
   }
 
   ngOnAfterViewInit(): void {
@@ -65,12 +66,7 @@ export class ViewStationsComponent implements OnInit {
     this.eventsService
       .getEventTypesInOrganization(this.organizationId)
       .subscribe((types) => {
-        types.forEach((type) => {
-          this.stationTypes.push(
-            this.languageService.instant(categoryTypeToLabel(type)),
-          );
-        });
-
+        this.stationTypes = types;
         this.newStation = {
           name: '',
           type: types[0] || null,
