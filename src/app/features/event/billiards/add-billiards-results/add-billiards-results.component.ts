@@ -81,7 +81,7 @@ export class AddBilliardsResultsComponent {
     this.addMatchDialogRef = this.dialogService.open(
       AddBilliardsMatchComponent,
       {
-        header: this.languageService.instant('event.rounds.addSeries'),
+        header: this.languageService.instant('event.addGame'),
         data: {},
       },
     );

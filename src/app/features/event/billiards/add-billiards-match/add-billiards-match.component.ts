@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { WinType } from '@interfaces/event/games/billiards/billiards-win-type';
 import { NewBilliardsMatchDialog } from '@interfaces/event/games/billiards/new-billiards-match-dialog';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-add-billiards-match',
@@ -15,11 +16,6 @@ export class AddBilliardsMatchComponent {
     { name: 'Drużyna 2', value: 2 },
   ];
 
-  winTypes: any[] = [
-    { name: 'Wszystkie kule wbite', value: WinType.ALL_IN },
-    { name: 'Faul', value: WinType.FOUl_ON8 },
-  ];
-
   winType!: WinType;
   team1Bills: number = 0;
   team2Bills: number = 0;
@@ -30,18 +26,31 @@ export class AddBilliardsMatchComponent {
   constructor(
     private dialogConfig: DynamicDialogConfig,
     private dialogRef: DynamicDialogRef,
-  ) {}
+    private translationService: TranslateService,
+  ) {
+    this.winnerOptions = [
+      {
+        name: this.translationService.instant('event.common.team') + ' 1',
+        value: 1,
+      },
+      { name: this.translationService.instant('match.draw'), value: 0 },
+      {
+        name: this.translationService.instant('event.common.team') + ' 2',
+        value: 2,
+      },
+    ];
+  }
 
   onSubmit() {
     this.validationError = '';
 
     if (this.winner === null) {
-      this.validationError = 'Podaj zwycięzców';
+      this.validationError = 'billiards.validation.selectWinners';
       return;
     }
 
     if (this.winner !== 0 && !this.winType) {
-      this.validationError = 'Podaj typ wygranej';
+      this.validationError = 'billiards.validation.selectWinType';
       return;
     }
 

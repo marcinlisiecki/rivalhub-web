@@ -286,5 +286,15 @@
   "notification.showMatch": "Pokaż mecz",
   "notification.header": "Powiadomienia",
   "notification.noNotifications": "Brak nowych powiadomień",
-  "event.confirmResults": "Potwierdź wyniki"
+  "event.confirmResults": "Potwierdź wyniki",
+  "match.draw": "Remis",
+  "billiards.match.allBillsIn": "Wbito wszystkie bile",
+  "match.foul": "Faul",
+  "match.winners": "Zwycięzcy",
+  "billiards.match.remainingBills": "Pozostałe bile",
+  "billiards.match.remainingTeam1Bills": "Pozostałe bile pierwszej drużyny",
+  "billiards.match.remainingTeam2Bills": "Pozostałe bile drugiej drużyny",
+  "billiards.match.winType": "Typ wygranej",
+  "billiards.validation.selectWinners": "Podaj zwycięzców",
+  "billiards.validation.selectWinType": "Podaj typ wygranej'"
 }

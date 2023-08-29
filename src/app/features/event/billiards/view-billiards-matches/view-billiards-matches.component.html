@@ -18,13 +18,18 @@
         >
         </p-badge>
         <div *ngIf="!match.team1Won && !match.team2Won">
-          <p-badge severity="warning" value="Remis"></p-badge>
+          <p-badge
+            severity="warning"
+            value="{{ 'match.draw' | translate }}"
+          ></p-badge>
         </div>
         <div *ngIf="match.team1Won || match.team2Won">
           <p-badge
             severity="info"
             value="{{
-              match.winType === WinType.ALL_IN ? 'Wbito wszystkie bile' : 'Faul'
+              match.winType === WinType.ALL_IN
+                ? ('billiards.match.allBillsIn' | translate)
+                : ('match.foul' | translate)
             }}"
           ></p-badge>
         </div>
@@ -46,7 +51,9 @@
           <p>{{ 'event.common.team' | translate }} 1</p>
 
           <div>
-            <p-tag severity="success" *ngIf="match.team1Won">Zwycięzcy</p-tag>
+            <p-tag severity="success" *ngIf="match.team1Won">{{
+              'match.winners' | translate
+            }}</p-tag>
           </div>
         </div>
         <div *ngFor="let user of match.team1" class="team-member">
@@ -60,14 +67,17 @@
           </div>
         </div>
         <div class="nie-mam-sily-na-wymyslanie-nazw">
-          Pozostałe bile: {{ match.howManyBillsLeftTeam1 }}
+          {{ 'billiards.match.remainingBills' | translate }}:
+          {{ match.howManyBillsLeftTeam1 }}
         </div>
       </div>
       <div class="team">
         <div class="team-label">
           <p>{{ 'event.common.team' | translate }} 2</p>
           <div>
-            <p-tag severity="success" *ngIf="match.team2Won">Zwycięzcy</p-tag>
+            <p-tag severity="success" *ngIf="match.team2Won">{{
+              'match.winners' | translate
+            }}</p-tag>
           </div>
         </div>
         <div *ngFor="let user of match.team2" class="team-member">
@@ -81,7 +91,8 @@
           </div>
         </div>
         <div class="nie-mam-sily-na-wymyslanie-nazw" v>
-          Pozostałe bile: {{ match.howManyBillsLeftTeam2 }}
+          {{ 'billiards.match.remainingBills' | translate }}:
+          {{ match.howManyBillsLeftTeam2 }}
         </div>
       </div>
     </section>
