@@ -13,7 +13,6 @@
           label="{{ 'event.leaveEvent' | translate }}"></p-button>
       </h1>
 
-      <p-badge severity="info" value="{{ categoryTypeToLabel(eventType) | translate }}"></p-badge>
       <div class="tags">
         <p-tag severity="info" value="{{ categoryTypeToLabel(eventType) | translate }}"></p-tag>
         <p-tag [severity]="event.eventPublic ? 'success' : 'danger'" value="{{
