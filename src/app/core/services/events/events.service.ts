@@ -119,6 +119,7 @@ export class EventsService {
   }
 
   mapDartsMatches(fakeLegs: FakeDartsLeg[]): DartsLeg[] {
+    if (!fakeLegs) return [];
     return fakeLegs.map((l) => ({
       dartFormat: l.dateFormat,
       dartMode: l.dartMode,

@@ -7,10 +7,7 @@
         {{ event.name }}
       </h1>
 
-      <p-badge
-        severity="info"
-        value="{{ categoryTypeToLabel(eventType) | translate }}"
-      ></p-badge>
+      <p-badge severity="info" value="{{ categoryTypeToLabel(eventType) | translate }}"></p-badge>
 
       <p class="description">
         {{ event.description ?? ('event.noDescription' | translate) }}
@@ -18,40 +15,29 @@
     </section>
 
     <section>
-      <app-view-ping-pong-matches
-        *ngIf="eventType === EventType.PING_PONG"
-        [matches]="getPingPongMatches()"
-      ></app-view-ping-pong-matches>
+      <app-view-ping-pong-matches *ngIf="eventType === EventType.PING_PONG"
+        [matches]="getPingPongMatches()"></app-view-ping-pong-matches>
 
-      <app-view-table-football-matches
-        *ngIf="eventType === EventType.TABLE_FOOTBALL"
-        [matches]="getTableFootballMatches()"
-      >
+      <app-view-table-football-matches *ngIf="eventType === EventType.TABLE_FOOTBALL"
+        [matches]="getTableFootballMatches()">
       </app-view-table-football-matches>
 
-      <app-view-pull-ups-matches
-        *ngIf="eventType === EventType.PULL_UPS"
-        [matches]="getPullUpsMatches()"
-      >
+      <app-view-pull-ups-matches *ngIf="eventType === EventType.PULL_UPS" [matches]="getPullUpsMatches()">
       </app-view-pull-ups-matches>
 
-      <!-- TODO: rzuca błędami jak głupie -->
-      <app-view-darts-matches
-        *ngIf="eventType === EventType.DARTS"
-        [matches]="getDartsMatches()"> </app-view-darts-matches>
+      <app-view-darts-matches *ngIf="eventType === EventType.DARTS" [matches]="getDartsMatches()">
+      </app-view-darts-matches>
     </section>
 
     <section class="buttons">
-      <a
-        [routerLink]="[
+      <a [routerLink]="[
           '/organizations',
           organizationId,
           'events',
           eventId,
           'results',
           { type: eventType }
-        ]"
-      >
+        ]">
         <p-button>{{ 'event.addResults' | translate }} </p-button>
       </a>
     </section>
@@ -61,11 +47,7 @@
     <h2 class="section-title">{{ 'event.participants' | translate }}</h2>
 
     <div class="users">
-      <a
-        class="user"
-        *ngFor="let user of participants"
-        routerLink="/profiles/{{ user.id }}"
-      >
+      <a class="user" *ngFor="let user of participants" routerLink="/profiles/{{ user.id }}">
         <app-avatar class="user-avatar" [user]="user"></app-avatar>
         <p>{{ user.name }}</p>
       </a>

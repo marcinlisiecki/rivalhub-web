@@ -95,8 +95,16 @@ export class ViewEventComponent implements OnInit {
   }
 
   getDartsMatches(): DartsLeg[] {
-    const matches = this.matches as FakeDartsLeg[];
-    return this.eventsService.mapDartsMatches(matches);
+    const mappedMatches: DartsLeg[] = [];
+    this.matches?.forEach((element) => {
+      const mappedMatch = this.eventsService.mapDartsMatch(
+        element as FakeDartsLeg,
+      );
+      if (mappedMatch) {
+        mappedMatches.push(mappedMatch);
+      }
+    });
+    return mappedMatches;
   }
 
   protected readonly EventType = EventType;

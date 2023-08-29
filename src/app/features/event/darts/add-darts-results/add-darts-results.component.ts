@@ -36,7 +36,6 @@ export class AddDartsResultsComponent implements OnInit {
   ngOnInit(): void {
     this.organizationId = this.route.snapshot.params['organizationId'];
     this.eventId = this.route.snapshot.params['eventId'];
-    console.log(this.editable);
     this.fetchMatches();
     this.fetchEventUsers();
   }
@@ -74,8 +73,7 @@ export class AddDartsResultsComponent implements OnInit {
               next: (leg: FakeDartsLeg) => {
                 this.showAddNewMatch = false;
                 const mapped: DartsLeg = this.eventsService.mapDartsMatch(leg);
-                //TODO: push do listy meczy po dodaniu, ale najpierw porządek muszę zrobic
-                // this.matches.push(leg);
+                this.matches.push(mapped);
               },
               error: (err) => {
                 console.log(err);

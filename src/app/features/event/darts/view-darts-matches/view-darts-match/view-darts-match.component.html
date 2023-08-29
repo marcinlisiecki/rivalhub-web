@@ -23,26 +23,30 @@
         </div>
         <p-divider></p-divider>
 
-        <div *ngFor="let queue of match.scoresInMatch; let i=index" class="leg-score">
+        <div *ngFor="let playerScores of match.scoresInMatch; let i=index" class="leg-score">
             <div class="queue" [style.grid-template-columns]="'repeat(' + calculateRows() + ', 1fr)'">
                 <div class="flex-center">
                     <p>#{{i}}</p>
                 </div>
 
-                <div class="row" *ngFor="let item of queue let i=index">
+                <!-- <div class="row" *ngFor="let item of queue let i=index">
 
-                    <p class="points-got">{{queue}}</p>
+                    <p class="points-got">
+                        Tutaj będą punkty zdobyte w rundzie
+                    </p>
                     <div class="shots">
 
-                        <!-- <img *ngFor="let _ of getHits(match.bounceOutsInLeg[i])" class="dart-icon"
+                        <img *ngFor="let _ of getHits(match.bounceOutsInLeg[i])" class="dart-icon"
                             src="assets/img/dart/dart-hit.png">
 
                         <img *ngFor="let _ of getMisses(match.bounceOutsInLeg[i])" class="dart-icon"
-                            src="assets/img/dart/dart-miss.png"> -->
+                            src="assets/img/dart/dart-miss.png">
 
                     </div>
-                    <p class="points-left">232</p>
-                </div>
+                    <p class="points-left">
+                        Tutaj będą punkty pozostałe do zakończenia rundy
+                    </p>
+                </div> -->
 
             </div>
             <p-divider></p-divider>

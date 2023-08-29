@@ -50,7 +50,6 @@ export class AddQueueComponent implements OnInit {
   handleScore(event: InputNumberInputEvent, index: number) {
     this.cheating = false;
 
-    console.log(event);
     if (parseInt(event.value) < 0 || event.value === null) {
       event.value = '0';
       event.formattedValue = '0';
