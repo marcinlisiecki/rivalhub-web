@@ -1,11 +1,11 @@
 <div class="ranking-main">
   <div class="ranking-body">
     <app-ranking-categories
-      (categoryChange)="lol($event)"
+      (categoryChange)="categoryChanged($event)"
     ></app-ranking-categories>
 
     <p-card header="Ranking">
-      <app-ranking-users></app-ranking-users>
+      <app-ranking-users [users]="category"></app-ranking-users>
     </p-card>
   </div>
 </div>

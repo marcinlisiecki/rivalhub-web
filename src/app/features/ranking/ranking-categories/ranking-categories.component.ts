@@ -21,7 +21,7 @@ interface Type {
 })
 export class RankingCategoriesComponent implements OnInit, OnDestroy {
   @Output() categoryChange = new EventEmitter();
-  selectedCategory: Type | undefined;
+  selectedCategory!: Type;
   categoriesSub!: Subscription;
   categories: Type[] = [];
   types: any[] = [];
@@ -52,8 +52,7 @@ export class RankingCategoriesComponent implements OnInit, OnDestroy {
   }
 
   cliked() {
-    console.log(this.selectedCategory);
-    this.categoryChange.emit();
+    this.categoryChange.emit(this.selectedCategory);
   }
 
   createType(event: EventType): Type {
