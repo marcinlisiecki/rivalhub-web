@@ -1,12 +1,15 @@
 import {
   AfterViewInit,
   Component,
+  ElementRef,
   EventEmitter,
   Input,
   OnInit,
   Output,
+  ViewChild,
 } from '@angular/core';
 import { AddQueue } from '@app/core/interfaces/event/games/darts/add-queue';
+import { DartsLeg } from '@app/core/interfaces/event/games/darts/dart-leg';
 import { UserDetailsDto } from '@app/core/interfaces/user/user-details-dto';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { InputNumberInputEvent } from 'primeng/inputnumber';
@@ -20,6 +23,7 @@ export class AddQueueComponent implements OnInit {
   @Input() participants!: UserDetailsDto[];
   @Output() addQueue: EventEmitter<AddQueue[]> = new EventEmitter<AddQueue[]>();
   newQueue: AddQueue[] = [];
+  match!: DartsLeg;
   cheating: boolean = false;
   hit = 'assets/img/dart/dart-hit.png';
   miss = 'assets/img/dart/dart-miss.png';
@@ -28,9 +32,22 @@ export class AddQueueComponent implements OnInit {
     private dialogRef: DynamicDialogRef,
   ) {}
 
+  ngOnInit(): void {
+    this.participants = this.dialogConfig.data['match'].participants;
+    this.match = this.dialogConfig.data['match'];
+    this.newQueue = this.participants.map(() => ({
+      score: 0,
+      blanks: 0,
+    }));
+  }
+
   onSubmit() {
-    this.newQueue.forEach((player) => {
-      if (player.score > (3 - player.blanks) * 60) {
+    console.log(this.newQueue);
+    this.newQueue.forEach((player, index) => {
+      if (
+        player.score > (3 - player.blanks) * 60 ||
+        player.score > this.match.pointsLeftInLeg[index]
+      ) {
         this.cheating = true;
       }
     });
@@ -38,13 +55,6 @@ export class AddQueueComponent implements OnInit {
       return;
     }
     this.dialogRef.close(this.newQueue);
-  }
-  ngOnInit(): void {
-    this.participants = this.dialogConfig.data['participants'];
-    this.newQueue = this.participants.map(() => ({
-      score: 0,
-      blanks: 0,
-    }));
   }
 
   handleScore(event: InputNumberInputEvent, index: number) {
@@ -58,7 +68,16 @@ export class AddQueueComponent implements OnInit {
       event.value = '180';
       event.formattedValue = '180';
     }
+
+    this.validateEnd(parseInt(event.value), index);
+
     this.newQueue[index].score = parseInt(event.value);
+  }
+
+  private validateEnd(points: number, playerIndex: number) {
+    if (this.match.pointsLeftInLeg[playerIndex] - points < 0) {
+      this.cheating = true;
+    }
   }
 
   hitOrMiss(event: MouseEvent, index: number) {

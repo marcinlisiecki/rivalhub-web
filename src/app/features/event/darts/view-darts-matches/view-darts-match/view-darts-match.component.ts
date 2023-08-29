@@ -8,6 +8,9 @@ import { DartsLeg } from '@app/core/interfaces/event/games/darts/dart-leg';
 import { EventsService } from '@app/core/services/events/events.service';
 import { ActivatedRoute } from '@angular/router';
 import { FakeDartsLeg } from '@app/core/interfaces/event/games/darts/fake-darts-leg';
+import { AddQueueDto } from '@app/core/interfaces/event/games/darts/add-queue-dto';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { TOAST_LIFETIME } from '@app/core/constants/messages';
 
 @Component({
   selector: 'app-view-darts-match',
@@ -29,20 +32,24 @@ export class ViewDartsMatchComponent implements OnInit {
     private languageService: LanguageService,
     private eventService: EventsService,
     private route: ActivatedRoute,
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService,
   ) {}
 
   ngOnInit(): void {
+    // this.editable = false;
     this.route.params.subscribe((params) => {
       this.organizationId = params['organizationId'];
       this.eventId = params['eventId'];
     });
+    console.log(this.match);
   }
 
   openAddQueueDialog() {
     this.addQueueDialogRef = this.dialogService.open(AddQueueComponent, {
       data: {
         newQueue: this.newQueue,
-        participants: this.match.participants,
+        match: this.match,
       },
       header: this.languageService.instant('event.addQueue'),
       width: '40rem',
@@ -51,25 +58,76 @@ export class ViewDartsMatchComponent implements OnInit {
     this.addQueueDialogRef.onClose.subscribe((queue: AddQueue[]) => {
       if (queue) {
         console.log(queue);
-        // this.eventService
-        //   .addDartsQueue(this.organizationId, this.eventId, 1, queue)
-        //   .subscribe({
-        //     next: (leg: FakeDartsLeg) => {
-        //       this.match = this.eventService.mapDartsMatch(leg);
-        //     },
-        //   });
+        const queueInput: AddQueueDto = {
+          singlePlayerScoreInRoundsList: queue,
+        };
+        this.eventService
+          .addDartsQueue(
+            this.organizationId,
+            this.eventId,
+            this.match.matchId,
+            queueInput,
+          )
+          .subscribe({
+            next: (leg: FakeDartsLeg) => {
+              this.match = this.eventService.mapDartsMatch(leg);
+            },
+          });
       }
     });
   }
 
+  onDelete(icon: Event, roundId: number) {
+    console.log(icon);
+    if (!this.editable) return;
+
+    // this.confirmationService.confirm({
+    //   target: icon.target as EventTarget,
+    //   acceptLabel: this.languageService.instant('common.yes'),
+    //   rejectLabel: this.languageService.instant('common.no'),
+    //   icon: 'pi pi-exclamation-triangle',
+    //   message: this.languageService.instant('event.set.deleteQuestion'),
+    //   accept: () => {
+    console.log(roundId);
+    this.eventService
+      .deleteDartsQueue(
+        this.organizationId,
+        this.eventId,
+        this.match.matchId,
+        roundId,
+      )
+      .subscribe({
+        next: () => {
+          this.messageService.add({
+            severity: 'success',
+            life: TOAST_LIFETIME,
+            summary: this.languageService.instant(
+              'event.series.deleteConfirmation',
+            ),
+          });
+          this.match.scoresInMatch = this.match.scoresInMatch.filter(
+            (score, index) => index !== roundId,
+          );
+        },
+      });
+    //   },
+    // });
+  }
+
   getHits(bounceOuts: number): number[] {
+    if (bounceOuts === 3) return [];
     return new Array(3 - bounceOuts);
   }
+
   getMisses(bounceOuts: number): number[] {
+    if (bounceOuts === 0) return [];
     return new Array(bounceOuts);
   }
 
   calculateRows() {
+    if (this.editable) {
+      return this.match.participants.length + 2;
+    }
     return this.match.participants.length + 1;
   }
 }

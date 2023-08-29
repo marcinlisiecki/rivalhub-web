@@ -29,26 +29,32 @@
                     <p>#{{i}}</p>
                 </div>
 
-                <!-- <div class="row" *ngFor="let item of queue let i=index">
+                <div class="row" *ngFor="let roundScore of playerScores let row=index">
 
                     <p class="points-got">
-                        Tutaj będą punkty zdobyte w rundzie
+                        {{roundScore}}
                     </p>
                     <div class="shots">
-
-                        <img *ngFor="let _ of getHits(match.bounceOutsInLeg[i])" class="dart-icon"
+                        <img *ngFor="let _ of getHits(match.bounceOutsInRound[i][row])" class="dart-icon"
                             src="assets/img/dart/dart-hit.png">
-
-                        <img *ngFor="let _ of getMisses(match.bounceOutsInLeg[i])" class="dart-icon"
+                        <img *ngFor="let _ of getMisses(match.bounceOutsInRound[i][row])" class="dart-icon"
                             src="assets/img/dart/dart-miss.png">
-
                     </div>
                     <p class="points-left">
-                        Tutaj będą punkty pozostałe do zakończenia rundy
+                        {{match.pointsLeftInLegAfterRound[i][row]-roundScore}}
                     </p>
-                </div> -->
+                </div>
+                <div class="remove-button">
+                    <i style="color: red" [style]="
+                    {
+                        opacity: editable ? 1 : 0,
+                        cursor: editable ? 'pointer' : 'default',
+                    }
+                    " class="pi pi-times-circle" (click)="onDelete($event, i)"></i>
+                </div>
 
             </div>
+
             <p-divider></p-divider>
         </div>
     </section>

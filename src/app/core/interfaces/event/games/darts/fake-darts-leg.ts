@@ -5,8 +5,11 @@ import { DartQueue } from './dart-queue';
 export interface FakeDartsLeg {
   dateFormat: string;
   dartMode: string;
+  id: number;
   userDetails: UserDetailsDto[];
   scoresInMatch: number[][][];
+  bounceOutsInRound: number[][][];
+  pointsLeftInLegAfterRound: number[][][];
   pointsLeftInLeg: number[][];
   placesInLeg: number[][];
   bounceOutsInLeg: number[][];

@@ -143,12 +143,17 @@ export class EventsService {
   }
 
   mapDartsMatches(fakeLegs: FakeDartsLeg[]): DartsLeg[] {
+    console.log(fakeLegs);
+
     if (!fakeLegs) return [];
     return fakeLegs.map((l) => ({
+      matchId: l.id,
       dartFormat: l.dateFormat,
       dartMode: l.dartMode,
       participants: l.userDetails,
       scoresInMatch: l.scoresInMatch[0],
+      bounceOutsInRound: l.bounceOutsInRound[0],
+      pointsLeftInLegAfterRound: l.pointsLeftInLegAfterRound[0],
       pointsLeftInLeg: l.pointsLeftInLeg[0],
       placesInLeg: l.placesInLeg[0],
       bounceOutsInLeg: l.bounceOutsInLeg[0],
@@ -159,10 +164,13 @@ export class EventsService {
 
   mapDartsMatch(fakeLeg: FakeDartsLeg): DartsLeg {
     return {
+      matchId: fakeLeg.id,
       dartFormat: fakeLeg.dateFormat,
       dartMode: fakeLeg.dartMode,
       participants: fakeLeg.userDetails,
       scoresInMatch: fakeLeg.scoresInMatch[0],
+      bounceOutsInRound: fakeLeg.bounceOutsInRound[0],
+      pointsLeftInLegAfterRound: fakeLeg.pointsLeftInLegAfterRound[0],
       pointsLeftInLeg: fakeLeg.pointsLeftInLeg[0],
       placesInLeg: fakeLeg.placesInLeg[0],
       bounceOutsInLeg: fakeLeg.bounceOutsInLeg[0],
@@ -310,8 +318,6 @@ export class EventsService {
     eventId: number,
     type: EventType,
   ): Observable<{}> {
-    console.log(eventId);
-
     return this.http.delete(
       environment.apiUrl +
         `/organizations/${organizationId}/events/${eventId}?type=${type}`,
@@ -367,13 +373,30 @@ export class EventsService {
     organizationId: number,
     eventId: number,
     matchId: number,
-    queue: AddQueue[],
+    queue: any,
   ): Observable<FakeDartsLeg> {
     return this.http.post<FakeDartsLeg>(
       environment.apiUrl +
         `/organizations/${organizationId}/events/${eventId}/match/${matchId}/dart/legs/rounds/0`,
       queue,
     );
+  }
+
+  deleteDartsQueue(
+    organizationId: number,
+    eventId: number,
+    matchId: number,
+    numberOfRound: number,
+  ): Observable<{}> {
+    {
+      return this.http.delete<{}>(
+        environment.apiUrl +
+          `/organizations/${organizationId}/events/${eventId}/match/${matchId}/dart/legs/rounds/0`,
+        {
+          body: numberOfRound,
+        },
+      );
+    }
   }
 
   joinEvent(eventId: number, type: string) {
