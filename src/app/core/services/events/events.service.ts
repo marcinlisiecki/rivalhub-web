@@ -18,6 +18,8 @@ import { PullUpsSeries } from '@interfaces/event/games/pull-ups/pull-ups-series'
 import { NewPullUpsMatch } from '@interfaces/event/games/pull-ups/new-pull-ups-match';
 import { PullUpsSeriesScores } from '@interfaces/event/games/pull-ups/pull-ups-series-scores';
 import { BilliardsMatch } from '@interfaces/event/games/billiards/billiards-match';
+import { NewBilliardsMatch } from '@interfaces/event/games/billiards/new-billiards-match';
+import { NewBilliardsResults } from '@interfaces/event/games/billiards/new-billiards-results';
 
 @Injectable({
   providedIn: 'root',
@@ -246,6 +248,31 @@ export class EventsService {
       environment.apiUrl +
         `/organizations/${organizationId}/events/${eventId}/match?type=${EventType.PULL_UPS}`,
       newMatch,
+    );
+  }
+
+  addBilliardsMatch(
+    organizationId: number,
+    eventId: number,
+    newMatch: NewBilliardsMatch,
+  ): Observable<BilliardsMatch> {
+    return this.http.post<BilliardsMatch>(
+      environment.apiUrl +
+        `/organizations/${organizationId}/events/${eventId}/match?type=${EventType.BILLIARDS}`,
+      newMatch,
+    );
+  }
+
+  addBilliardsResults(
+    organizationId: number,
+    eventId: number,
+    matchId: number,
+    results: NewBilliardsResults,
+  ): Observable<BilliardsMatch> {
+    return this.http.post<BilliardsMatch>(
+      environment.apiUrl +
+        `/organizations/${organizationId}/events/${eventId}/match/${matchId}/billiards?type=${EventType.BILLIARDS}`,
+      results,
     );
   }
 

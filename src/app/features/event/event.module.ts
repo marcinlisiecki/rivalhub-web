@@ -49,6 +49,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { DropdownModule } from 'primeng/dropdown';
 import { AddBilliardsMatchComponent } from './billiards/add-billiards-match/add-billiards-match.component';
 import { ListboxModule } from 'primeng/listbox';
+import {RadioButtonModule} from "primeng/radiobutton";
 
 @NgModule({
   declarations: [
@@ -104,6 +105,7 @@ import { ListboxModule } from 'primeng/listbox';
     InputNumberModule,
     DropdownModule,
     ListboxModule,
+    RadioButtonModule,
   ],
   providers: [DialogService],
 })

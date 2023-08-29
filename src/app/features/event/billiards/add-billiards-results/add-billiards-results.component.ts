@@ -7,11 +7,11 @@ import { LanguageService } from '@app/core/services/language/language.service';
 import { EventType } from '@interfaces/event/event-type';
 import { BilliardsMatch } from '@interfaces/event/games/billiards/billiards-match';
 import { AddPingPongMatch } from '@interfaces/event/games/ping-pong/add-ping-pong-match';
-import { WinType } from '@interfaces/event/games/billiards/billiards-win-type';
-import { PullUpsMatch } from '@interfaces/event/games/pull-ups/pull-ups-match';
-import { AddPullUpsSeriesComponent } from '@app/features/event/pull-ups/add-pull-ups-series/add-pull-ups-series.component';
-import { NewPullUpsSeries } from '@interfaces/event/games/pull-ups/new-pull-ups-series';
 import { AddBilliardsMatchComponent } from '@app/features/event/billiards/add-billiards-match/add-billiards-match.component';
+import { NewBilliardsMatchDialog } from '@interfaces/event/games/billiards/new-billiards-match-dialog';
+import { NewBilliardsMatch } from '@interfaces/event/games/billiards/new-billiards-match';
+import { BilliardsResult } from '@interfaces/event/games/billiards/billiards';
+import { NewBilliardsResults } from '@interfaces/event/games/billiards/new-billiards-results';
 
 @Component({
   selector: 'app-add-billiards-results',
@@ -22,7 +22,6 @@ export class AddBilliardsResultsComponent {
   @Input() editable: boolean = true;
 
   matches: BilliardsMatch[] = [];
-  addSetDialogRef?: DynamicDialogRef;
   eventUsers: UserDetailsDto[] = [];
   addMatchDialogRef?: DynamicDialogRef;
 
@@ -51,7 +50,7 @@ export class AddBilliardsResultsComponent {
   }
 
   ngOnDestroy(): void {
-    this.addSetDialogRef?.destroy();
+    this.addMatchDialogRef?.destroy();
   }
 
   fetchMatches() {
@@ -59,7 +58,7 @@ export class AddBilliardsResultsComponent {
       .getEventMatches<BilliardsMatch[]>(
         this.organizationId,
         this.eventId,
-        EventType.PING_PONG,
+        EventType.BILLIARDS,
       )
       .subscribe({
         next: (matches) => {
@@ -79,9 +78,6 @@ export class AddBilliardsResultsComponent {
   }
 
   addNewEventUsers(newEvent: AddPingPongMatch) {
-    // const matchIndex = this.matches.findIndex(
-    //   (item: PullUpsMatch) => item.id === matchId,
-    // );
     this.addMatchDialogRef = this.dialogService.open(
       AddBilliardsMatchComponent,
       {
@@ -90,35 +86,47 @@ export class AddBilliardsResultsComponent {
       },
     );
 
-    // this.addSeriesDialogRef.onClose.subscribe((series: NewPullUpsSeries) => {
-    //   if (series) {
-    //     const matchIndex = this.matches.findIndex(
-    //       (item) => item.id === series.matchId,
-    //     );
-    //
-    //     this.matches[matchIndex].scores = this.matches[
-    //       matchIndex
-    //       ].scores.concat(
-    //       ...series.series.map((item) => ({
-    //         seriesID: item.seriesID,
-    //         score: item.result,
-    //         userId: item.userId,
-    //       })),
-    //     );
-    //
-    //     this.eventsService
-    //       .addPullUpsSeries(
-    //         this.organizationId,
-    //         this.eventId,
-    //         series.matchId,
-    //         this.matches[matchIndex].scores,
-    //       )
-    //       .subscribe({
-    //         next: (match: PullUpsMatch) => {
-    //           this.matches[matchIndex] = match;
-    //         },
-    //       });
-    //   }
-    // });
+    this.addMatchDialogRef.onClose.subscribe(
+      (match: NewBilliardsMatchDialog) => {
+        if (match) {
+          const newMatch: NewBilliardsMatch = {
+            team1Ids: newEvent.match.team1Ids,
+            team2Ids: newEvent.match.team2Ids,
+          };
+
+          this.eventsService
+            .addBilliardsMatch(this.organizationId, this.eventId, newMatch)
+            .subscribe({
+              next: (createdMatch: BilliardsMatch) => {
+                const results: NewBilliardsResults = {
+                  howManyBillsLeftTeam1: match.howManyBillsLeftTeam1,
+                  howManyBillsLeftTeam2: match.howManyBillsLeftTeam2,
+                  team1HadPottedFirst: false,
+                  team1PlaysFull: false,
+                  team1Won: match.team1Won,
+                  team2Won: match.team2Won,
+                  winType: match.winType,
+                };
+
+                this.eventsService
+                  .addBilliardsResults(
+                    this.organizationId,
+                    this.eventId,
+                    createdMatch.id,
+                    results,
+                  )
+                  .subscribe({
+                    next: (updatedMatch) => {
+                      this.matches.push(updatedMatch);
+                    },
+                  });
+              },
+            });
+        }
+
+        this.showAddUsers = false;
+        this.showAddNewMatch = false;
+      },
+    );
   }
 }

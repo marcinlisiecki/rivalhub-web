@@ -1,23 +1,71 @@
-<section>
-  <p-selectButton
-    [options]="winnerOptions"
-    optionLabel="name"
-    optionValue="value"
-  ></p-selectButton>
-
-  <div class="input-box">
-    <label for="">Pozostałe bile pierwszej drużyny</label>
-    <p-inputNumber mode="decimal"></p-inputNumber>
+<section class="wrapper">
+  <div>
+    <p>Zwycięzcy</p>
+    <p-selectButton
+      [options]="winnerOptions"
+      optionLabel="name"
+      optionValue="value"
+      [(ngModel)]="winner"
+    ></p-selectButton>
   </div>
 
-  <div class="input-box">
-    <label for="">Pozostałe bile pierwszej drużyny</label>
-    <p-inputNumber mode="decimal"></p-inputNumber>
+  <p-divider></p-divider>
+
+  <div class="bills">
+    <div class="input-box">
+      <label for="team1Bills">Pozostałe bile pierwszej drużyny</label>
+      <p-inputNumber
+        [min]="0"
+        mode="decimal"
+        styleClass="input-wide"
+        inputId="team1Bills"
+        [(ngModel)]="team1Bills"
+      ></p-inputNumber>
+    </div>
+
+    <div class="input-box">
+      <label for="team2Bills">Pozostałe bile pierwszej drużyny</label>
+      <p-inputNumber
+        [min]="0"
+        mode="decimal"
+        styleClass="input-wide"
+        inputId="team2Bills"
+        [(ngModel)]="team2Bills"
+      ></p-inputNumber>
+    </div>
   </div>
 
-  <p-listbox
-    [options]="winTypes"
-    optionLabel="name"
-    optionValue="value"
-  ></p-listbox>
+  <p-divider></p-divider>
+
+  <div class="win-type" *ngIf="winner && winner !== 0">
+    <p>Typ wygranej</p>
+
+    <div class="radio-wrapper">
+      <p-radioButton
+        name="win-type"
+        value="{{ WinType.ALL_IN }}"
+        [(ngModel)]="winType"
+        inputId="all"
+      ></p-radioButton>
+      <label for="all">Wszystkie kule wbite</label>
+    </div>
+
+    <div class="radio-wrapper">
+      <p-radioButton
+        name="win-type"
+        value="{{ WinType.FOUl_ON8 }}"
+        [(ngModel)]="winType"
+        inputId="foul"
+      ></p-radioButton>
+      <label for="foul">Fault</label>
+    </div>
+  </div>
+
+  <p-button styleClass="button-wide" (click)="onSubmit()">Dodaj</p-button>
+
+  <div *ngIf="validationError" class="validation-error-wrapper">
+    <app-validation-error>
+      {{ validationError }}
+    </app-validation-error>
+  </div>
 </section>

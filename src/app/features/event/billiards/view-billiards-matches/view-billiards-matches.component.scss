@@ -7,6 +7,12 @@
   background-color: $panelContentBg;
 }
 
+.matches {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+}
+
 .nie-mam-sily-na-wymyslanie-nazw {
   color: $textSecondaryColor;
 }

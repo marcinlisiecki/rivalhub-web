@@ -1,11 +1,11 @@
 <h2 class="section-title" *ngIf="!editable">{{ 'event.games' | translate }}</h2>
 
-<app-no-resource-info *ngIf="mockMatches?.length === 0">
+<app-no-resource-info *ngIf="matches?.length === 0">
   {{ 'event.noGames' | translate }}
 </app-no-resource-info>
 
 <div class="matches">
-  <div class="match" *ngFor="let match of mockMatches">
+  <div class="match" *ngFor="let match of matches">
     <div class="match-header">
       <div class="match-header-tags">
         <p-badge
@@ -44,6 +44,7 @@
       <div class="team">
         <div class="team-label">
           <p>{{ 'event.common.team' | translate }} 1</p>
+
           <div>
             <p-tag severity="success" *ngIf="match.team1Won">Zwycięzcy</p-tag>
           </div>
@@ -80,24 +81,9 @@
           </div>
         </div>
         <div class="nie-mam-sily-na-wymyslanie-nazw" v>
-          Pozostałe bile: {{ match.howManyBillsLeftTeam1 }}
+          Pozostałe bile: {{ match.howManyBillsLeftTeam2 }}
         </div>
       </div>
     </section>
-
-    <!--    <app-view-game-sets-->
-    <!--      [gameSets]="match.sets"-->
-    <!--      [editable]="editable"-->
-    <!--      [matchId]="match.id"-->
-    <!--    ></app-view-game-sets>-->
-
-    <!--    <div class="add-set-button-wrapper" *ngIf="editable">-->
-    <!--      <p-button-->
-    <!--        (click)="handleAddSet.emit(match.id)"-->
-    <!--        styleClass="p-button-outlined"-->
-    <!--      >-->
-    <!--        {{ 'event.common.addSet' | translate }}-->
-    <!--      </p-button>-->
-    <!--    </div>-->
   </div>
 </div>
