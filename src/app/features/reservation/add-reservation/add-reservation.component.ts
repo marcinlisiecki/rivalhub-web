@@ -18,7 +18,7 @@ import { DISPLAY_DATE_FORMAT } from '@app/core/constants/date';
 })
 export class AddReservationComponent {
   @Input() isInModal: boolean = false;
-
+  organizationId!: number;
   stations: Station[] | null = null;
 
   types: Set<string> = new Set<string>();
@@ -41,6 +41,10 @@ export class AddReservationComponent {
     private datePipe: DatePipe,
   ) {}
 
+  ngOnInit() {
+    this.organizationId = this.route.snapshot.params['id'];
+  }
+
   findRightCategory(type: string): ClosestStationAvailable {
     const cat = this.closestAvailable.find(
       (closest: ClosestStationAvailable) => closest.type === type,
@@ -49,10 +53,9 @@ export class AddReservationComponent {
     return cat!;
   }
   fetchClosestAvailableStations() {
-    const organizationId: number = this.route.snapshot.params['id'];
     this.stationsService
       .getClosestAvailableStations(
-        organizationId,
+        this.organizationId,
         this.startTime,
         this.finishTime,
       )

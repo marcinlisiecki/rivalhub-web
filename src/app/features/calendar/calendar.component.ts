@@ -2,6 +2,8 @@ import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { CalendarService } from '@app/core/services/calendar/calendar.service';
 import { API_DATE_FORMAT } from '@app/core/constants/date';
 import { DatePipe } from '@angular/common';
+import { Filters } from '@interfaces/calendar/calendar-filters';
+import { Organization } from '@interfaces/organization/organization';
 
 @Component({
   selector: 'app-calendar',
@@ -10,17 +12,31 @@ import { DatePipe } from '@angular/common';
 })
 export class CalendarComponent implements OnInit, OnDestroy {
   sidebarHeader = this.calendarService.currentDate;
+  organizations!: Organization[];
   sidebarVisible: boolean = false;
   sidebarWidth = '0';
   sidebarIcon? = 'pi pi-arrow-right';
   calendarMargin = '0';
+  selectedOrganizations: string[] = [];
 
+  selectedFilters: Filters = {
+    selectedOrganizations: this.selectedOrganizations,
+    selectedTypes: ['1', '2'],
+  };
   constructor(
     private calendarService: CalendarService,
     private datePipe: DatePipe,
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.calendarService.getOrganization();
+    this.organizations = this.calendarService.organizations();
+    this.organizations.forEach((organization) => {
+      this.selectedFilters.selectedOrganizations.push(
+        organization.id.toString(),
+      );
+    });
+    this.calendarService.filters = this.selectedFilters;
     this.calendarService.getMonthEvents(
       <string>this.datePipe.transform(new Date(), API_DATE_FORMAT),
     );

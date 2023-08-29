@@ -1,4 +1,7 @@
 <div class="wrapper">
+  <app-organization-back-button
+    [organizationId]="organizationId"
+  ></app-organization-back-button>
   <div class="dashboard-container">
     <h2>{{ 'organization.admins' | translate }}</h2>
     <app-admin-card

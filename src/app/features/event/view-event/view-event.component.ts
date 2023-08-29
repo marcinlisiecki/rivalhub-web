@@ -23,6 +23,7 @@ import { AddUserDialogComponent } from '@app/features/event/new-event/add-user-d
 import { OrganizationsService } from '@app/core/services/organizations/organizations.service';
 import { PagedResponse } from '@interfaces/generic/paged-response';
 import { ex } from '@fullcalendar/core/internal-common';
+import { BilliardsMatch } from '@interfaces/event/games/billiards/billiards-match';
 
 @Component({
   selector: 'app-view-event',
@@ -41,7 +42,8 @@ export class ViewEventComponent implements OnInit {
     | PingPongMatch[]
     | TableFootballMatch[]
     | PullUpsMatch[]
-    | FakeDartsLeg[];
+    | BilliardsMatch[]
+      | FakeDartsLeg[];
   loggedInUserId!: number;
   canEdit: boolean = false;
   canJoin: boolean = false;
@@ -73,6 +75,25 @@ export class ViewEventComponent implements OnInit {
     this.fetchParticipants();
     this.fetchOrganizationUsers();
     this.fetchMatches();
+  }
+
+  approveMatch(matchId: number) {
+    this.eventsService
+      .approveMatch(this.organizationId, this.eventId, matchId, this.eventType)
+      .subscribe({
+        next: () => {
+          const matchIndex = this.matches?.findIndex((m) => m.id === matchId);
+          if (this.matches && matchIndex) {
+            const loggedInUserId = this.authService.getUserId() as number;
+            this.matches[matchIndex].userApprovalMap[loggedInUserId] = true;
+          }
+
+          this.fetchMatches();
+        },
+        error: (err: HttpErrorResponse) => {
+          this.errorsService.createErrorMessage(extractMessage(err));
+        },
+      });
   }
 
   openAddUserDialog() {
@@ -319,6 +340,10 @@ export class ViewEventComponent implements OnInit {
       }
     });
     return mappedMatches;
+  }
+
+  getBilliardsMatches(): BilliardsMatch[] {
+    return this.matches as BilliardsMatch[];
   }
 
   protected readonly EventType = EventType;

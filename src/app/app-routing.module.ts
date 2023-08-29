@@ -25,6 +25,7 @@ import { AddResultsComponent } from '@app/features/event/add-results/add-results
 import { EditProfileComponent } from './features/profile/edit-profile/edit-profile.component';
 import { ViewOrganizationEventsComponent } from '@app/features/organization/view-organization-events/view-organization-events.component';
 import { ViewReservationComponent } from '@app/features/reservation/view-reservation/view-reservation.component';
+import { RankingComponent } from '@app/features/ranking/ranking.component';
 import { PageNotFoundComponent } from '@app/shared/page-not-found/page-not-found.component';
 
 const routes: Routes = [
@@ -128,6 +129,11 @@ const routes: Routes = [
   {
     path: 'organizations/:organizationId/events/:eventId/results',
     component: AddResultsComponent,
+    canActivate: [authenticateGuard],
+  },
+  {
+    path: 'organizations/:id/ranking',
+    component: RankingComponent,
     canActivate: [authenticateGuard],
   },
   {

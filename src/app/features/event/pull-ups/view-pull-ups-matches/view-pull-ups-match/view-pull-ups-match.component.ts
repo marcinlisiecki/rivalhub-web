@@ -3,13 +3,14 @@ import { PullUpsMatch } from '@interfaces/event/games/pull-ups/pull-ups-match';
 import { PullUpsSeriesScores } from '@interfaces/event/games/pull-ups/pull-ups-series-scores';
 import { PullUpsDisplayRanking } from '@interfaces/event/games/pull-ups/pull-ups-display-ranking';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { LanguageService } from '@app/core/services/language/language.service';
 import { TOAST_LIFETIME } from '@app/core/constants/messages';
 import { EventsService } from '@app/core/services/events/events.service';
 import { ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { extractMessage } from '@app/core/utils/apiErrors';
 import { ErrorsService } from '@app/core/services/errors/errors.service';
+import { AuthService } from '@app/core/services/auth/auth.service';
+import { LanguageService } from '@app/core/services/language/language.service';
 
 @Component({
   selector: 'app-view-pull-ups-match',
@@ -21,18 +22,24 @@ export class ViewPullUpsMatchComponent implements OnInit {
   @Input() editable: boolean = false;
 
   @Output() handleAddSeries: EventEmitter<number> = new EventEmitter<number>();
+  @Output() approveMatch: EventEmitter<number> = new EventEmitter<number>();
+
+  loggedInUserId!: number;
 
   series: PullUpsSeriesScores[] = [];
   ranking: PullUpsDisplayRanking[] = [];
 
   constructor(
     private confirmationService: ConfirmationService,
-    private languageService: LanguageService,
+    public languageService: LanguageService,
     private messageService: MessageService,
     private eventsService: EventsService,
     private route: ActivatedRoute,
     private errorsService: ErrorsService,
-  ) {}
+    private authService: AuthService,
+  ) {
+    this.loggedInUserId = authService.getUserId() as number;
+  }
 
   ngOnInit(): void {
     this.generateSeries();

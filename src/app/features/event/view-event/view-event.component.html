@@ -1,7 +1,7 @@
 <section class="wrapper" *ngIf="event">
+  <app-go-back-button [ngStyle]="{ marginBottom: '1rem' }"></app-go-back-button>
   <section class="main">
     <p-confirmPopup></p-confirmPopup>
-    <app-go-back-button></app-go-back-button>
 
     <section *ngIf="event">
       <h1 class="event-title">
@@ -35,18 +35,35 @@
     </section>
 
     <section>
-      <app-view-ping-pong-matches *ngIf="eventType === EventType.PING_PONG"
-        [matches]="getPingPongMatches()"></app-view-ping-pong-matches>
+      <app-view-ping-pong-matches
+        *ngIf="eventType === EventType.PING_PONG"
+        [matches]="getPingPongMatches()"
+        (approveMatch)="approveMatch($event)"
+      ></app-view-ping-pong-matches>
 
-      <app-view-table-football-matches *ngIf="eventType === EventType.TABLE_FOOTBALL"
-        [matches]="getTableFootballMatches()">
+      <app-view-table-football-matches
+        *ngIf="eventType === EventType.TABLE_FOOTBALL"
+        [matches]="getTableFootballMatches()"
+        (approveMatch)="approveMatch($event)"
+      >
       </app-view-table-football-matches>
 
-      <app-view-pull-ups-matches *ngIf="eventType === EventType.PULL_UPS" [matches]="getPullUpsMatches()">
+      <app-view-pull-ups-matches
+        *ngIf="eventType === EventType.PULL_UPS"
+        [matches]="getPullUpsMatches()"
+        (approveMatch)="approveMatch($event)"
+      >
       </app-view-pull-ups-matches>
 
       <app-view-darts-matches *ngIf="eventType === EventType.DARTS" [matches]="getDartsMatches()">
       </app-view-darts-matches>
+
+      <app-view-billiards-matches
+        *ngIf="eventType === EventType.BILLIARDS"
+        (approveMatch)="approveMatch($event)"
+        [matches]="getBilliardsMatches()"
+      >
+      </app-view-billiards-matches>
     </section>
 
     <section class="buttons" *ngIf="canEdit">

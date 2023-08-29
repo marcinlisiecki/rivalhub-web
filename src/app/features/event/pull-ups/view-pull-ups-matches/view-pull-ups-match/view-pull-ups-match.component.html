@@ -1,4 +1,27 @@
 <section class="match">
+  <div class="match-header">
+    <p-badge
+      [severity]="match.approved ? 'success' : 'danger'"
+      [value]="
+        match.approved
+          ? languageService.instant('event.approval')
+          : languageService.instant('event.noApproval')
+      "
+    >
+    </p-badge>
+    <p-button
+      styleClass="p-button-sm p-button-text p-button-success"
+      (click)="approveMatch.emit(match.id)"
+      *ngIf="
+        match.userApprovalMap[loggedInUserId] !== undefined &&
+        !match.userApprovalMap[loggedInUserId] &&
+        match.scores.length !== 0 &&
+        !editable
+      "
+      label="{{ 'event.confirmResults' | translate }}"
+    ></p-button>
+  </div>
+
   <section class="teams">
     <section class="team">
       <h2>{{ 'event.rounds.participants' | translate }}</h2>
@@ -6,6 +29,10 @@
         <div class="team-member-data">
           <app-avatar class="team-member-avatar" [user]="user"></app-avatar>
           <p>{{ user.name }}</p>
+          <i
+            class="pi pi-check-circle"
+            *ngIf="match.userApprovalMap[user.id]"
+          ></i>
         </div>
       </div>
     </section>

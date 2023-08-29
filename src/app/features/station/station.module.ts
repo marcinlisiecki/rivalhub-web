@@ -12,6 +12,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { ConfirmationService } from 'primeng/api';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import {TranslateModule} from "@ngx-translate/core";
+import {RippleModule} from "primeng/ripple";
 @NgModule({
   declarations: [ViewStationsComponent],
   imports: [
@@ -27,6 +28,7 @@ import {TranslateModule} from "@ngx-translate/core";
     InputSwitchModule,
     ConfirmPopupModule,
     TranslateModule,
+    RippleModule,
   ],
   exports: [ViewStationsComponent],
   providers: [ConfirmationService],

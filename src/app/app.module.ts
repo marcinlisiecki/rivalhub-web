@@ -29,9 +29,18 @@ import { DatePipe } from '@angular/common';
 import { lastValueFrom } from 'rxjs';
 import { LanguageService } from '@app/core/services/language/language.service';
 import { AngularSvgIconModule } from 'angular-svg-icon';
+import { RankingComponent } from './features/ranking/ranking.component';
+import { RankingUsersComponent } from './features/ranking/ranking-users/ranking-users.component';
+import { RankingCategoriesComponent } from './features/ranking/ranking-categories/ranking-categories.component';
+import {DropdownModule} from "primeng/dropdown";
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+    RankingComponent,
+    RankingUsersComponent,
+    RankingCategoriesComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -61,6 +70,7 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
     CalendarModule,
     UserModule,
     InfiniteScrollModule,
+    DropdownModule,
   ],
 
   providers: [

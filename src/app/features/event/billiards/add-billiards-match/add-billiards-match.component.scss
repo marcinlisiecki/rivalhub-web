@@ -1,0 +1,36 @@
+@import 'src/scss/variables';
+
+.wrapper {
+}
+
+.bills {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+}
+
+p {
+  margin: 0 0 1rem 0;
+  font-weight: $weightMedium;
+}
+
+.win-type {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.5rem;
+  margin-bottom: 1.5rem;
+
+  p {
+    margin-bottom: 0.5rem;
+  }
+}
+
+.radio-wrapper {
+  display: flex;
+  align-items: center;
+  column-gap: 0.5rem;
+}
+
+.validation-error-wrapper {
+  margin-top: 1rem;
+}

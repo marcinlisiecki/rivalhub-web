@@ -41,24 +41,25 @@ export class ViewStationsComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private eventsService: EventsService,
     private languageService: LanguageService,
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
-    this.route.params.subscribe((params) => {
-      this.organizationId = params['id'];
-      this.stationsService
-        .getOrganizationEditStations(this.organizationId)
-        .subscribe({
-          next: (res: Station[]) => {
-            this.stations = res;
-          },
-          error: (err: unknown) => {
-            this.apiError = extractMessage(err);
-          },
-        });
+      this.route.params.subscribe((params) => {
+          this.organizationId = params['id'];
+    this.stationsService
+      .getOrganizationEditStations(this.organizationId)
+      .subscribe({
+        next: (res: Station[]) => {
+          this.stations = res;
+        },
+        error: (err: unknown) => {
+          this.apiError = extractMessage(err);
+        },
+      });
 
-      this.fetchStationTypes();
-    });
+    this.fetchStationTypes();
+      });
   }
 
   ngOnAfterViewInit(): void {

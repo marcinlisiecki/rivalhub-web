@@ -1,4 +1,8 @@
 <div class="content-wrapper">
+  <app-organization-back-button
+    [ngStyle]="{ marginTop: '1rem' }"
+    [organizationId]="organizationId"
+  ></app-organization-back-button>
   <p-card
     *ngIf="organization"
     header="{{ 'organization.invite' | translate }}"

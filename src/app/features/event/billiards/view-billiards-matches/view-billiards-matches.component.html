@@ -1,0 +1,102 @@
+<h2 class="section-title" *ngIf="!editable">{{ 'event.games' | translate }}</h2>
+
+<app-no-resource-info *ngIf="matches?.length === 0">
+  {{ 'event.noGames' | translate }}
+</app-no-resource-info>
+
+<div class="matches">
+  <div class="match" *ngFor="let match of matches">
+    <div class="match-header">
+      <div class="match-header-tags">
+        <p-badge
+          [severity]="match.approved ? 'success' : 'danger'"
+          [value]="
+            match.approved
+              ? languageService.instant('event.approval')
+              : languageService.instant('event.noApproval')
+          "
+        >
+        </p-badge>
+        <div *ngIf="!match.team1Won && !match.team2Won">
+          <p-badge
+            severity="warning"
+            value="{{ 'match.draw' | translate }}"
+          ></p-badge>
+        </div>
+        <div *ngIf="match.team1Won || match.team2Won">
+          <p-badge
+            severity="info"
+            value="{{
+              match.winType === WinType.ALL_IN
+                ? ('billiards.match.allBillsIn' | translate)
+                : ('match.foul' | translate)
+            }}"
+          ></p-badge>
+        </div>
+      </div>
+
+      <p-button
+        styleClass="p-button-sm p-button-text p-button-success"
+        (click)="approveMatch.emit(match.id)"
+        *ngIf="
+          match.userApprovalMap[loggedInUserId] !== undefined &&
+          !match.userApprovalMap[loggedInUserId] &&
+          !editable
+        "
+        label="{{ 'event.confirmResults' | translate }}"
+      ></p-button>
+    </div>
+
+    <section class="teams">
+      <div class="team">
+        <div class="team-label">
+          <p>{{ 'event.common.team' | translate }} 1</p>
+
+          <div>
+            <p-tag severity="success" *ngIf="match.team1Won">{{
+              'match.winners' | translate
+            }}</p-tag>
+          </div>
+        </div>
+        <div *ngFor="let user of match.team1" class="team-member">
+          <div class="team-member-data">
+            <app-avatar class="team-member-avatar" [user]="user"></app-avatar>
+            <p>{{ user.name }}</p>
+            <i
+              class="pi pi-check-circle"
+              *ngIf="match.userApprovalMap[user.id]"
+            ></i>
+          </div>
+        </div>
+        <div class="nie-mam-sily-na-wymyslanie-nazw">
+          {{ 'billiards.match.remainingBills' | translate }}:
+          {{ match.howManyBillsLeftTeam1 }}
+        </div>
+      </div>
+      <div class="team">
+        <div class="team-label">
+          <p>{{ 'event.common.team' | translate }} 2</p>
+          <div>
+            <p-tag severity="success" *ngIf="match.team2Won">{{
+              'match.winners' | translate
+            }}</p-tag>
+          </div>
+        </div>
+        <div *ngFor="let user of match.team2" class="team-member">
+          <div class="team-member-data">
+            <app-avatar class="team-member-avatar" [user]="user"></app-avatar>
+            <p>{{ user.name }}</p>
+            <i
+              class="pi pi-check-circle"
+              *ngIf="match.userApprovalMap[user.id]"
+            ></i>
+          </div>
+        </div>
+        <div class="nie-mam-sily-na-wymyslanie-nazw" v>
+          {{ 'billiards.match.remainingBills' | translate }}:
+          {{ match.howManyBillsLeftTeam2 }}
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

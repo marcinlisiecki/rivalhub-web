@@ -23,6 +23,9 @@ import { CreatedDartsMatch } from '@app/core/interfaces/event/games/darts/create
 import { FakeDartsLeg } from '@app/core/interfaces/event/games/darts/fake-darts-leg';
 import { DartsLeg } from '@app/core/interfaces/event/games/darts/dart-leg';
 import { PullUpsSeriesScores } from '@interfaces/event/games/pull-ups/pull-ups-series-scores';
+import { BilliardsMatch } from '@interfaces/event/games/billiards/billiards-match';
+import { NewBilliardsMatch } from '@interfaces/event/games/billiards/new-billiards-match';
+import { NewBilliardsResults } from '@interfaces/event/games/billiards/new-billiards-results';
 
 @Injectable({
   providedIn: 'root',
@@ -36,6 +39,19 @@ export class EventsService {
   getAllEventTypesInApp(): Observable<EventType[]> {
     return this.http.get<EventType[]>(
       environment.apiUrl + '/organizations/event-types',
+    );
+  }
+
+  approveMatch(
+    organizationId: number,
+    eventId: number,
+    matchId: number,
+    type: EventType,
+  ): Observable<{}> {
+    return this.http.get<{}>(
+      environment.apiUrl +
+        `/organizations/${organizationId}/events/${eventId}/match/${matchId}/approve`,
+      { params: { type } },
     );
   }
 
@@ -129,7 +145,8 @@ export class EventsService {
       | PingPongMatch[]
       | TableFootballMatch[]
       | PullUpsMatch[]
-      | FakeDartsLeg[],
+      | BilliardsMatch[]
+        | FakeDartsLeg[],
   >(
     organizationId: number,
     eventId: number,
@@ -286,6 +303,31 @@ export class EventsService {
       environment.apiUrl +
         `/organizations/${organizationId}/events/${eventId}/match?type=${EventType.PULL_UPS}`,
       newMatch,
+    );
+  }
+
+  addBilliardsMatch(
+    organizationId: number,
+    eventId: number,
+    newMatch: NewBilliardsMatch,
+  ): Observable<BilliardsMatch> {
+    return this.http.post<BilliardsMatch>(
+      environment.apiUrl +
+        `/organizations/${organizationId}/events/${eventId}/match?type=${EventType.BILLIARDS}`,
+      newMatch,
+    );
+  }
+
+  addBilliardsResults(
+    organizationId: number,
+    eventId: number,
+    matchId: number,
+    results: NewBilliardsResults,
+  ): Observable<BilliardsMatch> {
+    return this.http.post<BilliardsMatch>(
+      environment.apiUrl +
+        `/organizations/${organizationId}/events/${eventId}/match/${matchId}/billiards?type=${EventType.BILLIARDS}`,
+      results,
     );
   }
 
