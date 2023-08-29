@@ -1,13 +1,15 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { EventType } from '@app/core/interfaces/event/event-type';
-import { DartsLeg } from '@app/core/interfaces/event/games/darts/darts-leg';
 import { UserDetailsDto } from '@app/core/interfaces/user/user-details-dto';
 import { EventsService } from '@app/core/services/events/events.service';
 import { LanguageService } from '@app/core/services/language/language.service';
 import { DialogService } from 'primeng/dynamicdialog';
-import { MOCKLEGS, MOCKLEGS2 } from '../view-darts-matches/mock-legs';
 import { AddDartsLeg } from '@app/core/interfaces/event/games/darts/add-darts-leg';
+import { AddDartMatch } from '@app/core/interfaces/event/games/darts/add-dart-match';
+import { CreatedDartsMatch } from '@app/core/interfaces/event/games/darts/created-darts-match';
+import { DartsLeg } from '@app/core/interfaces/event/games/darts/dart-leg';
+import { FakeDartsLeg } from '@app/core/interfaces/event/games/darts/fake-darts-leg';
 
 @Component({
   selector: 'app-add-darts-results',
@@ -34,21 +36,21 @@ export class AddDartsResultsComponent implements OnInit {
   ngOnInit(): void {
     this.organizationId = this.route.snapshot.params['organizationId'];
     this.eventId = this.route.snapshot.params['eventId'];
-    this.matches = MOCKLEGS;
-    // this.fetchMatches();
+    console.log(this.editable);
+    this.fetchMatches();
     this.fetchEventUsers();
   }
 
   fetchMatches() {
     this.eventsService
-      .getEventMatches<DartsLeg[]>(
+      .getEventMatches<FakeDartsLeg[]>(
         this.organizationId,
         this.eventId,
         EventType.DARTS,
       )
       .subscribe({
         next: (matches) => {
-          this.matches = matches;
+          this.matches = this.eventsService.mapDartsMatches(matches);
         },
       });
   }
@@ -57,25 +59,32 @@ export class AddDartsResultsComponent implements OnInit {
     this.eventsService.getEventUsers(this.eventId, EventType.DARTS).subscribe({
       next: (users: UserDetailsDto[]) => {
         this.eventUsers = users;
-        this.matches[0].participants = users;
       },
     });
   }
 
-  handleAddLeg(leg: AddDartsLeg) {
-    this.matches.push({
-      legid: 0,
-      dartFormat: leg.DartFormat,
-      dartRule: leg.DartRule,
-      participants: leg.Participants,
-      queue: [
-        {
-          queueid: 0,
-          score: [],
-          bounceOuts: [],
+  handleAddMatch(newMatch: AddDartMatch) {
+    this.eventsService
+      .addDartsMatch(this.organizationId, this.eventId, newMatch)
+      .subscribe({
+        next: (res: CreatedDartsMatch) => {
+          this.eventsService
+            .createDartsLeg(this.organizationId, this.eventId, res.id)
+            .subscribe({
+              next: (leg: FakeDartsLeg) => {
+                this.showAddNewMatch = false;
+                const mapped: DartsLeg = this.eventsService.mapDartsMatch(leg);
+                //TODO: push do listy meczy po dodaniu, ale najpierw porządek muszę zrobic
+                // this.matches.push(leg);
+              },
+              error: (err) => {
+                console.log(err);
+              },
+            });
         },
-      ],
-    });
-    this.showAddNewMatch = false;
+        error: (err) => {
+          console.log(err);
+        },
+      });
   }
 }

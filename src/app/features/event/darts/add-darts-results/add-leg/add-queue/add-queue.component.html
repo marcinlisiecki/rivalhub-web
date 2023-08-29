@@ -1,10 +1,16 @@
-<div class="wrapper">
-    <div *ngFor="let item of participants" class="input-box">
-        <label>{{item.name}}</label>
-        <input pInputText type="number" />
+<div class="queue-wrapper">
+    <div *ngFor="let item of participants; let i=index" class="input-box">
+        
+            <label>{{item.name}}</label>
+            <div class="result-inputs">
+                <p-inputNumber (onInput)="handleScore($event,i)" mode="decimal" [min]="0" [max]="180"></p-inputNumber>
+                <img class="dart-icon" src="assets/img/dart/dart-hit.png" (click)="hitOrMiss($event, i)">
+                <img class="dart-icon" src="assets/img/dart/dart-hit.png" (click)="hitOrMiss($event, i)">
+                <img class="dart-icon" src="assets/img/dart/dart-hit.png" (click)="hitOrMiss($event, i)">
+            </div>        
     </div>
-
-
+    <p class="validation-error" *ngIf="cheating">{{"event.game.cheating"|translate}}</p>
+<p-divider></p-divider>
     <p-button styleClass="button-wide" (click)="onSubmit()">
         {{ 'button.add' | translate }}</p-button>
 </div>

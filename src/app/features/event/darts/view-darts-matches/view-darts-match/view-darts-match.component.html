@@ -1,8 +1,8 @@
-<div class="dart-wrapper">
+<div class="dart-wrapper" *ngIf="match">
     <section class="tags">
         <p-tag severity="success" value="Dart"></p-tag>
         <p-tag severity="success" [value]="match.dartFormat"></p-tag>
-        <p-tag severity="success" [value]="match.dartRule"></p-tag>
+        <p-tag severity="success" [value]="match.dartMode"></p-tag>
     </section>
     <section class="participants-list">
         <div class="participant" *ngFor="let participant of match.participants; let pindex=index">
@@ -23,22 +23,22 @@
         </div>
         <p-divider></p-divider>
 
-        <div *ngFor="let queue of match.queue" class="leg-score">
+        <div *ngFor="let queue of match.scoresInMatch; let i=index" class="leg-score">
             <div class="queue" [style.grid-template-columns]="'repeat(' + calculateRows() + ', 1fr)'">
                 <div class="flex-center">
-                    <p>#{{queue.queueid}}</p>
+                    <p>#{{i}}</p>
                 </div>
 
-                <div class="row" *ngFor="let item of queue.score; let i=index">
+                <div class="row" *ngFor="let item of queue let i=index">
 
-                    <p class="points-got">{{queue.score[i]}}</p>
+                    <p class="points-got">{{queue}}</p>
                     <div class="shots">
 
-                        <img *ngFor="let _ of getHits(queue.bounceOuts[i])" class="dart-icon"
+                        <!-- <img *ngFor="let _ of getHits(match.bounceOutsInLeg[i])" class="dart-icon"
                             src="assets/img/dart/dart-hit.png">
 
-                        <img *ngFor="let _ of getMisses(queue.bounceOuts[i])" class="dart-icon"
-                            src="assets/img/dart/dart-miss.png">
+                        <img *ngFor="let _ of getMisses(match.bounceOutsInLeg[i])" class="dart-icon"
+                            src="assets/img/dart/dart-miss.png"> -->
 
                     </div>
                     <p class="points-left">232</p>
@@ -51,6 +51,6 @@
 
 
     <section>
-        <p-button (onClick)="openAddQueueDialog()">{{'event.addQueue' | translate}}</p-button>
+        <p-button *ngIf="editable" (onClick)="openAddQueueDialog()">{{'event.addQueue' | translate}}</p-button>
     </section>
 </div>

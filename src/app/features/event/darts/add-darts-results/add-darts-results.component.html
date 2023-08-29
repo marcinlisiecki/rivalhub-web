@@ -2,7 +2,9 @@
     <section>
         <app-go-back-button></app-go-back-button>
 
-        <app-view-darts-matches [matches]="matches"></app-view-darts-matches>
+        <app-view-darts-matches [editable]="true" [matches]="matches"></app-view-darts-matches>
+
+        <app-add-leg (addMatch)="handleAddMatch($event)" *ngIf="showAddNewMatch" [participants]="eventUsers"></app-add-leg>
 
         <div class="add-match-button-wrapper">
             <p-button *ngIf="!showAddNewMatch && editable" (onClick)="showAddNewMatch = true">

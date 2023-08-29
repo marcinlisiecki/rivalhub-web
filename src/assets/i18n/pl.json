@@ -87,6 +87,7 @@
 	"event.description": "Opis",
 	"event.fastChallenge": "Szybkie wyzwanie",
 	"event.games": "Mecze",
+	"event.game.cheating":"Ktoś oszukuje!",
 	"event.legs":"Legi",
 	"event.info": "Infomacje",
 	"event.joinEvent": "Dołącz",

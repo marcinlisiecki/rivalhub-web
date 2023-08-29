@@ -6,7 +6,7 @@
     {{ 'event.noLegs' | translate }}
 </app-no-resource-info>
 
-<div class="matches">
-    <app-view-darts-match *ngFor="let match of matches"
+<div class="matches" *ngIf="matches">
+    <app-view-darts-match [editable]="editable" *ngFor="let match of matches"
     [match]="match"></app-view-darts-match>
 </div>

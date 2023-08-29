@@ -11,8 +11,8 @@ import { PingPongMatch } from '@interfaces/event/games/ping-pong/ping-pong-match
 import { TableFootballMatch } from '@interfaces/event/games/table-football/table-football-match';
 import { categoryTypeToLabel } from '@app/core/utils/event';
 import { PullUpsMatch } from '@interfaces/event/games/pull-ups/pull-ups-match';
-import { DartsLeg } from '@app/core/interfaces/event/games/darts/darts-leg';
-import { MOCKLEGS } from '../darts/view-darts-matches/mock-legs';
+import { DartsLeg } from '@app/core/interfaces/event/games/darts/dart-leg';
+import { FakeDartsLeg } from '@app/core/interfaces/event/games/darts/fake-darts-leg';
 
 @Component({
   selector: 'app-view-event',
@@ -30,7 +30,7 @@ export class ViewEventComponent implements OnInit {
     | PingPongMatch[]
     | TableFootballMatch[]
     | PullUpsMatch[]
-    | DartsLeg[];
+    | FakeDartsLeg[];
 
   constructor(
     private route: ActivatedRoute,
@@ -95,8 +95,8 @@ export class ViewEventComponent implements OnInit {
   }
 
   getDartsMatches(): DartsLeg[] {
-    MOCKLEGS[0].participants = this.participants;
-    return MOCKLEGS;
+    const matches = this.matches as FakeDartsLeg[];
+    return this.eventsService.mapDartsMatches(matches);
   }
 
   protected readonly EventType = EventType;

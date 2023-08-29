@@ -1,6 +1,13 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { AddDartMatch } from '@app/core/interfaces/event/games/darts/add-dart-match';
 import { AddDartsLeg } from '@app/core/interfaces/event/games/darts/add-darts-leg';
+import {
+  DARTSFORMATS,
+  DARTSMODES,
+} from '@app/core/interfaces/event/games/darts/dart-consts';
+import { DartFormat } from '@app/core/interfaces/event/games/darts/dart-format';
+import { DartMode } from '@app/core/interfaces/event/games/darts/dart-mode';
 import { UserDetailsDto } from '@app/core/interfaces/user/user-details-dto';
 import { EventsService } from '@app/core/services/events/events.service';
 
@@ -12,21 +19,13 @@ import { EventsService } from '@app/core/services/events/events.service';
 export class AddLegComponent implements OnInit {
   @Input() participants!: UserDetailsDto[];
 
-  @Output() addLeg: EventEmitter<AddDartsLeg> = new EventEmitter<AddDartsLeg>();
-  dartRule = 'none';
-  dartRules: any[] = [
-    { label: '---', value: 'none' },
-    { label: 'Double In', value: 'doubleIn' },
-    { label: 'Double Out', value: 'doubleOut' },
-    { label: 'Double In and Out', value: 'doubleInAndOut' },
-  ];
-  dartFormat = '301';
-  dartFormats: any[] = [
-    { label: '301', value: '_301' },
-    { label: '501', value: '_501' },
-    { label: '701', value: '_701' },
-    { label: '901', value: '_901' },
-  ];
+  @Output() addMatch: EventEmitter<AddDartMatch> =
+    new EventEmitter<AddDartMatch>();
+
+  dartModes: { label: string; value: DartMode }[] = DARTSMODES;
+  dartFormats: { label: string; value: DartFormat }[] = DARTSFORMATS;
+  dartMode: DartMode = DartMode.None;
+  dartFormat = DartFormat._301;
 
   organizationId!: number;
   eventId!: number;
@@ -41,11 +40,11 @@ export class AddLegComponent implements OnInit {
     this.eventId = this.route.snapshot.params['eventId'];
   }
   handleAddMatch() {
-    const newLeg: AddDartsLeg = {
-      DartFormat: this.dartFormat,
-      DartRule: this.dartRule,
-      Participants: this.participants,
+    const newLeg: AddDartMatch = {
+      team1Ids: this.participants.map((p) => p.id),
+      dartFormat: this.dartFormat,
+      dartMode: this.dartMode,
     };
-    this.addLeg.emit(newLeg);
+    this.addMatch.emit(newLeg);
   }
 }

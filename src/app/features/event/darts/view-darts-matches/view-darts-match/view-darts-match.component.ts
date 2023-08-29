@@ -1,9 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AddQueue } from '@app/core/interfaces/event/games/darts/add-queue';
-import { DartsLeg } from '@app/core/interfaces/event/games/darts/darts-leg';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AddQueueComponent } from '../../add-darts-results/add-leg/add-queue/add-queue.component';
 import { LanguageService } from '@app/core/services/language/language.service';
+import { DartQueue } from '@app/core/interfaces/event/games/darts/dart-queue';
+import { DartsLeg } from '@app/core/interfaces/event/games/darts/dart-leg';
 
 @Component({
   selector: 'app-view-darts-match',
@@ -12,13 +13,9 @@ import { LanguageService } from '@app/core/services/language/language.service';
 })
 export class ViewDartsMatchComponent implements OnInit {
   @Input({ required: true }) match!: DartsLeg;
+  @Input() editable: boolean = false;
 
-  newQueue: AddQueue[] = [
-    {
-      score: 1,
-      blanks: 0,
-    },
-  ];
+  newQueue: AddQueue[] = [];
 
   addQueueDialogRef?: DynamicDialogRef;
   constructor(
@@ -31,15 +28,23 @@ export class ViewDartsMatchComponent implements OnInit {
   openAddQueueDialog() {
     this.addQueueDialogRef = this.dialogService.open(AddQueueComponent, {
       data: {
-        require3Characters: false,
         newQueue: this.newQueue,
         participants: this.match.participants,
       },
       header: this.languageService.instant('event.addQueue'),
-      width: '25rem',
+      width: '40rem',
     });
 
-    this.addQueueDialogRef.onClose.subscribe((queue) => {});
+    this.addQueueDialogRef.onClose.subscribe((queue: AddQueue[]) => {
+      console.log(this.match);
+      if (queue) {
+        //TODO: naprawić dodawanie kolejki do meczu
+        // for (let i = 0; i < queue.length; i++) {
+        //   this.match.scoresInMatch[i].push(queue[i].score);
+        //   this.match.bounceOutsInLeg[i] += queue[i].blanks;
+        // }
+      }
+    });
   }
 
   getHits(bounceOuts: number): number[] {

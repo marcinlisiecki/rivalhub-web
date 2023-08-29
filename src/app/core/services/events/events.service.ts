@@ -16,8 +16,12 @@ import { NewTableFootballMatch } from '@interfaces/event/games/table-football/ne
 import { PullUpsMatch } from '@interfaces/event/games/pull-ups/pull-ups-match';
 import { PullUpsSeries } from '@interfaces/event/games/pull-ups/pull-ups-series';
 import { NewPullUpsMatch } from '@interfaces/event/games/pull-ups/new-pull-ups-match';
-import { DartsLeg } from '@app/core/interfaces/event/games/darts/darts-leg';
 import { AddDartsLeg } from '@app/core/interfaces/event/games/darts/add-darts-leg';
+import { AddDartMatch } from '@app/core/interfaces/event/games/darts/add-dart-match';
+import { AddQueue } from '@app/core/interfaces/event/games/darts/add-queue';
+import { CreatedDartsMatch } from '@app/core/interfaces/event/games/darts/created-darts-match';
+import { FakeDartsLeg } from '@app/core/interfaces/event/games/darts/fake-darts-leg';
+import { DartsLeg } from '@app/core/interfaces/event/games/darts/dart-leg';
 
 @Injectable({
   providedIn: 'root',
@@ -101,7 +105,7 @@ export class EventsService {
       | PingPongMatch[]
       | TableFootballMatch[]
       | PullUpsMatch[]
-      | DartsLeg[],
+      | FakeDartsLeg[],
   >(
     organizationId: number,
     eventId: number,
@@ -112,6 +116,34 @@ export class EventsService {
         `/organizations/${organizationId}/events/${eventId}/match`,
       { params: { type: eventType } },
     );
+  }
+
+  mapDartsMatches(fakeLegs: FakeDartsLeg[]): DartsLeg[] {
+    return fakeLegs.map((l) => ({
+      dartFormat: l.dateFormat,
+      dartMode: l.dartMode,
+      participants: l.userDetails,
+      scoresInMatch: l.scoresInMatch[0],
+      pointsLeftInLeg: l.pointsLeftInLeg[0],
+      placesInLeg: l.placesInLeg[0],
+      bounceOutsInLeg: l.bounceOutsInLeg[0],
+      bestRoundScoresInLeg: l.bestRoundScoresInLeg[0],
+      numberOfRoundsPlayedInLeg: l.numberOfRoundsPlayedInLeg[0],
+    }));
+  }
+
+  mapDartsMatch(fakeLeg: FakeDartsLeg): DartsLeg {
+    return {
+      dartFormat: fakeLeg.dateFormat,
+      dartMode: fakeLeg.dartMode,
+      participants: fakeLeg.userDetails,
+      scoresInMatch: fakeLeg.scoresInMatch[0],
+      pointsLeftInLeg: fakeLeg.pointsLeftInLeg[0],
+      placesInLeg: fakeLeg.placesInLeg[0],
+      bounceOutsInLeg: fakeLeg.bounceOutsInLeg[0],
+      bestRoundScoresInLeg: fakeLeg.bestRoundScoresInLeg[0],
+      numberOfRoundsPlayedInLeg: fakeLeg.numberOfRoundsPlayedInLeg[0],
+    };
   }
 
   getEventUsers(
@@ -240,6 +272,43 @@ export class EventsService {
         name: addEvent.name,
         isEventPublic: addEvent.isEventPublic,
       },
+    );
+  }
+
+  createDartsLeg(
+    organizationId: number,
+    eventId: number,
+    matchId: number,
+  ): Observable<FakeDartsLeg> {
+    return this.http.post<FakeDartsLeg>(
+      environment.apiUrl +
+        `/organizations/${organizationId}/events/${eventId}/match/${matchId}/dart/legs`,
+      {},
+    );
+  }
+
+  addDartsMatch(
+    organizationId: number,
+    eventId: number,
+    match: AddDartMatch,
+  ): Observable<CreatedDartsMatch> {
+    return this.http.post<CreatedDartsMatch>(
+      environment.apiUrl +
+        `/organizations/${organizationId}/events/${eventId}/match?type=DARTS`,
+      match,
+    );
+  }
+
+  addDartsQueue(
+    organizationId: number,
+    eventId: number,
+    matchId: number,
+    queue: AddQueue[],
+  ): Observable<FakeDartsLeg> {
+    return this.http.post<FakeDartsLeg>(
+      environment.apiUrl +
+        `/organizations/${organizationId}/events/${eventId}/match/${matchId}/dart/legs/rounds/0`,
+      queue,
     );
   }
 
