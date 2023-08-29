@@ -21,6 +21,7 @@ import { AddUserDialogComponent } from '@app/features/event/new-event/add-user-d
 import { OrganizationsService } from '@app/core/services/organizations/organizations.service';
 import { PagedResponse } from '@interfaces/generic/paged-response';
 import { ex } from '@fullcalendar/core/internal-common';
+import { BilliardsMatch } from '@interfaces/event/games/billiards/billiards-match';
 
 @Component({
   selector: 'app-view-event',
@@ -35,7 +36,11 @@ export class ViewEventComponent implements OnInit {
   event?: EventDto;
   organizationUsers: UserDetailsDto[] = [];
   participants: UserDetailsDto[] = [];
-  matches?: PingPongMatch[] | TableFootballMatch[] | PullUpsMatch[];
+  matches?:
+    | PingPongMatch[]
+    | TableFootballMatch[]
+    | PullUpsMatch[]
+    | BilliardsMatch[];
   loggedInUserId!: number;
   canEdit: boolean = false;
   canJoin: boolean = false;
@@ -300,6 +305,10 @@ export class ViewEventComponent implements OnInit {
 
   getPullUpsMatches(): PullUpsMatch[] {
     return this.matches as PullUpsMatch[];
+  }
+
+  getBilliardsMatches(): BilliardsMatch[] {
+    return this.matches as BilliardsMatch[];
   }
 
   protected readonly EventType = EventType;

@@ -1,0 +1,57 @@
+<h2 class="section-title" *ngIf="!editable">{{ 'event.games' | translate }}</h2>
+
+<app-no-resource-info *ngIf="mockMatches?.length === 0">
+  {{ 'event.noGames' | translate }}
+</app-no-resource-info>
+
+<div class="matches">
+  <div class="match" *ngFor="let match of mockMatches">
+    <section class="teams">
+      <div class="team">
+        <div class="team-label">
+          <p>{{ 'event.common.team' | translate }} 1</p>
+        </div>
+        <div *ngFor="let user of match.team1" class="team-member">
+          <div class="team-member-data">
+            <app-avatar class="team-member-avatar" [user]="user"></app-avatar>
+            <p>{{ user.name }}</p>
+          </div>
+        </div>
+        <div>
+          <p-tag severity="success" *ngIf="match.team1Won">Zwycięzcy</p-tag>
+        </div>
+      </div>
+      <div class="team">
+        <div class="team-label">
+          <p>{{ 'event.common.team' | translate }} 2</p>
+        </div>
+        <div *ngFor="let user of match.team2" class="team-member">
+          <div class="team-member-data">
+            <app-avatar class="team-member-avatar" [user]="user"></app-avatar>
+            <p>{{ user.name }}</p>
+          </div>
+        </div>
+        <div>
+          <p-tag severity="success" *ngIf="match.team2Won">Zwycięzcy</p-tag>
+        </div>
+      </div>
+    </section>
+
+    <section>Wygrany</section>
+
+    <!--    <app-view-game-sets-->
+    <!--      [gameSets]="match.sets"-->
+    <!--      [editable]="editable"-->
+    <!--      [matchId]="match.id"-->
+    <!--    ></app-view-game-sets>-->
+
+    <!--    <div class="add-set-button-wrapper" *ngIf="editable">-->
+    <!--      <p-button-->
+    <!--        (click)="handleAddSet.emit(match.id)"-->
+    <!--        styleClass="p-button-outlined"-->
+    <!--      >-->
+    <!--        {{ 'event.common.addSet' | translate }}-->
+    <!--      </p-button>-->
+    <!--    </div>-->
+  </div>
+</div>

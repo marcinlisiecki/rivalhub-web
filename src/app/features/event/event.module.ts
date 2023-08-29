@@ -42,6 +42,7 @@ import { AddUsersComponent } from './common/add-users/add-users.component';
 import { TagModule } from 'primeng/tag';
 import {ConfirmPopupModule} from "primeng/confirmpopup";
 import {AngularSvgIconModule} from "angular-svg-icon";
+import { ViewBilliardsMatchesComponent } from './billiards/view-billiards-matches/view-billiards-matches.component';
 
 @NgModule({
   declarations: [
@@ -69,6 +70,7 @@ import {AngularSvgIconModule} from "angular-svg-icon";
     AddPullUpsResultsComponent,
     AddPullUpsSeriesComponent,
     AddUsersComponent,
+    ViewBilliardsMatchesComponent,
   ],
   imports: [
     CommonModule,
