@@ -25,7 +25,11 @@ export class ViewStationsComponent implements OnInit {
 
   stationsOptions: string[] = [];
 
-  newStation!: NewStation;
+  newStation: NewStation = {
+    name: '',
+    type: EventType.PING_PONG || null,
+    active: true,
+  };
 
   clonedStations: { [s: string]: Station } = {};
 
@@ -40,18 +44,18 @@ export class ViewStationsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-  this.route.params.subscribe((params) => {
-    this.organizationId = params['id'];
-    this.stationsService
-      .getOrganizationEditStations(this.organizationId)
-      .subscribe({
-        next: (res: Station[]) => {
-          this.stations = res;
-        },
-        error: (err: unknown) => {
-          this.apiError = extractMessage(err);
-        },
-      });
+    this.route.params.subscribe((params) => {
+      this.organizationId = params['id'];
+      this.stationsService
+        .getOrganizationEditStations(this.organizationId)
+        .subscribe({
+          next: (res: Station[]) => {
+            this.stations = res;
+          },
+          error: (err: unknown) => {
+            this.apiError = extractMessage(err);
+          },
+        });
 
       this.fetchStationTypes();
     });

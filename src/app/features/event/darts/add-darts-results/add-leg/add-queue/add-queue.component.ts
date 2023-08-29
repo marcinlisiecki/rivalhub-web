@@ -1,5 +1,6 @@
 import {
   AfterViewInit,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
@@ -8,9 +9,11 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
+import { TOAST_LIFETIME } from '@app/core/constants/messages';
 import { AddQueue } from '@app/core/interfaces/event/games/darts/add-queue';
 import { DartsLeg } from '@app/core/interfaces/event/games/darts/dart-leg';
 import { UserDetailsDto } from '@app/core/interfaces/user/user-details-dto';
+import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { InputNumberInputEvent } from 'primeng/inputnumber';
 
@@ -27,9 +30,11 @@ export class AddQueueComponent implements OnInit {
   cheating: boolean = false;
   hit = 'assets/img/dart/dart-hit.png';
   miss = 'assets/img/dart/dart-miss.png';
+
   constructor(
     private dialogConfig: DynamicDialogConfig,
     private dialogRef: DynamicDialogRef,
+    private messageService: MessageService,
   ) {}
 
   ngOnInit(): void {
@@ -50,10 +55,14 @@ export class AddQueueComponent implements OnInit {
       ) {
         this.cheating = true;
       }
+      if (player.score === 0) {
+        player.blanks = 3;
+      }
     });
     if (this.cheating) {
       return;
     }
+
     this.dialogRef.close(this.newQueue);
   }
 
@@ -78,6 +87,13 @@ export class AddQueueComponent implements OnInit {
     if (this.match.pointsLeftInLeg[playerIndex] - points < 0) {
       this.cheating = true;
     }
+  }
+
+  finishedMatch(index: number) {
+    if (this.match.pointsLeftInLeg[index] === 0) {
+      return true;
+    }
+    return false;
   }
 
   hitOrMiss(event: MouseEvent, index: number) {

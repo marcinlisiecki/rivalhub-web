@@ -14,7 +14,7 @@
     <section class="grid-container">
         <div class="header" [style.grid-template-columns]="'repeat(' + calculateRows() + ', 1fr)'">
             <div class="row">
-                <p>P#</p>
+                <p>K#</p>
             </div>
             <div class="row" *ngFor="let user of match.participants; let i=index">
                 <p>P{{i+1}}</p>
@@ -31,18 +31,29 @@
 
                 <div class="row" *ngFor="let roundScore of playerScores let row=index">
 
-                    <p class="points-got">
-                        {{roundScore}}
-                    </p>
-                    <div class="shots">
-                        <img *ngFor="let _ of getHits(match.bounceOutsInRound[i][row])" class="dart-icon"
-                            src="assets/img/dart/dart-hit.png">
-                        <img *ngFor="let _ of getMisses(match.bounceOutsInRound[i][row])" class="dart-icon"
-                            src="assets/img/dart/dart-miss.png">
-                    </div>
-                    <p class="points-left">
-                        {{match.pointsLeftInLegAfterRound[i][row]-roundScore}}
-                    </p>
+                    
+                    <ng-container *ngIf="match.pointsLeftInLegAfterRound[i][row]-roundScore>0; else elseTemplate">
+                        <p class="points-got">
+                            {{roundScore}}
+                        </p>
+                        <div class="shots">
+                            <img *ngFor="let _ of getHits(match.bounceOutsInRound[i][row])" class="dart-icon"
+                                src="assets/img/dart/dart-hit.png">
+                            <img *ngFor="let _ of getMisses(match.bounceOutsInRound[i][row])" class="dart-icon"
+                                src="assets/img/dart/dart-miss.png">
+                        </div>
+                        <p class="points-left">
+                            {{match.pointsLeftInLegAfterRound[i][row]-roundScore}}
+                        </p>
+                    </ng-container>
+                    <ng-template #elseTemplate >
+                        <div class="shots" *ngIf="roundScore!==null">
+                            {{"event.game.placed" | translate}} #{{match.placesInLeg[row]}}
+                        </div>
+                    </ng-template>
+
+
+                   
                 </div>
                 <div class="remove-button">
                     <i style="color: red" [style]="
@@ -51,6 +62,8 @@
                         cursor: editable ? 'pointer' : 'default',
                     }
                     " class="pi pi-times-circle" (click)="onDelete($event, i)"></i>
+                    <p-confirmPopup></p-confirmPopup>
+
                 </div>
 
             </div>
@@ -61,6 +74,6 @@
 
 
     <section>
-        <p-button *ngIf="editable" (onClick)="openAddQueueDialog()">{{'event.addQueue' | translate}}</p-button>
+        <p-button *ngIf="editable" [style.display]="!isLegOver() ? 'block' : 'none'" (onClick)="openAddQueueDialog()">{{'event.addQueue' | translate}}</p-button>
     </section>
 </div>

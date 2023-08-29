@@ -8,7 +8,6 @@ export interface DartsLeg {
   scoresInMatch: number[][];
   bounceOutsInRound: number[][];
   pointsLeftInLegAfterRound: number[][];
-
   pointsLeftInLeg: number[];
   placesInLeg: number[];
   bounceOutsInLeg: number[];
