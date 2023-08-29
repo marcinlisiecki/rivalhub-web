@@ -37,9 +37,11 @@
 
       <p-button
         styleClass="p-button-sm p-button-text p-button-success"
+        (click)="approveMatch.emit(match.id)"
         *ngIf="
           match.userApprovalMap[loggedInUserId] !== undefined &&
-          !match.userApprovalMap[loggedInUserId]
+          !match.userApprovalMap[loggedInUserId] &&
+          !editable
         "
         label="{{ 'event.confirmResults' | translate }}"
       ></p-button>

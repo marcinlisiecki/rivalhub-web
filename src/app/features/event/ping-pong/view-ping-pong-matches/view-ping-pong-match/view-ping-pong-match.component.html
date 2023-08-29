@@ -15,7 +15,8 @@
       *ngIf="
         match.userApprovalMap[loggedInUserId] !== undefined &&
         !match.userApprovalMap[loggedInUserId] &&
-        match.sets.length !== 0
+        match.sets.length !== 0 &&
+        !editable
       "
       label="{{ 'event.confirmResults' | translate }}"
     ></p-button>
