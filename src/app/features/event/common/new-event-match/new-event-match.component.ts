@@ -25,6 +25,7 @@ export class NewEventMatchComponent implements OnInit {
   @Input() teamCount: number = 2;
   @Input() providedUsers: UserDetailsDto[] = [];
   @Input() fetchUsers: boolean = true;
+  @Input() peopleCount = 2;
 
   loggedInUserId!: number | null;
 

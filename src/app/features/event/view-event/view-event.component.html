@@ -71,6 +71,13 @@
         (approveMatch)="approveMatch($event)"
       >
       </app-view-pull-ups-matches>
+
+      <app-view-billiards-matches
+        *ngIf="eventType === EventType.BILLIARDS"
+        (approveMatch)="approveMatch($event)"
+        [matches]="getBilliardsMatches()"
+      >
+      </app-view-billiards-matches>
     </section>
 
     <section class="buttons" *ngIf="canEdit">

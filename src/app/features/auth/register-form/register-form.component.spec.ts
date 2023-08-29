@@ -133,7 +133,7 @@ describe('RegisterFormComponent', () => {
     expect(component.registerForm.valid).toBeTrue();
   });
 
-  it('should should not call register() if form is not valid', () => {
+  it('should not call register() if form is not valid', () => {
     component.registerForm.setValue({
       email: 'invalidemail',
       name: 'Test',

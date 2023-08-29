@@ -40,8 +40,16 @@ import { AddPullUpsResultsComponent } from './pull-ups/add-pull-ups-results/add-
 import { AddPullUpsSeriesComponent } from './pull-ups/add-pull-ups-series/add-pull-ups-series.component';
 import { AddUsersComponent } from './common/add-users/add-users.component';
 import { TagModule } from 'primeng/tag';
-import {ConfirmPopupModule} from "primeng/confirmpopup";
-import {AngularSvgIconModule} from "angular-svg-icon";
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { AngularSvgIconModule } from 'angular-svg-icon';
+import { ViewBilliardsMatchesComponent } from './billiards/view-billiards-matches/view-billiards-matches.component';
+import { AddBilliardsResultsComponent } from './billiards/add-billiards-results/add-billiards-results.component';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { DropdownModule } from 'primeng/dropdown';
+import { AddBilliardsMatchComponent } from './billiards/add-billiards-match/add-billiards-match.component';
+import { ListboxModule } from 'primeng/listbox';
+import {RadioButtonModule} from "primeng/radiobutton";
 
 @NgModule({
   declarations: [
@@ -69,6 +77,9 @@ import {AngularSvgIconModule} from "angular-svg-icon";
     AddPullUpsResultsComponent,
     AddPullUpsSeriesComponent,
     AddUsersComponent,
+    ViewBilliardsMatchesComponent,
+    AddBilliardsResultsComponent,
+    AddBilliardsMatchComponent,
   ],
   imports: [
     CommonModule,
@@ -90,6 +101,11 @@ import {AngularSvgIconModule} from "angular-svg-icon";
     TagModule,
     ConfirmPopupModule,
     AngularSvgIconModule,
+    SelectButtonModule,
+    InputNumberModule,
+    DropdownModule,
+    ListboxModule,
+    RadioButtonModule,
   ],
   providers: [DialogService],
 })
