@@ -13,4 +13,7 @@ export interface DartsLeg {
   bounceOutsInLeg: number[];
   bestRoundScoresInLeg: number[];
   numberOfRoundsPlayedInLeg: number[];
+  userApprovalMap: {
+    [id: number]: boolean;
+  };
 }

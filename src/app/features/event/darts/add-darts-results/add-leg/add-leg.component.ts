@@ -45,7 +45,6 @@ export class AddLegComponent implements OnInit {
       dartFormat: this.dartFormat,
       dartMode: this.dartMode,
     };
-    console.log(newLeg.team1Ids);
     this.addMatch.emit(newLeg);
   }
 }

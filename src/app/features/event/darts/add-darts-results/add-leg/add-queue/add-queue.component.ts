@@ -47,7 +47,6 @@ export class AddQueueComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.newQueue);
     this.newQueue.forEach((player, index) => {
       if (
         player.score > (3 - player.blanks) * 60 ||

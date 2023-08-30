@@ -310,5 +310,6 @@
   "billiards.match.remainingTeam2Bills": "Pozostałe bile drugiej drużyny",
   "billiards.match.winType": "Typ wygranej",
   "billiards.validation.selectWinners": "Podaj zwycięzców",
-  "billiards.validation.selectWinType": "Podaj typ wygranej"
+  "billiards.validation.selectWinType": "Podaj typ wygranej'",
+  "events.noEvents": "Brak dostępnych kategorii"
 }

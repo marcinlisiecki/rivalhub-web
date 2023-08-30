@@ -21,9 +21,14 @@
           : []
       "
     >
-      <div class="user-data">        
+      <div class="user-data">
         <app-avatar class="user-avatar" [user]="user"></app-avatar>
-        <p>{{ user.name }}</p>
+        <div>
+          <p>{{ user.name }}</p>
+          <i [ngStyle]="{ fontSize: '0.75rem', color: 'grey' }">{{
+            user.email
+          }}</i>
+        </div>
       </div>
       <div class="user-add-button" (click)="handleAddUser(user)">
         <i class="pi pi-plus"></i>

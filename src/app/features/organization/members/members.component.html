@@ -1,9 +1,11 @@
 <div class="wrapper">
-  <app-organization-back-button
-    [organizationId]="organizationId"
-  ></app-organization-back-button>
   <div class="dashboard-container">
-    <h2>{{ 'organization.admins' | translate }}</h2>
+    <div>
+      <app-organization-back-button
+        [organizationId]="organizationId"
+      ></app-organization-back-button>
+      <h2>{{ 'organization.admins' | translate }}</h2>
+    </div>
     <app-admin-card
       [amIAdmin]="amIAdmin"
       *ngFor="let adminUser of adminUsers; let i = index"
@@ -29,14 +31,17 @@
       *ngIf="searchQuery; else infiniteScrollContent"
       class="dashboard-container"
     >
-      <app-member-card
-        [amIAdmin]="amIAdmin"
-        *ngFor="let filteredUser of filteredUsers; let i = index"
-        [user]="filteredUser"
-        (changedStatus)="onChangeStatus()"
-        class="dashboard-container-header"
-      >
-      </app-member-card>
+      <span *ngIf="eventTypes">
+        <app-member-card
+          [eventTypes]="eventTypes"
+          [amIAdmin]="amIAdmin"
+          *ngFor="let filteredUser of filteredUsers; let i = index"
+          [user]="filteredUser"
+          (changedStatus)="onChangeStatus()"
+          class="dashboard-container-header"
+        >
+        </app-member-card>
+      </span>
     </div>
   </div>
   <ng-template #infiniteScrollContent>
@@ -47,8 +52,10 @@
       [infiniteScrollThrottle]="500"
       (scrolled)="onScroll()"
       [scrollWindow]="true"
+      *ngIf="eventTypes"
     >
       <app-member-card
+        [eventTypes]="eventTypes"
         [amIAdmin]="amIAdmin"
         *ngFor="let user of users; let i = index"
         [user]="user"
