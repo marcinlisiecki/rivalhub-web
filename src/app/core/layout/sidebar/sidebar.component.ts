@@ -37,6 +37,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   organizations: Organization[] = [];
   selectedOrganization: Organization | null = null;
   amIAdmin!: boolean;
+  userName!: string;
 
   constructor(
     private viewService: ViewService,
@@ -102,6 +103,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
     if (this.authService.isAuth()) {
       this.usersService.getMe().subscribe((user: UserDetailsDto) => {
         this.isAccountActivated = user.activationTime !== null;
+        this.userName = user.name;
       });
     }
 

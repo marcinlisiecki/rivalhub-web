@@ -56,9 +56,16 @@
           </app-section-item>
 
           <app-section-item
-            icon="pi pi-user"
+            icon="pi pi-users"
             title="{{ 'sidebar.participants' | translate }}"
             routerLink="/organizations/{{ selectedOrganization.id }}/members"
+          >
+          </app-section-item>
+
+          <app-section-item
+            icon="pi pi-chart-bar"
+            title="{{ 'sidebar.ranking' | translate }}"
+            routerLink="/organizations/{{ selectedOrganization.id }}/ranking"
           >
           </app-section-item>
 
@@ -131,6 +138,16 @@
             icon="pi pi-th-large"
             title="{{ 'sidebar.myOrganizations' | translate }}"
             routerLink="/organizations"
+          >
+          </app-section-item>
+
+          <i *ngIf="isLoggedIn" [ngStyle]="{ fontSize: '.95rem' }"
+            >{{ 'sidebar.hello' | translate }} {{ userName.slice(0, 15) }}</i
+          >
+          <app-section-item
+            icon="pi pi-user"
+            title="{{ 'sidebar.profile' | translate }}"
+            routerLink="/profiles/1"
           >
           </app-section-item>
 
