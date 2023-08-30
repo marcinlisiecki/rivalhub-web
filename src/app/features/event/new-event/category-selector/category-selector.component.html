@@ -3,6 +3,9 @@
     <h1>{{ 'event.category' | translate }}</h1>
   </header>
   <section class="categories">
+    <app-no-resource-info *ngIf="events.length === 0">{{
+      'events.noEvents' | translate
+    }}</app-no-resource-info>
     <div
       class="card-checkbox categories-item"
       [class.selected-category]="selectedEventType === event"

@@ -36,6 +36,7 @@ import { ViewOrganizationEventsComponent } from './view-organization-events/view
 import { InputSwitchModule } from 'primeng/inputswitch';
 import {AccordionModule} from "primeng/accordion";
 import {AngularSvgIconModule} from "angular-svg-icon";
+import {MenuModule} from "primeng/menu";
 
 @NgModule({
   declarations: [
@@ -84,6 +85,7 @@ import {AngularSvgIconModule} from "angular-svg-icon";
     InputSwitchModule,
     AccordionModule,
     AngularSvgIconModule,
+    MenuModule,
   ],
   exports: [
     MyOrganizationsComponent,

@@ -1,10 +1,11 @@
 <div class="add-reservation">
-  <app-organization-back-button
-    [ngStyle]="{ marginLeft: '-21rem', marginTop: '1rem' }"
-    [organizationId]="organizationId"
-  ></app-organization-back-button>
   <section class="add-reservation-container">
-    <h1>{{ 'organization.newReservation' | translate }}</h1>
+    <div>
+      <app-organization-back-button
+        [organizationId]="organizationId"
+      ></app-organization-back-button>
+      <h1>{{ 'organization.newReservation' | translate }}</h1>
+    </div>
     <div class="form-container">
       <div class="dates-wrapper">
         <div class="input-box">
