@@ -5,6 +5,7 @@ export interface Notification {
   id: number;
   matchId: number;
   type: EventType;
+  organizationId: number;
   status: NotificationStatus;
   eventId: number;
 }

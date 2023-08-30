@@ -15,6 +15,7 @@ export interface FakeDartsLeg {
   bounceOutsInLeg: number[][];
   bestRoundScoresInLeg: number[][];
   numberOfRoundsPlayedInLeg: number[][];
+  approved: boolean;
   userApprovalMap: {
     [id: number]: boolean;
   };

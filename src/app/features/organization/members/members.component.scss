@@ -26,5 +26,13 @@
     padding: 10px;
     border-radius: $dashboardRadius;
     border: $dashboardBorder;
+
+    &-inner {
+      display: flex;
+      align-items: center;
+      height: 100px;
+      margin: 10px auto;
+      flex: 0 0 100%;
+    }
   }
 }

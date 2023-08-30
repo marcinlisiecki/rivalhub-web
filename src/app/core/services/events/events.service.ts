@@ -162,7 +162,7 @@ export class EventsService {
   mapDartsMatches(fakeLegs: FakeDartsLeg[]): DartsLeg[] {
     if (!fakeLegs) return [];
     return fakeLegs.map((l) => ({
-      matchId: l.id,
+      id: l.id,
       dartFormat: l.dateFormat,
       dartMode: l.dartMode,
       participants: l.userDetails,
@@ -175,12 +175,13 @@ export class EventsService {
       bestRoundScoresInLeg: l.bestRoundScoresInLeg[0],
       numberOfRoundsPlayedInLeg: l.numberOfRoundsPlayedInLeg[0],
       userApprovalMap: l.userApprovalMap,
+      approved: l.approved,
     }));
   }
 
   mapDartsMatch(fakeLeg: FakeDartsLeg): DartsLeg {
     return {
-      matchId: fakeLeg.id,
+      id: fakeLeg.id,
       dartFormat: fakeLeg.dateFormat,
       dartMode: fakeLeg.dartMode,
       participants: fakeLeg.userDetails,
@@ -193,6 +194,7 @@ export class EventsService {
       bestRoundScoresInLeg: fakeLeg.bestRoundScoresInLeg[0],
       numberOfRoundsPlayedInLeg: fakeLeg.numberOfRoundsPlayedInLeg[0],
       userApprovalMap: fakeLeg.userApprovalMap,
+      approved: fakeLeg.approved,
     };
   }
 
