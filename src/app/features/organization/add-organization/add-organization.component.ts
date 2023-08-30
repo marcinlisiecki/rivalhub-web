@@ -15,7 +15,7 @@ import { LanguageService } from '@app/core/services/language/language.service';
   templateUrl: './add-organization.component.html',
   styleUrls: ['./add-organization.component.scss'],
 })
-export class AddOrganizationComponent implements AfterViewInit {
+export class AddOrganizationComponent {
   private DEFAULTAVATAR = '/assets/img/svg/defaultOrganization.svg';
   ACCEPTEDFILETYPES = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'];
   MAXFILESIZE = 5242880;
@@ -41,14 +41,6 @@ export class AddOrganizationComponent implements AfterViewInit {
     private languageService: LanguageService,
   ) {}
 
-  @ViewChild('colorPicker') colorPicker!: any;
-  onImageClick() {
-    this.colorPicker.el.nativeElement.childNodes[0].childNodes[0].click();
-  }
-  ngAfterViewInit(): void {
-    this.hideInput();
-  }
-
   onFileSelectClicked(event: FileSelectEvent) {
     this.clientError = undefined;
     if (!this.ACCEPTEDFILETYPES.includes(event.files[0].type)) {
@@ -71,7 +63,6 @@ export class AddOrganizationComponent implements AfterViewInit {
     this.customAvatar = true;
     this.imageURL = this.DEFAULTAVATAR;
     this.uploadedFile = undefined;
-    this.hideInput();
   }
 
   onSubmit() {
@@ -112,9 +103,6 @@ export class AddOrganizationComponent implements AfterViewInit {
 
   get name() {
     return this.addForm.get('name');
-  }
-  hideInput() {
-    this.colorPicker.el.nativeElement.childNodes[0].childNodes[0].style.opacity = 0;
   }
 
   protected readonly subscribeOn = subscribeOn;

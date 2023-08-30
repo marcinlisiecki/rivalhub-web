@@ -1,58 +1,31 @@
 <section class="wrapper">
-  <app-organization-back-button
-    [organizationId]="organizationId"
-  ></app-organization-back-button>
+  <app-organization-back-button [organizationId]="organizationId"></app-organization-back-button>
   <h1>{{ 'organization.settings' | translate }}</h1>
 
   <section class="organization-info">
     <p-card>
       <form [formGroup]="editForm">
         <div class="form-item form-avatar">
-          <img
-            (click)="onImageClick()"
-            class="avatar-img"
-            [ngStyle]="!customAvatar ? { 'background-color': color } : null"
-            [ngClass]="{ 'avatar-img-hoverable': !customAvatar }"
-            width="75"
-            height="75"
-            [src]="imageURL"
-            alt="avatar"
-          />
-          <p-colorPicker
-            [disabled]="customAvatar"
-            #colorPicker
-            [(ngModel)]="color"
-            [ngModelOptions]="{ standalone: true }"
-          ></p-colorPicker>
+          <img class="avatar-img" [ngStyle]="!customAvatar ? { 'background-color': color } : null" width="75"
+            height="75" [src]="imageURL" alt="avatar" />
+          <p-divider layout="vertical"></p-divider>
+
+          <p-colorPicker pTooltip="{{'colorpicker.tooltip' | translate}}" tooltipPosition="top" [(ngModel)]="color"
+            [ngModelOptions]="{ standalone: true }"></p-colorPicker>
 
           <p-divider layout="vertical"></p-divider>
-          <p-fileUpload
-            #fileupload
-            name="uploadAvatar"
-            [customUpload]="true"
-            (onSelect)="onFileSelectClicked($event)"
-            (onClear)="onClearClicked()"
-            [showUploadButton]="false"
-            cancelLabel="{{ 'common.delete' | translate }}"
-            chooseLabel="{{ 'common.addPicture' | translate }}"
-            [accept]="joinAcceptableImageTypes()"
-            [fileLimit]="1"
-            [maxFileSize]="MAXFILESIZE"
-          >
+          <p-fileUpload #fileupload name="uploadAvatar" [customUpload]="true" (onSelect)="onFileSelectClicked($event)"
+            (onClear)="onClearClicked()" [showUploadButton]="false" cancelLabel="{{ 'common.delete' | translate }}"
+            chooseLabel="{{ 'common.addPicture' | translate }}" [accept]="joinAcceptableImageTypes()" [fileLimit]="1"
+            [maxFileSize]="MAXFILESIZE">
           </p-fileUpload>
         </div>
 
         <div class="input-box">
           <label for="organization-name">{{
             'organization.name' | translate
-          }}</label>
-          <input
-            #organization
-            id="organization-name"
-            type="text"
-            pInputText
-            formControlName="organizationName"
-          />
+            }}</label>
+          <input #organization id="organization-name" type="text" pInputText formControlName="organizationName" />
           <small id="organization-name-help" class="input-helper-text">
             {{ 'organization.nameHelp' | translate }}
           </small>
@@ -75,18 +48,11 @@
   <h2>{{ 'event.availableCategories' | translate }}</h2>
 
   <section class="categories">
-    <div
-      *ngFor="let type of possibleEventTypes"
-      class="card-checkbox categories-item"
-      [class.card-checkbox-selected]="activeEventTypes.includes(type)"
-      (click)="toggleAvailableEventType(type)"
-    >
-      <svg-icon
-        [src]="EventIcon[type]"
-        [svgStyle]="{
+    <div *ngFor="let type of possibleEventTypes" class="card-checkbox categories-item"
+      [class.card-checkbox-selected]="activeEventTypes.includes(type)" (click)="toggleAvailableEventType(type)">
+      <svg-icon [src]="EventIcon[type]" [svgStyle]="{
           width: '100%'
-        }"
-      ></svg-icon>
+        }"></svg-icon>
       <p>{{ categoryTypeToLabel(type) | translate }}</p>
     </div>
   </section>
@@ -95,14 +61,10 @@
     <h2>
       {{ 'organization.configurator.settings.invitations.title' | translate }}
     </h2>
-    <p-checkbox
-      formControlName="onlyAdminCanSeeInvitationLink"
-      [binary]="true"
-      label="{{
+    <p-checkbox formControlName="onlyAdminCanSeeInvitationLink" [binary]="true" label="{{
         'organization.configurator.settings.invitations.linkVisibility'
           | translate
-      }}"
-    ></p-checkbox>
+      }}"></p-checkbox>
   </form>
 
   <div class="button-wrapper">
@@ -111,11 +73,7 @@
     </p-button>
     <p-confirmPopup></p-confirmPopup>
 
-    <p-button
-      [loading]="isLoading"
-      [disabled]="isLoading"
-      (onClick)="onDelete($event)"
-    >
+    <p-button [loading]="isLoading" [disabled]="isLoading" (onClick)="onDelete($event)">
       {{ 'organization.delete' | translate }}
     </p-button>
   </div>

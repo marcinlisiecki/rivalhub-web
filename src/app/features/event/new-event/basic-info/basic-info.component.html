@@ -5,14 +5,8 @@
 
   <form action="" [formGroup]="basicInfoForm" class="basic-info-form">
     <div class="input-box">
-      <label for="name">{{ 'input.userName' | translate }}*</label>
-      <input
-        id="name"
-        name="name"
-        type="text"
-        pInputText
-        formControlName="name"
-      />
+      <label for="name">{{ 'input.eventName' | translate }}*</label>
+      <input id="name" name="name" type="text" pInputText formControlName="name" />
       <small class="input-helper-text">
         {{ 'event.nameRequire3Characters' | translate }}
       </small>
@@ -20,28 +14,17 @@
 
     <div class="input-box">
       <label for="description">{{ 'event.description' | translate }}</label>
-      <textarea
-        pInputTextarea
-        id="description"
-        rows="5"
-        formControlName="description"
-      ></textarea>
+      <textarea pInputTextarea id="description" rows="5" formControlName="description"></textarea>
     </div>
   </form>
 
   <p-divider></p-divider>
 
   <div class="form-step-navigation">
-    <p-button
-      styleClass="p-button-outlined"
-      (onClick)="setFormStep.emit(AddEventFormStep.CATEGORY)"
-    >
+    <p-button styleClass="p-button-outlined" (onClick)="setFormStep.emit(AddEventFormStep.CATEGORY)">
       {{ 'stepForm.previous' | translate }}
     </p-button>
-    <p-button
-      [disabled]="!basicInfoForm.valid"
-      (onClick)="setFormStep.emit(AddEventFormStep.ADD_USERS)"
-    >
+    <p-button [disabled]="!basicInfoForm.valid" (onClick)="setFormStep.emit(AddEventFormStep.ADD_USERS)">
       {{ 'stepForm.next' | translate }}
     </p-button>
   </div>

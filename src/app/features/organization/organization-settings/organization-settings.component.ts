@@ -1,8 +1,14 @@
-import { Component, Renderer2, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  OnInit,
+  Renderer2,
+  ViewChild,
+} from '@angular/core';
 import { EventType } from '@interfaces/event/event-type';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { EventsService } from '@app/core/services/events/events.service';
-import {ActivatedRoute, Params, Router} from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { OrganizationsService } from '@app/core/services/organizations/organizations.service';
 import { ErrorsService } from '@app/core/services/errors/errors.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -13,20 +19,21 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { FileSelectEvent } from 'primeng/fileupload';
 import { ImageService } from '@app/core/services/image/image.service';
 import { EditOrganization } from '@app/core/interfaces/organization/edit-organization';
-import {Observable, of, Subscription} from 'rxjs';
+import { Observable, of, Subscription } from 'rxjs';
 import { LanguageService } from '@app/core/services/language/language.service';
 import { EventIcon } from '@interfaces/event/event-icon';
+import { Tooltip } from 'primeng/tooltip';
 
 @Component({
   selector: 'app-organization-settings',
   templateUrl: './organization-settings.component.html',
   styleUrls: ['./organization-settings.component.scss'],
 })
-export class OrganizationSettingsComponent {
+export class OrganizationSettingsComponent implements OnInit {
   possibleEventTypes: EventType[] = [];
   activeEventTypes: EventType[] = [];
   organizationId!: number;
-  paramsSub?: Subscription
+  paramsSub?: Subscription;
   isLoading: boolean = false;
   toastLifeTime: number = 3 * 1000;
 
@@ -67,16 +74,12 @@ export class OrganizationSettingsComponent {
 
   ngOnInit(): void {
     this.paramsSub = this.route.params.subscribe((params: Params) => {
-      this.organizationId = params['id']
+      this.organizationId = params['id'];
       this.fetchAllEventTypes();
       this.fetchActiveEventTypes();
       this.fetchOrganizationsSettings();
       this.fetchOrganizationNameAndAvatar();
-    })
-  }
-
-  ngAfterViewInit(): void {
-    this.hideInput();
+    });
   }
 
   onSave() {
@@ -261,7 +264,6 @@ export class OrganizationSettingsComponent {
       );
       return;
     }
-    this.uploadedFile;
     this.uploadedFile = event.files[0];
     this.imageURL = URL.createObjectURL(event.currentFiles[0]);
     this.customAvatar = true;
@@ -271,16 +273,10 @@ export class OrganizationSettingsComponent {
     this.customAvatar = false;
     this.imageURL = this.DEFAULTAVATAR;
     this.uploadedFile = undefined;
-    this.hideInput();
   }
 
   joinAcceptableImageTypes() {
     return this.ACCEPTEDFILETYPES.join(',');
-  }
-
-  @ViewChild('colorPicker') colorPicker!: any;
-  onImageClick() {
-    this.colorPicker.el.nativeElement.childNodes[0].childNodes[0].click();
   }
 
   @ViewChild('fileupload') fileUpload!: any;
@@ -289,10 +285,6 @@ export class OrganizationSettingsComponent {
       this.fileUpload.el.nativeElement.querySelectorAll('[disabled]')[0];
     this.renderer.removeAttribute(element, 'disabled');
     this.renderer.removeClass(element, 'p-disabled');
-  }
-
-  hideInput() {
-    this.colorPicker.el.nativeElement.childNodes[0].childNodes[0].style.opacity = 0;
   }
 
   get organizationName() {
