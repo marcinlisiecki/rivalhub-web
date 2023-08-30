@@ -45,7 +45,6 @@ export class ViewDartsMatchComponent implements OnInit {
       this.organizationId = params['organizationId'];
       this.eventId = params['eventId'];
     });
-    console.log(this.match);
   }
 
   openAddQueueDialog() {
@@ -60,7 +59,6 @@ export class ViewDartsMatchComponent implements OnInit {
 
     this.addQueueDialogRef.onClose.subscribe((queue: AddQueue[]) => {
       if (queue) {
-        console.log(queue);
         const queueInput: AddQueueDto = {
           singlePlayerScoreInRoundsList: queue,
         };
@@ -111,7 +109,6 @@ export class ViewDartsMatchComponent implements OnInit {
   }
 
   onDelete(icon: Event, roundId: number) {
-    console.log(icon);
     if (!this.editable) return;
 
     this.confirmationService.confirm({
@@ -121,7 +118,6 @@ export class ViewDartsMatchComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       message: this.languageService.instant('event.set.deleteQuestion'),
       accept: () => {
-        console.log(roundId);
         this.eventService
           .deleteDartsQueue(
             this.organizationId,
@@ -153,7 +149,6 @@ export class ViewDartsMatchComponent implements OnInit {
               this.match.pointsLeftInLegAfterRound.length - 1
             ][index];
         });
-        console.log('Mecz:', this.match);
       },
     });
   }
@@ -168,7 +163,6 @@ export class ViewDartsMatchComponent implements OnInit {
       this.match.pointsLeftInLegAfterRound[
         this.match.pointsLeftInLegAfterRound.length - 1
       ][index] !== 0;
-    console.log(col, '  ', isFinished);
     return isFinished;
   }
 

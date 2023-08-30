@@ -160,8 +160,6 @@ export class EventsService {
   }
 
   mapDartsMatches(fakeLegs: FakeDartsLeg[]): DartsLeg[] {
-    console.log(fakeLegs);
-
     if (!fakeLegs) return [];
     return fakeLegs.map((l) => ({
       matchId: l.id,
