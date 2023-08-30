@@ -1,4 +1,11 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { AddQueue } from '@app/core/interfaces/event/games/darts/add-queue';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AddQueueComponent } from '../../add-darts-results/add-leg/add-queue/add-queue.component';
@@ -14,6 +21,7 @@ import {
   TOAST_LIFETIME,
   TOAST_LIFETIME_LONG,
 } from '@app/core/constants/messages';
+import { AuthService } from '@app/core/services/auth/auth.service';
 
 @Component({
   selector: 'app-view-darts-match',
@@ -24,21 +32,27 @@ export class ViewDartsMatchComponent implements OnInit {
   @Input({ required: true }) match!: DartsLeg;
   @Input() editable: boolean = false;
 
+  @Output() approveMatch: EventEmitter<number> = new EventEmitter<number>();
+
   newQueue: AddQueue[] = [];
 
   addQueueDialogRef?: DynamicDialogRef;
 
   organizationId!: number;
   eventId!: number;
+  loggedInUserId!: number;
+
   constructor(
     private dialogService: DialogService,
-    private languageService: LanguageService,
+    public languageService: LanguageService,
     private eventService: EventsService,
     private route: ActivatedRoute,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
-    private changeDetector: ChangeDetectorRef,
-  ) {}
+    private authService: AuthService,
+  ) {
+    this.loggedInUserId = authService.getUserId() as number;
+  }
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
@@ -73,7 +87,7 @@ export class ViewDartsMatchComponent implements OnInit {
           .addDartsQueue(
             this.organizationId,
             this.eventId,
-            this.match.matchId,
+            this.match.id,
             queueInput,
           )
           .subscribe({
@@ -122,7 +136,7 @@ export class ViewDartsMatchComponent implements OnInit {
           .deleteDartsQueue(
             this.organizationId,
             this.eventId,
-            this.match.matchId,
+            this.match.id,
             roundId,
           )
           .subscribe({

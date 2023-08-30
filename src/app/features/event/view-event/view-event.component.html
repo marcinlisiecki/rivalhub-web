@@ -74,6 +74,7 @@
       <app-view-darts-matches
         *ngIf="eventType === EventType.DARTS"
         [matches]="getDartsMatches()"
+        (approveMatch)="approveMatch($event)"
       >
       </app-view-darts-matches>
 
