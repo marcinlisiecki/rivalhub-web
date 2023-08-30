@@ -24,8 +24,6 @@ export class LanguageService extends TranslateService {
     this.setDefaultLang(this.currentLanguage());
   }
 
-  changedLangEff = effect(() => console.log(this.currentLanguage()));
-
   setLocalStorage(): void {
     let browserLanguage: string = <string>this.getBrowserLang();
     let localLang: string | null = localStorage.getItem('currentLanguage');
