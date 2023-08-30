@@ -164,7 +164,6 @@ export class ViewOrganizationEventsComponent
       tempEvents.push(...(await this.fetchEventsForType(EventType.PULL_UPS)));
       tempEvents.push(...(await this.fetchEventsForType(EventType.BILLIARDS)));
       tempEvents.push(...(await this.fetchEventsForType(EventType.DARTS)));
-      tempEvents.push(...(await this.fetchEventsForType(EventType.RUNNING)));
     } catch (err: unknown) {
       this.errorsService.createErrorMessage(extractMessage(err));
     } finally {
