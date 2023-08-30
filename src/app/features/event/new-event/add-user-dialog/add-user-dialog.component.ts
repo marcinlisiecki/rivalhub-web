@@ -24,8 +24,10 @@ export class AddUserDialogComponent {
   }
 
   setFilteredUserList() {
-    this.filteredUserList = this.userList.filter((user) =>
-      user.name.toLowerCase().includes(this.userSearchQuery.toLowerCase()),
+    this.filteredUserList = this.userList.filter(
+      (user) =>
+        user.name.toLowerCase().includes(this.userSearchQuery.toLowerCase()) ||
+        user.email.toLowerCase().includes(this.userSearchQuery.toLowerCase()),
     );
   }
 
