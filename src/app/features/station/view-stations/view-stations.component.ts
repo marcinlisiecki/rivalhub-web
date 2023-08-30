@@ -10,6 +10,8 @@ import { NewStation } from '@app/core/interfaces/station/new-station';
 import { ConfirmationService } from 'primeng/api';
 import { EventsService } from '@app/core/services/events/events.service';
 import { LanguageService } from '@app/core/services/language/language.service';
+import { StationOption } from '@app/core/interfaces/station/station-option';
+import { STATION_OPTIONS } from '@app/core/constants/stations';
 @Component({
   selector: 'app-view-stations',
   templateUrl: './view-stations.component.html',
@@ -23,8 +25,6 @@ export class ViewStationsComponent implements OnInit {
   apiError: string | null = null;
   inputError: string | null = null;
 
-  stationsOptions: string[] = [];
-
   newStation: NewStation = {
     name: '',
     type: EventType.PING_PONG || null,
@@ -34,6 +34,7 @@ export class ViewStationsComponent implements OnInit {
   clonedStations: { [s: string]: Station } = {};
 
   stationTypes!: string[];
+  stationOptions: StationOption[] = STATION_OPTIONS;
 
   constructor(
     private route: ActivatedRoute,
@@ -41,25 +42,24 @@ export class ViewStationsComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private eventsService: EventsService,
     private languageService: LanguageService,
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
-      this.route.params.subscribe((params) => {
-          this.organizationId = params['id'];
-    this.stationsService
-      .getOrganizationEditStations(this.organizationId)
-      .subscribe({
-        next: (res: Station[]) => {
-          this.stations = res;
-        },
-        error: (err: unknown) => {
-          this.apiError = extractMessage(err);
-        },
-      });
+    this.route.params.subscribe((params) => {
+      this.organizationId = params['id'];
+      this.stationsService
+        .getOrganizationEditStations(this.organizationId)
+        .subscribe({
+          next: (res: Station[]) => {
+            this.stations = res;
+          },
+          error: (err: unknown) => {
+            this.apiError = extractMessage(err);
+          },
+        });
 
-    this.fetchStationTypes();
-      });
+      this.fetchStationTypes();
+    });
   }
 
   ngOnAfterViewInit(): void {
@@ -71,6 +71,13 @@ export class ViewStationsComponent implements OnInit {
       .getEventTypesInOrganization(this.organizationId)
       .subscribe((types) => {
         this.stationTypes = types;
+        this.stationOptions = this.stationOptions.filter((stationOption) => {
+          stationOption.label = this.languageService.instant(
+            stationOption.label,
+          );
+          return this.stationTypes.includes(stationOption.value);
+        });
+
         this.newStation = {
           name: '',
           type: types[0] || null,
