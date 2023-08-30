@@ -1,0 +1,28 @@
+<div class="set">
+  <p class="set-index">
+    <span class="invisible">
+      <i class="pi pi-times-circle"></i>
+    </span>
+    {{ 'event.common.set' | translate }} {{ gameSet.setNr }}
+    <i
+      [style]="{
+        opacity: editable ? 1 : 0,
+        pointerEvents: editable ? 'all' : 'none'
+      }"
+      class="pi pi-times-circle"
+      (click)="onDelete($event)"
+    ></i>
+  </p>
+
+  <div class="set-results">
+    <div class="set-result">
+      <p class="set-label">{{ 'event.common.team' | translate }}{{ ' 1' }}</p>
+      <p class="set-score">{{ gameSet.team1Score }}</p>
+    </div>
+
+    <div class="set-result">
+      <p class="set-score">{{ gameSet.team2Score }}</p>
+      <p class="set-label">{{ 'event.common.team' | translate }}{{ ' 2' }}</p>
+    </div>
+  </div>
+</div>

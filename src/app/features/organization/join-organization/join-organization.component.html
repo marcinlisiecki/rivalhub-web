@@ -1,0 +1,26 @@
+<div class="main-container">
+  <app-centered-spinner
+    *ngIf="isAccountVerified === null"
+  ></app-centered-spinner>
+
+  <p-messages severity="info" *ngIf="isAccountVerified === false">
+    <ng-template pTemplate>
+      {{ 'organization.info' | translate }}
+    </ng-template>
+  </p-messages>
+
+  <div *ngIf="isAccountVerified">
+    <h1>{{ mainMessage }}</h1>
+    <p-button
+      *ngIf="isLoaded"
+      styleClass="button-wide"
+      type="submit"
+      (onClick)="onSubmit()"
+    >
+      {{ 'common.join' | translate }}
+    </p-button>
+    <app-validation-error *ngIf="responseError">
+      {{ responseError }}
+    </app-validation-error>
+  </div>
+</div>

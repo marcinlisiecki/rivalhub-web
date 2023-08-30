@@ -1,17 +1,99 @@
-<div class="organizations-container">
-  <div class="organization-card" *ngFor="let organization of organizations">
-    <a
-      class="organization-link"
-      [ngStyle]="{
-        'background-image': 'url(' + getImagePath(organization.imageUrl) + ')'
-      }"
-      [routerLink]="createURL(organization.id)"
-    >
-      <span
-        class="organization-name"
-        *ngIf="isDefaultAvatar"
-        >{{ displayName(organization.name) }}</span
+<section class="wrapper">
+  <header>
+    <h1>{{ 'organization.myOrganization' | translate }}</h1>
+  </header>
+
+  <div class="content">
+    <div class="organizations-container">
+      <div
+        *ngIf="organizations.length === 0 && !isLoading"
+        class="no-organizations"
       >
-    </a>
+        <img src="assets/img/svg/void.svg" alt="" />
+        <p>{{ 'organization.noOrganizations' | translate }}</p>
+        <p-button
+          *ngIf="isAccountVerified"
+          routerLink="/organizations/new"
+          icon="pi pi-plus"
+          iconPos="right"
+          label="{{ 'organization.create' | translate }}"
+        ></p-button>
+      </div>
+
+      <div class="organization-card" *ngFor="let organization of organizations">
+        <a
+          class="organization-link"
+          [ngStyle]="{
+            'background-image': 'url(' + organization.imageUrl + ')',
+            'background-color': checkDefaultAvatar(organization.imageUrl)
+              ? organization.color
+              : 'none'
+          }"
+          [routerLink]="createURL(organization.id)"
+        >
+        </a>
+        <span class="organization-name">{{ organization.name }}</span>
+      </div>
+    </div>
+
+    <section class="right-panel">
+      <section class="invitations">
+        <header>
+          <h1>{{ 'organization.invitations' | translate }}</h1>
+        </header>
+
+        <div *ngFor="let invitation of invitations" class="invitation">
+          <p>{{ invitation.organization.name }}</p>
+          <div>
+            <p-button
+              [disabled]="!isAccountVerified"
+              styleClass="p-button-text p-button-success"
+              icon="pi pi-check"
+              (onClick)="acceptInvitation(invitation)"
+            ></p-button>
+            <p-button
+              [disabled]="!isAccountVerified"
+              styleClass="p-button-text p-button-danger"
+              icon="pi pi-times"
+              (onClick)="rejectInvitation(invitation)"
+            ></p-button>
+          </div>
+        </div>
+
+        <app-no-resource-info *ngIf="invitations.length === 0">
+          {{ 'organization.noInvitations' | translate }}
+        </app-no-resource-info>
+      </section>
+
+      <section class="notifications">
+        <header>
+          <h1>{{ 'notification.header' | translate }}</h1>
+        </header>
+
+        <div *ngFor="let notification of notifications" class="notification">
+          <p>
+            {{ 'notification.content' | translate }}
+            <strong>{{
+              categoryTypeToLabel(notification.type) | translate
+            }}</strong>
+          </p>
+
+          <a
+            [routerLink]="[
+              '/organizations',
+              notification.organizationId,
+              'events',
+              notification.eventId,
+              { type: notification.type }
+            ]"
+            >{{ 'notification.showMatch' | translate }}</a
+          >
+        </div>
+
+        <app-no-resource-info *ngIf="notifications.length === 0">
+          {{ 'notification.noNotifications' | translate }}
+        </app-no-resource-info>
+      </section>
+    </section>
   </div>
-</div>
+</section>

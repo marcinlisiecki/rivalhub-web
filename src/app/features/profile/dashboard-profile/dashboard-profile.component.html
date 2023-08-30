@@ -1,0 +1,20 @@
+<section class="user" [ngClass]="{ 'info-compact': compact }">
+  <div class="avatar">
+    <img class="dashboard-header-image" [src]="imageUrl" alt="Image" />
+  </div>
+  <div class="info">
+    <h4 class="info-name">{{ user.name }}</h4>
+    <p *ngIf="!compact" class="info-email">{{ user.email }}</p>
+  </div>
+  <p-button
+    class="align-top"
+    (onClick)="goToEdit()"
+    routerLinkActive="router-link-active"
+    routerLinkActive="router-link-active"
+    *ngIf="isMe"
+    icon="pi pi-cog"
+    label="{{ 'common.edit' | translate }}"
+    styleClass="p-button-secondary"
+    iconPos="right"
+  ></p-button>
+</section>

@@ -1,0 +1,15 @@
+<full-calendar class="calendar-main" #calendar [options]="calendarOptions()">
+  <ng-template #eventContent let-arg>
+    <div
+      class="calendar-event cal-{{ arg.event.title }}"
+      [ngStyle]="{ borderColor: arg.event!['borderColor'] }"
+    >
+      <span *ngIf="!isTitleIsToLong(arg.event.title); else toLongTitle">
+        {{ arg.event.title }}
+      </span>
+    </div>
+    <ng-template #toLongTitle>
+      <b>{{ arg.event.title.slice(0, 12) + '...' }}</b>
+    </ng-template>
+  </ng-template></full-calendar
+>

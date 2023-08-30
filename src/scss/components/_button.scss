@@ -1,3 +1,5 @@
+@import '/src/scss/variables';
+
 .button-wide {
   width: 100%;
   display: flex;
@@ -7,7 +9,7 @@
 
 .button-absolute {
   position: absolute;
-  right:0;
+  right: 0;
 }
 
 .p-button-overwrite {
@@ -41,3 +43,13 @@
   outline: none !important;
   box-shadow: none !important;
 }
+
+.button-show-more {
+  background-color: transparent !important;
+  color: white !important;
+  border: 1px dashed white !important;
+}
+.p-button-edit {
+  color: $textSecondaryColor !important;
+}
+

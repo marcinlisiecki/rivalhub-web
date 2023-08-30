@@ -12,3 +12,57 @@
   padding: 1rem;
   background-color: $panelContentBg;
 }
+
+p {
+  margin: 0;
+  padding: 0;
+}
+
+.name {
+  color: $textSecondaryColor;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+}
+
+.bottom {
+  margin-top: 1.5rem;
+  display: flex;
+  gap: 1rem;
+  align-items: flex-end;
+  .date {
+    color: $textSecondaryColor;
+    align-self: flex-end;
+  }
+
+  p-button:first-of-type {
+    margin-left: auto;
+  }
+}
+
+.stations {
+  margin-top: 0.5rem;
+  display: flex;
+  column-gap: 1rem;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.header-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.paginator-wrapper {
+  margin: 1rem 0;
+}

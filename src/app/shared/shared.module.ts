@@ -18,6 +18,21 @@ import { NoAvailableStationsComponent } from './no-available-stations/no-availab
 import { CenteredSpinnerComponent } from './centered-spinner/centered-spinner.component';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { LayoutModule } from '@angular/cdk/layout';
+import { VerifyAccountInfoComponent } from './verify-account-info/verify-account-info.component';
+import { NoResourceInfoComponent } from './no-resource-info/no-resource-info.component';
+import { AccordionModule } from 'primeng/accordion';
+import { EventResultComponent } from './event-result/event-result.component';
+import { PingPingResultComponent } from './event-result/ping-ping-result/ping-ping-result.component';
+import { EventWaitingComponent } from './event-result/event-waiting/event-waiting.component';
+import { OrganizationBackButtonComponent } from './organization-back-button/organization-back-button.component';
+import { EventCardComponent } from './event-card/event-card.component';
+import { TagModule } from 'primeng/tag';
+import { TranslateModule } from '@ngx-translate/core';
+import { RouterLink } from '@angular/router';
+import { AvatarComponent } from './avatar/avatar.component';
+import { GoBackButtonComponent } from './go-back-button/go-back-button.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { AngularSvgIconModule } from 'angular-svg-icon';
 
 @NgModule({
   declarations: [
@@ -25,6 +40,16 @@ import { LayoutModule } from '@angular/cdk/layout';
     CategoryStationsSelectorComponent,
     NoAvailableStationsComponent,
     CenteredSpinnerComponent,
+    VerifyAccountInfoComponent,
+    NoResourceInfoComponent,
+    EventResultComponent,
+    PingPingResultComponent,
+    EventWaitingComponent,
+    OrganizationBackButtonComponent,
+    EventCardComponent,
+    AvatarComponent,
+    GoBackButtonComponent,
+    PageNotFoundComponent,
   ],
   exports: [
     ValidationErrorComponent,
@@ -42,6 +67,13 @@ import { LayoutModule } from '@angular/cdk/layout';
     CenteredSpinnerComponent,
     NoAvailableStationsComponent,
     LayoutModule,
+    VerifyAccountInfoComponent,
+    NoResourceInfoComponent,
+    EventResultComponent,
+    OrganizationBackButtonComponent,
+    EventCardComponent,
+    AvatarComponent,
+    GoBackButtonComponent,
   ],
   imports: [
     CommonModule,
@@ -59,6 +91,11 @@ import { LayoutModule } from '@angular/cdk/layout';
     FormsModule,
     ProgressSpinnerModule,
     LayoutModule,
+    AccordionModule,
+    TagModule,
+    TranslateModule,
+    RouterLink,
+    AngularSvgIconModule,
   ],
 })
 export class SharedModule {}

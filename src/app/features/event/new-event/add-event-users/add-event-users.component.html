@@ -1,0 +1,51 @@
+<section class="form-step-wrapper">
+  <header>
+    <h1>{{ 'event.new.steps.addUsers' | translate }}</h1>
+  </header>
+
+  <section class="teams">
+    <div class="team">
+      <div class="team-member" *ngFor="let user of addedUsers">
+        <div class="team-member-data">
+          <app-avatar class="team-member-avatar" [user]="user"></app-avatar>
+          <p>{{ user.name }}</p>
+        </div>
+        <div class="team-member-remove-button" (click)="removeUser(user)">
+          <i class="pi pi-times-circle"></i>
+        </div>
+      </div>
+
+      <div class="team-add-button" (click)="openAddUserDialog()">
+        <i class="pi pi-plus"></i>
+        <p>{{ 'event.new.steps.addUsers' | translate }}</p>
+      </div>
+    </div>
+  </section>
+  <p-divider></p-divider>
+
+  <section class="public-event-setting">
+    <label for="publicEvent">{{ 'event.public' | translate }}</label>
+    <p-inputSwitch
+      id="publicEvent"
+      [(ngModel)]="publicEvent"
+      (onChange)="setPublicEvent.emit(publicEvent)"
+    ></p-inputSwitch>
+  </section>
+
+  <p-divider></p-divider>
+
+  <div class="form-step-navigation">
+    <p-button
+      styleClass="p-button-outlined"
+      (onClick)="setFormStep.emit(AddEventFormStep.BASIC_INFO)"
+    >
+      {{ 'stepForm.previous' | translate }}
+    </p-button>
+    <p-button
+      (onClick)="setFormStep.emit(AddEventFormStep.DATE)"
+      [disabled]="addedUsers.length === 0"
+    >
+      {{ 'stepForm.next' | translate }}
+    </p-button>
+  </div>
+</section>

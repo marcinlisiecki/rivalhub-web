@@ -1,0 +1,125 @@
+<section class="wrapper">
+  <div>
+    <app-organization-back-button
+      [organizationId]="organizationId"
+    ></app-organization-back-button>
+    <h1>{{ 'organization.settings' | translate }}</h1>
+  </div>
+
+  <section class="organization-info">
+    <p-card>
+      <form [formGroup]="editForm">
+        <div class="form-item form-avatar">
+          <img
+            class="avatar-img"
+            [ngStyle]="!customAvatar ? { 'background-color': color } : null"
+            width="75"
+            height="75"
+            [src]="imageURL"
+            alt="avatar"
+          />
+          <p-divider layout="vertical"></p-divider>
+
+          <p-colorPicker
+            pTooltip="{{ 'colorpicker.tooltip' | translate }}"
+            tooltipPosition="top"
+            [(ngModel)]="color"
+            [ngModelOptions]="{ standalone: true }"
+          ></p-colorPicker>
+
+          <p-divider layout="vertical"></p-divider>
+          <p-fileUpload
+            #fileupload
+            name="uploadAvatar"
+            [customUpload]="true"
+            (onSelect)="onFileSelectClicked($event)"
+            (onClear)="onClearClicked()"
+            [showUploadButton]="false"
+            cancelLabel="{{ 'common.delete' | translate }}"
+            chooseLabel="{{ 'common.addPicture' | translate }}"
+            [accept]="joinAcceptableImageTypes()"
+            [fileLimit]="1"
+            [maxFileSize]="MAXFILESIZE"
+          >
+          </p-fileUpload>
+        </div>
+
+        <div class="input-box">
+          <label for="organization-name">{{
+            'organization.name' | translate
+          }}</label>
+          <input
+            #organization
+            id="organization-name"
+            type="text"
+            pInputText
+            formControlName="organizationName"
+          />
+          <small id="organization-name-help" class="input-helper-text">
+            {{ 'organization.nameHelp' | translate }}
+          </small>
+        </div>
+        <div *ngIf="organizationName?.invalid && organizationName?.touched">
+          <app-validation-error *ngIf="organizationName?.errors?.['required']">
+            {{ 'organization.nameRequired' | translate }}
+          </app-validation-error>
+          <app-validation-error *ngIf="organizationName?.errors?.['minlength']">
+            {{ 'organization.minLength' | translate }}
+          </app-validation-error>
+          <app-validation-error *ngIf="organizationName?.errors?.['maxlength']">
+            {{ 'organization.maxLength' | translate }}
+          </app-validation-error>
+        </div>
+      </form>
+    </p-card>
+  </section>
+
+  <h2>{{ 'event.availableCategories' | translate }}</h2>
+
+  <section class="categories">
+    <div
+      *ngFor="let type of possibleEventTypes"
+      class="card-checkbox categories-item"
+      [class.card-checkbox-selected]="activeEventTypes.includes(type)"
+      (click)="toggleAvailableEventType(type)"
+    >
+      <svg-icon
+        [src]="EventIcon[type]"
+        [svgStyle]="{
+          maxWidth: '5rem',
+          maxHeight: '5rem'
+        }"
+      ></svg-icon>
+      <p>{{ categoryTypeToLabel(type) | translate }}</p>
+    </div>
+  </section>
+
+  <form [formGroup]="settingsForm">
+    <h2>
+      {{ 'organization.configurator.settings.invitations.title' | translate }}
+    </h2>
+    <p-checkbox
+      formControlName="onlyAdminCanSeeInvitationLink"
+      [binary]="true"
+      label="{{
+        'organization.configurator.settings.invitations.linkVisibility'
+          | translate
+      }}"
+    ></p-checkbox>
+  </form>
+
+  <div class="button-wrapper">
+    <p-button [loading]="isLoading" [disabled]="isLoading" (onClick)="onSave()">
+      {{ 'organization.saveSettings' | translate }}
+    </p-button>
+    <p-confirmPopup></p-confirmPopup>
+
+    <p-button
+      [loading]="isLoading"
+      [disabled]="isLoading"
+      (onClick)="onDelete($event)"
+    >
+      {{ 'organization.delete' | translate }}
+    </p-button>
+  </div>
+</section>

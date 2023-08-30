@@ -7,6 +7,15 @@
         </ng-template>
       </p-messages>
     </div>
+
+    <div class="registered-message-wrapper" *ngIf="invitation">
+      <p-messages severity="info">
+        <ng-template pTemplate>
+          {{ 'login.loginRequested' | translate }}
+        </ng-template>
+      </p-messages>
+    </div>
+
     <div class="input-box">
       <label for="email">{{ 'input.email' | translate }}</label>
       <input
@@ -15,7 +24,6 @@
         pInputText
         name="email"
         type="email"
-        placeholder="jan.kowalski@example.com"
       />
       <div *ngIf="email?.invalid && email?.touched">
         <app-validation-error *ngIf="email?.errors?.['required']">
@@ -33,7 +41,6 @@
         inputId="password"
         styleClass="input-wide"
         inputStyleClass="input-wide"
-        placeholder="********"
       ></p-password>
       <div *ngIf="password?.invalid && password?.touched">
         <app-validation-error *ngIf="password?.errors?.['required']">
@@ -48,8 +55,12 @@
       </p-button>
       <p class="api-error-wrapper" *ngIf="apiError">
         <app-validation-error>
-          {{ apiError }}
+          {{ apiError | translate }}
         </app-validation-error>
+      </p>
+      <p class="no-account-wrapper">
+        {{ 'login.register' | translate }}
+        <a routerLink="/register">{{ 'button.signUp' | translate }}</a>
       </p>
     </div>
   </form>

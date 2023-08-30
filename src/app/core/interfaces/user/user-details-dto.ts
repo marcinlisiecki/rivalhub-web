@@ -3,4 +3,5 @@ export interface UserDetailsDto {
   name: string;
   email: string;
   profilePictureUrl: string;
+  activationTime: Date | null;
 }

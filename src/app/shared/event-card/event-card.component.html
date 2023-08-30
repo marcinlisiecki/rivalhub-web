@@ -1,0 +1,61 @@
+<section class="wrapper">
+  <header>
+    <div>
+      <i class="pi pi-calendar"></i>
+      <p class="event-label">
+        {{ categoryTypeToLabel(event.eventType) | translate }}
+      </p>
+    </div>
+    <div>
+      <p-tag
+        *ngIf="event.eventPublic"
+        severity="success"
+        value="{{ 'event.publicLabel' | translate }}"
+      ></p-tag>
+      <p-tag
+        *ngIf="!event.eventPublic"
+        severity="danger"
+        value="{{ 'event.privateLabel' | translate }}"
+      ></p-tag>
+    </div>
+  </header>
+
+  <p class="event-name">{{ event.name }}</p>
+
+  <footer>
+    <div class="date">
+      {{ event.startTime | date: DISPLAY_DATE_FORMAT }}・{{
+        timeDifferenceInHours
+      }}h {{ timeDifferenceInMinutes }}m・{{ event.participants.length }}
+      {{
+        event.participants.length === 1
+          ? ('event.participantsCount.singular' | translate)
+          : ('event.participantsCount.plural' | translate)
+      }}
+    </div>
+    <div class="actions">
+      <p-button
+        *ngIf="canJoin"
+        (onClick)="joinEvent.emit(event)"
+        styleClass="p-button-secondary p-button-text p-button-sm"
+        iconPos="left"
+        icon="pi pi-plus"
+        label="{{ 'event.joinEvent' | translate }}"
+      ></p-button>
+      <p-button
+        styleClass="p-button-secondary p-button-outlined p-button-sm"
+        [routerLink]="[
+          '/organizations',
+          organizationId,
+          'events',
+          event.eventId,
+          { type: event.eventType }
+        ]"
+        label="{{ 'event.showEvent' | translate }}"
+        iconPos="right"
+        icon="pi pi-arrow-right"
+      >
+      </p-button>
+    </div>
+  </footer>
+</section>

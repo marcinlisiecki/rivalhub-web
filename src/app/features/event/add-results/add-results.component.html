@@ -1,0 +1,14 @@
+<app-add-ping-pong-results
+  *ngIf="eventType === EventType.PING_PONG"
+></app-add-ping-pong-results>
+<app-add-table-football-results
+  *ngIf="eventType === EventType.TABLE_FOOTBALL"
+></app-add-table-football-results>
+<app-add-pull-ups-results
+  *ngIf="eventType === EventType.PULL_UPS"
+></app-add-pull-ups-results>
+<app-add-darts-results *ngIf="eventType===EventType.DARTS">
+</app-add-darts-results>
+
+<app-add-billiards-results *ngIf="eventType === EventType.BILLIARDS">
+</app-add-billiards-results>

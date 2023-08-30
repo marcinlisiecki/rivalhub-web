@@ -1,0 +1,101 @@
+@import 'src/scss/variables';
+
+.dashboard-container {
+  display: flex;
+  align-items: center;
+  margin: 20px auto 0 auto;
+  max-width: $pageWidth;
+  flex-wrap: wrap;
+  position: relative;
+  padding: 0 5px;
+  flex-grow: 1;
+
+  &-compact {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    height: 70px;
+  }
+
+  .dashboard-nav-panel {
+    display: none;
+  }
+
+  &-header {
+    display: flex;
+    height: 140px;
+    flex: $flexRow;
+  }
+
+  .dashboard-panels {
+    display: flex;
+    justify-content: center;
+    flex: $flexRow;
+    gap: 30px;
+    
+    &-activities {
+      display: flex;
+        align-self: flex-start;
+        flex-direction: column;
+
+    }
+
+    &-users {
+      display: flex;
+      align-self: flex-start;
+      flex-direction: column;
+      flex: 0 0 20%;
+
+    }
+  }
+}
+
+
+
+@media only screen and (max-width: $mobileBreakpoint) {
+  .dashboard-container {
+    display: flex;
+    align-items: center;
+    margin: 20px 5px;
+    max-width: $pageWidth;
+    flex-wrap: wrap;
+    padding: 0 5px;
+
+    &-header {
+      display: flex;
+      height: 140px;
+      flex: $flexRow;
+    }
+
+    .dashboard-panels {
+      display: flex;
+      justify-content: space-between;
+      flex: $flexRow;
+      margin-top: 25px;
+      flex-wrap: wrap;
+
+      &-history {
+        display: flex;
+        align-self: flex-start;
+        flex-direction: column;
+        flex: $flexRow;
+      }
+
+      &-activities {
+        align-self: flex-start;
+        display: flex;
+        flex-direction: column;
+        flex: $flexRow;
+        flex: 0 0 100%;
+      }
+
+      &-users {
+        display: flex;
+        align-self: flex-start;
+        flex-direction: column;
+        flex: 0 0 100%;
+        
+      }
+    }
+  }
+}

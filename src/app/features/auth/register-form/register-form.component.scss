@@ -1,0 +1,10 @@
+@import 'src/scss/variables';
+
+.already-have-account-wrapper {
+  margin: 1rem 0 0 0;
+  color: $textSecondaryColor;
+
+  a {
+    color: $primaryTextColor;
+  }
+}

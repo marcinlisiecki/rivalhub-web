@@ -5,15 +5,24 @@ import { CalendarModule } from 'primeng/calendar';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from '@app/shared/shared.module';
 import { RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
+import { ViewReservationComponent } from './view-reservation/view-reservation.component';
+import { BadgeModule } from 'primeng/badge';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
 
 @NgModule({
-  declarations: [AddReservationComponent],
+  declarations: [AddReservationComponent, ViewReservationComponent],
   imports: [
     RouterModule,
     CommonModule,
     CalendarModule,
     FormsModule,
     SharedModule,
+    TranslateModule,
+    BadgeModule,
+    ConfirmDialogModule,
+    ConfirmPopupModule,
   ],
   exports: [CommonModule, CalendarModule, FormsModule, SharedModule],
 })

@@ -1,0 +1,91 @@
+<section class="match">
+  <div class="match-header">
+    <p-badge
+      [severity]="match.approved ? 'success' : 'danger'"
+      [value]="
+        match.approved
+          ? languageService.instant('event.approval')
+          : languageService.instant('event.noApproval')
+      "
+    >
+    </p-badge>
+    <p-button
+      styleClass="p-button-sm p-button-text p-button-success"
+      (click)="approveMatch.emit(match.id)"
+      *ngIf="
+        match.userApprovalMap[loggedInUserId] !== undefined &&
+        !match.userApprovalMap[loggedInUserId] &&
+        match.scores.length !== 0 &&
+        !editable
+      "
+      label="{{ 'event.confirmResults' | translate }}"
+    ></p-button>
+  </div>
+
+  <section class="teams">
+    <section class="team">
+      <h2>{{ 'event.rounds.participants' | translate }}</h2>
+      <div *ngFor="let user of match.userDetailsDtos" class="team-member">
+        <div class="team-member-data">
+          <app-avatar class="team-member-avatar" [user]="user"></app-avatar>
+          <p>{{ user.name }}</p>
+          <i
+            class="pi pi-check-circle"
+            *ngIf="match.userApprovalMap[user.id]"
+          ></i>
+        </div>
+      </div>
+    </section>
+  </section>
+  <section class="series">
+    <p-confirmPopup></p-confirmPopup>
+    <h2>{{ 'event.rounds.course' | translate }}</h2>
+
+    <app-no-resource-info *ngIf="series?.length === 0">
+      {{ 'event.rounds.noSeries' | translate }}
+    </app-no-resource-info>
+
+    <div *ngFor="let seriesItem of series" class="series-item">
+      <p class="series-label">
+        {{ 'event.rounds.series' | translate }} {{ seriesItem.seriesID }}
+        <i
+          class="pi pi-times-circle"
+          *ngIf="editable"
+          (click)="deleteSeries($event, seriesItem)"
+        ></i>
+      </p>
+      <div class="series-results">
+        <div
+          *ngFor="let userResults of seriesItem.scores"
+          class="series-result"
+        >
+          <p class="result-name">{{ userResults.userName }}</p>
+          <p class="result-score">{{ userResults.score }}</p>
+        </div>
+      </div>
+    </div>
+
+    <p-button
+      *ngIf="editable && !match.approved"
+      styleClass="p-button-outlined"
+      (click)="handleAddSeries.emit(match.id)"
+      >{{ 'event.rounds.addSeries' | translate }}</p-button
+    >
+  </section>
+  <section *ngIf="!editable">
+    <h2>{{ 'event.rounds.ranking.ranking' | translate }}</h2>
+    <div class="ranking">
+      <app-no-resource-info *ngIf="series?.length === 0">
+        {{ 'event.rounds.ranking.unavailable' | translate }}
+      </app-no-resource-info>
+
+      <div
+        *ngFor="let place of series!.length > 0 ? ranking : []"
+        class="ranking-item"
+      >
+        <p class="ranking-score">{{ place.place }}</p>
+        <p class="ranking-name">{{ place.name }}</p>
+      </div>
+    </div>
+  </section>
+</section>

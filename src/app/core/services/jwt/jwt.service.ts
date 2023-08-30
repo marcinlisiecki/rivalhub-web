@@ -12,6 +12,18 @@ export class JwtService {
     return this.cookieService.get('token');
   }
 
+  getRefreshToken() {
+    return this.cookieService.get('refreshToken');
+  }
+
+  setRefreshToken(token: string) {
+    this.cookieService.put('refreshToken', token);
+  }
+
+  removeRefreshToken() {
+    this.cookieService.remove('refreshToken');
+  }
+
   setToken(token: string) {
     this.cookieService.put('token', token);
   }
@@ -28,6 +40,32 @@ export class JwtService {
     return decoded?.sub || null;
   }
 
+  getActivationTimeFromToken(decoded: any): string | null {
+    return decoded?.activationTime || null;
+  }
+
+  getActivationTime(): string | null {
+    const token: string | undefined = this.getToken();
+    if (token === undefined) {
+      return null;
+    }
+
+    const decoded = this.decodeToken(token) || '';
+    return this.getActivationTimeFromToken(decoded);
+  }
+
+  getAdminOrganizationIdsFromToken(decoded: any): number[] | null {
+    return decoded?.adminOrganizationIds || null;
+  }
+
+  getUserIdFromToken(decoded: any): number | null {
+    return decoded?.id || null;
+  }
+
+  getUserNameFromToken(decoded: any): string | null {
+    return decoded?.name || null;
+  }
+
   getUserEmail(): string | null {
     const token: string | undefined = this.getToken();
     if (token === undefined) {
@@ -36,6 +74,26 @@ export class JwtService {
 
     const decoded = this.decodeToken(token) || '';
     return this.getUserEmailFromToken(decoded);
+  }
+
+  getUserId(): number | null {
+    const token: string | undefined = this.getToken();
+    if (token === undefined) {
+      return null;
+    }
+
+    const decoded = this.decodeToken(token) || '';
+    return this.getUserIdFromToken(decoded);
+  }
+
+  getUserName(): string | null {
+    const token: string | undefined = this.getToken();
+    if (token === undefined) {
+      return null;
+    }
+
+    const decoded = this.decodeToken(token) || '';
+    return this.getUserNameFromToken(decoded);
   }
 
   getExpiration(decoded: any): number | null {
@@ -51,7 +109,8 @@ export class JwtService {
   }
 
   isTokenValid(): boolean {
-    const token: string | undefined = this.getToken();
+    const token: string | undefined = this.getRefreshToken();
+
     if (token === undefined) {
       return false;
     }
@@ -65,5 +124,14 @@ export class JwtService {
     }
 
     return !this.isTokenExpired(expiration);
+  }
+
+  getAdminOrganizationIds(): number[] | null {
+    const token: string | undefined = this.getToken();
+    if (token === undefined) {
+      return null;
+    }
+    const decoded = this.decodeToken(token) || '';
+    return this.getAdminOrganizationIdsFromToken(decoded);
   }
 }

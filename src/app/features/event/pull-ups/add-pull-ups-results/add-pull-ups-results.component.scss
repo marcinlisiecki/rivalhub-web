@@ -1,0 +1,26 @@
+@import 'src/scss/variables';
+
+.wrapper {
+  margin: 4rem auto 0 auto;
+  max-width: $nonBgFormWidth;
+
+  h1 {
+    font-size: $textXl;
+  }
+}
+
+h2 {
+  font-size: $textLg;
+}
+
+.new-round-toggle-button {
+  margin: 1rem 0;
+}
+
+.new-round-wrapper {
+  margin: 1rem 0;
+}
+
+.add-round-button {
+  margin-top: 1rem;
+}

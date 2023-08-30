@@ -1,25 +1,98 @@
 <section class="wrapper">
-  <h1>Stanowiska w organizacji</h1>
+  <h1 *ngIf="showHeading">{{ 'organization.stations' | translate }}</h1>
 
-  <p-table [value]="stations" styleClass="p-datatable-striped">
+  <p-table [value]="stations" styleClass="p-datatable-striped" dataKey="id" editMode="row">
     <ng-template pTemplate="header">
       <tr>
-        <th>ID</th>
-        <th>Nazwa</th>
-        <th>Typ</th>
+        <th style="width: 35%">{{ 'common.name' | translate }}</th>
+        <th style="width: 35%">{{ 'common.type' | translate }}</th>
+        <th style="width: 15%">{{ 'common.active' | translate }}</th>
+        <th style="width: 15%"></th>
+
+        <!-- Przyciski zmiany stanowiska do zmiany koloru np biały sekundary chociaż wizualnie spoko <3  -->
+        <!--ptaszek na ikonke zapisu i przycisk undo  (domyślny wiersz już gotowy)  -->
+        <!-- dodawanie stanowiska zaminić na dodawanie kolejnego wiersza -->
+        <!-- na mobilnym widoku dodatkowo oscylować wiersze -->
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-station>
+    <ng-template pTemplate="body" let-station let-editing="editing" let-ri="rowIndex">
+      <tr [pEditableRow]="station">
+        <td>
+          <p-cellEditor>
+            <ng-template pTemplate="input">
+              <input pInputText type="text" [(ngModel)]="station.name" required />
+            </ng-template>
+            <ng-template pTemplate="output">
+              {{ station.name }}
+            </ng-template>
+          </p-cellEditor>
+        </td>
+        <td>
+          <p-cellEditor>
+            <ng-template pTemplate="input">
+              <p-dropdown [options]="stationTypes" appendTo="body" [(ngModel)]="station.type"></p-dropdown>
+            </ng-template>
+            <ng-template pTemplate="output">
+              {{ categoryTypeToLabel(station.type) | translate }}
+            </ng-template>
+          </p-cellEditor>
+        </td>
+        <td>
+          <p-cellEditor>
+            <ng-template pTemplate="input">
+              <p-inputSwitch [(ngModel)]="station.active"></p-inputSwitch>
+            </ng-template>
+            <ng-template pTemplate="output">
+              <i *ngIf="station.active" class="pi pi-check" style="color: green"></i>
+              <i *ngIf="!station.active" class="pi pi-times" style="color: red"></i>
+            </ng-template>
+          </p-cellEditor>
+        </td>
+        <td>
+          <div class="flex align-items-center justify-content-center gap-2">
+            <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
+              (click)="onRowEditInit(station)" class="p-button-rounded p-button-text p-button-plain"></button>
+
+            <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-save"
+              (click)="onRowEditSave(station)" class="p-button-rounded p-button-text p-button-plain mr-2"></button>
+            <p-confirmPopup></p-confirmPopup>
+
+            <button pButton pRipple type="button" pSaveEditableRow icon="pi pi-trash"
+              (click)="onRowDelete($event, station)"
+              class="p-button-rounded p-button-text p-button-danger mr-2"></button>
+
+            <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi"
+              (click)="onRowEditCancel(station, ri)" class="p-button-rounded p-button-text p-button-danger">
+              <img src="assets/img/svg/turn-back.svg" />
+            </button>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="footer">
       <tr>
-        <td>{{ station.id }}</td>
-        <td>{{ station.name }}</td>
-        <td>{{ categoryTypeToLabel(station.type) }}</td>
+        <td>
+          <input pInputText type="text" [(ngModel)]="newStation.name" required />
+        </td>
+        <td>
+          <p-dropdown [options]="stationOptions" optionValue="value" optionLabel="label" appendTo="body"
+            [(ngModel)]="newStation.type"></p-dropdown>
+        </td>
+        <td>
+          <p-inputSwitch [(ngModel)]="newStation.active"></p-inputSwitch>
+        </td>
+        <td>
+          <button pButton pRipple type="button" (click)="onRowAdd()" icon="pi pi-save"
+            class="p-button-rounded p-button-text p-button-plain"></button>
+        </td>
       </tr>
     </ng-template>
   </p-table>
 
-  <a routerLink="/organizations/{{ organizationId }}/stations/new">
-    <p-button>Dodaj stanowisko</p-button>
-  </a>
-  <app-validation-error *ngIf="apiError">{{ apiError }}</app-validation-error>
+  <app-validation-error *ngIf="inputError">{{
+    inputError
+    }}</app-validation-error>
+  <app-validation-error *ngIf="apiError">{{
+    apiError | translate
+    }}</app-validation-error>
 </section>

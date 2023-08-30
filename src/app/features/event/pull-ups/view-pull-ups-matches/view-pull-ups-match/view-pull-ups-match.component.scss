@@ -1,0 +1,178 @@
+@import 'src/scss/variables';
+
+.match {
+  padding: 1rem;
+  border-radius: $borderRadius;
+  background-color: $panelContentBg;
+}
+
+.match-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.teams {
+  margin-top: 1rem;
+  display: flex;
+  column-gap: 0.5rem;
+
+  .team {
+    flex: 1;
+    border-radius: $borderRadius;
+
+    h2 {
+      margin-top: 0;
+    }
+
+    &-label {
+      display: flex;
+      flex-direction: column;
+      row-gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    > p:first-of-type {
+      margin-bottom: 1rem;
+    }
+
+    p {
+      padding: 0;
+      margin: 0;
+    }
+
+    &-member {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 3rem;
+
+      &-data {
+        display: flex;
+        align-items: center;
+        column-gap: 0.75rem;
+
+        i {
+          color: $successButtonBg;
+          font-size: $textSm;
+        }
+      }
+
+      &-avatar {
+        width: 2rem;
+        height: 2rem;
+        border-radius: 20%;
+        background-color: $shade600;
+      }
+
+      &-remove-button {
+        width: 2.5rem;
+        height: 2.5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        border-radius: 100rem;
+
+        i {
+          color: $dangerColor;
+        }
+
+        &:hover {
+          background-color: transparentize($shade600, 0.5);
+        }
+      }
+    }
+  }
+}
+
+.add-set-button-wrapper {
+  margin-top: 1rem;
+}
+
+.series {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.5rem;
+
+  &-item {
+    width: 100%;
+    border: 2px dotted $shade600;
+    padding: 1rem;
+    border-radius: $borderRadius;
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.5rem;
+  }
+
+  p {
+    padding: 0;
+    margin: 0;
+  }
+
+  &-label {
+    padding: 0;
+    font-size: $textSm;
+    text-transform: uppercase;
+    color: $textSecondaryColor;
+    font-weight: $weightMedium;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    i {
+      cursor: pointer;
+      color: $dangerButtonBg;
+    }
+  }
+
+  &-results {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0.5rem;
+  }
+
+  &-result {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    column-gap: 0.5rem;
+    background-color: $bgColor;
+    padding: 0.5rem;
+    border-radius: $borderRadius;
+  }
+}
+
+.result-name,
+.ranking-name {
+  color: $textSecondaryColor;
+  padding: 0;
+  margin: 0;
+}
+
+.ranking-score {
+  padding: 0;
+  margin: 0;
+}
+
+.result-score {
+}
+
+h2 {
+  font-size: $textBase;
+}
+
+.ranking {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.5rem;
+}
+
+.ranking-item {
+  display: flex;
+  align-items: center;
+  column-gap: 0.5rem;
+  background-color: $bgColor;
+  padding: 1rem;
+  border-radius: $borderRadius;
+}

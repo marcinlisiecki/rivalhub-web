@@ -1,8 +1,37 @@
-<h4>Ostatnia aktywność</h4>
-<div class="list-wrapper">
-  <app-activity-item
-    class="item-container"
-    *ngFor="let reservation of reservations"
-    [reservation]="reservation"
-  ></app-activity-item>
-</div>
+<section>
+  <header class="header-wrapper">
+    <h4>{{ 'organization.incomingEvents' | translate }}</h4>
+
+    <div class="filters">
+      <p-dropdown
+        (onChange)="filterEvents()"
+        [options]="eventTypesFilter"
+        optionLabel="name"
+        [(ngModel)]="selectedFilter"
+      ></p-dropdown>
+    </div>
+  </header>
+
+  <section class="list-wrapper">
+    <app-no-resource-info *ngIf="paginatedEvents.length === 0">
+      {{ 'organization.noIncomingEvents' | translate }}
+    </app-no-resource-info>
+
+    <app-event-card
+      *ngFor="let event of paginatedEvents"
+      [event]="event"
+      (joinEvent)="joinEvent($event)"
+      [canJoin]="canJoin(event)"
+    >
+    </app-event-card>
+  </section>
+
+  <div class="paginator-wrapper">
+    <p-paginator
+      (onPageChange)="onPageChange($event)"
+      [first]="first"
+      [rows]="rows"
+      [totalRecords]="filteredEvents.length"
+    ></p-paginator>
+  </div>
+</section>

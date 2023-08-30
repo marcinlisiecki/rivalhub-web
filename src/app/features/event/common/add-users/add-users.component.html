@@ -1,0 +1,18 @@
+<section class="teams">
+  <div class="team">
+    <div class="team-member" *ngFor="let user of addedUsers">
+      <div class="team-member-data">
+        <app-avatar class="team-member-avatar" [user]="user"></app-avatar>
+        <p>{{ user.name }}</p>
+      </div>
+      <div class="team-member-remove-button" (click)="removeUser(user)">
+        <i class="pi pi-times-circle"></i>
+      </div>
+    </div>
+
+    <div class="team-add-button" (click)="openAddUserDialog()">
+      <i class="pi pi-plus"></i>
+      <p>{{ 'event.addUser' | translate }}</p>
+    </div>
+  </div>
+</section>

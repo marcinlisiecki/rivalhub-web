@@ -1,0 +1,77 @@
+<section class="wrapper">
+  <div>
+    <p>{{ 'match.winners' | translate }}</p>
+    <p-selectButton
+      [options]="winnerOptions"
+      optionLabel="name"
+      optionValue="value"
+      [(ngModel)]="winner"
+    ></p-selectButton>
+  </div>
+
+  <p-divider></p-divider>
+
+  <div class="bills">
+    <div class="input-box">
+      <label for="team1Bills">{{
+        'billiards.match.remainingTeam1Bills' | translate
+      }}</label>
+      <p-inputNumber
+        [min]="0"
+        mode="decimal"
+        styleClass="input-wide"
+        inputId="team1Bills"
+        [(ngModel)]="team1Bills"
+      ></p-inputNumber>
+    </div>
+
+    <div class="input-box">
+      <label for="team2Bills">{{
+        'billiards.match.remainingTeam2Bills' | translate
+      }}</label>
+      <p-inputNumber
+        [min]="0"
+        mode="decimal"
+        styleClass="input-wide"
+        inputId="team2Bills"
+        [(ngModel)]="team2Bills"
+      ></p-inputNumber>
+    </div>
+  </div>
+
+  <p-divider></p-divider>
+
+  <div class="win-type" *ngIf="winner && winner !== 0">
+    <p>{{ 'billiards.match.winType' | translate }}</p>
+
+    <div class="radio-wrapper">
+      <p-radioButton
+        name="win-type"
+        value="{{ WinType.ALL_IN }}"
+        [(ngModel)]="winType"
+        inputId="all"
+      ></p-radioButton>
+      <label for="all">{{ 'billiards.match.allBillsIn' | translate }}</label>
+    </div>
+
+    <div class="radio-wrapper">
+      <p-radioButton
+        name="win-type"
+        value="{{ WinType.FOUl_ON8 }}"
+        [(ngModel)]="winType"
+        inputId="foul"
+      ></p-radioButton>
+      <label for="foul">{{ 'match.foul' | translate }}</label>
+    </div>
+  </div>
+
+  <p-button styleClass="button-wide" (click)="onSubmit()">{{
+    'button.add' | translate
+  }}</p-button>
+
+  <div *ngIf="validationError" class="validation-error-wrapper">
+    <app-validation-error>
+      {{ validationError | translate }}
+    </app-validation-error>
+  </div>
+</section>

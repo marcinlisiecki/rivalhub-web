@@ -1,0 +1,39 @@
+<div class="avatar" (click)="takeToUserProfile()">
+  <app-avatar [user]="user"></app-avatar>
+</div>
+
+<div class="info" (click)="takeToUserProfile()">
+  <div>
+    <p class="info-name">{{ user.name }}</p>
+    <h4 class="info-title">{{ user.email }}</h4>
+  </div>
+</div>
+
+<p-confirmPopup></p-confirmPopup>
+<div class="button-container">
+  <p-button
+    *ngIf="amIAdmin && !myself"
+    styleClass="p-button-sm"
+    class="card-btn"
+    (onClick)="onKickAdmin($event)"
+    >{{ 'organization.kickButtonText' | translate }}</p-button
+  >
+  <p-button
+    *ngIf="amIAdmin && !myself"
+    styleClass="p-button-sm"
+    class="card-btn"
+    (onClick)="unAdmin($event)"
+  >
+    {{ 'organization.adminButtonText' | translate }}</p-button
+  >
+  <p-button
+    *ngIf="!myself"
+    styleClass="p-button-sm"
+    class="card-btn"
+    (onClick)="menu.toggle($event)"
+    icon="pi pi-angle-down"
+    iconPos="right"
+    label="{{ 'organization.challenge' | translate }}"
+  ></p-button>
+  <p-menu [popup]="true" #menu [model]="items"></p-menu>
+</div>

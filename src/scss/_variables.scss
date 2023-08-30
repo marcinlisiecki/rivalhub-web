@@ -1,7 +1,10 @@
 @import 'src/assets/viva/viva-dark/theme';
 
+$bgColor: #121212;
+
 $pageWidth: 1280px;
 $nonBgFormWidth: 600px;
+$nonBgWideFormWidth: 900px;
 
 $dangerColor: #da2237;
 
@@ -18,4 +21,13 @@ $weightBold: 800;
 $textVerySmall: 0.75rem;
 $textSm: 0.875rem;
 $textBase: 1rem;
-$fontFamily:  'Inter', sans-serif;
+$textLg: 1.25rem;
+$textXl: 1.5rem;
+
+$fontFamily: 'Inter', sans-serif;
+
+$winningBgColor: #84cc16;
+$losingBgColor: #991b1b;
+$tieBgColor: #a3a3a3;
+
+$flexRow: 0 0 100%;

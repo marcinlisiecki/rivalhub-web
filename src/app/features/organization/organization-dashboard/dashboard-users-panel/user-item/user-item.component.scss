@@ -1,4 +1,18 @@
+.wrapper {
+  cursor: pointer;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  column-gap: 0.8rem;
+  padding: 0.3rem 0;
+
+  p {
+    margin: 0;
+  }
+}
+
+
 .item-avatar {
-    margin-right: 15px;
-    height: 30px;
+  border-radius: 5px;
+  height: 24px;
 }

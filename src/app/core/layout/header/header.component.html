@@ -2,28 +2,31 @@
   <div class="header-content">
     <div class="header-left">
       <a class="header-logo-wrapper" routerLink="/">
-        <img priority ngSrc="assets/img/logo.png" height="40" width="60" alt="Logo" />
+        <img
+          priority
+          ngSrc="assets/img/logo.png"
+          height="50"
+          width="75"
+          alt="Logo"
+        />
       </a>
       <nav>
         <ul>
           <li>
-            <app-header-link routerLink="/">{{
-              'header.main-page' | translate
-            }}</app-header-link>
-          </li>
-          <li>
-            <p-toast></p-toast>
-            <p-menu styleClass="header-menu-flag" #menu [model]="flagItems" [popup]="true"></p-menu>
-            <button class="button-flag" (click)="menu.toggle($event)">
-              <img id="flag" [src]="pathOfFlag" alt="flag" width="24" height="12" />
-            </button>
+            <app-lang-btn></app-lang-btn>
           </li>
         </ul>
       </nav>
     </div>
-    <nav *ngIf="!mobileView">
-      <app-header-logged-in [logout]="logout" *ngIf="isLoggedIn"></app-header-logged-in>
-      <app-header-not-logged-in *ngIf="!isLoggedIn"></app-header-not-logged-in>
+    <nav>
+      <app-header-logged-in
+        *ngIf="isLoggedIn"
+        [mobileView]="mobileView"
+      ></app-header-logged-in>
+      <app-header-not-logged-in
+        *ngIf="!isLoggedIn"
+        [mobileView]="mobileView"
+      ></app-header-not-logged-in>
     </nav>
   </div>
 </header>

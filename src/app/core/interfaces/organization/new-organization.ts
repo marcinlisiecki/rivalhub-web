@@ -1,4 +1,5 @@
 export interface NewOrganization {
   name: string;
-  imageUrl?: string;
+  color: string;
+  uploadedFile?: File;
 }

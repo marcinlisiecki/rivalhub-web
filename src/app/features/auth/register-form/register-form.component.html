@@ -8,7 +8,6 @@
         name="email"
         id="email"
         type="email"
-        placeholder="jan.kowalski@example.com"
       />
       <div *ngIf="email?.invalid && email?.touched">
         <app-validation-error *ngIf="email?.errors?.['required']">
@@ -27,16 +26,15 @@
         name="name"
         id="name"
         type="text"
-        placeholder="jan.kowal"
         formControlName="name"
       />
       <div *ngIf="name?.invalid && name?.touched">
         <app-validation-error *ngIf="name?.errors?.['required']">
           {{ 'input.userNameRequired' | translate }}
         </app-validation-error>
-        <app-validation-error *ngIf="name?.errors?.['minlength']">
-          {{ 'input.userNameMin' | translate }}
-        </app-validation-error>
+        <app-validation-error *ngIf="name?.errors?.['minlength']">{{
+          'input.userNameMin' | translate
+        }}</app-validation-error>
         <app-validation-error *ngIf="name?.errors?.['maxlength']">
           {{ 'input.userNameMax' | translate }}
         </app-validation-error>
@@ -52,8 +50,9 @@
         styleClass="input-wide"
         class="password"
         inputStyleClass="input-wide"
-        placeholder="********"
         formControlName="password"
+        [mediumRegex]="MEDIUM_REGEX"
+        [strongRegex]="STRONG_REGEX"
         [promptLabel]="setPasswordPrompt()"
         [weakLabel]="'input.passwordWeakLabel' | translate"
         [mediumLabel]="'input.passwordMediumLabel' | translate"
@@ -75,8 +74,12 @@
       </p-button>
       <p class="api-error-wrapper" *ngIf="apiError">
         <app-validation-error>
-          {{ apiError }}
+          {{ apiError | translate }}
         </app-validation-error>
+      </p>
+      <p class="already-have-account-wrapper">
+        {{ 'register.login' | translate }}
+        <a routerLink="/login">{{ 'button.signIn' | translate }}</a>
       </p>
     </div>
   </form>

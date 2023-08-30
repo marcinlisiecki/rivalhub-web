@@ -1,0 +1,23 @@
+<h2>{{ 'organization.configurator.stations.title' | translate }}</h2>
+
+<app-view-stations [showHeading]="false"></app-view-stations>
+
+<p-divider></p-divider>
+
+<div class="form-step-navigation">
+  <p-button
+    icon="pi pi-arrow-left"
+    iconPos="left"
+    label="{{ 'stepForm.previous' | translate }}"
+    styleClass="p-button-outlined"
+    (click)="setStep.emit(OrganizationConfiguratorStep.CATEGORIES)"
+  >
+  </p-button>
+  <p-button
+    icon="pi pi-arrow-right"
+    iconPos="right"
+    label="{{ 'stepForm.next' | translate }}"
+    (click)="setStep.emit(OrganizationConfiguratorStep.SETTINGS)"
+  >
+  </p-button>
+</div>

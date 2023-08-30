@@ -14,10 +14,6 @@ export class HeroComponent {
     private router: Router,
   ) {
     this.value = this.authService.isAuth();
-    if (this.value) {
-      setTimeout(() => {
-        this.router.navigateByUrl('/organizations').then();
-      }, 1000);
-    }
+    if (this.value) this.router.navigateByUrl('/organizations').then();
   }
 }

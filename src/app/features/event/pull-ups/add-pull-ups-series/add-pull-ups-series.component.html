@@ -1,0 +1,20 @@
+<section class="wrapper">
+  <div *ngFor="let userResult of usersResults" class="input-box">
+    <label for="{{ userResult.name }}">{{ userResult.name }}</label>
+    <input
+      pInputText
+      type="number"
+      [name]="userResult.name"
+      [id]="userResult.name"
+      [(ngModel)]="userResult.result"
+    />
+  </div>
+</section>
+
+<p-button styleClass="button-wide" (click)="onSubmit()">{{
+  'button.add' | translate
+}}</p-button>
+
+<div class="validation-error-wrapper" *ngIf="errorMessage">
+  <app-validation-error>{{ errorMessage | translate }}</app-validation-error>
+</div>

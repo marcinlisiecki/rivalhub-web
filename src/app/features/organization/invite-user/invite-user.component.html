@@ -1,28 +1,38 @@
 <div class="content-wrapper">
-  <p-card header="Zaproś użytkownika" styleClass="centered-form" subheader="Do organizacji XXX">
+  <app-organization-back-button
+    [ngStyle]="{ marginTop: '1rem' }"
+    [organizationId]="organizationId"
+  ></app-organization-back-button>
+  <p-card
+    *ngIf="organization"
+    header="{{ 'organization.invite' | translate }}"
+    styleClass="centered-form"
+    subheader="{{ 'organization.toOrg' | translate }} {{ organization.name }}"
+  >
     <form [formGroup]="inviteForm" (ngSubmit)="onSubmit()" class="invite-form">
       <div class="input-box">
-        <label for="email">Adres email</label>
-          <input
-            id="email"
-            formControlName="email"
-            pInputText
-            name="email"
-            type="email"
-            placeholder="jan.kowalski@example.com"
-          />
+        <label for="email">{{ 'input.email' | translate }}</label>
+        <input
+          id="email"
+          formControlName="email"
+          pInputText
+          name="email"
+          type="email"
+        />
         <div *ngIf="email?.invalid && email?.touched">
           <app-validation-error *ngIf="email?.errors?.['required']">
-            Adres email jest wymagany
+            {{ 'input.emailWarning' | translate }}
           </app-validation-error>
         </div>
       </div>
-      <p-button styleClass="button-wide" type="submit">Zaproś</p-button>
+      <p-button styleClass="button-wide" type="submit">{{
+        'common.invite' | translate
+      }}</p-button>
     </form>
 
-    <div class="invite-link">
-      <p>Albo udostępnij link</p>
-      <span class="supporting-text">https://exmaple.com/invite/434354325</span>
+    <div class="invite-link" *ngIf="invitationLink">
+      <p>{{ 'organization.inviteLink' | translate }}</p>
+      <span class="supporting-text">{{ invitationLink }}</span>
     </div>
   </p-card>
 </div>

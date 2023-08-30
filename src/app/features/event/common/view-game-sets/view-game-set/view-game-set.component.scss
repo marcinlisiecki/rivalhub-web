@@ -1,0 +1,61 @@
+@import 'src/scss/variables';
+
+.set {
+  width: 100%;
+  border: 2px dotted $shade600;
+  padding: 1rem;
+  border-radius: $borderRadius;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 0.5rem;
+
+  &-index {
+    margin: 0 0 0.25rem 0;
+    padding: 0;
+    font-size: $textSm;
+    text-transform: uppercase;
+    color: $textSecondaryColor;
+    font-weight: $weightMedium;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+
+    .invisible {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    i {
+      cursor: pointer;
+      color: $dangerButtonBg;
+    }
+  }
+
+  &-label {
+    color: $textSecondaryColor;
+    font-size: $textBase;
+  }
+
+  &-score {
+    font-weight: $weightMedium;
+  }
+
+  &-results {
+    display: flex;
+    column-gap: 2rem;
+    justify-content: center;
+  }
+
+  &-result {
+    font-size: $textLg;
+    display: flex;
+    align-items: center;
+    column-gap: 1rem;
+
+    p {
+      padding: 0;
+      margin: 0;
+    }
+  }
+}

@@ -1,0 +1,72 @@
+<div class="match">
+  <div class="match-header">
+    <p-badge
+      [severity]="match.approved ? 'success' : 'danger'"
+      [value]="
+        match.approved
+          ? languageService.instant('event.approval')
+          : languageService.instant('event.noApproval')
+      "
+    >
+    </p-badge>
+    <p-button
+      styleClass="p-button-sm p-button-text p-button-success"
+      (click)="approveMatch.emit(match.id)"
+      *ngIf="
+        match.userApprovalMap[loggedInUserId] !== undefined &&
+        !match.userApprovalMap[loggedInUserId] &&
+        match.sets.length !== 0 &&
+        !editable
+      "
+      label="{{ 'event.confirmResults' | translate }}"
+    ></p-button>
+  </div>
+
+  <section class="teams">
+    <div class="team">
+      <div class="team-label">
+        <p>{{ 'event.common.team' | translate }} 1</p>
+      </div>
+      <div *ngFor="let user of match.team1" class="team-member">
+        <div class="team-member-data">
+          <app-avatar class="team-member-avatar" [user]="user"></app-avatar>
+          <p>{{ user.name }}</p>
+          <i
+            class="pi pi-check-circle"
+            *ngIf="match.userApprovalMap[user.id]"
+          ></i>
+        </div>
+      </div>
+    </div>
+    <div class="team">
+      <div class="team-label">
+        <p>{{ 'event.common.team' | translate }} 2</p>
+      </div>
+      <div *ngFor="let user of match.team2" class="team-member">
+        <div class="team-member-data">
+          <app-avatar class="team-member-avatar" [user]="user"></app-avatar>
+          <p>{{ user.name }}</p>
+          <i
+            class="pi pi-check-circle"
+            *ngIf="match.userApprovalMap[user.id]"
+          ></i>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <app-view-game-sets
+    [gameSets]="match.sets"
+    [editable]="editable"
+    [matchId]="match.id"
+  ></app-view-game-sets>
+
+  <div class="add-set-button-wrapper" *ngIf="editable && !match.approved">
+    <p-button
+      (click)="handleAddSet.emit(match.id)"
+      styleClass="p-button-outlined"
+    >
+      {{ 'event.common.addSet' | translate }}
+    </p-button>
+  </div>
+</div>

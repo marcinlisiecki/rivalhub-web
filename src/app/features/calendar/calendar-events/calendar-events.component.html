@@ -1,0 +1,46 @@
+<div class="events">
+  <div
+    *ngIf="currentDayEvents().length !== 0; then eventContent; else noEvents"
+  ></div>
+</div>
+
+<ng-template #eventContent>
+  <div
+    [class]="event['type']"
+    *ngFor="let event of currentDayEvents()"
+    [ngStyle]="color(event)"
+  >
+    <section>
+      <i>{{ event['organizationName'] }}</i>
+
+      <i
+        >{{ eventToString(event.title).slice(0, 10)
+        }}<span *ngIf="isTitleIsToLong(event.title)">...</span></i
+      >
+
+      <i>
+        {{ categoryTypeToLabel(event!['extendedProps']!['type']) | translate }}
+      </i>
+
+      <i>
+        <b *ngIf="!event.allDay">{{ getDate(event) | date: 'HH:mm' }}</b>
+      </i>
+      <i>
+        <b *ngIf="event.allDay"> {{ 'calendar.allDay' | translate }} </b>
+      </i>
+    </section>
+    <section style="margin-left: 0.5rem">
+      <h5>{{ 'calendar.type.' + event['type'] | translate }}</h5>
+      <a [routerLink]="event['eventURL']">
+        <p-button class="evbtn" styleClass="event-button">{{
+          'calendar.event.eventButton' | translate
+        }}</p-button>
+      </a>
+    </section>
+  </div>
+</ng-template>
+<ng-template #noEvents>
+  <div>
+    <p>{{ 'calendar.noEvents' | translate }}</p>
+  </div>
+</ng-template>

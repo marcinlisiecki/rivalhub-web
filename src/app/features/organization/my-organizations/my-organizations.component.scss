@@ -1,42 +1,159 @@
 @import 'src/scss/variables';
 
-.organizations-container {
-    display: flex;
-    flex-wrap: wrap;
-    width: $pageWidth;
-    margin: 0 auto;
-    .organization-card {
-        display: flex;
-        margin: 10px;
+.wrapper {
+  max-width: $pageWidth;
+  margin: 2rem auto 0 auto;
+}
 
+.content {
+  display: flex;
+  column-gap: 1rem;
+  margin-top: 2rem;
+}
 
+.notifications {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.5rem;
+  width: 100%;
+  margin: 1rem 0;
 
-        .organization-link {
-            display: flex;
-            width: 200px;
-            height: 200px;
+  h1 {
+    padding: 0;
+    margin: 0 0 0.5rem 0;
+    font-size: $textLg;
+    font-weight: $weightRegular;
+    color: $textSecondaryColor;
+  }
+}
 
-            justify-content: center;
-            align-items: center;
+.notification {
+  background-color: $panelContentBg;
+  border-radius: $borderRadius;
+  padding: 1rem;
+  margin: 0;
 
-            text-decoration: none;
-            border-radius: $dashboardRadius;
+  p {
+    padding: 0;
+    margin: 0;
+  }
 
-            background-repeat: no-repeat;
-            background-size: cover;
+  a {
+    display: block;
+    margin-top: 0.5rem;
+    color: $primaryColor;
+    text-decoration: none;
 
-            &:hover {
-                //red border
-                border: 2.5px solid red;
-            }
-
-        }
-
-        .organization-name {
-            backdrop-filter: blur(5px);
-            color: black;
-            font-size: 16px;
-            font-weight: $weightMedium;
-        }
+    &:hover {
+      text-decoration: underline;
     }
+  }
+}
+
+.right-panel {
+  width: 400px;
+}
+
+.invitations {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.5rem;
+
+  .verify-account-wrapper {
+  }
+
+  h1 {
+    padding: 0;
+    margin: 0 0 0.5rem 0;
+    font-size: $textLg;
+    font-weight: $weightRegular;
+    color: $textSecondaryColor;
+  }
+}
+
+.invitation {
+  background-color: $panelContentBg;
+  border-radius: $borderRadius;
+  padding: 0.5rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: 1rem;
+
+  p {
+    padding: 0;
+    margin: 0;
+    font-weight: $weightMedium;
+  }
+}
+
+.verify-account-info {
+  margin: 1rem 0;
+  display: flex;
+  width: 100%;
+}
+
+.organizations-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  flex: 1;
+
+  .organization-card {
+    display: flex;
+    flex-direction: column;
+
+    .organization-link {
+      display: flex;
+      width: 200px;
+      height: 200px;
+
+      justify-content: center;
+      align-items: center;
+
+      text-decoration: none;
+      border-radius: $dashboardRadius;
+
+      background-repeat: no-repeat;
+      background-size: cover;
+
+      &:hover {
+        //red border
+        border: 2.5px solid red;
+      }
+    }
+
+    .organization-name {
+      width: 200px;
+      margin-top: 10px;
+      backdrop-filter: blur(5px);
+      text-align: center;
+      color: white;
+      font-size: 16px;
+      font-weight: $weightMedium;
+      flex-wrap: wrap;
+      overflow-wrap: break-word;
+    }
+  }
+}
+
+.no-organizations {
+  margin: 4rem auto;
+  width: 20rem;
+  height: 10rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  p {
+    margin: 2rem auto;
+    text-align: center;
+    color: $textSecondaryColor;
+  }
+
+  img {
+    width: auto;
+    height: 100%;
+  }
 }

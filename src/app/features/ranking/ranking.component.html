@@ -1,0 +1,12 @@
+<div class="ranking-main">
+  <app-go-back-button [ngStyle]="{ marginBottom: '1rem' }"></app-go-back-button>
+  <div class="ranking-body">
+    <app-ranking-categories
+      (categoryChange)="categoryChanged($event)"
+    ></app-ranking-categories>
+
+    <p-card header="{{ 'event.rounds.ranking.ranking' | translate }}">
+      <app-ranking-users [users]="category"></app-ranking-users>
+    </p-card>
+  </div>
+</div>

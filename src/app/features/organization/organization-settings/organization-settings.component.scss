@@ -1,0 +1,58 @@
+@import 'src/scss/variables';
+
+.wrapper {
+  max-width: $pageWidth;
+  margin: 4rem auto;
+
+  h1 {
+    margin-top: 0.5rem;
+  }
+}
+
+h2 {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-weight: $weightMedium;
+  font-size: $textLg;
+}
+
+.categories {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+
+  &-item {
+    aspect-ratio: 1 / 1;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    i {
+      font-size: 2rem;
+    }
+  }
+}
+
+.form-avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 15px;
+  padding: 10px;
+}
+
+.organization-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button-wrapper {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+
+.avatar-img {
+  border-radius: $dashboardRadius;
+}

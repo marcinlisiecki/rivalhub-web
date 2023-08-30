@@ -1,28 +1,30 @@
 <section class="form-step-wrapper">
   <header>
-    <h1>Data i czas wydarzenia</h1>
+    <h1>{{ 'event.date.D&T' | translate }}</h1>
   </header>
 
   <form class="time-selector-wrapper" [formGroup]="dateForm">
     <div class="input-box">
-      <label for="startDate">Data rozpoczęcia</label>
+      <label for="startDate">{{ 'event.date.start' | translate }}</label>
       <p-calendar
         inputId="startDate"
         styleClass="input-wide"
         [showTime]="true"
         [showIcon]="true"
+        [minDate]="today"
         dateFormat="dd-mm-yy"
         formControlName="startDate"
       ></p-calendar>
     </div>
     <div class="input-box">
-      <label for="endDate">Data zakończenia</label>
+      <label for="endDate">{{ 'event.date.end' | translate }}</label>
       <p-calendar
         inputId="endDate"
         styleClass="input-wide"
         dateFormat="dd-mm-yy"
         [showTime]="true"
         [showIcon]="true"
+        [minDate]="today"
         formControlName="endDate"
       ></p-calendar>
     </div>
@@ -33,12 +35,12 @@
   <div class="form-step-navigation">
     <p-button
       styleClass="p-button-outlined"
-      (onClick)="setFormStep.emit(AddEventFormStep.BASIC_INFO)"
+      (onClick)="setFormStep.emit(AddEventFormStep.ADD_USERS)"
     >
-      Powrót
+      {{ 'stepForm.previous' | translate }}
     </p-button>
     <p-button (onClick)="setFormStep.emit(AddEventFormStep.RESERVATION)">
-      Dalej
+      {{ 'stepForm.next' | translate }}
     </p-button>
   </div>
 

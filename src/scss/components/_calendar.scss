@@ -1,0 +1,50 @@
+td[highlight='true'] {
+  background-color: $primaryColor !important;
+}
+
+.calendar-event {
+  display: flex;
+  font-size: 0.5rem;
+  width: 100%;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.cal-rezerwacja {
+  border: 1px solid;
+}
+
+fc-header-toolbar {
+  width: auto !important;
+  height: 1.5rem;
+}
+
+fc-toolbar-chunk {
+  font-size: 0.5rem !important;
+}
+
+.button-filter {
+  width: auto;
+  height: 1.5rem;
+  margin-left: 0.79rem;
+}
+
+.event-button {
+  font-size: 0.65rem;
+  padding: 0.4rem;
+}
+
+p-button.evbtn > button {
+  border-color: black !important;
+}
+
+.calendar-sidebar-btn {
+  width: 2.5rem !important;
+  height: 1.5rem !important;
+}
+
+.fc-toolbar-title {
+  margin: 0.5rem 2rem !important;
+  font-size: 1.45rem !important;
+}

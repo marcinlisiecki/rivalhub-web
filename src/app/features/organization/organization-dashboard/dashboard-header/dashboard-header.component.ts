@@ -1,20 +1,23 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { ImageService } from '@app/core/services/image/image.service';
 
 import { Organization } from '@interfaces/organization/organization';
+
 @Component({
   selector: 'app-dashboard-header',
   templateUrl: './dashboard-header.component.html',
   styleUrls: ['./dashboard-header.component.scss'],
 })
-export class DashboardHeaderComponent {
-  @Input({ required: true })
-  organization!: Organization;
+export class DashboardHeaderComponent implements OnInit {
+  @Input({ required: true }) organization!: Organization;
+  @Input() usersCount!: number;
+  defaultAvatar!: boolean;
 
-  getImagePath(imageUrl: string | null): string {
-    if (imageUrl !== null) {
-      return imageUrl;
-    }
+  constructor(private imageService: ImageService) {}
 
-    return 'assets/img/avatars/avatarplaceholder.png';
+  ngOnInit(): void {
+    this.defaultAvatar = this.imageService.checkDefaultAvatar(
+      this.organization.imageUrl,
+    );
   }
 }

@@ -1,0 +1,29 @@
+<section class="wrapper">
+  <section>
+    <app-go-back-button></app-go-back-button>
+    <h1>{{ 'event.games' | translate }}</h1>
+
+    <app-view-ping-pong-matches
+      [matches]="matches"
+      [editable]="true"
+      (handleAddSet)="openAddSetDialog($event)"
+    >
+    </app-view-ping-pong-matches>
+
+    <div class="add-match-button-wrapper">
+      <p-button
+        *ngIf="!showAddNewMatch && editable"
+        (onClick)="showAddNewMatch = true"
+      >
+        {{ 'event.addGame' | translate }}
+      </p-button>
+    </div>
+
+    <app-new-event-match
+      [fetchUsers]="false"
+      [providedUsers]="eventUsers"
+      *ngIf="showAddNewMatch"
+      (addMatch)="handleAddMatch($event)"
+    ></app-new-event-match>
+  </section>
+</section>

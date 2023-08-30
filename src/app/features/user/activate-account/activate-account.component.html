@@ -1,0 +1,13 @@
+<section class="wrapper">
+  <app-centered-spinner *ngIf="isLoading"></app-centered-spinner>
+
+  <p-messages severity="success" *ngIf="isSuccess">
+    <ng-template pTemplate>
+      {{ 'organization.accountVerified' | translate }}</ng-template
+    >
+  </p-messages>
+
+  <p-messages severity="error" *ngIf="errorMessage !== null">
+    <ng-template pTemplate> {{ errorMessage | translate }} </ng-template>
+  </p-messages>
+</section>

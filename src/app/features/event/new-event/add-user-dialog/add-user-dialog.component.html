@@ -1,0 +1,53 @@
+<section class="wrapper">
+  <div class="input-box">
+    <label for="name">{{ 'input.userName' | translate }}</label>
+    <input
+      pInputText
+      type="text"
+      name=""
+      id="name"
+      class="input-wide"
+      [ngModel]="userSearchQuery"
+      (ngModelChange)="onSearchChange($event)"
+    />
+  </div>
+
+  <div class="users">
+    <div
+      class="user"
+      *ngFor="
+        let user of userSearchQuery.length >= 3 || !require3Characters
+          ? filteredUserList
+          : []
+      "
+    >
+      <div class="user-data">
+        <app-avatar class="user-avatar" [user]="user"></app-avatar>
+        <div>
+          <p>{{ user.name }}</p>
+          <i [ngStyle]="{ fontSize: '0.75rem', color: 'grey' }">{{
+            user.email
+          }}</i>
+        </div>
+      </div>
+      <div class="user-add-button" (click)="handleAddUser(user)">
+        <i class="pi pi-plus"></i>
+      </div>
+    </div>
+  </div>
+
+  <app-no-resource-info
+    *ngIf="
+      filteredUserList.length === 0 &&
+      (userSearchQuery.length >= 3 || !require3Characters)
+    "
+  >
+    {{ 'event.noUsers' | translate }}
+  </app-no-resource-info>
+
+  <app-no-resource-info
+    *ngIf="userSearchQuery.length < 3 && require3Characters"
+  >
+    {{ 'event.require3Characters' | translate }}
+  </app-no-resource-info>
+</section>

@@ -1,0 +1,213 @@
+.event-waiting-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    flex-wrap: wrap;
+
+    h4 {
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+
+}
+
+$glassColor: #919EB3;
+$frameColor: #334155;
+$sandColor: #EDD0AA;
+$time : 3s;
+
+.box-canvas {
+    position: relative;
+    margin: auto;
+    display: block;
+    width: 75px;
+    height: 125px;
+    margin-top: 1.5rem;
+}
+
+.frame {
+    position: absolute;
+    width: 75px;
+    height: 94px;
+    border-top: 5px solid $glassColor;
+    border-bottom: 5px solid $glassColor;
+    animation: rotateFrame $time infinite;
+}
+
+@keyframes rotateFrame {
+    0% {
+        transform: none;
+    }
+
+    90% {
+        transform: none;
+    }
+
+    100% {
+        transform: rotate(180deg);
+    }
+}
+
+.top {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 67.5px;
+    height: 42.5px;
+    clip-path: polygon(45% 100%, 55% 100%, 100% 0, 0 0);
+}
+
+.top::before {
+    content: '';
+    position: absolute;
+    width: 67.5px;
+    height: 42.5px;
+    bottom: 0px;
+    background: $sandColor;
+    animation: $time lowerTopSand infinite;
+}
+
+.top::after {
+    content: '';
+    position: absolute;
+    top: 0px;
+    left: -7.5px;
+    width: 95px;
+    height: 95px;
+    transform: rotate(-90deg);
+    background: conic-gradient(from 0deg, white 0deg, transparent 90deg, white 180deg);
+}
+
+@keyframes lowerTopSand {
+    0% {
+        transform: none;
+    }
+
+    100% {
+        transform: translateY(43px);
+    }
+}
+
+.bottom {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 42.5px;
+    width: 67.5px;
+    height: 42.5px;
+    clip-path: polygon(45% 0, 55% 0, 100% 100%, 0 100%);
+}
+
+.bottom::before {
+    content: '';
+    position: absolute;
+    transform: translateX(-50%);
+    left: 50%;
+    width: 67.5px;
+    height: 10px;
+    bottom: 0;
+    background: $sandColor;
+    animation: $time raiseBottomSand infinite;
+}
+
+.blob {
+    position: absolute;
+    transform: translateX(-50%);
+    top: 5px;
+    left: 50%;
+    content: '';
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: $sandColor;
+    animation: raiseMound $time infinite;
+}
+
+@keyframes raiseMound {
+    0% {
+        transform: translate(-50%, 34px);
+        width: 75px;
+    }
+
+    100% {
+        transform: translateX(-50%);
+        width: 25px;
+    }
+}
+
+@keyframes raiseBottomSand {
+    0% {
+        height: 20px;
+        transform: translate(-50%, 34px);
+        border-radius: 0;
+    }
+
+    100% {
+        height: 50px;
+        transform: translateX(-50%);
+        border-radius: 50% 50% 0 0;
+    }
+}
+
+.drip {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 5px solid $sandColor;
+    animation: fadeDrip $time infinite;
+}
+
+@keyframes fadeDrip {
+    0% {
+        opacity: 1;
+    }
+
+    70% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+.drip::before {
+    content: '';
+    position: absolute;
+    left: -0.5px;
+    width: 1.5px;
+    height: 100px;
+    background: repeating-linear-gradient(to bottom, $sandColor, $sandColor 2.5px, transparent 2.5px, transparent 5px);
+    animation: drip $time infinite;
+}
+
+@keyframes drip {
+    0% {
+        transform: translateY(-75px);
+        opacity: 1;
+    }
+
+    99% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(15px);
+    }
+}
+
+.glass {
+    position: absolute;
+    top: -45px;
+    left: -7.5px;
+    width: 95px;
+    height: 95px;
+    transform: rotate(-270deg);
+    background: conic-gradient(from 0deg, white 0deg, transparent 90deg, white 180deg);
+}

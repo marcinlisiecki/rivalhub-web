@@ -1,6 +1,6 @@
 <section class="form-step-wrapper">
   <header>
-    <h1>Rezerwacja</h1>
+    <h1>{{ 'event.reservation' | translate }}</h1>
   </header>
 
   <app-category-stations-selector
@@ -26,8 +26,8 @@
       styleClass="p-button-outlined"
       (onClick)="setFormStep.emit(AddEventFormStep.DATE)"
     >
-      Powrót
+      {{ 'stepForm.previous' | translate }}
     </p-button>
-    <p-button> Stwórz wydarzenie </p-button>
+    <p-button (click)="emitThat()"> {{ 'event.create' | translate }} </p-button>
   </div>
 </section>

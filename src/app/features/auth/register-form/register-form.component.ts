@@ -4,6 +4,9 @@ import { AuthService } from '@app/core/services/auth/auth.service';
 import { RegisterCredentials } from '@interfaces/auth/register-credentials';
 import { Router } from '@angular/router';
 import { extractMessage } from '@app/core/utils/apiErrors';
+import { MEDIUM_REGEX, STRONG_REGEX } from '@app/core/constants/password';
+import { InvitationsService } from '@app/core/services/invitations/invitations.service';
+import { LanguageService } from '@app/core/services/language/language.service';
 
 @Component({
   selector: 'app-register-form',
@@ -25,20 +28,16 @@ export class RegisterFormComponent {
   });
   apiError: null | string = null;
   isLoading: boolean = false;
-  passwordPrompt: string = '';
 
   constructor(
     private authService: AuthService,
     private router: Router,
+    private invitationService: InvitationsService,
+    private languageService: LanguageService,
   ) {}
 
   setPasswordPrompt(): string {
-    let lang: string = <string>localStorage.getItem('currentLanguage');
-    if (lang === 'pl') {
-      return 'Wprowadź hasło';
-    } else {
-      return 'Enter password';
-    }
+    return this.languageService.instant('input.passwordPromptLabel');
   }
 
   onSubmit() {
@@ -58,9 +57,13 @@ export class RegisterFormComponent {
     };
 
     this.authService.register(credentials).subscribe({
-      next: () => {
+      next: (res) => {
+        if (res?.token) {
+          this.router.navigateByUrl('/organizations?registered=true');
+          this.invitationService.setUserIds();
+        }
+
         this.isLoading = false;
-        this.router.navigateByUrl('/login?registered=true').then();
       },
       error: (err: unknown) => {
         this.isLoading = false;
@@ -80,4 +83,7 @@ export class RegisterFormComponent {
   get password() {
     return this.registerForm.get('password');
   }
+
+  protected readonly MEDIUM_REGEX = MEDIUM_REGEX;
+  protected readonly STRONG_REGEX = STRONG_REGEX;
 }

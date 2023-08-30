@@ -1,0 +1,51 @@
+@import 'src/scss/variables';
+
+.info {
+  display: flex;
+  height: 70px;
+  justify-content: space-between;
+  flex-grow: 1;
+  cursor: pointer;
+
+  &-title {
+    text-wrap: normal;
+    margin: 10px 0 10px 15px;
+    font-weight: $weightMedium;
+    color: $textSecondaryColor;
+    font-size: $textSm
+  }
+
+  &-name {
+    margin: 10px 0 10px 15px;
+    font-weight: $weightBold;
+    font-size: $textLg
+  }
+}
+
+.avatar {
+  width: 70px;
+  height: 70px;
+  overflow: hidden;
+  border-radius: 10px;
+  margin-left: 20px;
+  cursor: pointer;
+}
+
+.avatar-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  aspect-ratio: 1/1;
+  width: 100%;
+  height: 100%;
+}
+
+.dashboard-header-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}
+
+.card-btn {
+  margin: 0 10px;
+}

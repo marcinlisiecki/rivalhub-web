@@ -1,0 +1,12 @@
+@import 'src/scss/variables';
+
+.matches {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+}
+
+.section-title {
+  font-size: $textLg;
+  font-weight: $weightMedium;
+}

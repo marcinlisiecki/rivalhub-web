@@ -1,0 +1,35 @@
+<section class="wrapper">
+  <section>
+    <app-go-back-button></app-go-back-button>
+    <h1>{{ 'event.rounds.rounds' | translate }}</h1>
+
+    <app-view-pull-ups-matches
+      [matches]="matches"
+      [editable]="true"
+      (handleAddSeries)="openAddSeriesDialog($event)"
+    ></app-view-pull-ups-matches>
+
+    <div class="new-round-toggle-button">
+      <p-button *ngIf="!showAddNewMatch" (click)="showAddNewMatch = true">{{
+        'event.rounds.add' | translate
+      }}</p-button>
+    </div>
+
+    <div class="new-round-wrapper" *ngIf="showAddNewMatch">
+      <p>{{ 'event.rounds.add' | translate }}</p>
+
+      <app-add-users
+        (handleAddUser)="addUser($event)"
+        (handleRemoveUser)="removeUser($event)"
+        [addedUsers]="addedUsers"
+        [userList]="eventUsers"
+      ></app-add-users>
+
+      <div class="add-round-button">
+        <p-button [disabled]="addedUsers.length < 1" (onClick)="addMatch()">{{
+          'button.add' | translate
+        }}</p-button>
+      </div>
+    </div>
+  </section>
+</section>

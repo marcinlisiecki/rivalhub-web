@@ -1,0 +1,35 @@
+<div class="wrapper">
+  <div class="input-box">
+    <label for="team1Score"
+      >{{ 'event.common.team' | translate }}{{ ' 1' }}</label
+    >
+    <input
+      pInputText
+      type="number"
+      name="team1Score"
+      id="team1Score"
+      [(ngModel)]="team1Score"
+    />
+  </div>
+
+  <div class="input-box">
+    <label for="team2Score"
+      >{{ 'event.common.team' | translate }}{{ ' 2' }}</label
+    >
+    <input
+      pInputText
+      type="number"
+      name="team2Score"
+      id="team2Score"
+      [(ngModel)]="team2Score"
+    />
+  </div>
+</div>
+
+<p-button styleClass="button-wide" (click)="onSubmit()">{{
+  'button.add' | translate
+}}</p-button>
+
+<div class="validation-error-wrapper" *ngIf="errorMessage">
+  <app-validation-error>{{ errorMessage | translate }}</app-validation-error>
+</div>

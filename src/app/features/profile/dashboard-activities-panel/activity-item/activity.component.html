@@ -1,0 +1,19 @@
+<div class="content">
+  <div class="stations">
+    <p *ngFor="let station of reservation.stationList">
+      {{ station.name }}
+    </p>
+  </div>
+  <div class="bottom">
+    <p class="date">
+      {{ reservation.startTime | date: DISPLAY_DATE_FORMAT }} -
+      {{ reservation.endTime | date: DISPLAY_DATE_FORMAT }}
+    </p>
+
+    <a [routerLink]="routerLink">
+      <p>{{ 'common.show' | translate }}</p>
+      <i class="pi pi-arrow-right"></i>
+    </a>    
+
+  </div>
+</div>

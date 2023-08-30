@@ -1,11 +1,14 @@
-import { Component, Input } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { FileSelectEvent } from 'primeng/fileupload';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { subscribeOn } from 'rxjs';
 import { OrganizationsService } from '@app/core/services/organizations/organizations.service';
 import { Router } from '@angular/router';
 import { extractMessage } from '@app/core/utils/apiErrors';
-import { NewOrganization } from '@interfaces/organization/new-organization';
+import { Organization } from '@interfaces/organization/organization';
+import { AuthService } from '@app/core/services/auth/auth.service';
+import { NewOrganization } from '@app/core/interfaces/organization/new-organization';
+import { LanguageService } from '@app/core/services/language/language.service';
 
 @Component({
   selector: 'app-add-organization',
@@ -13,10 +16,14 @@ import { NewOrganization } from '@interfaces/organization/new-organization';
   styleUrls: ['./add-organization.component.scss'],
 })
 export class AddOrganizationComponent {
+  private DEFAULTAVATAR = '/assets/img/svg/defaultOrganization.svg';
+  ACCEPTEDFILETYPES = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'];
+  MAXFILESIZE = 5242880;
+  color: string = '#4c4d87';
   uploadedFile: File | undefined;
-  imageURL: string = 'assets/img/avatars/avatarplaceholder.png';
-  error: string | undefined;
-
+  imageURL: string = this.DEFAULTAVATAR;
+  clientError: string | undefined;
+  customAvatar: boolean = true;
   addForm = new FormGroup({
     name: new FormControl('', [
       Validators.required,
@@ -30,15 +37,31 @@ export class AddOrganizationComponent {
   constructor(
     private organizationService: OrganizationsService,
     private router: Router,
+    private authService: AuthService,
+    private languageService: LanguageService,
   ) {}
 
   onFileSelectClicked(event: FileSelectEvent) {
+    this.clientError = undefined;
+    if (!this.ACCEPTEDFILETYPES.includes(event.files[0].type)) {
+      this.clientError = this.languageService.instant('organization.files');
+      return;
+    }
+    if (event.files[0].size > this.MAXFILESIZE) {
+      this.clientError = this.languageService.instant(
+        'organization.fileToLarge',
+      );
+      return;
+    }
+
     this.uploadedFile = event.files[0];
     this.imageURL = URL.createObjectURL(event.currentFiles[0]);
+    this.customAvatar = false;
   }
 
-  onClearClicked(event: Event) {
-    this.imageURL = 'assets/img/avatars/avatarplaceholder.png';
+  onClearClicked() {
+    this.customAvatar = true;
+    this.imageURL = this.DEFAULTAVATAR;
     this.uploadedFile = undefined;
   }
 
@@ -50,16 +73,21 @@ export class AddOrganizationComponent {
       return;
     }
 
+    const newOrganization: NewOrganization = {
+      name: this.name?.value!,
+      color: this.color,
+      uploadedFile: this.uploadedFile,
+    };
+
     this.isLoading = true;
     URL.revokeObjectURL(this.imageURL);
 
-    const newOrganization: NewOrganization = {
-      name: this.name?.value || '',
-    };
-
     this.organizationService.add(newOrganization).subscribe({
-      next: () => {
-        this.router.navigateByUrl('/organizations').then();
+      next: (organization: Organization) => {
+        this.authService.refreshToken().subscribe();
+        this.router
+          .navigateByUrl(`/organizations/${organization.id}/configurator`)
+          .then();
       },
       error: (err: unknown) => {
         this.apiError = extractMessage(err);
@@ -67,6 +95,10 @@ export class AddOrganizationComponent {
     });
 
     this.isLoading = false;
+  }
+
+  joinAcceptableImageTypes() {
+    return this.ACCEPTEDFILETYPES.join(',');
   }
 
   get name() {

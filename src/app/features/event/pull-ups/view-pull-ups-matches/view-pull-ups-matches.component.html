@@ -1,0 +1,18 @@
+<h2 class="section-title" *ngIf="!editable">
+  {{ 'event.rounds.rounds' | translate }}
+</h2>
+
+<app-no-resource-info *ngIf="matches?.length === 0">
+  {{ 'event.noGames' | translate }}
+</app-no-resource-info>
+
+<div class="matches">
+  <app-view-pull-ups-match
+    *ngFor="let match of matches"
+    [match]="match"
+    [editable]="editable"
+    (handleAddSeries)="handleAddSeries.emit($event)"
+    (approveMatch)="approveMatch.emit($event)"
+  >
+  </app-view-pull-ups-match>
+</div>

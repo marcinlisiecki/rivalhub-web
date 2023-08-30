@@ -1,8 +1,8 @@
-import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { navAnimation } from '@app/core/animations/nav-animation';
 import { OrganizationsService } from '@app/core/services/organizations/organizations.service';
-import { ActivatedRoute } from '@angular/router';
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { ActivatedRoute, Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 import { ViewService } from '@app/core/services/view/view.service';
 import { EventDto } from '@interfaces/event/event-dto';
 import { Organization } from '@interfaces/organization/organization';
@@ -10,6 +10,14 @@ import { PagedResponse } from '@interfaces/generic/paged-response';
 import { UserDetailsDto } from '@interfaces/user/user-details-dto';
 import { Subscription } from 'rxjs';
 import { Reservation } from '@interfaces/reservation/reservation';
+import { MessageService } from 'primeng/api';
+import { OrganizationSettings } from '@interfaces/organization/organization-settings';
+import { AuthService } from '@app/core/services/auth/auth.service';
+import { ImageService } from '@app/core/services/image/image.service';
+import { EventType } from '@interfaces/event/event-type';
+import { ErrorsService } from '@app/core/services/errors/errors.service';
+import { extractMessage } from '@app/core/utils/apiErrors';
+import { LanguageService } from '@app/core/services/language/language.service';
 
 @Component({
   selector: 'app-organization-dashboard',
@@ -18,82 +26,45 @@ import { Reservation } from '@interfaces/reservation/reservation';
   animations: [navAnimation],
 })
 export class OrganizationDashboardComponent implements OnInit, OnDestroy {
-  navVisible: boolean = false;
   mobileView!: boolean;
   reservations: Reservation[] = [];
-  events: EventDto[] = [
-    {
-      id: 1,
-      name: 'Wędkowanie na jeziorze',
-      place: 'Jezioro',
-      date: new Date(),
-      beginEndTime: '10:00 - 14:00',
-      participantIds: [5],
-    },
-    {
-      id: 2,
-      name: 'Wędkowanie na rzece',
-      place: 'Rzeka',
-      date: new Date(),
-      beginEndTime: '10:00 - 14:00',
-      participantIds: [1, 2],
-    },
-    {
-      id: 3,
-      name: 'Wędkowanie na stawie',
-      place: 'Staw',
-      date: new Date(),
-      beginEndTime: '10:00 - 14:00',
-      participantIds: [2, 3, 4],
-    },
-  ];
+  events: EventDto[] = [];
   organization!: Organization;
   users!: UserDetailsDto[];
   id!: number;
-
+  canUserInvite: boolean = false;
+  amIAdmin!: boolean;
   resizeEventSub?: Subscription;
   paramsSub?: Subscription;
 
   constructor(
     private organizationsService: OrganizationsService,
     private route: ActivatedRoute,
+    private router: Router,
     private viewService: ViewService,
+    private messageService: MessageService,
+    private authService: AuthService,
+    private imageService: ImageService,
+    private errorsService: ErrorsService,
+    private languageService: LanguageService,
   ) {}
 
   ngOnInit(): void {
-    this.mobileView = this.viewService.mobileView;
-    this.resizeEventSub = this.viewService.resizeSubject.subscribe(
-      (value: boolean) => {
-        this.mobileView = value;
-      },
-    );
+    this.handleRWD();
 
     this.paramsSub = this.route.params.subscribe((params) => {
       this.id = params['id'];
+
+      this.getOrganizationInfo();
+      this.getOrganizationUsers();
+      this.fetchSettings();
+      this.getOrganizationEvents().then();
     });
 
-    this.getOrganizationInfo();
-    this.getOrganizationUsers();
-    this.getOrganizationReservations();
-    // this.getOrgzationEvents();
-  }
+    this.handleConfigured();
+    this.handleInvitation();
 
-  getOrganizationReservations() {
-    this.organizationsService.getOrganizationReservations(this.id).subscribe({
-      next: (res: Reservation[]) => {
-        // Only temporarily TODO
-        const alreadyAdded: number[] = [];
-
-        for (const reservation of res) {
-          if (alreadyAdded.includes(reservation.id)) {
-            continue;
-          }
-
-          alreadyAdded.push(reservation.id);
-          this.reservations.push(reservation);
-        }
-      },
-    });
+    this.amIAdmin = this.authService.amIAdmin(this.id);
   }
 
   ngOnDestroy(): void {
@@ -101,27 +72,110 @@ export class OrganizationDashboardComponent implements OnInit, OnDestroy {
     this.paramsSub?.unsubscribe();
   }
 
-  private getOrganizationInfo() {
-    this.organizationsService.choose(this.id).subscribe({
-      next: (res: Organization) => {
-        this.organization = res;
-        this.organization.imageUrl = this.getImagePath(res.imageUrl);
+  private handleRWD() {
+    this.mobileView = this.viewService.mobileView;
+    this.resizeEventSub = this.viewService.resizeSubject.subscribe(
+      (value: boolean) => {
+        this.mobileView = value;
       },
-      //Dodaj kiedyś obsługę błędów jak wpadniesz na fajny pomysł jak to zrobić
-      error: (err: HttpErrorResponse) => {
-        console.error('An error occurred:', err);
+    );
+  }
+
+  private fetchSettings() {
+    this.organizationsService.getSettings(this.id).subscribe({
+      next: (settings: OrganizationSettings) => {
+        this.canUserInvite = !settings.onlyAdminCanSeeInvitationLink;
       },
     });
   }
 
-  private getOrgzationEvents() {
-    this.organizationsService.getEvents(this.id).subscribe({
-      next: (res: EventDto[]) => {
-        this.events = res;
+  private handleConfigured() {
+    const configured = this.route.snapshot.queryParams['configured'];
+    if (configured) {
+      this.messageService.add({
+        severity: 'success',
+        life: 1000 * 10,
+        summary: this.languageService.instant('organization.configured'),
+      });
+      this.router
+        .navigate([], {
+          relativeTo: this.route,
+          queryParams: {},
+        })
+        .then();
+    }
+  }
+
+  private handleInvitation() {
+    const inviteSuccess = this.route.snapshot.queryParams['invited'];
+    if (inviteSuccess) {
+      this.messageService.add({
+        severity: 'success',
+        life: 1000 * 10,
+        summary: this.languageService.instant('organization.invitationSended'),
+      });
+      this.router
+        .navigate([], {
+          relativeTo: this.route,
+          queryParams: {},
+        })
+        .then();
+    }
+  }
+
+  private getOrganizationInfo() {
+    this.organizationsService.choose(this.id).subscribe({
+      next: (res: Organization) => {
+        this.organization = res;
+        this.organization.imageUrl = this.imageService.getOrganizationImagePath(
+          res.imageUrl,
+        );
       },
       error: (err: HttpErrorResponse) => {
-        console.error('An error occurred:', err);
+        this.errorsService.createErrorMessage(extractMessage(err));
       },
+    });
+  }
+
+  private async getOrganizationEvents() {
+    const tempEvents: EventDto[] = [];
+
+    try {
+      tempEvents.push(...(await this.fetchEventsForType(EventType.PING_PONG)));
+      tempEvents.push(
+        ...(await this.fetchEventsForType(EventType.TABLE_FOOTBALL)),
+      );
+      tempEvents.push(...(await this.fetchEventsForType(EventType.PULL_UPS)));
+      tempEvents.push(...(await this.fetchEventsForType(EventType.BILLIARDS)));
+      tempEvents.push(...(await this.fetchEventsForType(EventType.DARTS)));
+    } catch (err: unknown) {
+      this.errorsService.createErrorMessage(extractMessage(err));
+    } finally {
+      this.events = this.filterIncomingAndActiveEvents(tempEvents);
+    }
+  }
+
+  private filterIncomingAndActiveEvents(events: EventDto[]) {
+    return events
+      .filter(
+        (event) => event.status === 'Active' || event.status === 'Incoming',
+      )
+      .sort(
+        (a, b) =>
+          new Date(a.startTime).getTime() - new Date(b.startTime).getTime(),
+      );
+  }
+
+  async fetchEventsForType(type: EventType) {
+    return new Promise<EventDto[]>((resolve, reject) => {
+      this.organizationsService.getEvents(this.id, type).subscribe({
+        next: (events: EventDto[]) => {
+          resolve(events);
+        },
+        error: (err: HttpErrorResponse) => {
+          reject(err);
+        },
+      });
     });
   }
 
@@ -130,22 +184,9 @@ export class OrganizationDashboardComponent implements OnInit, OnDestroy {
       next: (res: PagedResponse<UserDetailsDto>) => {
         this.users = res.content;
       },
-      //Dodaj kiedyś obsługę błędów jak wpadniesz na fajny pomysł jak to zrobić
       error: (err: HttpErrorResponse) => {
-        console.error('An error occurred:', err);
+        this.errorsService.createErrorMessage(extractMessage(err));
       },
     });
-  }
-
-  getImagePath(imageUrl: string | null): string {
-    if (imageUrl !== null) {
-      return imageUrl;
-    }
-
-    return 'assets/img/avatars/avatarplaceholder.png';
-  }
-
-  toggleNav() {
-    this.navVisible = !this.navVisible;
   }
 }

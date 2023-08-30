@@ -1,68 +1,76 @@
-<section class="add-reservation-container">
-  <h1>Nowa rezerwacja</h1>
-  <div class="form-container">
-    <div class="dates-wrapper">
-      <div class="input-box">
-        <label for="startDate">Data rozpoczęcia</label>
-        <p-calendar
-          inputId="startDate"
-          styleClass="input-wide"
-          [minDate]="today"
-          [showTime]="true"
-          [showIcon]="true"
-          [(ngModel)]="startTime"
-          (ngModelChange)="readyDateAndValid = false"
-        ></p-calendar>
+<div class="add-reservation">
+  <section class="add-reservation-container">
+    <div>
+      <app-organization-back-button
+        [organizationId]="organizationId"
+      ></app-organization-back-button>
+      <h1>{{ 'organization.newReservation' | translate }}</h1>
+    </div>
+    <div class="form-container">
+      <div class="dates-wrapper">
+        <div class="input-box">
+          <label for="startDate">{{ 'event.date.start' | translate }}</label>
+          <p-calendar
+            inputId="startDate"
+            styleClass="input-wide"
+            [minDate]="today"
+            [showTime]="true"
+            [showIcon]="true"
+            [(ngModel)]="startTime"
+            (ngModelChange)="readyDateAndValid = false"
+          ></p-calendar>
+        </div>
+        <div class="input-box">
+          <label for="endDate">{{ 'event.date.end' | translate }}</label>
+          <p-calendar
+            inputId="endDate"
+            [minDate]="today"
+            styleClass="input-wide"
+            [showTime]="true"
+            [showIcon]="true"
+            [(ngModel)]="finishTime"
+            (ngModelChange)="readyDateAndValid = false"
+          ></p-calendar>
+        </div>
       </div>
-      <div class="input-box">
-        <label for="endDate">Data zakończenia</label>
-        <p-calendar
-          inputId="endDate"
-          [minDate]="today"
-          styleClass="input-wide"
-          [showTime]="true"
-          [showIcon]="true"
-          [(ngModel)]="finishTime"
-          (ngModelChange)="readyDateAndValid = false"
-        ></p-calendar>
-      </div>
+
+      <p class="invalid-data" *ngIf="emptyData">
+        {{ 'organization.allField' | translate }}
+      </p>
+      <p class="invalid-data" *ngIf="invalidDate">
+        {{ 'organization.reservationStart' | translate }}
+      </p>
+      <p-button
+        styleClass="button-wide p-button-secondary"
+        [style]="{ 'margin-top': '10px' }"
+        type="submit"
+        (onClick)="fetchStations()"
+        >{{ 'organization.dateSubmit' | translate }}
+      </p-button>
     </div>
 
-    <p class="invalid-data" *ngIf="emptyData">Należy wypełnić wszystkie pola</p>
-    <p class="invalid-data" *ngIf="invalidDate">
-      Godzina startowa musi być przed godziną zakończenia
-    </p>
+    <div class="form-container" *ngIf="readyDateAndValid">
+      <li class="form-container-list" *ngFor="let category of types">
+        <app-category-stations-selector
+          categoryLabel="{{ categoryTypeToLabel(category) | translate }}"
+          [stations]="getCategoryStations(category) || []"
+          (toggleStation)="toggleSelectedStation($event)"
+          [selectedStations]="selectedStations"
+          [closestAvailable]="findRightCategory(category)"
+        >
+        </app-category-stations-selector>
+      </li>
+    </div>
+
+    <app-centered-spinner
+      *ngIf="readyDateAndValid && stations === null"
+    ></app-centered-spinner>
+
     <p-button
-      styleClass="button-wide p-button-secondary"
-      [style]="{ 'margin-top': '10px' }"
-      type="submit"
-      (onClick)="fetchStations()"
-      >Zatwierdź date
-    </p-button>
-  </div>
-
-  <div
-    class="form-container"
-    *ngIf="readyDateAndValid && stations !== null && stations.length !== 0"
-  >
-    <li class="form-container-list" *ngFor="let category of types">
-      <app-category-stations-selector
-        [categoryLabel]="categoryTypeToLabel(category)"
-        [stations]="getCategoryStations(category) || []"
-        (toggleStation)="toggleSelectedStation($event)"
-        [selectedStations]="selectedStations"
-      >
-      </app-category-stations-selector>
-    </li>
-  </div>
-
-  <app-centered-spinner
-    *ngIf="readyDateAndValid && stations === null"
-  ></app-centered-spinner>
-
-  <app-no-available-stations
-    *ngIf="readyDateAndValid && stations !== null && stations.length === 0"
-  ></app-no-available-stations>
-
-  <p-button (onClick)="onSubmit()">Zapisz</p-button>
-</section>
+      (onClick)="onSubmit()"
+      [disabled]="selectedStations.length === 0"
+      *ngIf="readyDateAndValid"
+      >{{ 'common.save' | translate }}</p-button
+    >
+  </section>
+</div>

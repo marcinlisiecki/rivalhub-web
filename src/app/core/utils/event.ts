@@ -3,17 +3,20 @@ import { EventType } from '@interfaces/event/event-type';
 export const categoryTypeToLabel = (eventType: EventType | string): string => {
   return (
     {
-      [EventType.PING_PONG]: 'Ping Pong',
-      [EventType.BILLIARDS]: 'Bilard',
+      [EventType.PING_PONG]: 'eventType.pingPong',
+      [EventType.BILLIARDS]: 'eventType.billiards',
+      [EventType.PULL_UPS]: 'eventType.pullUps',
+      [EventType.DARTS]: 'eventType.darts',
+      [EventType.TABLE_FOOTBALL]: 'eventType.tableFootball',
+      [EventType.RUNNING]: 'eventType.running',
     }[eventType] || ''
   );
 };
 
 export const labelToCategoryType = (label: string): EventType => {
-  const categoryLabelsToTypes: { [label: string]: EventType } = {
-    PING_PONG: EventType.PING_PONG,
-    BILLIARDS: EventType.BILLIARDS,
+  const eventTypeMap: Record<string, EventType> = {
+    'Ping Pong': EventType.PING_PONG,
+    Bilard: EventType.BILLIARDS,
   };
-
-  return categoryLabelsToTypes[label];
+  return eventTypeMap[label];
 };

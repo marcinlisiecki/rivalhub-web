@@ -1,0 +1,42 @@
+<div class="body">
+  <div class="go-back">
+    <app-go-back-button
+      [ngStyle]="{ marginBottom: '1rem' }"
+    ></app-go-back-button>
+    <div class="bottom">
+      <div class="calendar-container">
+        <div class="left" #cal>
+          <p-sidebar
+            styleClass="calendarSidebar"
+            [(visible)]="sidebarVisible"
+            [appendTo]="cal"
+            [modal]="false"
+            (onHide)="toggleSidebar()"
+          >
+            <ng-template pTemplate="header"
+              ><h2>{{ sidebarHeader() | date: 'dd.MM.yyyy' }}</h2></ng-template
+            >
+            <app-calendar-events></app-calendar-events>
+          </p-sidebar>
+        </div>
+        <div class="right">
+          <div class="top">
+            <p-toggleButton
+              styleClass="calendar-sidebar-btn"
+              (click)="toggleSidebar()"
+              onIcon="{{ sidebarIcon }}"
+              offIcon="{{ sidebarIcon }}"
+            ></p-toggleButton>
+            <app-calendar-filter
+              [selectedFilters]="selectedFilters"
+              [organizations]="organizations"
+            ></app-calendar-filter>
+          </div>
+          <app-calendar-body
+            (dateClick)="!sidebarVisible && toggleSidebar()"
+          ></app-calendar-body>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

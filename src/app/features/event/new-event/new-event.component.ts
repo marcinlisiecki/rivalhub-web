@@ -6,12 +6,20 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AVAILABLE_EVENTS } from '@app/core/constants/event';
 import { categoryTypeToLabel } from '@app/core/utils/event';
 import { OrganizationsService } from '@app/core/services/organizations/organizations.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AvailableEvent } from '@interfaces/event/available-event';
 import { AddEventFormStep } from '@interfaces/event/add-event-form-step';
 import { Station } from '@interfaces/station/station';
-import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
+import { StationsService } from '@app/core/services/stations/stations.service';
+import { AddEventUser } from '@interfaces/event/add-event-user';
+import { UserDetailsDto } from '@interfaces/user/user-details-dto';
+import { PagedResponse } from '@interfaces/generic/paged-response';
+import { AuthService } from '@app/core/services/auth/auth.service';
+import { LanguageService } from '@app/core/services/language/language.service';
+import { EventsService } from '@app/core/services/events/events.service';
+import { AddEvent } from '@interfaces/event/add-event';
+import { UsersService } from '@app/core/services/users/users.service';
 
 @Component({
   selector: 'app-new-event',
@@ -23,8 +31,8 @@ export class NewEventComponent implements OnInit, OnDestroy {
   formStep: AddEventFormStep = AddEventFormStep.CATEGORY;
   formSteps: MenuItem[] = [];
   formStepIndex: number = 0;
-
-  events: AvailableEvent[] = AVAILABLE_EVENTS;
+  isChallenge: boolean = false;
+  events: EventType[] = [];
   selectedEventType: EventType | null = null;
 
   stations: Station[] | null = null;
@@ -32,7 +40,15 @@ export class NewEventComponent implements OnInit, OnDestroy {
 
   dateError: string | null = null;
 
+  oponent?: UserDetailsDto;
+  userList: UserDetailsDto[] = [];
+  addedUsers: AddEventUser[] = [];
+  notAddedUserList: UserDetailsDto[] = [];
+  isPublicEvent: boolean = false;
+
   onLangChangeSub?: Subscription;
+
+  newEvent!: AddEvent;
 
   basicInfoForm: FormGroup = new FormGroup({
     name: new FormControl('', [
@@ -52,16 +68,123 @@ export class NewEventComponent implements OnInit, OnDestroy {
   });
 
   constructor(
-    private organizationService: OrganizationsService,
+    private eventsService: EventsService,
+    private stationsService: StationsService,
+    private organizationsService: OrganizationsService,
     private route: ActivatedRoute,
-    private translateService: TranslateService,
+    private authService: AuthService,
+    private router: Router,
+    private languageService: LanguageService,
+    private userService: UsersService,
   ) {}
 
   ngOnInit(): void {
-    this.setStepsMenu();
-    this.onLangChangeSub = this.translateService.onLangChange.subscribe(() =>
+    this.userService.getMe().subscribe({
+      next: (user: UserDetailsDto) => {
+        this.addedUsers.push({
+          id: user.id,
+          name: user.name,
+          profilePictureUrl: user.profilePictureUrl,
+        });
+
+        this.handleQuickChallenge();
+        this.handleLanguage();
+        this.fetchUserList();
+        this.fetchEventTypes();
+      },
+      error: () => {
+        this.router.navigateByUrl('/login').then();
+      },
+    });
+  }
+
+  handleLanguage() {
+    setTimeout(() => this.setStepsMenu(), 100);
+    this.onLangChangeSub = this.languageService.onLangChange.subscribe(() =>
       this.setStepsMenu(),
     );
+  }
+
+  handleQuickChallenge() {
+    const challengeId = this.route.snapshot.queryParams['challengeId'];
+    const challengeName = this.route.snapshot.queryParams['challengeName'];
+    const challengeType = this.route.snapshot.queryParams['challengeType'];
+
+    this.userService
+      .getUser(parseInt(this.route.snapshot.queryParams['challengeId']))
+      .subscribe({
+        next: (user: UserDetailsDto) => {
+          this.isChallenge = true;
+          this.addedUsers.push({
+            id: user.id,
+            name: user.name,
+            profilePictureUrl: user.profilePictureUrl,
+          });
+
+          this.selectedEventType = challengeType as EventType;
+          this.basicInfoForm
+            .get('name')
+            ?.setValue(this.languageService.instant('event.fastChallenge'));
+          this.setFormStep(AddEventFormStep.DATE);
+        },
+        error: () => {
+          //TODO obsługa błedu
+        },
+      });
+  }
+
+  fetchEventTypes() {
+    const organizationId = this.route.snapshot.params['id'];
+    this.eventsService.getEventTypesInOrganization(organizationId).subscribe({
+      next: (eventTypes: EventType[]) => {
+        this.events = eventTypes;
+      },
+    });
+  }
+
+  handleAddUser(data?: AddEventUser) {
+    if (!data) {
+      return;
+    }
+
+    this.addedUsers.push(data);
+    this.notAddedUserList = this.getOnlyNotAddedUserList();
+  }
+
+  handleSetPublicEvent(isPublic: boolean) {
+    this.isPublicEvent = isPublic;
+  }
+
+  handleRemoveUser(data?: AddEventUser) {
+    if (!data) {
+      return;
+    }
+
+    this.addedUsers = this.addedUsers.filter((user) => user.id !== data.id);
+    this.notAddedUserList = this.getOnlyNotAddedUserList();
+  }
+
+  fetchUserList() {
+    const organizationId = this.route.snapshot.params['id'];
+
+    this.organizationsService.getUsers(organizationId, 0, 1000).subscribe({
+      next: (res: PagedResponse<UserDetailsDto>) => {
+        this.userList = res.content;
+        this.notAddedUserList = this.getOnlyNotAddedUserList();
+      },
+    });
+  }
+
+  getOnlyNotAddedUserList() {
+    let notAddedList: UserDetailsDto[] = [];
+
+    this.userList.forEach((user) => {
+      if (this.userList.findIndex((item) => item.id === user.id) !== -1) {
+        notAddedList.push(user);
+      }
+    });
+
+    return notAddedList;
   }
 
   ngOnDestroy(): void {
@@ -71,16 +194,19 @@ export class NewEventComponent implements OnInit, OnDestroy {
   setStepsMenu() {
     this.formSteps = [
       {
-        label: this.translateService.instant('event.new.steps.category'),
+        label: this.languageService.instant('event.new.steps.category'),
       },
       {
-        label: this.translateService.instant('event.new.steps.info'),
+        label: this.languageService.instant('event.new.steps.info'),
       },
       {
-        label: this.translateService.instant('event.new.steps.date'),
+        label: this.languageService.instant('event.new.steps.addUsers'),
       },
       {
-        label: this.translateService.instant('event.new.steps.reservation'),
+        label: this.languageService.instant('event.new.steps.date'),
+      },
+      {
+        label: this.languageService.instant('event.new.steps.reservation'),
       },
     ];
   }
@@ -98,7 +224,7 @@ export class NewEventComponent implements OnInit, OnDestroy {
     const endDate: Date = this.dateForm.get('endDate')?.value;
 
     if (startDate.getTime() > endDate.getTime()) {
-      this.dateError = 'Godzina startowa musi być przed godziną zakończenia';
+      this.dateError = this.languageService.instant('event.date.dateErr');
       return false;
     }
 
@@ -122,7 +248,7 @@ export class NewEventComponent implements OnInit, OnDestroy {
         return;
       }
 
-      this.organizationService
+      this.stationsService
         .getAvailableStations(
           organizationId,
           startDate,
@@ -165,6 +291,45 @@ export class NewEventComponent implements OnInit, OnDestroy {
   selectEvent(eventType: EventType): void {
     this.selectedStations = [];
     this.selectedEventType = eventType;
+  }
+
+  buildEvent() {
+    let startTime = this.dateForm.get('startDate')?.value;
+    let endTime = this.dateForm.get('endDate')?.value;
+    let name = this.basicInfoForm.get('name')?.value;
+    let description = this.basicInfoForm.get('description')?.value;
+
+    let hostId = this.authService.getUserId();
+
+    let newEventStationList = this.selectedStations.map((item) =>
+      parseInt(item),
+    );
+
+    this.newEvent = {
+      endTime: endTime,
+      host: hostId || -1,
+      participants: this.addedUsers.map((user) => user.id),
+      startTime: startTime,
+      stationList: newEventStationList,
+      isEventPublic: this.isPublicEvent,
+      name: name,
+      description: description,
+    };
+  }
+  addEvent() {
+    this.buildEvent();
+    const organizationId: number = this.route.snapshot.params['id'];
+
+    this.eventsService
+      .addEvent(this.newEvent, organizationId, this.selectedEventType!)
+      .subscribe({
+        next: () => {
+          this.router.navigateByUrl(`/organizations/${organizationId}`).then();
+        },
+        error: (err) => {
+          //TODO obsułga błedu
+        },
+      });
   }
 
   protected readonly AddEventFormStep = AddEventFormStep;

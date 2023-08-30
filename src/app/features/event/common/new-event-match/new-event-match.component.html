@@ -1,0 +1,39 @@
+<section class="wrapper">
+  <header>
+    <h1>{{ 'event.new.game' | translate }}</h1>
+  </header>
+
+  <section class="teams">
+    <div class="team" *ngFor="let team of teams; let teamIndex = index">
+      <h2>{{ 'event.common.team' | translate }} {{ teamIndex + 1 }}</h2>
+      <div *ngFor="let user of teams[teamIndex]" class="team-member">
+        <div class="team-member-data">
+          <app-avatar class="team-member-avatar" [user]="user"></app-avatar>
+          <p>{{ user.name }}</p>
+        </div>
+        <div
+          class="team-member-remove-button"
+          (click)="removeUser(teamIndex, user)"
+        >
+          <i class="pi pi-times-circle"></i>
+        </div>
+      </div>
+
+      <div
+        *ngFor="let i of Array(peopleCount - teams[teamIndex].length)"
+        class="team-add-button"
+        (click)="openAddUserDialog(teamIndex)"
+      >
+        <i class="pi pi-plus"></i>
+        <p>{{ 'event.addUser' | translate }}</p>
+      </div>
+    </div>
+  </section>
+
+  <p-button
+    [disabled]="teams[0].length === 0 || teams[1].length === 0"
+    (onClick)="handleAddMatch()"
+  >
+    {{ 'event.addGame' | translate }}
+  </p-button>
+</section>

@@ -1,0 +1,30 @@
+<div class="ping-pong-wrapper">
+  <p>Liczba setów: {{ result.sets!.length }}</p>
+  <div class="score">
+    <div
+      class="score-team"
+      [ngClass]="{
+        'score-winning': team1Won,
+        'score-losing': team2Won,
+        'score-tie': tie
+      }"
+    >
+      <p>{{ team1Result }}</p>
+    </div>
+    <p-divider></p-divider>
+    <div
+      class="score-team"
+      [ngClass]="{
+        'score-winning': team2Won,
+        'score-losing': team1Won,
+        'score-tie': tie
+      }"
+    >
+      <p>{{ team2Result }}</p>
+    </div>
+  </div>
+  <p>
+    {{ result.startTime | date: DISPLAY_DATE_FORMAT }} -
+    {{ result.endTime | date: DISPLAY_DATE_FORMAT }}
+  </p>
+</div>

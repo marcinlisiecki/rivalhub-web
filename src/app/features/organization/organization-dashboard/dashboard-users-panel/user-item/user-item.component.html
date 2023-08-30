@@ -1,2 +1,9 @@
-<img class="item-avatar" [src]="getImagePath(user.profilePictureUrl)">
-<p>{{user.name}}</p>
+<div class="wrapper" id="user-{{ user.id }}" #userItem>  
+    <app-avatar class="item-avatar" [user]="user"></app-avatar>
+  <p>{{ user.name }}</p>
+</div>
+<p-contextMenu
+  [target]="userItem"
+  [model]="items"
+  [style]="{ width: '220px' }"
+></p-contextMenu>

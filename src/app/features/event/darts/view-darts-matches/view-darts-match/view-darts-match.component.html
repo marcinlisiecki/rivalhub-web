@@ -1,0 +1,142 @@
+<div class="dart-wrapper" *ngIf="match">
+  <div class="match-header-tags">
+    <section class="tags">
+      <p-badge
+        [severity]="match.approved ? 'success' : 'danger'"
+        [value]="
+          match.approved
+            ? languageService.instant('event.approval')
+            : languageService.instant('event.noApproval')
+        "
+      >
+      </p-badge>
+      <p-tag severity="success" value="Dart"></p-tag>
+      <p-tag
+        severity="success"
+        [value]="match.dartFormat.replace('_', '')"
+      ></p-tag>
+      <p-tag
+        severity="success"
+        [value]="dartFormatToLabel[match.dartMode]"
+        *ngIf="match.dartMode !== 'NONE'"
+      ></p-tag>
+    </section>
+
+    <button
+      pButton
+      class="p-button-sm p-button-text p-button-success"
+      (click)="approveMatch.emit(match.id)"
+      *ngIf="
+        match.userApprovalMap[loggedInUserId] !== undefined &&
+        !match.userApprovalMap[loggedInUserId] &&
+        !editable
+      "
+    >
+      {{ 'event.confirmResults' | translate }}
+    </button>
+  </div>
+
+  <section class="participants-list">
+    <div
+      class="participant"
+      *ngFor="let participant of match.participants; let pindex = index"
+    >
+      <app-avatar class="participant-avatar" [user]="participant"></app-avatar>
+      <p>P{{ pindex + 1 }}-{{ participant.name }}</p>
+      <i
+        class="pi pi-check-circle"
+        *ngIf="match.userApprovalMap[participant.id]"
+      ></i>
+    </div>
+  </section>
+
+  <section class="grid-container">
+    <div
+      class="header"
+      [style.grid-template-columns]="'repeat(' + calculateRows() + ', 1fr)'"
+    >
+      <div class="row">
+        <p>K#</p>
+      </div>
+      <div class="row" *ngFor="let user of match.participants; let i = index">
+        <p>P{{ i + 1 }}</p>
+      </div>
+    </div>
+    <p-divider></p-divider>
+
+    <div
+      *ngFor="let playerScores of match.scoresInMatch; let i = index"
+      class="leg-score"
+    >
+      <div
+        class="queue"
+        [style.grid-template-columns]="'repeat(' + calculateRows() + ', 1fr)'"
+      >
+        <div class="flex-center">
+          <p>#{{ i + 1 }}</p>
+        </div>
+
+        <div
+          class="row"
+          *ngFor="let roundScore of playerScores; let row = index"
+        >
+          <ng-container
+            *ngIf="
+              match.pointsLeftInLegAfterRound[i][row] - roundScore > 0;
+              else elseTemplate
+            "
+          >
+            <p class="points-got">
+              {{ roundScore }}
+            </p>
+            <div class="shots">
+              <img
+                *ngFor="let _ of getHits(match.bounceOutsInRound[i][row])"
+                class="dart-icon"
+                src="assets/img/dart/dart-hit.png"
+              />
+              <img
+                *ngFor="let _ of getMisses(match.bounceOutsInRound[i][row])"
+                class="dart-icon"
+                src="assets/img/dart/dart-miss.png"
+              />
+            </div>
+            <p class="points-left">
+              {{ match.pointsLeftInLegAfterRound[i][row] - roundScore }}
+            </p>
+          </ng-container>
+          <ng-template #elseTemplate>
+            <div class="shots" *ngIf="roundScore !== null">
+              {{ 'event.game.placed' | translate }} #{{
+                match.placesInLeg[row]
+              }}
+            </div>
+          </ng-template>
+        </div>
+        <div class="remove-button" *ngIf="i == match.scoresInMatch.length - 1">
+          <i
+            style="color: red"
+            [style]="{
+              opacity: editable ? 1 : 0,
+              cursor: editable ? 'pointer' : 'default'
+            }"
+            class="pi pi-times-circle"
+            (click)="onDelete($event, i)"
+          ></i>
+          <p-confirmPopup *ngIf="editable"></p-confirmPopup>
+        </div>
+      </div>
+
+      <p-divider></p-divider>
+    </div>
+  </section>
+
+  <section>
+    <p-button
+      *ngIf="editable && !match.approved"
+      [style.display]="!isLegOver() ? 'block' : 'none'"
+      (onClick)="openAddQueueDialog()"
+      >{{ 'event.addQueue' | translate }}</p-button
+    >
+  </section>
+</div>

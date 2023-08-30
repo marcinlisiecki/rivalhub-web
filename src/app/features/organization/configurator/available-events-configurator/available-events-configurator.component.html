@@ -1,0 +1,43 @@
+<h2>{{ 'organization.configurator.categories.title' | translate }}</h2>
+
+<section class="categories">
+  <div
+    *ngFor="let type of possibleEventTypes"
+    class="card-checkbox categories-item"
+    [class.card-checkbox-selected]="activeEventTypes.includes(type)"
+    (click)="toggleAvailableEventType.emit(type)"
+  >
+    <svg-icon
+      [src]="EventIcon[type]"
+      [svgStyle]="{
+        maxWidth: '5rem',
+        maxHeight: '5rem'
+      }"
+    ></svg-icon>
+
+    <p>{{ categoryTypeToLabel(type) | translate }}</p>
+  </div>
+</section>
+
+<p-divider></p-divider>
+
+<div class="form-step-navigation space-between">
+  <p-button
+    icon="pi pi-arrow-right"
+    iconPos="right"
+    label="{{ 'stepForm.next' | translate }}"
+    [loading]="isLoading"
+    [disabled]="isLoading"
+    (onClick)="setStep.emit(OrganizationConfiguratorStep.STATIONS)"
+  >
+  </p-button>
+  <p-button
+    styleClass="p-button-text p-button-secondary"
+    label="{{ 'organization.configurator.skip' | translate }}"
+    iconPos="right"
+    icon="pi pi-angle-double-right"
+    [disabled]="isLoading"
+    (onClick)="skipConfiguration()"
+  >
+  </p-button>
+</div>

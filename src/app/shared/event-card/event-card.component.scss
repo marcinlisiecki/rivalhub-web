@@ -1,0 +1,61 @@
+@import 'src/scss/variables';
+
+.wrapper {
+  padding: 1rem;
+  border-radius: $borderRadius;
+  background-color: $panelContentBg;
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid $dividerColor;
+    padding-bottom: 0.7rem;
+    margin-bottom: 0.7rem;
+
+    > div {
+      display: flex;
+      align-items: center;
+      column-gap: 0.6rem;
+
+      i {
+        color: $primaryColor;
+      }
+    }
+  }
+}
+
+.event-label {
+  padding: 0;
+  margin: 0;
+  text-transform: uppercase;
+  font-weight: $weightMedium;
+  font-size: $textSm;
+  color: $primaryColor;
+}
+
+.event-name {
+  padding: 0;
+  margin: 0;
+}
+
+footer {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+}
+
+.actions {
+  display: flex;
+  column-gap: 0.5rem;
+  align-items: center;
+}
+
+.date {
+  color: $textSecondaryColor;
+  display: flex;
+  align-items: center;
+  column-gap: 0.5rem;
+  font-size: $textSm;
+}

@@ -1,0 +1,9 @@
+@import 'src/scss/variables';
+
+.main-container {
+  display: flex;
+  align-items: center;
+  margin: 20px auto 0 auto;
+  max-width: $nonBgFormWidth;
+  flex-direction: column;
+}

@@ -1,0 +1,56 @@
+@import 'src/scss/variables';
+
+@media screen and (max-width: $mobileBreakpoint) {
+  .body {
+    font-size: $textVerySmall;
+  }
+}
+@media screen and (min-resolution: 90dpi) {
+  .body {
+    font-size: $textVerySmall;
+  }
+}
+
+.body {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  font-size: $textBase;
+
+  .go-back {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+  }
+
+  .bottom {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    border: 2px solid #334155;
+    margin: auto;
+    padding: 2rem;
+    width: 75em;
+
+    .calendar-container {
+      display: flex;
+      max-width: 75em;
+
+      .left {
+        height: 31.6rem;
+        overflow-x: hidden;
+      }
+
+      .right {
+        margin-left: 0.5dvw;
+
+        .top {
+          display: flex;
+          justify-content: flex-start;
+          margin-bottom: 0.5rem;
+        }
+      }
+    }
+  }
+}

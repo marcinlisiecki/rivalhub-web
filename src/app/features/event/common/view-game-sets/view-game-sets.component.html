@@ -1,0 +1,17 @@
+<h2>{{ 'event.common.set' | translate }}</h2>
+
+<app-no-resource-info *ngIf="!gameSets || gameSets.length === 0">
+  {{ 'event.common.noSets' | translate }}
+</app-no-resource-info>
+
+<section class="sets">
+  <p-confirmPopup></p-confirmPopup>
+
+  <app-view-game-set
+    [editable]="editable"
+    *ngFor="let set of gameSets"
+    [gameSet]="set"
+    (deleteSet)="deleteGameSet($event)"
+  >
+  </app-view-game-set>
+</section>

@@ -1,0 +1,69 @@
+<section class="wrapper">
+  <h1 class="text-center">{{ 'organization.profileEdit' | translate }}</h1>
+
+  <section class="form-container">
+    <p-card>
+      <form [formGroup]="editForm">
+        <div class="form-item form-avatar">
+          <img
+            class="avatar-img"
+            width="75"
+            height="75"
+            [src]="imageURL"
+            alt="avatar"
+          />
+
+          <p-divider layout="vertical"></p-divider>
+          <p-fileUpload
+            #fileupload
+            name="uploadAvatar"
+            [customUpload]="true"
+            (onSelect)="onFileSelectClicked($event)"
+            (onClear)="onClearClicked()"
+            [showUploadButton]="false"
+            cancelLabel="{{ 'common.delete' | translate }}"
+            chooseLabel="{{ 'common.addPicture' | translate }}"
+            [accept]="joinAcceptableImageTypes()"
+            [fileLimit]="1"
+            [maxFileSize]="MAXFILESIZE"
+          >
+          </p-fileUpload>
+        </div>
+
+        <div class="input-box">
+          <label for="organization-name">{{
+            'input.userName' | translate
+          }}</label>
+          <input
+            #organization
+            id="organization-name"
+            type="text"
+            pInputText
+            formControlName="userName"
+          />
+          <small id="organization-name-help" class="input-helper-text">
+            {{ 'organization.organizationNameHelp' | translate }}
+          </small>
+        </div>
+        <div *ngIf="userName?.invalid && userName?.touched">
+          <app-validation-error *ngIf="userName?.errors?.['required']">
+            {{ 'organization.nameRequired' | translate }}
+          </app-validation-error>
+          <app-validation-error *ngIf="userName?.errors?.['minlength']">
+            {{ 'input.userNameMin' | translate }}
+          </app-validation-error>
+          <app-validation-error *ngIf="userName?.errors?.['maxlength']">
+            {{ 'input.userNameMax' | translate }}
+          </app-validation-error>
+        </div>
+      </form>
+      <p-button
+        [loading]="isLoading"
+        [disabled]="isLoading"
+        (onClick)="onSubmit()"
+      >
+        {{ 'organization.saveSettings' | translate }}
+      </p-button>
+    </p-card>
+  </section>
+</section>

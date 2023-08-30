@@ -1,0 +1,10 @@
+<h4>{{ 'organization.gamesHistory' | translate }}</h4>
+
+<div class="list-wrapper">
+  <app-event-result
+    class="item-container"
+    *ngFor="let game of games"
+    [result]="game"
+  >
+  </app-event-result>
+</div>

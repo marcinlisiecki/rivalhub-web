@@ -1,29 +1,24 @@
 <ul>
+  <li *ngIf="!mobileView && isAccountActivated">
+    <app-header-link routerLink="/calendar">
+      {{ 'header.calendar' | translate }}
+    </app-header-link>
+  </li>
 
+  <li *ngIf="!mobileView && isAccountActivated">
+    <app-header-link routerLink="/organizations/new">
+      {{ 'header.organizationAdd' | translate }}
+    </app-header-link>
+  </li>
 
-    <!--        <li *ngIf="isLoggedIn">-->
-    <!--          <app-header-link routerLink="/calendar">-->
-    <!--            {{ 'header.calendar' | translate }}-->
-    <!--          </app-header-link>-->
-    <!--        </li>-->
+  <li *ngIf="!mobileView">
+    <app-header-link routerLink="/organizations">
+      {{ 'header.organizationShow' | translate }}
+    </app-header-link>
+  </li>
 
-    <li>
-        <app-header-link routerLink="/organizations/new">
-            {{ 'header.organisationAdd' | translate }}
-        </app-header-link>
-    </li>
-
-    <li>
-        <app-header-link routerLink="/organizations">
-            {{ 'header.organisationShow' | translate }}
-        </app-header-link>
-    </li>
-
-    <li>
-        <app-header-link routerLink="/profile" (click)="profileMenu.toggle($event)">
-            {{ 'header.profile' | translate }}
-            <i class="pi pi-angle-down"></i>
-        </app-header-link>
-        <p-menu [model]="profileItems" #profileMenu [popup]="true"></p-menu>
-    </li>
+  <li (click)="showSidebar()">
+    <app-avatar class="user-avatar" *ngIf="user" [user]="user"></app-avatar>
+    
+  </li>
 </ul>

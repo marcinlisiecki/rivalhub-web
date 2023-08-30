@@ -1,0 +1,28 @@
+.events {
+}
+
+.event {
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: row;
+}
+
+.reservation {
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: row;
+  background-color: #367790;
+}
+
+i {
+  display: block;
+  margin: 0.1rem;
+}

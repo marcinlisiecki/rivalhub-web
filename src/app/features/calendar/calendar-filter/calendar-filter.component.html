@@ -1,0 +1,15 @@
+<p-button
+  #btn
+  (click)="changeDisplayMenu()"
+  [label]="'calendar.filter.button' | translate"
+  styleClass="button-filter"
+  [icon]="icon"
+></p-button>
+<div class="menu" *ngIf="displayMenu">
+  <app-calendar-filter-menu
+    (selectedFiltersChanged)="handleFilterChange($event)"
+    [organizations]="organizations"
+    [types]="types"
+    [selectedFilters]="selectedFilters"
+  ></app-calendar-filter-menu>
+</div>

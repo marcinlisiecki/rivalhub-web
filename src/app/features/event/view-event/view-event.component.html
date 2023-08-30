@@ -1,0 +1,147 @@
+<section class="wrapper" *ngIf="event">
+  <section class="main">
+    <app-go-back-button></app-go-back-button>
+    <p-confirmPopup></p-confirmPopup>
+
+    <section *ngIf="event">
+      <h1 class="event-title">
+        {{ event.name }}
+        <p-button
+          *ngIf="canJoin"
+          (click)="joinEvent()"
+          styleClass="p-button-secondary p-button-outlined p-button-sm"
+          iconPos="left"
+          icon="pi pi-plus"
+          label="{{ 'event.joinEvent' | translate }}"
+        ></p-button>
+        <p-button
+          *ngIf="canEdit && event.host !== loggedInUserId"
+          (click)="leaveEvent()"
+          styleClass="p-button-danger p-button-outlined p-button-sm"
+          iconPos="left"
+          label="{{ 'event.leaveEvent' | translate }}"
+        ></p-button>
+      </h1>
+
+      <div class="tags">
+        <p-tag
+          severity="info"
+          value="{{ categoryTypeToLabel(eventType) | translate }}"
+        ></p-tag>
+        <p-tag
+          [severity]="event.eventPublic ? 'success' : 'danger'"
+          value="{{
+            (event.eventPublic ? 'event.publicLabel' : 'event.privateLabel')
+              | translate
+          }}"
+        ></p-tag>
+      </div>
+
+      <span *ngIf="event.description; then desc; else noDesc"> </span>
+      <ng-template #desc>
+        <p class="description">
+          {{ event.description }}
+        </p>
+      </ng-template>
+      <ng-template #noDesc>
+        <p class="description">
+          {{ 'event.noDescription' | translate }}
+        </p>
+      </ng-template>
+    </section>
+
+    <section>
+      <app-view-ping-pong-matches
+        *ngIf="eventType === EventType.PING_PONG"
+        [matches]="getPingPongMatches()"
+        (approveMatch)="approveMatch($event)"
+      ></app-view-ping-pong-matches>
+
+      <app-view-table-football-matches
+        *ngIf="eventType === EventType.TABLE_FOOTBALL"
+        [matches]="getTableFootballMatches()"
+        (approveMatch)="approveMatch($event)"
+      >
+      </app-view-table-football-matches>
+
+      <app-view-pull-ups-matches
+        *ngIf="eventType === EventType.PULL_UPS"
+        [matches]="getPullUpsMatches()"
+        (approveMatch)="approveMatch($event)"
+      >
+      </app-view-pull-ups-matches>
+
+      <app-view-darts-matches
+        *ngIf="eventType === EventType.DARTS"
+        [matches]="getDartsMatches()"
+        (approveMatch)="approveMatch($event)"
+      >
+      </app-view-darts-matches>
+
+      <app-view-billiards-matches
+        *ngIf="eventType === EventType.BILLIARDS"
+        (approveMatch)="approveMatch($event)"
+        [matches]="getBilliardsMatches()"
+      >
+      </app-view-billiards-matches>
+    </section>
+
+    <section class="buttons" *ngIf="canEdit">
+      <a
+        [routerLink]="[
+          '/organizations',
+          organizationId,
+          'events',
+          eventId,
+          'results',
+          { type: eventType }
+        ]"
+      >
+        <p-button>{{ 'event.addResults' | translate }} </p-button>
+      </a>
+      <p-button
+        *ngIf="loggedInUserId === event.host"
+        icon="pi pi-times"
+        iconPos="left"
+        styleClass="p-button-danger p-button-outlined"
+        label="{{ 'event.delete' | translate }}"
+        (click)="onRemoveEvent($event)"
+      >
+      </p-button>
+    </section>
+  </section>
+
+  <section class="participants">
+    <h2 class="section-title">
+      {{ 'event.participants.participants' | translate }}
+    </h2>
+
+    <div class="users">
+      <div class="user" *ngFor="let user of participants">
+        <a routerLink="/profiles/{{ user.id }}" class="user-data">
+          <app-avatar class="user-avatar" [user]="user"></app-avatar>
+          <div>
+            <p>{{ user.name }}</p>
+            <i [ngStyle]="{ fontSize: '0.75rem', color: 'grey' }">{{
+              user.email
+            }}</i>
+          </div>
+        </a>
+
+        <p-button
+          *ngIf="user.id !== event.host && loggedInUserId === event.host"
+          icon="pi pi-times-circle"
+          styleClass="p-button-danger p-button-text p-button-sm"
+          (click)="onRemoveUser($event, user)"
+        ></p-button>
+      </div>
+
+      <p-button
+        *ngIf="loggedInUserId === event.host"
+        (click)="openAddUserDialog()"
+        styleClass="button-wide p-button-text p-button-secondary"
+        label="{{ 'event.addUser' | translate }}"
+      ></p-button>
+    </div>
+  </section>
+</section>

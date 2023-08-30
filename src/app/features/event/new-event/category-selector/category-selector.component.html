@@ -1,16 +1,25 @@
 <section class="form-step-wrapper">
   <header>
-    <h1>Kategoria</h1>
+    <h1>{{ 'event.category' | translate }}</h1>
   </header>
   <section class="categories">
+    <app-no-resource-info *ngIf="events.length === 0">{{
+      'events.noEvents' | translate
+    }}</app-no-resource-info>
     <div
       class="card-checkbox categories-item"
-      [class.selected-category]="selectedEventType === event.type"
+      [class.selected-category]="selectedEventType === event"
       *ngFor="let event of events"
-      (click)="selectEvent.emit(event.type)"
+      (click)="selectEvent.emit(event)"
     >
-      <i class="pi {{ event.icon }}"></i>
-      <p>{{ categoryTypeToLabel(event.type) }}</p>
+      <svg-icon
+        [src]="EventIcon[event]"
+        [svgStyle]="{
+          maxWidth: '5rem',
+          maxHeight: '5rem'
+        }"
+      ></svg-icon>
+      <p>{{ categoryTypeToLabel(event) | translate }}</p>
     </div>
   </section>
 
@@ -21,7 +30,7 @@
       [disabled]="selectedEventType === null"
       (onClick)="setFormStep.emit(AddEventFormStep.BASIC_INFO)"
     >
-      Dalej
+      {{ 'stepForm.next' | translate }}
     </p-button>
   </div>
 </section>
