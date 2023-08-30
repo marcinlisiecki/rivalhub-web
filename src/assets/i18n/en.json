@@ -139,6 +139,7 @@
 	"event.removeConfirmation": "Event deleted",
 	"event.require3Characters": "Please enter at least 3 characters",
 	"event.reservation": "Reservation",
+	"event.reservations": "Reservations",
 	"event.round.deleteConfirmation": "Round removed",
 	"event.round.deleteQuestion": "Are you sure you want to delete this round?",
 	"event.rounds.add": "Add a new round",

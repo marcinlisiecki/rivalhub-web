@@ -8,15 +8,11 @@ import {
 
 import { UserDetailsDto } from '@interfaces/user/user-details-dto';
 import { Reservation } from '@interfaces/reservation/reservation';
-import { RESERVATIONS } from '@app/mock/stations';
 import { UsersService } from '@app/core/services/users/users.service';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, debounceTime, fromEvent } from 'rxjs';
 import { headerCompactAnimation } from '@app/core/animations/header-animation';
 import { AuthService } from '@app/core/services/auth/auth.service';
-import { PingPongResult } from '@app/core/interfaces/event/games/ping-pong/ping-pong-result';
-import { GAMES } from '@app/mock/results';
-import { EventResult } from '@app/core/interfaces/event/event-result';
 
 @Component({
   selector: 'app-profile',
@@ -26,8 +22,7 @@ import { EventResult } from '@app/core/interfaces/event/event-result';
 })
 export class ProfileComponent implements OnInit, OnDestroy {
   user!: UserDetailsDto;
-  reservations: Reservation[] = RESERVATIONS;
-  games: EventResult[] = GAMES;
+  reservations: Reservation[] = [];
   compact: boolean = false;
   private scrollSubject = new Subject<Event>();
   isMe!: boolean;
@@ -45,10 +40,18 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.usersService.getUser(userId).subscribe((user: UserDetailsDto) => {
       this.user = user;
       this.isMe = this.user.email === this.authService.getUserEmail();
+      this.fetchReservations(Number(userId));
     });
 
     this.scrollSubject.pipe(debounceTime(10)).subscribe((event: Event) => {
       this.handleScroll(event);
+    });
+  }
+  fetchReservations(userId: number) {
+    this.usersService.getCommonReservations(userId).subscribe({
+      next: (reservations: Reservation[]) => {
+        this.reservations = reservations;
+      },
     });
   }
 
