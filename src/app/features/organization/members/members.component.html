@@ -1,9 +1,11 @@
 <div class="wrapper">
-  <app-organization-back-button
-    [organizationId]="organizationId"
-  ></app-organization-back-button>
   <div class="dashboard-container">
-    <h2>{{ 'organization.admins' | translate }}</h2>
+    <div>
+      <app-organization-back-button
+        [organizationId]="organizationId"
+      ></app-organization-back-button>
+      <h2>{{ 'organization.admins' | translate }}</h2>
+    </div>
     <app-admin-card
       [amIAdmin]="amIAdmin"
       *ngFor="let adminUser of adminUsers; let i = index"
