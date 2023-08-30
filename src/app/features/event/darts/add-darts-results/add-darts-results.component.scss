@@ -1,0 +1,18 @@
+@import 'src/scss/variables';
+
+.wrapper {
+    margin: 4rem auto 0 auto;
+    max-width: $pageWidth;
+
+    h1 {
+        font-size: $textXl;
+    }
+}
+
+h2 {
+    font-size: $textLg;
+}
+
+.add-match-button-wrapper {
+    margin: 1rem 0;
+}

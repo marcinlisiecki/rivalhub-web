@@ -16,6 +16,12 @@ import { NewTableFootballMatch } from '@interfaces/event/games/table-football/ne
 import { PullUpsMatch } from '@interfaces/event/games/pull-ups/pull-ups-match';
 import { PullUpsSeries } from '@interfaces/event/games/pull-ups/pull-ups-series';
 import { NewPullUpsMatch } from '@interfaces/event/games/pull-ups/new-pull-ups-match';
+import { AddDartsLeg } from '@app/core/interfaces/event/games/darts/add-darts-leg';
+import { AddDartMatch } from '@app/core/interfaces/event/games/darts/add-dart-match';
+import { AddQueue } from '@app/core/interfaces/event/games/darts/add-queue';
+import { CreatedDartsMatch } from '@app/core/interfaces/event/games/darts/created-darts-match';
+import { FakeDartsLeg } from '@app/core/interfaces/event/games/darts/fake-darts-leg';
+import { DartsLeg } from '@app/core/interfaces/event/games/darts/dart-leg';
 import { PullUpsSeriesScores } from '@interfaces/event/games/pull-ups/pull-ups-series-scores';
 import { BilliardsMatch } from '@interfaces/event/games/billiards/billiards-match';
 import { NewBilliardsMatch } from '@interfaces/event/games/billiards/new-billiards-match';
@@ -139,7 +145,8 @@ export class EventsService {
       | PingPongMatch[]
       | TableFootballMatch[]
       | PullUpsMatch[]
-      | BilliardsMatch[],
+      | BilliardsMatch[]
+      | FakeDartsLeg[],
   >(
     organizationId: number,
     eventId: number,
@@ -150,6 +157,43 @@ export class EventsService {
         `/organizations/${organizationId}/events/${eventId}/match`,
       { params: { type: eventType } },
     );
+  }
+
+  mapDartsMatches(fakeLegs: FakeDartsLeg[]): DartsLeg[] {
+    if (!fakeLegs) return [];
+    return fakeLegs.map((l) => ({
+      matchId: l.id,
+      dartFormat: l.dateFormat,
+      dartMode: l.dartMode,
+      participants: l.userDetails,
+      scoresInMatch: l.scoresInMatch[0],
+      bounceOutsInRound: l.bounceOutsInRound[0],
+      pointsLeftInLegAfterRound: l.pointsLeftInLegAfterRound[0],
+      pointsLeftInLeg: l.pointsLeftInLeg[0],
+      placesInLeg: l.placesInLeg[0],
+      bounceOutsInLeg: l.bounceOutsInLeg[0],
+      bestRoundScoresInLeg: l.bestRoundScoresInLeg[0],
+      numberOfRoundsPlayedInLeg: l.numberOfRoundsPlayedInLeg[0],
+      userApprovalMap: l.userApprovalMap,
+    }));
+  }
+
+  mapDartsMatch(fakeLeg: FakeDartsLeg): DartsLeg {
+    return {
+      matchId: fakeLeg.id,
+      dartFormat: fakeLeg.dateFormat,
+      dartMode: fakeLeg.dartMode,
+      participants: fakeLeg.userDetails,
+      scoresInMatch: fakeLeg.scoresInMatch[0],
+      bounceOutsInRound: fakeLeg.bounceOutsInRound[0],
+      pointsLeftInLegAfterRound: fakeLeg.pointsLeftInLegAfterRound[0],
+      pointsLeftInLeg: fakeLeg.pointsLeftInLeg[0],
+      placesInLeg: fakeLeg.placesInLeg[0],
+      bounceOutsInLeg: fakeLeg.bounceOutsInLeg[0],
+      bestRoundScoresInLeg: fakeLeg.bestRoundScoresInLeg[0],
+      numberOfRoundsPlayedInLeg: fakeLeg.numberOfRoundsPlayedInLeg[0],
+      userApprovalMap: fakeLeg.userApprovalMap,
+    };
   }
 
   getEventUsers(
@@ -201,6 +245,17 @@ export class EventsService {
     );
   }
 
+  addDartsLeg(
+    organizationId: number,
+    eventId: number,
+    leg: AddDartsLeg,
+  ): Observable<DartsLeg> {
+    return this.http.post<DartsLeg>(
+      environment.apiUrl +
+        `/organizations/${organizationId}/events/${eventId}/match?type=DARTS`,
+      leg,
+    );
+  }
   removePullUpsSeries(
     organizationId: number,
     eventId: number,
@@ -305,8 +360,6 @@ export class EventsService {
     eventId: number,
     type: EventType,
   ): Observable<{}> {
-    console.log(eventId);
-
     return this.http.delete(
       environment.apiUrl +
         `/organizations/${organizationId}/events/${eventId}?type=${type}`,
@@ -332,6 +385,60 @@ export class EventsService {
         isEventPublic: addEvent.isEventPublic,
       },
     );
+  }
+
+  createDartsLeg(
+    organizationId: number,
+    eventId: number,
+    matchId: number,
+  ): Observable<FakeDartsLeg> {
+    return this.http.post<FakeDartsLeg>(
+      environment.apiUrl +
+        `/organizations/${organizationId}/events/${eventId}/match/${matchId}/dart/legs`,
+      {},
+    );
+  }
+
+  addDartsMatch(
+    organizationId: number,
+    eventId: number,
+    match: AddDartMatch,
+  ): Observable<CreatedDartsMatch> {
+    return this.http.post<CreatedDartsMatch>(
+      environment.apiUrl +
+        `/organizations/${organizationId}/events/${eventId}/match?type=DARTS`,
+      match,
+    );
+  }
+
+  addDartsQueue(
+    organizationId: number,
+    eventId: number,
+    matchId: number,
+    queue: any,
+  ): Observable<FakeDartsLeg> {
+    return this.http.post<FakeDartsLeg>(
+      environment.apiUrl +
+        `/organizations/${organizationId}/events/${eventId}/match/${matchId}/dart/legs/rounds/0`,
+      queue,
+    );
+  }
+
+  deleteDartsQueue(
+    organizationId: number,
+    eventId: number,
+    matchId: number,
+    numberOfRound: number,
+  ): Observable<FakeDartsLeg> {
+    {
+      return this.http.delete<FakeDartsLeg>(
+        environment.apiUrl +
+          `/organizations/${organizationId}/events/${eventId}/match/${matchId}/dart/legs/rounds/0`,
+        {
+          body: numberOfRound,
+        },
+      );
+    }
   }
 
   joinEvent(eventId: number, type: string) {
