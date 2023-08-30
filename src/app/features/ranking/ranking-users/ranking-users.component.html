@@ -11,7 +11,7 @@
     <tr>
       <td>{{ user.userDetailsDto['name'] }}</td>
       <td [ngStyle]="{ color: 'green' }">{{ user.winGames }}</td>
-      <td [ngStyle]="{ color: 'red' }">{{ user.winGames - user.winGames }}</td>
+      <td [ngStyle]="{ color: 'red' }">{{ user.games - user.winGames }}</td>
       <td>{{ user.games }}</td>
     </tr>
   </ng-template>

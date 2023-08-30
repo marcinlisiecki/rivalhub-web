@@ -61,7 +61,7 @@
     [matchId]="match.id"
   ></app-view-game-sets>
 
-  <div class="add-set-button-wrapper" *ngIf="editable">
+  <div class="add-set-button-wrapper" *ngIf="editable && !match.approved">
     <p-button
       (click)="handleAddSet.emit(match.id)"
       styleClass="p-button-outlined"
