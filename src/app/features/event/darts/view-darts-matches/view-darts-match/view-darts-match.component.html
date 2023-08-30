@@ -11,8 +11,15 @@
       >
       </p-badge>
       <p-tag severity="success" value="Dart"></p-tag>
-      <p-tag severity="success" [value]="match.dartFormat"></p-tag>
-      <p-tag severity="success" [value]="match.dartMode"></p-tag>
+      <p-tag
+        severity="success"
+        [value]="match.dartFormat.replace('_', '')"
+      ></p-tag>
+      <p-tag
+        severity="success"
+        [value]="dartFormatToLabel[match.dartMode]"
+        *ngIf="match.dartMode !== 'NONE'"
+      ></p-tag>
     </section>
 
     <button
@@ -116,7 +123,7 @@
             class="pi pi-times-circle"
             (click)="onDelete($event, i)"
           ></i>
-          <p-confirmPopup></p-confirmPopup>
+          <p-confirmPopup *ngIf="editable"></p-confirmPopup>
         </div>
       </div>
 

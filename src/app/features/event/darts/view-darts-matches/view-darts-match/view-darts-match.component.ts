@@ -22,6 +22,7 @@ import {
   TOAST_LIFETIME_LONG,
 } from '@app/core/constants/messages';
 import { AuthService } from '@app/core/services/auth/auth.service';
+import { dartFormatToLabel } from '@app/core/utils/dartFormatToLabel';
 
 @Component({
   selector: 'app-view-darts-match',
@@ -59,6 +60,8 @@ export class ViewDartsMatchComponent implements OnInit {
       this.organizationId = params['organizationId'];
       this.eventId = params['eventId'];
     });
+
+    console.log(this.match);
   }
 
   openAddQueueDialog() {
@@ -196,4 +199,6 @@ export class ViewDartsMatchComponent implements OnInit {
     }
     return this.match.participants.length + 1;
   }
+
+  protected readonly dartFormatToLabel = dartFormatToLabel;
 }
