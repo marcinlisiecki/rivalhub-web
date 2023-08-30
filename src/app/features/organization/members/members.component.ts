@@ -5,6 +5,8 @@ import { UserDetailsDto } from '@interfaces/user/user-details-dto';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '@app/core/services/auth/auth.service';
 import { Subscription } from 'rxjs';
+import { EventType } from '@interfaces/event/event-type';
+import { EventsService } from '@app/core/services/events/events.service';
 
 @Component({
   selector: 'app-members',
@@ -25,6 +27,7 @@ export class MembersComponent implements OnInit {
   public noMore: boolean = false;
   public amIAdmin!: boolean;
   private paramsSub?: Subscription;
+  eventTypes: EventType[] | null = null;
 
   toggleLoading = () => (this.isLoading = !this.isLoading);
 
@@ -32,6 +35,7 @@ export class MembersComponent implements OnInit {
     private organizationService: OrganizationsService,
     private route: ActivatedRoute,
     private authService: AuthService,
+    private eventsService: EventsService,
   ) {}
 
   ngOnInit() {
@@ -39,9 +43,18 @@ export class MembersComponent implements OnInit {
       this.organizationId = params['id'];
       this.amIAdmin = this.authService.amIAdmin(this.organizationId);
       this.loadData();
+      this.fetchActiveEventTypes(this.organizationId);
     });
 
     // TODO debounce 500 ms
+  }
+
+  fetchActiveEventTypes(organizationId: number) {
+    this.eventsService.getEventTypesInOrganization(organizationId).subscribe({
+      next: (eventTypes: EventType[]) => {
+        this.eventTypes = eventTypes;
+      },
+    });
   }
 
   loadData() {
