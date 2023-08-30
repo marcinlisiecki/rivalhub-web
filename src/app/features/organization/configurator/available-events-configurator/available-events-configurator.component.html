@@ -10,9 +10,11 @@
     <svg-icon
       [src]="EventIcon[type]"
       [svgStyle]="{
-        width: '100%'
+        maxWidth: '5rem',
+        maxHeight: '5rem'
       }"
     ></svg-icon>
+
     <p>{{ categoryTypeToLabel(type) | translate }}</p>
   </div>
 </section>
