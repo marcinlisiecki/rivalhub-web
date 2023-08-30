@@ -1,0 +1,30 @@
+<section class="wrapper">
+    <header>
+        <h1>{{ 'event.new.leg' | translate }}</h1>
+    </header>
+
+    <section>
+        <div class="event-options">
+            <p-selectButton [options]="dartModes" [(ngModel)]="dartMode" optionLabel="label"
+                optionValue="value"></p-selectButton>
+            <p-selectButton [options]="dartFormats" [(ngModel)]="dartFormat" optionLabel="label"
+                optionValue="value"></p-selectButton>
+        </div>
+    </section>
+
+    <section class="participants">
+        <h2>Uczestnicy</h2>
+        <div *ngFor="let participant of participants">
+            <div class="team-member-data">
+                <app-avatar class="team-member-avatar" [user]="participant"></app-avatar>
+                <p>{{ participant.name }}</p>
+            </div>
+        </div>
+    </section>
+
+
+
+    <p-button (onClick)="handleAddMatch()">
+        {{ 'event.addGame' | translate }}
+    </p-button>
+</section>

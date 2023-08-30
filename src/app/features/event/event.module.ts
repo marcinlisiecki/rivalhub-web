@@ -39,13 +39,18 @@ import { TableModule } from 'primeng/table';
 import { AddPullUpsResultsComponent } from './pull-ups/add-pull-ups-results/add-pull-ups-results.component';
 import { AddPullUpsSeriesComponent } from './pull-ups/add-pull-ups-series/add-pull-ups-series.component';
 import { AddUsersComponent } from './common/add-users/add-users.component';
+import { ViewDartsMatchesComponent } from './darts/view-darts-matches/view-darts-matches.component';
+import { AddDartsResultsComponent } from './darts/add-darts-results/add-darts-results.component';
+import { AddLegComponent } from './darts/add-darts-results/add-leg/add-leg.component';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { ViewDartsMatchComponent } from './darts/view-darts-matches/view-darts-match/view-darts-match.component';
+import { AddQueueComponent } from './darts/add-darts-results/add-leg/add-queue/add-queue.component';
+import { InputNumberModule } from 'primeng/inputnumber';
 import { TagModule } from 'primeng/tag';
-import { ConfirmPopupModule } from 'primeng/confirmpopup';
-import { AngularSvgIconModule } from 'angular-svg-icon';
+import {ConfirmPopupModule} from "primeng/confirmpopup";
+import {AngularSvgIconModule} from "angular-svg-icon";
 import { ViewBilliardsMatchesComponent } from './billiards/view-billiards-matches/view-billiards-matches.component';
 import { AddBilliardsResultsComponent } from './billiards/add-billiards-results/add-billiards-results.component';
-import { SelectButtonModule } from 'primeng/selectbutton';
-import { InputNumberModule } from 'primeng/inputnumber';
 import { DropdownModule } from 'primeng/dropdown';
 import { AddBilliardsMatchComponent } from './billiards/add-billiards-match/add-billiards-match.component';
 import { ListboxModule } from 'primeng/listbox';
@@ -80,6 +85,11 @@ import {RadioButtonModule} from "primeng/radiobutton";
     ViewBilliardsMatchesComponent,
     AddBilliardsResultsComponent,
     AddBilliardsMatchComponent,
+    ViewDartsMatchesComponent,
+    AddDartsResultsComponent,
+    AddLegComponent,
+    ViewDartsMatchComponent,
+    AddQueueComponent,
   ],
   imports: [
     CommonModule,

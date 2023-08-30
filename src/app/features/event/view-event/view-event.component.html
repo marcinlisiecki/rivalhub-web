@@ -6,35 +6,19 @@
     <section *ngIf="event">
       <h1 class="event-title">
         {{ event.name }}
-        <p-button
-          *ngIf="canJoin"
-          (click)="joinEvent()"
-          styleClass="p-button-secondary p-button-outlined p-button-sm"
-          iconPos="left"
-          icon="pi pi-plus"
-          label="{{ 'event.joinEvent' | translate }}"
-        ></p-button>
-        <p-button
-          *ngIf="canEdit && event.host !== loggedInUserId"
-          (click)="leaveEvent()"
-          styleClass="p-button-danger p-button-outlined p-button-sm"
-          iconPos="left"
-          label="{{ 'event.leaveEvent' | translate }}"
-        ></p-button>
+        <p-button *ngIf="canJoin" (click)="joinEvent()" styleClass="p-button-secondary p-button-outlined p-button-sm"
+          iconPos="left" icon="pi pi-plus" label="{{ 'event.joinEvent' | translate }}"></p-button>
+        <p-button *ngIf="canEdit && event.host !== loggedInUserId" (click)="leaveEvent()"
+          styleClass="p-button-danger p-button-outlined p-button-sm" iconPos="left"
+          label="{{ 'event.leaveEvent' | translate }}"></p-button>
       </h1>
 
       <div class="tags">
-        <p-tag
-          severity="info"
-          value="{{ categoryTypeToLabel(eventType) | translate }}"
-        ></p-tag>
-        <p-tag
-          [severity]="event.eventPublic ? 'success' : 'danger'"
-          value="{{
+        <p-tag severity="info" value="{{ categoryTypeToLabel(eventType) | translate }}"></p-tag>
+        <p-tag [severity]="event.eventPublic ? 'success' : 'danger'" value="{{
             (event.eventPublic ? 'event.publicLabel' : 'event.privateLabel')
               | translate
-          }}"
-        ></p-tag>
+          }}"></p-tag>
       </div>
 
       <span *ngIf="event.description; then desc; else noDesc"> </span>
@@ -71,6 +55,9 @@
       >
       </app-view-pull-ups-matches>
 
+      <app-view-darts-matches *ngIf="eventType === EventType.DARTS" [matches]="getDartsMatches()">
+      </app-view-darts-matches>
+
       <app-view-billiards-matches
         *ngIf="eventType === EventType.BILLIARDS"
         (approveMatch)="approveMatch($event)"
@@ -80,26 +67,19 @@
     </section>
 
     <section class="buttons" *ngIf="canEdit">
-      <a
-        [routerLink]="[
+      <a [routerLink]="[
           '/organizations',
           organizationId,
           'events',
           eventId,
           'results',
           { type: eventType }
-        ]"
-      >
+        ]">
         <p-button>{{ 'event.addResults' | translate }} </p-button>
       </a>
-      <p-button
-        *ngIf="loggedInUserId === event.host"
-        icon="pi pi-times"
-        iconPos="left"
-        styleClass="p-button-danger p-button-outlined"
-        label="{{ 'event.delete' | translate }}"
-        (click)="onRemoveEvent($event)"
-      >
+      <p-button *ngIf="loggedInUserId === event.host" icon="pi pi-times" iconPos="left"
+        styleClass="p-button-danger p-button-outlined" label="{{ 'event.delete' | translate }}"
+        (click)="onRemoveEvent($event)">
       </p-button>
     </section>
   </section>
@@ -114,20 +94,12 @@
           <p>{{ user.name }}</p>
         </a>
 
-        <p-button
-          *ngIf="user.id !== event.host && loggedInUserId === event.host"
-          icon="pi pi-times-circle"
-          styleClass="p-button-danger p-button-text p-button-sm"
-          (click)="onRemoveUser($event, user)"
-        ></p-button>
+        <p-button *ngIf="user.id !== event.host && loggedInUserId === event.host" icon="pi pi-times-circle"
+          styleClass="p-button-danger p-button-text p-button-sm" (click)="onRemoveUser($event, user)"></p-button>
       </div>
 
-      <p-button
-        *ngIf="loggedInUserId === event.host"
-        (click)="openAddUserDialog()"
-        styleClass="button-wide p-button-text p-button-secondary"
-        label="{{ 'event.addUser' | translate }}"
-      ></p-button>
+      <p-button *ngIf="loggedInUserId === event.host" (click)="openAddUserDialog()"
+        styleClass="button-wide p-button-text p-button-secondary" label="{{ 'event.addUser' | translate }}"></p-button>
     </div>
   </section>
 </section>

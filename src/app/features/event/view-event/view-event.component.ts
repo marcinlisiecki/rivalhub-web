@@ -11,6 +11,8 @@ import { PingPongMatch } from '@interfaces/event/games/ping-pong/ping-pong-match
 import { TableFootballMatch } from '@interfaces/event/games/table-football/table-football-match';
 import { categoryTypeToLabel } from '@app/core/utils/event';
 import { PullUpsMatch } from '@interfaces/event/games/pull-ups/pull-ups-match';
+import { DartsLeg } from '@app/core/interfaces/event/games/darts/dart-leg';
+import { FakeDartsLeg } from '@app/core/interfaces/event/games/darts/fake-darts-leg';
 import { AuthService } from '@app/core/services/auth/auth.service';
 import { UsersService } from '@app/core/services/users/users.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -40,7 +42,8 @@ export class ViewEventComponent implements OnInit {
     | PingPongMatch[]
     | TableFootballMatch[]
     | PullUpsMatch[]
-    | BilliardsMatch[];
+    | BilliardsMatch[]
+    | FakeDartsLeg[];
   loggedInUserId!: number;
   canEdit: boolean = false;
   canJoin: boolean = false;
@@ -51,6 +54,7 @@ export class ViewEventComponent implements OnInit {
     private route: ActivatedRoute,
     private eventsService: EventsService,
     private errorsService: ErrorsService,
+    private authService: AuthService,
     private usersService: UsersService,
     private messageService: MessageService,
     private languageService: LanguageService,
@@ -58,7 +62,6 @@ export class ViewEventComponent implements OnInit {
     private router: Router,
     private dialogService: DialogService,
     private organizationsService: OrganizationsService,
-    private authService: AuthService,
   ) {}
 
   ngOnInit(): void {
@@ -324,6 +327,19 @@ export class ViewEventComponent implements OnInit {
 
   getPullUpsMatches(): PullUpsMatch[] {
     return this.matches as PullUpsMatch[];
+  }
+
+  getDartsMatches(): DartsLeg[] {
+    const mappedMatches: DartsLeg[] = [];
+    this.matches?.forEach((element) => {
+      const mappedMatch = this.eventsService.mapDartsMatch(
+        element as FakeDartsLeg,
+      );
+      if (mappedMatch) {
+        mappedMatches.push(mappedMatch);
+      }
+    });
+    return mappedMatches;
   }
 
   getBilliardsMatches(): BilliardsMatch[] {

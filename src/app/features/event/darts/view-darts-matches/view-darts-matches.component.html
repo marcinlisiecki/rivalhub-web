@@ -1,0 +1,12 @@
+<h2 class="section-title" *ngIf="!editable">
+    {{ 'event.legs' | translate }}
+</h2>
+
+<app-no-resource-info *ngIf="matches?.length === 0">
+    {{ 'event.noLegs' | translate }}
+</app-no-resource-info>
+
+<div class="matches" *ngIf="matches">
+    <app-view-darts-match [editable]="editable" *ngFor="let match of matches"
+    [match]="match"></app-view-darts-match>
+</div>
