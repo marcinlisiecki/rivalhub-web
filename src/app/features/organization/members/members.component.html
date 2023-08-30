@@ -29,14 +29,17 @@
       *ngIf="searchQuery; else infiniteScrollContent"
       class="dashboard-container"
     >
-      <app-member-card
-        [amIAdmin]="amIAdmin"
-        *ngFor="let filteredUser of filteredUsers; let i = index"
-        [user]="filteredUser"
-        (changedStatus)="onChangeStatus()"
-        class="dashboard-container-header"
-      >
-      </app-member-card>
+      <span *ngIf="eventTypes">
+        <app-member-card
+          [eventTypes]="eventTypes"
+          [amIAdmin]="amIAdmin"
+          *ngFor="let filteredUser of filteredUsers; let i = index"
+          [user]="filteredUser"
+          (changedStatus)="onChangeStatus()"
+          class="dashboard-container-header"
+        >
+        </app-member-card>
+      </span>
     </div>
   </div>
   <ng-template #infiniteScrollContent>
@@ -47,8 +50,10 @@
       [infiniteScrollThrottle]="500"
       (scrolled)="onScroll()"
       [scrollWindow]="true"
+      *ngIf="eventTypes"
     >
       <app-member-card
+        [eventTypes]="eventTypes"
         [amIAdmin]="amIAdmin"
         *ngFor="let user of users; let i = index"
         [user]="user"

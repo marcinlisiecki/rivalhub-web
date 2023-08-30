@@ -30,7 +30,10 @@
     *ngIf="!myself"
     styleClass="p-button-sm"
     class="card-btn"
-    (onClick)="onChallenge()"
-    >{{ 'organization.challenge' | translate }}</p-button
-  >
+    (onClick)="menu.toggle($event)"
+    icon="pi pi-angle-down"
+    iconPos="right"
+    label="{{ 'organization.challenge' | translate }}"
+  ></p-button>
+  <p-menu [popup]="true" #menu [model]="items"></p-menu>
 </div>
