@@ -29,23 +29,14 @@
 
   .dashboard-panels {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     flex: $flexRow;
     gap: 30px;
-
-    &-history,
+    
     &-activities {
       display: flex;
-      align-self: flex-start;
-      flex-direction: column;
-    }
-
-    &-history {
-      flex-basis: 70%;
-    }
-
-    &-activities {
-      flex-basis: 30%;
+        align-self: flex-start;
+        flex-direction: column;
 
     }
 

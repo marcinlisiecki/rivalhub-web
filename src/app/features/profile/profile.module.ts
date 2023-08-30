@@ -11,7 +11,8 @@ import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { ColorPickerModule } from 'primeng/colorpicker';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
-import {TranslateModule} from "@ngx-translate/core";
+import { TranslateModule } from '@ngx-translate/core';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import {TranslateModule} from "@ngx-translate/core";
     ReactiveFormsModule,
     FormsModule,
     TranslateModule,
+    RouterModule,
   ],
 })
 export class ProfileModule {}
