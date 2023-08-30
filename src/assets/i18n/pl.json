@@ -113,6 +113,7 @@
 	"event.new.steps.reservation": "Rezerwacja",
 	"event.newChallenge": "Nowe wyzwanie",
 	"event.noApproval": "Wyniki meczu nie zostały potwierdzone",
+	"event.eventName":"Nazwa wydarzenia",
 	"event.noDescription": "Brak opisu",
 	"event.noGames": "Brak meczów w wybranym wydarzeniu",
 	"event.noLegs": "Brak legów w wybranym wydarzeniu",
