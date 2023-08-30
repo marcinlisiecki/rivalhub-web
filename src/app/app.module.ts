@@ -33,6 +33,7 @@ import { RankingComponent } from './features/ranking/ranking.component';
 import { RankingUsersComponent } from './features/ranking/ranking-users/ranking-users.component';
 import { RankingCategoriesComponent } from './features/ranking/ranking-categories/ranking-categories.component';
 import {DropdownModule} from "primeng/dropdown";
+import {TableModule} from "primeng/table";
 
 @NgModule({
   declarations: [
@@ -71,6 +72,7 @@ import {DropdownModule} from "primeng/dropdown";
     UserModule,
     InfiniteScrollModule,
     DropdownModule,
+    TableModule,
   ],
 
   providers: [
