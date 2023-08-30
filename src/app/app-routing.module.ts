@@ -132,7 +132,7 @@ const routes: Routes = [
     canActivate: [authenticateGuard],
   },
   {
-    path: 'organizations/:id/ranking',
+    path: 'organizations/:organizationId/ranking',
     component: RankingComponent,
     canActivate: [authenticateGuard],
   },

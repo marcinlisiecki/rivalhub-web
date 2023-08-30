@@ -1,7 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { RankingDTO } from '@interfaces/ranking/ranking';
-import { RANKING_PING_PONG } from '@app/mock/ranking';
 
+interface Column {
+  field: string;
+  header: string;
+}
 @Component({
   selector: 'app-ranking-users',
   templateUrl: './ranking-users.component.html',
@@ -9,5 +12,17 @@ import { RANKING_PING_PONG } from '@app/mock/ranking';
 })
 export class RankingUsersComponent {
   @Input() users!: RankingDTO[];
-  //users = RANKING_PING_PONG;
+
+  cols!: Column[];
+
+  constructor() {}
+
+  ngOnInit() {
+    this.cols = [
+      { field: 'code', header: 'Nazwa użytkownika' },
+      { field: 'name', header: 'Ilość wygranych' },
+      { field: 'category', header: 'Ilość przegranych' },
+      { field: 'category', header: 'Ilość gier' },
+    ];
+  }
 }

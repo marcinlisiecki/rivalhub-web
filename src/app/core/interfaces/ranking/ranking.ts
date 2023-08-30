@@ -1,4 +1,7 @@
+import { UserDetailsDto } from '@interfaces/user/user-details-dto';
+
 export interface RankingDTO {
-  name: string;
-  score: string;
+  userDetailsDto: UserDetailsDto;
+  games: number;
+  winGames: number;
 }

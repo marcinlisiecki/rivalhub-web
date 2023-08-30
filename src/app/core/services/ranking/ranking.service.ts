@@ -1,31 +1,21 @@
 import { Injectable } from '@angular/core';
-import { EventType } from '@interfaces/event/event-type';
-import {
-  RANKING_BILARDS,
-  RANKING_DARTS,
-  RANKING_PING_PONG,
-  RANKING_PULL_UPS,
-  RANKING_RUNNING,
-  RANKING_TABLE_FOOTBALL,
-} from '@app/mock/ranking';
 import { RankingDTO } from '@interfaces/ranking/ranking';
+import { OrganizationSettings } from '@interfaces/organization/organization-settings';
+import { environment } from '../../../../environments/environment';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RankingService {
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
-  types: any = {
-    PING_PONG: RANKING_PING_PONG,
-    BILLIARDS: RANKING_BILARDS,
-    TABLE_FOOTBALL: RANKING_TABLE_FOOTBALL,
-    DARTS: RANKING_DARTS,
-    PULL_UPS: RANKING_PULL_UPS,
-    RUNNING: RANKING_RUNNING,
-  };
+  ngOnInit() {}
 
-  getRankingDTO(type: string): RankingDTO[] {
-    return this.types[type];
+  getRankingDTO(type: string, id: string): Observable<RankingDTO[]> {
+    return this.http.get<RankingDTO[]>(
+      environment.apiUrl + `/organizations/${id}/stats?type=${type}`,
+    );
   }
 }

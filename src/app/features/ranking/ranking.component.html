@@ -5,7 +5,7 @@
       (categoryChange)="categoryChanged($event)"
     ></app-ranking-categories>
 
-    <p-card header="Ranking">
+    <p-card header="{{ 'event.rounds.ranking.ranking' | translate }}">
       <app-ranking-users [users]="category"></app-ranking-users>
     </p-card>
   </div>
