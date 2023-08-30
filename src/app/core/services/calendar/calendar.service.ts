@@ -24,6 +24,7 @@ import { AuthService } from '../auth/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { categoryTypeToLabel } from '@app/core/utils/event';
+import { API_DATE_FORMAT } from '@app/core/constants/date';
 
 @Injectable({
   providedIn: 'root',
@@ -186,6 +187,15 @@ export class CalendarService {
     );
   }
 
+  private isAllDayEvent(event: EventDto | Reservation): boolean {
+    return (
+      this.datePipe.transform(event.startTime, 'HH:mm') === '00:00' &&
+      this.datePipe.transform(event.endTime, 'HH:mm') === '23:59' &&
+      this.datePipe.transform(event.startTime, 'ddMMyyyy') ===
+        this.datePipe.transform(event.endTime, 'ddMMyyyy')
+    );
+  }
+
   private createEvent(eventData: EventDto) {
     let color = eventData.organization.color;
     if (color == null) {
@@ -220,7 +230,7 @@ export class CalendarService {
       start: eventData.startTime,
       endStr: eventData.endTime.toString(),
       end: eventData.endTime,
-      allDay: false,
+      allDay: this.isAllDayEvent(eventData),
       borderColor: color,
       color: color,
       eventURL: eventURL,
@@ -264,7 +274,7 @@ export class CalendarService {
       endStr: res.endTime.toString(),
       end: res.endTime,
       color: '#367790',
-      allDay: false,
+      allDay: this.isAllDayEvent(res),
       borderColor: color,
       eventURL: eventURL,
       extendedProps: {

@@ -13,7 +13,10 @@
     <section>
       <i>{{ event['organizationName'] }}</i>
 
-      <i>{{ event.title }}</i>
+      <i
+        >{{ eventToString(event.title).slice(0, 10)
+        }}<span *ngIf="isTitleIsToLong(event.title)">...</span></i
+      >
 
       <i>
         {{ categoryTypeToLabel(event!['extendedProps']!['type']) | translate }}
@@ -23,7 +26,7 @@
         <b *ngIf="!event.allDay">{{ getDate(event) | date: 'HH:mm' }}</b>
       </i>
       <i>
-        <b *ngIf="event.allDay"> {{ 'calendar.allDay' | translate }}' </b>
+        <b *ngIf="event.allDay"> {{ 'calendar.allDay' | translate }} </b>
       </i>
     </section>
     <section style="margin-left: 0.5rem">

@@ -30,4 +30,15 @@ export class CalendarEventsComponent {
       return { backgroundColor: event['color'] };
     }
   }
+
+  isTitleIsToLong(title: string | undefined): boolean {
+    if (title) return title.length > 10;
+    else return false;
+  }
+
+  protected readonly toString = toString;
+
+  eventToString(arg: any) {
+    return String(arg);
+  }
 }
