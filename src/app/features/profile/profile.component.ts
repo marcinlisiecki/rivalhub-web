@@ -47,18 +47,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
       this.isMe = this.user.email === this.authService.getUserEmail();
     });
 
-    // this.usersService
-    //   .getCommonEvents(userId)
-    //   .subscribe((events: EventDto[]) => {
-    //     this.events = events;
-    //   });
-
-    // this.usersService
-    //   .getCommonReservations(userId)
-    //   .subscribe((reservations: Reservation[]) => {
-    //     this.reservations = reservations;
-    //   });
-
     this.scrollSubject.pipe(debounceTime(10)).subscribe((event: Event) => {
       this.handleScroll(event);
     });
