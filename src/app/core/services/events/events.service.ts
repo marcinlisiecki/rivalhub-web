@@ -174,6 +174,7 @@ export class EventsService {
       bounceOutsInLeg: l.bounceOutsInLeg[0],
       bestRoundScoresInLeg: l.bestRoundScoresInLeg[0],
       numberOfRoundsPlayedInLeg: l.numberOfRoundsPlayedInLeg[0],
+      userApprovalMap: l.userApprovalMap,
     }));
   }
 
@@ -191,6 +192,7 @@ export class EventsService {
       bounceOutsInLeg: fakeLeg.bounceOutsInLeg[0],
       bestRoundScoresInLeg: fakeLeg.bestRoundScoresInLeg[0],
       numberOfRoundsPlayedInLeg: fakeLeg.numberOfRoundsPlayedInLeg[0],
+      userApprovalMap: fakeLeg.userApprovalMap,
     };
   }
 
@@ -427,9 +429,9 @@ export class EventsService {
     eventId: number,
     matchId: number,
     numberOfRound: number,
-  ): Observable<{}> {
+  ): Observable<FakeDartsLeg> {
     {
-      return this.http.delete<{}>(
+      return this.http.delete<FakeDartsLeg>(
         environment.apiUrl +
           `/organizations/${organizationId}/events/${eventId}/match/${matchId}/dart/legs/rounds/0`,
         {

@@ -43,7 +43,7 @@ export class ViewEventComponent implements OnInit {
     | TableFootballMatch[]
     | PullUpsMatch[]
     | BilliardsMatch[]
-      | FakeDartsLeg[];
+    | FakeDartsLeg[];
   loggedInUserId!: number;
   canEdit: boolean = false;
   canJoin: boolean = false;

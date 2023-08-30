@@ -31,7 +31,7 @@
 
                 <div class="row" *ngFor="let roundScore of playerScores let row=index">
 
-                    
+
                     <ng-container *ngIf="match.pointsLeftInLegAfterRound[i][row]-roundScore>0; else elseTemplate">
                         <p class="points-got">
                             {{roundScore}}
@@ -46,16 +46,16 @@
                             {{match.pointsLeftInLegAfterRound[i][row]-roundScore}}
                         </p>
                     </ng-container>
-                    <ng-template #elseTemplate >
+                    <ng-template #elseTemplate>
                         <div class="shots" *ngIf="roundScore!==null">
                             {{"event.game.placed" | translate}} #{{match.placesInLeg[row]}}
                         </div>
                     </ng-template>
 
 
-                   
+
                 </div>
-                <div class="remove-button">
+                <div class="remove-button" *ngIf="i==match.scoresInMatch.length-1">
                     <i style="color: red" [style]="
                     {
                         opacity: editable ? 1 : 0,
@@ -74,6 +74,7 @@
 
 
     <section>
-        <p-button *ngIf="editable" [style.display]="!isLegOver() ? 'block' : 'none'" (onClick)="openAddQueueDialog()">{{'event.addQueue' | translate}}</p-button>
+        <p-button *ngIf="editable" [style.display]="!isLegOver() ? 'block' : 'none'"
+            (onClick)="openAddQueueDialog()">{{'event.addQueue' | translate}}</p-button>
     </section>
 </div>
