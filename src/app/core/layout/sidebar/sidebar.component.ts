@@ -38,6 +38,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   selectedOrganization: Organization | null = null;
   amIAdmin!: boolean;
   userName!: string;
+  userId!: number;
 
   constructor(
     private viewService: ViewService,
@@ -100,12 +101,15 @@ export class SidebarComponent implements OnInit, OnDestroy {
       },
     );
 
-    if (this.authService.isAuth()) {
-      this.usersService.getMe().subscribe((user: UserDetailsDto) => {
-        this.isAccountActivated = user.activationTime !== null;
-        this.userName = user.name;
-      });
-    }
+    this.authService.isAuthObservable().subscribe((res) => {
+      if (res) {
+        this.usersService.getMe().subscribe((user: UserDetailsDto) => {
+          this.isAccountActivated = user.activationTime !== null;
+          this.userName = user.name;
+          this.userId = user.id;
+        });
+      }
+    });
 
     if (this.selectedOrganization) {
       this.amIAdmin = this.authService.amIAdmin(this.selectedOrganization.id);
