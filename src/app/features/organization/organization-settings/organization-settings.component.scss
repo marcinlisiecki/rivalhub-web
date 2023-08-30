@@ -55,13 +55,4 @@ h2 {
 
 .avatar-img {
   border-radius: $dashboardRadius;
-
-  &-hoverable:hover {
-    cursor: pointer;
-  }
-}
-
-p-colorpicker {
-  height: 0;
-  width: 0;
 }
