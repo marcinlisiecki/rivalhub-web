@@ -7,7 +7,7 @@ import {
   Output,
 } from '@angular/core';
 import { UserDetailsDto } from '@interfaces/user/user-details-dto';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, MenuItemCommandEvent } from 'primeng/api';
 import { OrganizationsService } from '@app/core/services/organizations/organizations.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '@app/core/services/auth/auth.service';
@@ -15,6 +15,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { take } from 'rxjs';
 import { ImageService } from '@app/core/services/image/image.service';
 import { LanguageService } from '@app/core/services/language/language.service';
+import { categoryTypeToLabel } from '@app/core/utils/event';
+import { EventType } from '@interfaces/event/event-type';
 
 @Component({
   selector: 'app-admin-card',
@@ -25,6 +27,7 @@ export class AdminCardComponent implements OnInit {
   @Input() user!: UserDetailsDto;
   @Input() amIAdmin: boolean = false;
   @Output() changedStatus = new EventEmitter<void>();
+  @Input({ required: true }) eventTypes: EventType[] = [];
 
   private organizationId!: number;
   private confirmKickMessage: string = this.languageService.instant(
@@ -41,6 +44,8 @@ export class AdminCardComponent implements OnInit {
   );
   public myself: boolean = false;
   imageUrl!: string;
+  items: any[] = [];
+
   constructor(
     private route: ActivatedRoute,
     private confirmationService: ConfirmationService,
@@ -60,6 +65,24 @@ export class AdminCardComponent implements OnInit {
       );
     });
 
+    this.items = [
+      ...this.eventTypes.map((item) => ({
+        label: this.languageService.instant(categoryTypeToLabel(item)),
+        command: (_: MenuItemCommandEvent) =>
+          this.navigateToNewEvent(item as EventType),
+      })),
+    ];
+  }
+
+  navigateToNewEvent(type: EventType) {
+    this.router
+      .navigate(['organizations', this.organizationId, 'events', 'new'], {
+        queryParams: {
+          challengeId: this.user.id,
+          challengeType: type,
+        },
+      })
+      .then();
   }
 
   getImagePath(imageUrl: string | null): string {

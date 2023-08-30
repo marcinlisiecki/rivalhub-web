@@ -6,14 +6,17 @@
       ></app-organization-back-button>
       <h2>{{ 'organization.admins' | translate }}</h2>
     </div>
-    <app-admin-card
-      [amIAdmin]="amIAdmin"
-      *ngFor="let adminUser of adminUsers; let i = index"
-      [user]="adminUser"
-      (changedStatus)="onChangeStatus()"
-      class="dashboard-container-header"
-    >
-    </app-admin-card>
+    <span *ngIf="eventTypes" class="dashboard-container-header">
+      <app-admin-card
+        [eventTypes]="eventTypes"
+        [amIAdmin]="amIAdmin"
+        *ngFor="let adminUser of adminUsers; let i = index"
+        [user]="adminUser"
+        (changedStatus)="onChangeStatus()"
+        class="dashboard-container-header-inner"
+      >
+      </app-admin-card>
+    </span>
   </div>
 
   <div>
@@ -31,7 +34,7 @@
       *ngIf="searchQuery; else infiniteScrollContent"
       class="dashboard-container"
     >
-      <span *ngIf="eventTypes">
+      <div *ngIf="eventTypes">
         <app-member-card
           [eventTypes]="eventTypes"
           [amIAdmin]="amIAdmin"
@@ -41,7 +44,7 @@
           class="dashboard-container-header"
         >
         </app-member-card>
-      </span>
+      </div>
     </div>
   </div>
   <ng-template #infiniteScrollContent>

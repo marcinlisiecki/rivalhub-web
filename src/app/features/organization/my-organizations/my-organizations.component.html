@@ -76,13 +76,12 @@
             <strong>{{
               categoryTypeToLabel(notification.type) | translate
             }}</strong>
-            <!-- TODO: Zmienić id organizacji, jak backend zacznie je zwracać -->
           </p>
 
           <a
             [routerLink]="[
               '/organizations',
-              0,
+              notification.organizationId,
               'events',
               notification.eventId,
               { type: notification.type }

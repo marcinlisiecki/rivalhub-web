@@ -1,7 +1,7 @@
 import { UserDetailsDto } from '@app/core/interfaces/user/user-details-dto';
 
 export interface DartsLeg {
-  matchId: number;
+  id: number;
   dartFormat: string;
   dartMode: string;
   participants: UserDetailsDto[];
@@ -13,6 +13,7 @@ export interface DartsLeg {
   bounceOutsInLeg: number[];
   bestRoundScoresInLeg: number[];
   numberOfRoundsPlayedInLeg: number[];
+  approved: boolean;
   userApprovalMap: {
     [id: number]: boolean;
   };
