@@ -23,11 +23,15 @@ export class RankingComponent implements OnInit {
       this.route.snapshot.paramMap.get('organizationId')
     );
     this.rankSub = this.rankingService
-      .getRankingDTO('BILLIARDS', this.organizationId)
+      .getRankingDTO('DARTS', this.organizationId)
       .subscribe((users) => {
         this.category = users;
         this.category.sort((a, b) => {
-          return b.winGames - a.winGames;
+          let res = b.winGames / b.games - a.winGames / a.games;
+          if (!Number.isNaN(res)) {
+            return res;
+          }
+          return 1;
         });
       });
   }
@@ -42,7 +46,11 @@ export class RankingComponent implements OnInit {
       .subscribe((users) => {
         this.category = users;
         this.category.sort((a, b) => {
-          return b.winGames / b.games - a.winGames / a.games;
+          let res = b.winGames / b.games - a.winGames / a.games;
+          if (!Number.isNaN(res)) {
+            return res;
+          }
+          return 1;
         });
       });
   }
