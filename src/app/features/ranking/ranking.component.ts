@@ -26,6 +26,9 @@ export class RankingComponent implements OnInit {
       .getRankingDTO('BILLIARDS', this.organizationId)
       .subscribe((users) => {
         this.category = users;
+        this.category.sort((a, b) => {
+          return b.winGames - a.winGames;
+        });
       });
   }
 
@@ -38,6 +41,9 @@ export class RankingComponent implements OnInit {
       .getRankingDTO(a.type, this.organizationId)
       .subscribe((users) => {
         this.category = users;
+        this.category.sort((a, b) => {
+          return b.winGames / b.games - a.winGames / a.games;
+        });
       });
   }
 }

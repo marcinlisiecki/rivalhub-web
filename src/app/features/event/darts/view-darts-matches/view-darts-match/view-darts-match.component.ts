@@ -60,8 +60,6 @@ export class ViewDartsMatchComponent implements OnInit {
       this.organizationId = params['organizationId'];
       this.eventId = params['eventId'];
     });
-
-    console.log(this.match);
   }
 
   openAddQueueDialog() {
