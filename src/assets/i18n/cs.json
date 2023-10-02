@@ -315,5 +315,8 @@
 	"sidebar.signOut": "Odhlášení",
 	"sidebar.stations": "Stanice",
 	"stepForm.next": "Další",
-	"stepForm.previous": "Předchozí"
+	"stepForm.previous": "Předchozí",
+  "landing.heading": "Odemkni svůj soutěžní duch s",
+  "landing.joinNow": "připojit se nyní",
+  "landing.login": "přihlásit se"
 }

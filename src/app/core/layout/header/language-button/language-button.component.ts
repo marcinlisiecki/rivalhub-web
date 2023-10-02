@@ -22,12 +22,12 @@ export class LanguageButtonComponent implements OnInit {
     for (let flagKey in this.lang.flag) {
       let option = {
         label: `<img src="${this.flag[flagKey]}" alt=${flagKey} width="24" height="15"/>`,
-          escape: false,
+        escape: false,
         command: () => {
-        this.lang.useLanguage(flagKey);
-        this.pathOfFlag = this.flag[flagKey];
-      },
-      }
+          this.lang.useLanguage(flagKey);
+          this.pathOfFlag = this.flag[flagKey];
+        },
+      };
       this.flagItems.push(option);
     }
   }

@@ -316,5 +316,8 @@
 	"sidebar.signOut": "Wyloguj się",
 	"sidebar.stations": "Stanowiska",
 	"stepForm.next": "Dalej",
-	"stepForm.previous": "Powrót"
+	"stepForm.previous": "Powrót",
+  "landing.heading": "Odblokuj swojego ducha rywalizacji dzięki",
+  "landing.joinNow": "Dołącz teraz",
+  "landing.login": "Zaloguj się"
 }

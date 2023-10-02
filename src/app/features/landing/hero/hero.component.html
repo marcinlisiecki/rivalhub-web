@@ -2,19 +2,30 @@
   <div class="landing-content">
     <div class="landing-content-left">
       <div class="landing-header">
-        <span>{{ 'landing.welcome' | translate }}</span>
-        <app-rivalhub-logo></app-rivalhub-logo>
+        {{ 'landing.heading' | translate }}
+        <span class="colored">RivalHub.</span>
       </div>
       <p>
         <span>
           {{ 'landing.text1' | translate }}
         </span>
-        <app-rivalhub-logo></app-rivalhub-logo>
+        <span>RivalHub</span>
         <span>
           {{ 'landing.text2' | translate }}
         </span>
       </p>
-      <h3>{{ 'landing.join' | translate }}</h3>
+      <div class="buttons">
+        <p-button routerLink="/register">{{
+          'landing.joinNow' | translate
+        }}</p-button>
+        <p-button
+          routerLink="/login"
+          styleClass="p-button-outlined"
+          iconPos="right"
+          icon="pi pi-arrow-right"
+          label="{{ 'landing.login' | translate }}"
+        ></p-button>
+      </div>
     </div>
     <div class="landing-content-right">
       <img

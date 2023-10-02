@@ -315,5 +315,8 @@
 	"sidebar.signOut": "Log ud",
 	"sidebar.stations": "Stationer",
 	"stepForm.next": "Næste",
-	"stepForm.previous": "Forrige"
+	"stepForm.previous": "Forrige",
+  "landing.heading": "Lås op for din konkurrenceånd med",
+  "landing.joinNow": "tilmeld dig n",
+  "landing.login": "log ind"
 }

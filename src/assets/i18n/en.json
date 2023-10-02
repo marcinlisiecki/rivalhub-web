@@ -316,5 +316,8 @@
 	"sidebar.signOut": "Log Out",
 	"sidebar.stations": "Stations",
 	"stepForm.next": "Next",
-	"stepForm.previous": "Previous"
+	"stepForm.previous": "Previous",
+  "landing.heading": "Unlock Your Competitive Spirit with",
+  "landing.joinNow": "Join now",
+  "landing.login": "Login"
 }
